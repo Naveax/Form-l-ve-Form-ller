@@ -1,0 +1,19 @@
+{
+  "milestone":"V26_CROSS_WORD_XOR_PROJECTION_ANF_AUDIT",
+  "frozen_before_measurement":true,
+  "novelty":"Exact exhaustive cross-word output projection search; distinct from counter finite differences and prior per-bit ANF families.",
+  "scope":"controlled reduced ChaCha only; target-free forward-map structural falsifier",
+  "rounds":{"control":4,"primary":6},
+  "key_widths":[8,10,12,14,16],
+  "key_map":"existing reduced_key_multiword(k,b)",
+  "counter":1,
+  "projection_class":"all 120 unordered word pairs (i,j), 0<=i<j<16, with X_ij(k)=Z_i(k) xor Z_j(k); all 32 bit positions per pair",
+  "exact_method":"Complete 2^b truth tables and exact packed GF(2) Mobius ANF for all 3840 projected bits. Also compute individual component-word ANF metrics as frozen baseline.",
+  "stable_sparse_projection_rule":"A projected bit (i,j,bit) is stable-useful iff degree<=6 and support exponent<=0.75 at both b14 and b16 for R6.",
+  "component_gain_rule":"At b16, for a stable projected bit compare against the better of the two same-position component bits: degree_gain=min(deg_i,deg_j)-deg_proj; support_gain=min(exp_i,exp_j)-exp_proj.",
+  "primary_gate":{"r6_stable_sparse_projected_bits_min":16,"r6_stable_distinct_word_pairs_min":4,"r6_b16_median_component_degree_gain_min":2.0,"r6_b16_median_component_support_exponent_gain_min":0.10},
+  "secondary_control":"R4 metrics are diagnostic only and cannot rescue R6 failure.",
+  "stage1_only_if_pass":"Freeze a fresh algebraic-system/TOTAL scaling stage using only preregistered stable projection coordinates. Bill exhaustive projection search as one-time preprocessing plus monomial generation, solve, memory, matching/collisions and exact verification. No alpha claim from Stage0 alone.",
+  "kill_rule":"If any R6 primary gate fails, close exhaustive cross-word XOR projection family. No modular-sum reinterpretation, pair cherry-picking, threshold changes, output subset or second development set inside this family.",
+  "forbidden":"No target selection, post-hoc pair selection, approximate ANF, learned projection selection, or full-round claim."
+}

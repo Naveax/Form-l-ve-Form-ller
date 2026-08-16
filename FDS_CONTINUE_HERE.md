@@ -1,13 +1,14 @@
 # FDS_CONTINUE_HERE
 
-**State:** V26 first- and second-counter-difference ANF families NO-GO.  
-**Next:** freeze exact cross-word XOR projection ANF audit.
+**State:** V26 counter first/second finite-difference ANF families NO-GO.  
+**Active:** `V26_CROSS_WORD_XOR_PROJECTION_ANF_AUDIT`.
 
-1. Retire counter derivative order/stride tuning.
-2. Preserve exact vectorized ChaCha + packed Möbius infrastructure.
-3. New family must be target-free and exhaustive over a frozen projection class, not post-hoc output selection.
-4. Candidate next class: all 120 unordered output-word XOR pairs, all 32 bit positions, R4 control/R6 primary, b8→16.
-5. Freeze sparse/stability gates before measurement.
-6. Only exact stable sparse projections may open polynomial-system/TOTAL scaling.
-7. Failed Stage0 gets no second set or approximate rescue.
-8. alpha<1 remains NOT DEMONSTRATED; no full-round claim.
+1. Use frozen plan under `research/v26/cross-word-xor-anf/`.
+2. Counter1 only; b=`8,10,12,14,16`; R4 control/R6 primary.
+3. Exhaustively evaluate all 120 unordered output-word XOR pairs and all 32 bits, not a selected subset.
+4. Exact ANF via packed Möbius; compute component-word baseline metrics too.
+5. Stable-useful projected bit: degree<=6 and support-exp<=0.75 at both b14/b16.
+6. R6 PASS requires >=16 stable projected bits, >=4 distinct pairs, and b16 median component degree/support gains >=2 / >=0.10.
+7. R4 cannot rescue R6 failure.
+8. Only PASS opens separately frozen algebraic-system/TOTAL scaling.
+9. On FAIL close XOR projection family; no pair/threshold/output retuning.
