@@ -5,48 +5,51 @@
 **Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes are missing.  
 **Active work while blocked:** mathematics-first exact Walsh tensor-network / controlled-error analysis.
 
-Do not reduce the project to code recovery. Code is only a calculator/falsifier. The mathematical object is the signed Walsh tensor, its exact local tensor-network representation, and exact or certified approximate contraction.
+Do not reduce the project to code recovery. Code is only a calculator/falsifier. The mathematical object is the signed Walsh tensor, its exact minimal-rank local factorization, and exact or certified approximate contraction.
 
 ## Current mathematical chain
 
-The source-independent work has established:
+Established source-independent results now include:
 
-1. exact modular-addition Walsh coefficients admit a binary carry/sigma MPO of bond dimension 2;
-2. q138 rotations turn short carry tails into high-bit masks, explaining explicit support explosion without implying large local representation state;
-3. published hard-sigma local truncations have exact shell/residual Gram calculus, but are not identified with historical project `max_sigma_weight`;
-4. full exact QR/double-round Walsh operators obey Parseval/orthogonality, so bounded-cap zeros are not full-exact zeros;
-5. capped low rank can transfer to full-exact epsilon-rank only after a certified residual exists;
-6. local residuals can telescope through QR/layers/rounds;
-7. for one fixed-IO 32-bit QR coefficient, exact local elimination gives a site network with four nearest-neighbor sigma bonds plus offset-8 and offset-12 binary bonds;
-8. exact weighted path cutwidth is 44;
-9. exact weighted carving width is 42, so ordinary topology-only contraction ordering is exhausted;
-10. conditioning the 20 cyclic long-range wrap variables yields an exact 24-state-bit open-chain DP, trading memory for boundary-enumeration work.
+1. modular-addition Walsh tensor: exact longitudinal MPO bond dimension 2 from the sigma/carry recurrence;
+2. one interior addition-bit tensor: exact optimal transverse TT profile `[2,3,3,2]`, so minimal maximum local TT bond dimension 3;
+3. q138 rotation/carry amplification explains huge explicit support without implying huge local generative state;
+4. full exact Parseval/orthogonality and controlled-error/residual-Gram/epsilon-rank calculus remain available for approximation work;
+5. fused-site QR path cutwidth 44 and fused-site carving width 42 are exact **only for the fused-site representation**;
+6. exact local site refinement gives a 64-factor network with a balanced 41-bond cut, proving 42 is not a universal lower bound for the full factor network;
+7. keeping the original addition-bit factors separate refines the network further; smaller balanced cuts exist, but the full refined contraction-tree optimum is not yet certified;
+8. conditioning long-range wrap variables gives an independent exact 24-state-bit DP memory route with outer boundary enumeration.
 
-Relevant notes under `research/v26/recovered-bit-puncturing-dac/` include:
+Read especially:
 
 - `V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`
+- `V26_MODADD_LOCAL_TT_RANK_THEOREM.md`
 - `V26_EXACT_QR_PATHWIDTH_THEOREM.md`
 - `V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`
 - `V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`
+- `V26_QR_SITE_FUSION_REFINEMENT.md`
 - `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`
-- plus the earlier Parseval, tail, residual-Gram, epsilon-rank and error-exponent notes.
+- plus the Parseval, residual-Gram, epsilon-rank and error-exponent notes.
 
 ## First unfinished mathematical pass
 
-**Do not search another site ordering.** The next distinct mechanism is algebraic compression of the certified width-42 separator.
+The next distinct mechanism is **global contraction of minimal-rank local cores**.
 
 Work in this order:
 
-1. choose one width-42 cut from the certified carving decomposition;
-2. write the crossing indices explicitly by type: sigma, offset-8 `v4`, offset-12 `v3`;
-3. derive every exact linear/parity conservation law induced by the sigma recurrence and fixed boundary masks;
-4. determine how many formal `2^42` boundary states are immediately impossible;
-5. derive a factorized Gram or transfer representation of the contracted-side boundary message;
-6. compute exact small-instance Schmidt/rank spectra only as a finite falsifier for the derived algebra;
-7. if exact rank is still large, move to certified singular-value/epsilon-rank analysis rather than another graph permutation;
-8. separately examine whether the 20 conditioned wrap variables admit meet-in-the-middle or low-rank boundary-transfer reuse that reduces **total work**, not only memory.
+1. decompose every interior modular-addition bit tensor into an exact TT with current sigma in the center and bond profile `[2,3,3,2]`;
+2. rebuild one fixed-input/fixed-output QR network from those cores, preserving XOR/rotation constraints explicitly rather than collapsing them into oversized hyperfactors;
+3. compute a rigorous global contraction-width upper bound and compare it to 44/42 fused-site baselines;
+4. if the width drops, identify which bond-3 core placement causes the reduction and derive it algebraically;
+5. if topology remains large, compute separator Schmidt/rank structure before any approximation;
+6. only after the exact minimal-core route is exhausted should epsilon-rank/tail truncation become the active mechanism.
 
-The success condition for this mathematical pass is a rigorous reduction in effective separator dimension/rank below the topology-only 42-bond space, or a scoped NO-GO showing that the chosen algebraic mechanism does not reduce it.
+Do **not** cite fused-site carving width 42 as a lower bound for the full exact QR tensor network. It is a certified value for one exact but over-fused representation.
+
+A successful pass must either:
+
+- produce a rigorously smaller exact global width/representation using minimal-rank cores; or
+- close that precise refinement as insufficient and state the remaining separator-rank bottleneck.
 
 ## Measured execution remains frozen behind provenance
 
@@ -66,11 +69,9 @@ Core SHA-256:
 When bytes become available:
 
 1. run SHA-locked rematerialization;
-2. prove exact cap semantics/normalization/nestedness from the core;
+2. prove exact project cap semantics/normalization/nestedness from the core;
 3. restore dependencies and reproduce historical `19/19 PASS`;
 4. run the already-frozen cap2 all-four-column QR regression;
 5. only PASS opens packed cap3 under the existing `2 GiB RSS / 1 GiB compact` gates.
-
-Do not retune the frozen QR plan. Do not turn source-independent mathematical lemmas into project-specific numerical claims without the missing semantic/provenance bridge.
 
 Still no admitted full second-layer solution, ranking gain, alpha<1, or full-round relevance.
