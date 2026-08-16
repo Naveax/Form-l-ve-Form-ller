@@ -1,13 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** exact XOR and modular half-output decompositions are NO-GO; Issue #9 constant-factor PASS; alpha=1.  
-**Active:** `V25_DISJOINT_HALF_DEPENDENCY_BIDIRECTIONAL_MITM_CONE_AUDIT`.
+**State:** Issue #12 W4_W6 single-boundary disjoint-half MITM NO-GO.  
+**Next:** freeze exhaustive all-two-key-word layout dependency search.
 
-1. Use frozen target-free plan under `research/v25/dependency-mitm/`.
-2. W4_W6_SPLIT only: low half state4, high half state6.
-3. Enumerate all 80 split1..5 / word0..15 cones.
-4. Compute exact initial-side and final-side active half support sets.
-5. PASS only for exact `{4}` vs `{6}` disjoint coverage in either orientation.
-6. If none exists, close this simple single-word boundary MITM immediately.
-7. Numerical half-table/target work opens only after structural PASS.
-8. No approximate dependency or multi-boundary rescue in this milestone.
+1. Target-free structural audit only.
+2. Enumerate all 28 unordered active key/state-word pairs from words 4..11.
+3. For each layout enumerate all 80 internal cones.
+4. Use the identical exact support criterion from Issue #12.
+5. PASS only if at least one layout/cone gives `{wordA}` vs `{wordB}` nonempty disjoint coverage.
+6. Numerical target/TOTAL work opens only for such candidates.
+7. If zero candidates among 2,240 layout-cones, close simple two-word single-boundary dependency-separated MITM globally for this reduced 6-round structure.
+8. No approximate dependency or target tuning.

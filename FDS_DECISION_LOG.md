@@ -1,10 +1,10 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issue #10 XOR half separability
-0 exact bits on every fresh target; dense GF(2) ranks. `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`.
+## 2026-08-16 — Issues #10/#11 half-output factorization
+Exact XOR and modular-additive 8+8 separability both failed fresh primary gates. No alpha claim.
 
-## 2026-08-16 — Issue #11 modular-additive half separability
-Fresh b16 W5 8+8 tables showed no exact modular-additive width even at m4. Zero residual fraction at m4 was only ~6.9%; no common exact width; match set remains 65,536. `NO_GO_SIMPLE_MODULAR_8P8_SEPARABILITY`.
+## 2026-08-16 — Issue #12 W4_W6 dependency-separated MITM
+Target-free enumeration of all 80 internal cones found zero exact `{4}` vs `{6}` disjoint-support boundaries. 48/80 cones depend on both active halves from both directions. Decision: `NO_GO_SINGLE_BOUNDARY_DISJOINT_HALF_MITM` for this layout.
 
 ## Next
-Audit exact dependency separation across internal boundaries with the two logical halves placed in separate key/state words. This targets a real bidirectional MITM prerequisite rather than another output transform.
+Exhaust all 28 two-key-word layouts under the same target-free gate before closing the simple dependency-separated family globally.

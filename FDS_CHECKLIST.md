@@ -1,13 +1,13 @@
 # FDS_CHECKLIST
 
 ## Closed
-- [x] Issue #9 constant-factor verified screening PASS, alpha=1.
-- [x] Issue #10 exact XOR half separability NO-GO.
-- [x] Issue #11 exact modular-additive half separability NO-GO; even m4 not exact.
+- [x] Issue #9 constant-factor verified screen PASS, alpha=1.
+- [x] Issue #10 exact XOR 8+8 separability NO-GO.
+- [x] Issue #11 exact modular 8+8 separability NO-GO.
+- [x] Issue #12 W4_W6 target-free dependency audit: 0/80 candidates, NO-GO.
 
-## Next structural audit
-- [ ] Freeze W4_W6_SPLIT disjoint-half dependency plan.
-- [ ] Enumerate all 80 internal cones.
-- [ ] Compute forward/backward active-half support sets.
-- [ ] PASS only on exact disjoint nonempty `{low}` / `{high}` support.
-- [ ] Numerical MITM only if structural prerequisite passes.
+## Next
+- [ ] Freeze all 28 key-word-pair layout search.
+- [ ] Enumerate 2,240 layout-cones.
+- [ ] Apply exact disjoint support gate unchanged.
+- [ ] Numerical MITM only if any structural candidate exists.

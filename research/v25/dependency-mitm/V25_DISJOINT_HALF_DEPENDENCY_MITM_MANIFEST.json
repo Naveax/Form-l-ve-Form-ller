@@ -1,0 +1,6 @@
+{
+  "milestone":"V25_DISJOINT_HALF_DEPENDENCY_BIDIRECTIONAL_MITM_CONE_AUDIT",
+  "plan_commit":"15ce0211fe013e44b97ec905f5f87ee1ab50e22f",
+  "tests":"2/2 support regression PASS",
+  "local_sha256":{"evaluator":"3104dca1036dc235ac6b3d194de9d9dd684ccf9ceb45236237d707b9ac5b7e13","corrected_test":"09ad026e4bd2e3a6bc159f2882b67205c0bbca3d1caad5c18a6adf782a412e48","full_result":"61fab749bc3e98f57462ab9c6a26433d49fc062e7dae6248d010e6ae1bcccddf"}
+}

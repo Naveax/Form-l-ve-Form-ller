@@ -2,13 +2,16 @@
 
 ## Canonical status — 2026-08-16
 
-Issue #9 remains an admitted collision-tolerant **constant-factor** reduced-model screen; alpha=1. Issue #8 strict raw uniqueness remains NO-GO.
+Issue #9 remains a scoped collision-tolerant constant-factor PASS; alpha=1.
 
-Structural exponent audits:
-- Issue #10 exact XOR 8+8 separability: NO-GO, 0 exact bits on 4/4 targets, dense GF(2) ranks.
-- Issue #11 exact modular-additive 8+8 separability: NO-GO. No target is exact even at modulus 2^4; common exact width=0; 65,536 matches remain.
+Exact structural exponent hypotheses closed NO-GO:
+- Issue #10 XOR 8+8 output separability;
+- Issue #11 modular-additive 8+8 output separability;
+- Issue #12 single-boundary W4_W6 disjoint-half dependency MITM.
+
+Issue #12 enumerated all 80 internal cones. **0/80** had exact nonempty disjoint active supports `{4}` vs `{6}`. Forty-eight cones were fully mixed on both sides.
 
 No alpha<1 result exists.
 
 ## Next
-Move from output-function factorization to structural dependency separation. Audit all 80 internal `(split,word)` cones for `W4_W6_SPLIT`: does the forward boundary depend on only one 8-bit key half while the backward boundary depends only on the other, with disjoint active-word support? This is a target-free exact prerequisite for a genuine bidirectional MITM.
+Before abandoning dependency-separated MITM entirely, run one target-free exhaustive layout falsifier over every unordered pair of active key/state words 4..11 (28 layouts × 80 cones). If none has an exact disjoint-half cone, close the whole simple two-word single-boundary family.

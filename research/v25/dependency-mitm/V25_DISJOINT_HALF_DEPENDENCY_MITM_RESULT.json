@@ -1,0 +1,17 @@
+{
+  "milestone":"V25_DISJOINT_HALF_DEPENDENCY_BIDIRECTIONAL_MITM_CONE_AUDIT",
+  "status":"NO_GO_SINGLE_BOUNDARY_DISJOINT_HALF_MITM",
+  "cones":80,
+  "active_words":[4,6],
+  "candidate_count":0,
+  "stage1_opened":false,
+  "support_pattern_histogram":[
+    {"forward":[],"backward":[4,6],"count":8},
+    {"forward":[4],"backward":[4,6],"count":4},
+    {"forward":[4,6],"backward":[],"count":8},
+    {"forward":[4,6],"backward":[4],"count":4},
+    {"forward":[4,6],"backward":[4,6],"count":48},
+    {"forward":[4,6],"backward":[6],"count":4},
+    {"forward":[6],"backward":[4,6],"count":4}
+  ]
+}
