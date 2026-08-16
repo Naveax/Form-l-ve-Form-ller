@@ -8,17 +8,32 @@ The recovered bit-puncturing/D&C Stage0 remains admitted. Exact signed first-lay
 
 Stage0 verdict: `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.
 
-Important limit: these are exact signed marginals, not a complete joint second-layer distribution. Columns0/3 marginalize to zero but may remain coupled to other columns in the joint state.
+Important limit: these are exact signed marginals inside the frozen bounded trail family, not a complete joint or full-exact second-layer distribution.
 
-## Active QR-transform falsifier
+## Mathematics-first structural track
 
-`V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` is frozen. The cap2 factorized path, independent explicit-global-before-marginalization reference path, and all-four-column `1e-12` regression have been committed.
+The research center is now the exact/controlled-error mathematics of the signed Walsh/trail tensor. Code is a calculator/falsifier, not the object of study.
 
-Recovery tooling now accepts either the exact canonical snapshot or an exact SHA-locked core hit from a direct file/directory/nested ZIP. A `core_only` restore is explicitly marked `snapshot_verified=false` and `runtime_complete=false`; it does not open measurement until dependencies and the historical baseline are verified.
+Canonical mathematical notes under `research/v26/recovered-bit-puncturing-dac/` now establish:
+
+- `V26_TENSOR_RANK_MATHEMATICAL_REFRAMING.md`: the first-layer boundary object is a signed mixture of tensor products; column subsets and 2|2 flattenings inherit Kronecker factorizations and rank bounds.
+- `V26_FULL_QR_PARSEVAL_LEMMA.md`: for the full exact Walsh operator of any bijective QR/double-round, every normalized subset marginal has squared l2 norm exactly 1; full exact QR acts as an orthogonal local basis change and preserves whole-column singular spectra/ranks.
+- `V26_COHERENT_TRAIL_TAIL_BOUNDS.md`: omitted trail error must be bounded after coherent signed endpoint merging; individual trail-square sums alone are not safe hull-error bounds.
+- `V26_MODADD_SIGMA_SHELL_THEOREM.md`: the published one-addition sigma definition admits an exact two-state shell-energy transfer recurrence and shows that a fixed hard per-addition sigma cap is not uniformly accurate over all masks.
+- `V26_SIGMA_SEMANTICS_SEPARATION.md`: the published hard-per-addition sigma model is **not** identified with the recovered project `max_sigma_weight` parameter until the missing canonical core proves the semantics.
+- `V26_STAGE0_PARSEVAL_GAP_BOUNDS.md`: under compatible Walsh normalization, the cap4 Stage0 column marginals have unavoidable l2 distance from the full exact marginals of at least `1`, `0.2793271761`, `0.2687631657`, `1` for C0..C3 respectively.
+- `V26_EPSILON_RANK_BRIDGE_THEOREM.md`: if a capped flattening has rank/singular-tail complexity r and a certified full-to-cap residual epsilon, then the full exact tensor inherits a controlled epsilon-rank bound; exact capped rank alone is not stable enough.
+- `V26_LOCAL_TO_GLOBAL_ERROR_TELESCOPING.md`: certified local Walsh-operator/on-orbit defects can be telescoped through QR/layer/round composition, giving the intended bridge `local error -> global residual -> full-exact epsilon-rank -> controlled contraction` without global trail enumeration.
+
+This math track does not require the missing historical bytes for its source-independent lemmas. The bytes are required only to attach project-specific numerical cap semantics/errors to those lemmas.
+
+## Active measured QR-transform falsifier
+
+`V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` remains frozen. Its cap2 factorized/reference implementation and all-four-column `1e-12` regression are committed. No new canonical transform measurement is admitted while provenance is missing.
 
 ## Current blocker — exact historical runtime bytes
 
-The exact recovered `fds_v25_bit_puncturing.py` source required by the admitted Stage0 source and active falsifier is not present in current Git `main` or the current conversation mount.
+The exact recovered `fds_v25_bit_puncturing.py` source required to identify the historical cap semantics and rerun the frozen measurements is not present in current Git `main` or the current conversation mount.
 
 Canonical recovery authority:
 
@@ -30,25 +45,24 @@ Required identities:
 - snapshot `FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip` SHA-256: `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`
 - core `fds_v25_bit_puncturing.py` SHA-256: `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`
 
-Search status as of the latest 2026-08-16 audit:
+Latest recovery audit remains negative: `/mnt` + `/home/oai` + `/tmp` covered 812 files / 130,949,394 bytes with zero canonical snapshot/core/test/cert hits; historical Git trees, connected-account code search and public web search also yielded no byte source.
 
-- current conversation `/mnt/data`, including nested ZIP contents: `0 matches`;
-- broader `/mnt` + `/home/oai` + `/tmp`: 812 files / 130,949,394 bytes SHA-256 scanned; canonical snapshot/core/test/cert: `0 hits`;
-- historical recovery commit `2a94d1e...` records prior snapshot verification and `19/19 PASS`, but its Git tree does not contain the canonical core blob;
-- bootstrap raw ZIP was locally verified but was not committed as a Git object;
-- connected-account global GitHub code search and public web search produced no canonical byte source.
+This is a source-rematerialization/provenance blocker, **not a mathematical NO-GO**.
 
-Historical transcript text records the hashes and recovered result lineage but does not provide a verified byte-identical core.
+## Next mathematics
 
-This is a source-rematerialization/provenance blocker, **not a mathematical NO-GO**. Do not substitute a rewritten core silently.
+1. Work with the full exact Walsh operator and an abstract capped family separately; do not guess missing `max_sigma_weight` semantics.
+2. Develop source-conditioned/on-orbit residual certificates rather than uniform fixed-cap claims, because fixed small hard sigma caps are provably poor on some modular-addition masks.
+3. Use the local-to-global telescoping theorem to turn local certified residuals into a global `epsilon_K`.
+4. Combine `epsilon_K` with capped 2|2 singular spectra/rank bounds through the epsilon-rank bridge.
+5. Only after a controlled residual exists should pairwise/junction-tree contraction be judged as a candidate full-exact or controlled-approximation representation.
 
-## Next
+## Next measured execution after byte recovery
 
-1. Obtain historical backup ZIP/source bytes.
-2. Run `scripts/rematerialize_v25_trail_dac.py <candidate-path> --restore`.
-3. Require exact snapshot SHA, or exact core SHA with explicitly incomplete snapshot/runtime provenance.
-4. Restore/verify dependencies and reproduce historical `19/19 PASS`.
-5. Execute frozen cap2 all-column transform regression.
-6. Only cap2 PASS opens packed cap3 measurement under 2 GiB RSS / 1 GiB compact gates.
+1. SHA-locked rematerialization.
+2. Prove the exact project cap semantics/normalization and nestedness.
+3. Restore dependencies and reproduce historical `19/19 PASS`.
+4. Execute the already-frozen cap2 all-column QR regression.
+5. Only cap2 PASS opens packed cap3 under the existing 2 GiB RSS / 1 GiB compact gates.
 
 Still not admitted: full second-layer contraction, four-inverse-round exact energy, end-to-end ranking reduction, alpha<1, or full-round relevance.
