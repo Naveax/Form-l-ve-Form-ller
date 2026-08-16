@@ -1,0 +1,33 @@
+{
+  "milestone":"V25_REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER",
+  "frozen_before_layout_survivor_measurement":true,
+  "reduced_model":{"b":10,"rounds":6,"counter":1,"candidate_count":1024},
+  "fixed_algorithm":{"split":1,"boundary_word":0,"syndrome_width":16},
+  "layouts":[
+    {"id":"W4_CONTROL","fields":[{"state_word":4,"bit_offset":0,"width":10,"logical_shift":0}]},
+    {"id":"W5_SINGLE","fields":[{"state_word":5,"bit_offset":0,"width":10,"logical_shift":0}]},
+    {"id":"W6_SINGLE","fields":[{"state_word":6,"bit_offset":0,"width":10,"logical_shift":0}]},
+    {"id":"W7_SINGLE","fields":[{"state_word":7,"bit_offset":0,"width":10,"logical_shift":0}]},
+    {"id":"W4_W8_SPLIT","fields":[{"state_word":4,"bit_offset":0,"width":5,"logical_shift":0},{"state_word":8,"bit_offset":0,"width":5,"logical_shift":5}]},
+    {"id":"W4_W6_SPLIT","fields":[{"state_word":4,"bit_offset":0,"width":5,"logical_shift":0},{"state_word":6,"bit_offset":0,"width":5,"logical_shift":5}]}
+  ],
+  "layout_rationale":{"W4_CONTROL":"admitted one-word control","W5_SINGLE_W6_SINGLE_W7_SINGLE":"move the same 10-bit logical field to other ChaCha key/state words and other round0 column groups","W4_W8_SPLIT":"two active key words inside round0 group0","W4_W6_SPLIT":"two active key words spanning different round0 groups"},
+  "fresh_target_seed":5351200,
+  "fresh_target_generation":"shuffle logical IDs 1..1023 with Python random.Random(seed); exclude previously used/recovered b=10 target IDs; take first eight",
+  "fresh_targets":[813,410,917,769,850,373,572,1000],
+  "stage_L0_structural_cost":{"method":"propagate candidate-dependent state-word set through the exact fixed screen/direct QR schedules; a QR is candidate-dependent iff its input group intersects the current dependency set, after which all four group words become candidate-dependent","screen_total_generic_qr":18,"direct_total_generic_qr":21,"conservative_total_formula":"screen_fixed + screen_candidate*1024 + direct_fixed + direct_candidate*N_survivors","baseline_formula":"direct_fixed + direct_candidate*1024","no_screen_to_verify_reuse_credit":true},
+  "stage_L0_frozen_results":[
+    {"layout":"W4_CONTROL","screen_candidate_qr":15,"screen_fixed_qr":3,"direct_candidate_qr":18,"direct_fixed_qr":3},
+    {"layout":"W5_SINGLE","screen_candidate_qr":14,"screen_fixed_qr":4,"direct_candidate_qr":18,"direct_fixed_qr":3},
+    {"layout":"W6_SINGLE","screen_candidate_qr":14,"screen_fixed_qr":4,"direct_candidate_qr":18,"direct_fixed_qr":3},
+    {"layout":"W7_SINGLE","screen_candidate_qr":14,"screen_fixed_qr":4,"direct_candidate_qr":18,"direct_fixed_qr":3},
+    {"layout":"W4_W8_SPLIT","screen_candidate_qr":16,"screen_fixed_qr":2,"direct_candidate_qr":18,"direct_fixed_qr":3},
+    {"layout":"W4_W6_SPLIT","screen_candidate_qr":16,"screen_fixed_qr":2,"direct_candidate_qr":19,"direct_fixed_qr":2}
+  ],
+  "stage_L1_layout_gate":{"true_key_survives_targets":8,"median_total_qr_ratio_max":0.95,"positive_savings_targets_min":7,"direct_verifier_unique_true_targets_min":7},
+  "family_interpretation":{"broad_transfer":"at least 4 of 5 non-control layouts pass every L1 layout gate","partial_transfer":"2 or 3 non-control layouts pass every gate","one_word_scope_only":"0 or 1 non-control layouts pass every gate"},
+  "wall_policy":"Wall-time benchmarking is forbidden until exact generic-vs-cached execution equivalence is implemented for a layout that passes L1. QR accounting and correctness decide L1, not Python timing.",
+  "claim_limit":"No alpha<1 claim. No full-round claim. No layout may be added, removed, retuned, or reweighted after survivor results are observed.",
+  "next_if_transfer":"implement exact generic multi-layout cache executor, prove bit-for-bit equivalence, then frozen wall benchmark on passing layouts",
+  "next_if_no_transfer":"scope the admitted constant-factor win to the one-word word4 layout and pivot away from cache generality rather than retuning layouts"
+}
