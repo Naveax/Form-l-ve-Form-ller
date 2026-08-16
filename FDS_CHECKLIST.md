@@ -1,17 +1,16 @@
 # FDS_CHECKLIST
 
-## Preserved closed work
-- [x] V25/V26 families already killed/inapplicable remain closed.
-- [x] ALPHA_PASS remains 0.
+## Preserved
+- [x] Prior V25/V26 NO-GO/inapplicable families remain closed.
+- [x] Recovered trail core 19/19 PASS.
+- [x] Second-layer separator plan frozen before measurement.
+- [x] cap2/cap3 all-column signed marginal exactness validated.
+- [x] cap4 packed exact marginal construction avoids global Cartesian.
+- [x] cap4 frozen RSS/compact gates PASS.
+- [x] `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.
 
-## Recovered unfinished branch
-- [x] Trail/D&C snapshot located and SHA-256 verified.
-- [x] Recovered core regression 19/19 PASS.
-- [x] Recovered cert status `PASS_WITH_LIMITS`.
-- [x] First-layer exact factorization evidence restored.
-- [x] Second-layer separator plan frozen before new measurement.
-- [ ] cap2 exact signed column-marginal validation ×4.
-- [ ] cap3 exact signed column-marginal validation ×4.
-- [ ] cap4 exact column separator cardinality/time/RSS ×4 without global Cartesian materialization.
-- [ ] Stage0 PASS/NO-GO decision.
-- [ ] Only on PASS freeze cross-column contraction Stage1.
+## Next
+- [ ] Freeze single-column inverse-QR transform plan.
+- [ ] cap2 explicit propagated-marginal validation ×4.
+- [ ] cap3 transformed support/time/RSS ×4.
+- [ ] PASS/NO-GO before any joint cross-column tensor contraction.

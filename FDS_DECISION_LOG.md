@@ -1,8 +1,8 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Continuity correction: recovered bit-puncturing/D&C branch
-The later mechanism-exhaustion ledger incorrectly implied all nearby structural branches had been closed. Library/runtime recovery found canonical V25 files whose status was explicitly `CONTINUE_TO_SECOND_LAYER_TENSOR_CONTRACTION`.
+## 2026-08-16 — Recovered bit-puncturing D&C separator Stage0
+Exact signed factorized column marginals were validated against explicit first-layer global hulls at cap2 and cap3 for all four next columns. cap4 avoided 222.66M global Cartesian trails. Packed exact supports were 11,846,464 for column1 and 26,912 for column2, with columns0/3 cancelling exactly after marginalization. Compact estimate ~285 MB; peak RSS ~839 MiB, within frozen limits.
 
-Recovered first-layer evidence: cap3 explicit materialization/factorized signed energy match; cap5 43.07B raw Cartesian trails vs 3.438M factor entries (~12,526x theoretical compact-memory reduction), exact merged energy 0.6959718947 relative to sigma<=5 local enumeration. Four-round global beam collapse was explicitly classified as truncation failure, not zero true correlation.
+Decision: `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.
 
-Decision: preserve every prior NO-GO, but reopen this omitted unfinished branch as a V26 recovery milestone. First new gate is exact second-layer single-column separator measurement; no AI ideation until measured separator structure is known.
+This does not preserve the full cross-column joint state and does not admit four-round energy/ranking/alpha. Next falsifier applies one next-column inverse QR to the exact marginal and checks whether even that local transform remains tractable before building a joint contraction.

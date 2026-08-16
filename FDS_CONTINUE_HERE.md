@@ -1,14 +1,14 @@
 # FDS_CONTINUE_HERE
 
-**State:** later V26 NO-GO ledger preserved, but an unfinished verified bit-puncturing/D&C branch was recovered from Library/runtime authority.  
-**Active:** `V26_RECOVERED_BIT_PUNCTURING_SECOND_LAYER_SEPARATOR_AUDIT`.
+**State:** recovered bit-puncturing/D&C Stage0 `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.  
+**Next:** freeze `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`.
 
-1. Use the frozen plan under `research/v26/recovered-bit-puncturing-dac/`.
-2. Recovered snapshot SHA-256 is `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`; core tests reproduce 19/19 PASS.
-3. Do not reinterpret prior four-round global-beam collapse as zero correlation.
-4. Build exact signed first-layer marginals onto each of the four next-column interfaces.
-5. cap2/cap3 must match explicit global materialization support/coefficient/energy exactly for all four columns.
-6. cap4 must avoid the 222,660,480 global Cartesian trails and construct all four exact column marginals under frozen memory budgets.
-7. Passing this gate opens only a separately frozen cross-column/pairwise contraction stage. It is not an alpha result.
-8. If exact marginal validation or cap4 budget fails, close exact single-column separator; approximation needs a separate error-bounded plan.
-9. No new AI prompt until the real separator support/cardinality has been measured.
+1. Preserve all prior NO-GO/inapplicable results and Stage0 exact marginal evidence.
+2. Do not interpret zero column marginals as absent joint correlation.
+3. Apply one next-layer inverse QR linearly to each exact signed column marginal; this is an exact marginal transform but not a joint four-column contraction.
+4. cap2 must match explicit global first-layer hull + exact next-column QR propagation for all four columns.
+5. Measure cap3 transformed support/time/RSS for all columns under a separately frozen budget before attempting cap4.
+6. If transformed marginal already explodes, kill this separator route before joint tensor work.
+7. Only a PASS opens a pairwise/junction-tree cross-column contraction plan.
+8. No AI prompt yet; real separator behavior is now measurable locally.
+9. No alpha/full-round claim.

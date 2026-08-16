@@ -2,21 +2,15 @@
 
 ## Canonical status — 2026-08-16
 
-The later V25/V26 kill ledger remains valid for the families actually tested, and `ALPHA_PASS` remains 0.
+All previously killed/inapplicable V25/V26 families remain closed and `ALPHA_PASS` remains 0.
 
-A continuity audit recovered one important unfinished branch that had been omitted from the later mechanism-exhaustion summary: V25 bit-puncturing / divide-and-conquer trail enumeration.
+The recovered bit-puncturing/D&C branch is now active and Stage0 passed. Exact signed first-layer marginals onto all four second-layer column interfaces match explicit global materialization at cap2/cap3. At cap4, the global 222,660,480 Cartesian trails were avoided; packed exact separator supports are `[0,11846464,26912,0]`, total 24-byte compact estimate ~285 MB, measured peak RSS ~839 MiB.
 
-Recovered evidence is not a new claim. It had already admitted:
-- exact puncturing statistical ranking advantage over PNB-zero on small q138 screens;
-- exact local ADD/SUB Walsh machinery and inverse-QR hull validation;
-- exact one-double-round signed factor contraction;
-- cap5 first-layer factorization: 43,071,961,472 raw trails vs 3,438,542 local entries, ~12,526x theoretical compact-memory reduction;
-- explicit cap3 materialization/factor energy agreement.
+Stage0 verdict: `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.
 
-Its canonical status was `CONTINUE_TO_SECOND_LAYER_TENSOR_CONTRACTION`, not NO-GO. Four-inverse-round global beam collapse was explicitly a truncation failure, not proof of zero true correlation.
+Important limit: these are exact signed marginals, not a complete joint second-layer distribution. Columns0/3 marginalize to zero but may remain coupled to other columns in the joint state.
 
-## Active
-`V26_RECOVERED_BIT_PUNCTURING_SECOND_LAYER_SEPARATOR_AUDIT`.
-First measure/validate exact signed single-column boundary marginals at the second coupling layer. No new AI prompt is needed yet.
+## Next
+Freeze and run a single-column inverse-QR transform falsifier. Validate it against explicit global propagation on cap2, then measure whether cap3 transformed column marginals remain practical. Only if that passes should joint cross-column contraction be attempted.
 
-Still not admitted: end-to-end work reduction, alpha<1, four-inverse-round exact energy, or full-round relevance.
+Still not admitted: full second-layer contraction, four-inverse-round exact energy, end-to-end ranking reduction, alpha<1, or full-round relevance.
