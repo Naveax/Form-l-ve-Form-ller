@@ -34,6 +34,7 @@ Canonical notes establish exact tensor/Kronecker factorization, full-exact Parse
 - `V26_QR_Q138_LEFT_MAP_RANK528_THEOREM.md`: for q138 fixed output, exact rational algebra improves that map from interface dimension 3072 to exact rank `528`. The independent verifier is `scripts/verify_v26_qr_width41_left_rank528.py`.
 - `V26_QR_Q138_ALGEBRAIC_WIDTH40_THEOREM.md`: replacing the certified 34-leaf child by its exact rank-528 factorization and rebuilding the global tree gives a complete exact q138 fixed-output one-QR message-width certificate `W <= 40`.
 - `V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json` plus `scripts/verify_v26_qr_q138_algebraic_width40.py` are the structural machine-checkable authority. The modified network has 536 leaves, 535 internal tree nodes, 656 nontrivial indices, and maximum message dimension exactly `2^40` on a 171-leaf cluster crossing 40 binary indices.
+- `V26_QR_Q138_WIDTH40_BOTTLENECK_RANK64_BOUND.md`: the unique 171-leaf maximum cluster splits 64|107; its 40 external bits partition 16|24 and the children are joined by only six binary indices. Therefore the 40-bit parent flattening has exact topology-induced rank `<=64`. The 64-leaf child itself is constructible with peak message `2^22`.
 - `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`: conditioning 20 cyclic long-range wrap variables remains a separate exact route with 24 dynamic state bits and outer boundary enumeration.
 
 ## Current exact q138 structural result
@@ -49,23 +50,23 @@ Interpretation:
 - `41`: exact minimal-TT-core refinement;
 - `40`: exact algebraic rank-528 separator compression followed by a new complete global contraction tree.
 
-The final step is qualitatively different from graph reordering: the topology-only 3072-dimensional child interface has actual exact rank 528, a factor `64/11` reduction, and reinserting that rank factor lowers the complete global maximum from `2^41` to `2^40`.
+The final certified global step is qualitatively different from graph reordering: the topology-only 3072-dimensional child interface has actual exact rank 528, a factor `64/11` reduction, and reinserting that rank factor lowers the complete global maximum from `2^41` to `2^40`.
 
-`W <= 40` is a message-dimension upper bound for the **q138 fixed-output one-QR network**. It is not an optimality theorem, not an arithmetic-work bound, and not a generic arbitrary-mask QR result.
+The new 40-bit bottleneck is itself strongly factorizable across its certificate children: formal matrix shape `2^16 x 2^24`, exact Schmidt-rank upper bound `64` from a six-bit interface. Thus `2^40` describes a dense materialization at that node, not an intrinsic rank of the boundary tensor.
+
+`W <= 40` remains the admitted complete-tree message-dimension upper bound for the **q138 fixed-output one-QR network**. It is not an optimality theorem, not an arithmetic-work bound, and not a generic arbitrary-mask QR result.
 
 ## Current sharp mathematical bottleneck
 
-The previous width-40 target has succeeded. The active exact problem is now the algebraic structure of the new certified 40-bit bottleneck message.
+The next exact task is to turn the rank-64 structure of the 171-leaf bottleneck into another **global** improvement.
 
-The maximizing cluster has 171 tensor leaves and crosses exactly 40 binary indices. The next useful mechanism is not blind reordering. Repeat the successful separator program:
+1. Compile the 64-leaf child to an exact 16-external-bit by 6-interface-bit map and, initially, a rank-64 bond.
+2. Reinsert that factorization into the already rank-528-compressed q138 network.
+3. Require a complete global contraction-tree certificate before claiming `W < 40`.
+4. If topology cannot close below 40, compute the actual rational rank of the `2^16 x 64` child map; any rank below 64 is genuine algebraic compression beyond the six-bit graph interface.
+5. Only after exact rank compression stalls should certified epsilon-rank/tail approximation become the active mechanism.
 
-1. choose a certificate child/interface decomposition of the 171-leaf cluster;
-2. derive the topology-only Schmidt bound;
-3. expose sigma/equality-class sectors;
-4. compute exact rational child-map rank where feasible;
-5. if a strict rank reduction exists, reinsert it and require another complete global tree certificate.
-
-Only after exact separator rank compression stalls should certified epsilon-rank/tail approximation become the active mechanism.
+A preliminary separator search on one natural rank-64 reinsertion/root continuation did not by itself close `W<=39`. This is only a scoped search result, **not** a lower bound or NO-GO for width 39.
 
 ## Active measured QR-transform falsifier
 
