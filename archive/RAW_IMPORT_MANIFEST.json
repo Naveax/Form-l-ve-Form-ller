@@ -1,0 +1,18 @@
+{
+  "captured_at": "2026-08-16T14:30:00+03:00",
+  "source": "current conversation /mnt/data mount",
+  "file_count": 94,
+  "total_bytes": 4341402,
+  "archive": "archive/raw-import-2026-08-16.zip",
+  "archive_bytes": 1566535,
+  "archive_sha256": "b21a45f80d7af4fdf745d490daf8c100d620e40b89dc6b49a158a8c0f4263863",
+  "notable_files": {
+    "ai": {"bytes": 86151, "sha256": "41d4e21535d01756985097b5f30fcb85cbec609aa5d6779540187ee10f7c202c"},
+    "ai(1)": {"bytes": 88929, "sha256": "1d336a58382f18eac3db895efebb9a5c28713fbfb60013f6672ef2b5827a6d8c"},
+    "ai(2)": {"bytes": 785854, "sha256": "1d56cd6bd0abab03f6725c83a56e1a16af8282d919b145121acb3424a8b06ac2"},
+    "ai(3)": {"bytes": 516509, "sha256": "d19cb8ea59efad35f855290c01a3789c78170eb3fb655849859842207ccab37f"},
+    "Downloads(4).zip": {"bytes": 51080, "sha256": "a027ee88a407e74a02e48b0298bdcae9ca155fca4a1ca28c8b6cb9fee439257b"},
+    "Downloads(5).zip": {"bytes": 46042, "sha256": "048ff59a0ad1d84fcca9b625d2e1d15e5f2621aa88cc97bac42325768269ebbe"}
+  },
+  "verification": "Full per-file name/size/SHA-256 manifest exists in the local bootstrap snapshot and was verified before upload. The repository keeps this compact authority record plus the byte-for-byte ZIP archive."
+}

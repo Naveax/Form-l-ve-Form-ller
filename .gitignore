@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+_cert90_npz/
+_paircount_blocks/
+*_cache/
+*.tmp
+*.log
+.DS_Store
