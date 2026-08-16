@@ -1,9 +1,9 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — V26 rotational applicability
-Primary ChaCha rotational construction requires word-wise rotationally related permutation inputs. Under the fixed single-key source model, no nonzero rotation preserves all fixed constants, no arbitrary unknown key is generically equal to its rotation, and the corresponding same-key RX key difference is secret-dependent. The source exposes block outputs rather than a raw permutation oracle. Some rotated counter pairs exist, but they cannot repair the full-state incompatibility.
+## 2026-08-16 — V26 ANF key-interaction graph
+Frozen exact Stage0 formed the union primal graph from every active monomial across all 512 block-output ANFs. R4 and R6 graphs are complete at every tested b. R6 b14/b16 activate every possible nonconstant monomial mask and include the full-support monomial. Exact separator proxy is 1.0.
 
-Decision: `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL`. No rotational benchmark or Stage1.
+Decision: `NO_GO_ANF_PRIMAL_GRAPH_FACTORIZATION`. No graph sparsification/output cherry-picking or variable-elimination Stage1.
 
 ## Next
-Audit exact key-variable interaction/separator structure before attempting any new factorized solver.
+Stop local family adjacency search and perform a mechanism-exhaustion/literature gap audit. External AI ideation is now justified only for mechanisms genuinely outside the kill ledger; model consensus is not evidence.

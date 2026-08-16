@@ -2,18 +2,13 @@
 
 ## Canonical status — 2026-08-16
 
-V25 exponent track remains closed with `ALPHA_PASS=0`. Closed V26 exact families now include first/second counter derivatives, cross-word XOR projection, source-orbit 8-D counter cube, and the rotational applicability branch.
+V25 exponent track remains closed with `ALPHA_PASS=0`.
 
-Rotational applicability result: `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL`.
-- nonzero rotations preserving all four fixed ChaCha constants: none;
-- generic arbitrary same-key direct rotations: none;
-- public/generic same-key RX key differences: none;
-- direct applicable rotations: none;
-- raw permutation oracle: unavailable.
+V26 exact/structural closures now include counter first/second differences, cross-word XOR projections, source-orbit 8-D cube/superpoly, rotational applicability, and exact ANF key-interaction graph factorization.
 
-Source counter pairs exist for some rotations, so data volume is not the fundamental blocker. Fixed constants, fixed unknown key relation and block-function observability are.
+Issue #21 result is maximally dense in the tested representation: R4 and R6 primal key graphs are complete for every b=8/10/12/14/16. At R6 b14 and b16 every nonconstant monomial mask is active in at least one output bit (`16,383/16,383` and `65,535/65,535`), including the full-support monomial. Exact separator proxy is `1.0`.
 
-No rotational Stage1 opens. `alpha<1` remains NOT DEMONSTRATED; no full-round claim.
+Decision: `NO_GO_ANF_PRIMAL_GRAPH_FACTORIZATION`. No variable-elimination Stage1. `alpha<1` remains NOT DEMONSTRATED; no full-round claim.
 
 ## Next
-Open a mechanism-distinct exact key-interaction graph/separator audit using existing exact ANF infrastructure. Goal: determine whether the R6 key-variable interaction graph admits any nontrivial separator/factorization before building another solver.
+Pause automatic mutation of nearby mathematical families. Build a mechanism-exhaustion matrix from the V25/V26 kill ledger and primary literature, then solicit genuinely new mechanism proposals under the exact source/TOTAL constraints. Any proposal must identify a new exploitable invariant/representation, not another threshold, projection, derivative, cube, rotational pair or generic factorization.
