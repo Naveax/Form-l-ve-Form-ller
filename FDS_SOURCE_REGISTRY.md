@@ -2,7 +2,8 @@
 
 | ID | Class | Scope | Status |
 |---|---|---|---|
-| SRC-V26-FFCAN-ANF | FROZEN_PROTOCOL + EXACT_LOCAL | target-free b8–b16 R4/R6 all-bit ANF | NO-GO |
-| SRC-V25-EXPONENT | FROZEN_PROTOCOLS + MEASURED | V25 exponent families | CLOSED ALPHA_PASS=0 |
-| SRC-V25-CONSTANT | EXACT_TESTS + MEASURED | boundary/codegen engines | admitted scoped only |
-| SRC-RAW-20260816 | HISTORICAL_RECOVERED | bootstrap provenance | Issue #2 |
+| SRC-V26-CUBE8 | FROZEN_PROTOCOL + EXACT_LOCAL | source-orbit 8-D cube/superpoly b8–b16 R4/R6 | NO-GO |
+| SRC-V26-XWORD | FROZEN_PROTOCOL + EXACT_LOCAL | exhaustive cross-word XOR ANF | NO-GO |
+| SRC-V26-DIFF2 | FROZEN_PROTOCOL + EXACT_LOCAL | second counter finite difference ANF | NO-GO |
+| SRC-V26-FFCAN | FROZEN_PROTOCOL + EXACT_LOCAL | first counter difference/feed-forward cancellation ANF | NO-GO |
+| SRC-V25-EXPONENT | FROZEN_PROTOCOLS + MEASURED | V25 exponent track | CLOSED ALPHA_PASS=0 |

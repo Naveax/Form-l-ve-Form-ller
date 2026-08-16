@@ -1,14 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** V26 counter-derivative and cross-word XOR ANF families NO-GO.  
-**Active:** `V26_SOURCE_ORBIT_COUNTER_CUBE_SUPERPOLY_ANF_AUDIT`.
+**State:** V25 exponent track CLOSED; four V26 exact target-free families closed NO-GO.  
+**Next:** `V26_SINGLE_KEY_ROTATIONAL_APPLICABILITY_AUDIT`.
 
-1. Use frozen plan under `research/v26/source-orbit-counter-cube/`.
-2. Source counters only: cubes 512..767 and 1024..1279; fixed nonce; no chosen-IV extension.
-3. Low 8 counter bits are the cube variables; XOR all 256 outputs per cube.
-4. b=`8,10,12,14,16`; R4 control/R6 primary; all 512 output bits.
-5. Exact packed key-ANF for cube sums and same-base single-counter controls.
-6. Each R6 base at b16 must show median per-bit degree reduction >=2 and support-exp reduction >=0.10.
-7. >=16 identical bits must be sparse-useful at b14/b16 for both bases.
-8. Only PASS opens fresh source-orbit superpoly solving/TOTAL scaling.
-9. FAIL closes this cube dimension/base family; no retuning.
+1. Treat derivative, XOR-projection and frozen 8-D cube families as immutable NO-GO.
+2. Do not retune cube dimension/base/output/thresholds or open a second cube set.
+3. Read primary ChaCha rotational cryptanalysis sources and separate permutation distinguishers/related-key assumptions from fixed single-key sequential-counter observables.
+4. Freeze an applicability matrix before measurements: required controllable state/key relation, required paired inputs, observables, data, and source-orbit availability.
+5. If essential rotational assumptions are unavailable, close as `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL` without a fake benchmark.
+6. Only a source-compatible same-key relation may open a fresh Stage1.
+7. ALPHA_PASS still requires fresh TOTAL+verification exponent <1.
+8. No full-round claim without independent evidence.
