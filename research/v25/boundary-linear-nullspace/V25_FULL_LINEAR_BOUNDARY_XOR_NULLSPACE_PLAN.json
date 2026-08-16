@@ -1,0 +1,18 @@
+{
+  "milestone":"V25_FULL_LINEAR_BOUNDARY_WORD_XOR_NULLSPACE_AUDIT",
+  "frozen_before_measurement":true,
+  "scope":"controlled 6-round reduced-key exhaustive exact linear-cancellation audit",
+  "layout":{"id":"W4_W6_SPLIT","bits":16,"low_half":{"state_word":4,"width":8,"logical_shift":0},"high_half":{"state_word":6,"width":8,"logical_shift":8}},
+  "splits":[1,2,3,4,5],
+  "projection_space":"all 65,535 nonzero GF(2) masks over the 16 boundary words; projection is XOR of selected 32-bit words",
+  "fresh_targets":{"seed":15733018,"targets":[25053,23109,35877,44733]},
+  "exact_linear_method":"For each split and half-independence direction, encode every 32-bit boundary difference under variation of the forbidden half as GF(2) equations in 16 word-mask coefficients. Row-reduce to a 16-variable equation span. A projection mask is exact-independent iff it is orthogonal to the span.",
+  "orientations":["forward_low_only + backward_high_only","forward_high_only + backward_low_only"],
+  "stable_space":"For each split/orientation combine the forward equation span with all four frozen backward equation spans. Stable projection masks are the nonzero vectors in the resulting nullspace.",
+  "primary_gate":{"stable_nonzero_mask_count_min":1,"true_half_pair_in_match_set_targets":4,"match_pairs_max_per_target":512},
+  "match_rule":"Enumerate every stable nonzero mask if nullity permits; build exact 256 forward-half and 256 backward-half values and count equality matches. True-key halves are inspected only after each match set is formed.",
+  "selection_if_multiple":"minimum worst-case match count, then smaller split, then smaller mask integer, then low-forward orientation before high-forward",
+  "stage1_only_if_pass":"Freeze untouched widths/targets and explicit half-table construction/matching/collision/verification TOTAL scaling. Structural PASS alone is not alpha<1.",
+  "kill_rule":"If every split/orientation combined equation span has rank16 (nullity0), close the entire nonzero linear XOR projection family immediately. If nonzero masks exist but all exceed 512 matches on any fresh target, also close.",
+  "forbidden":"No approximate nullspace, target-specific mask, nonlinear word operation, alternate layout, second target set, or post-hoc equation dropping."
+}
