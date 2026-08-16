@@ -1,0 +1,11 @@
+{
+  "milestone":"V25_ALL_TWO_KEY_WORD_LAYOUT_DISJOINT_DEPENDENCY_AUDIT",
+  "status":"NO_GO_ALL_TWO_WORD_SINGLE_BOUNDARY_MITM",
+  "active_word_pairs":28,
+  "layout_cones":2240,
+  "candidate_count":0,
+  "layouts_with_candidates":0,
+  "stage1_opened":false,
+  "not_admitted":["TWO_WORD_SINGLE_BOUNDARY_HALF_SEPARATED_MITM","ALPHA_LT_1","FULL_ROUND_RELEVANCE"],
+  "next":"EXACT_TWO_BOUNDARY_WORD_XOR_PROJECTION_CANCELLATION_AUDIT"
+}

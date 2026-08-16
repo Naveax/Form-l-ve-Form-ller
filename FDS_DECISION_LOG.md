@@ -1,10 +1,9 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issues #10/#11 half-output factorization
-Exact XOR and modular-additive 8+8 separability both failed fresh primary gates. No alpha claim.
+## 2026-08-16 — Issue #13 exhaustive two-key-word dependency search
+All 28 unordered active key/state-word pairs and all 80 internal cones per layout were enumerated target-free under the unchanged exact support rule. **0/2,240** layout-cones provided nonempty disjoint active-half support. 0/28 layouts had any candidate.
 
-## 2026-08-16 — Issue #12 W4_W6 dependency-separated MITM
-Target-free enumeration of all 80 internal cones found zero exact `{4}` vs `{6}` disjoint-support boundaries. 48/80 cones depend on both active halves from both directions. Decision: `NO_GO_SINGLE_BOUNDARY_DISJOINT_HALF_MITM` for this layout.
+Decision: `NO_GO_ALL_TWO_WORD_SINGLE_BOUNDARY_MITM`. This closes simple raw-dependency-separated single-boundary MITM across every tested two-key-word placement.
 
 ## Next
-Exhaust all 28 two-key-word layouts under the same target-free gate before closing the simple dependency-separated family globally.
+If exponent reduction work continues, require a new algebraic cancellation mechanism. First candidate: XOR projections of boundary words, tested by exact function independence on fresh targets rather than dependency-union heuristics.

@@ -1,13 +1,12 @@
 # FDS_CONTINUE_HERE
 
-**State:** Issue #12 W4_W6 exact disjoint-half boundary NO-GO.  
-**Active:** `V25_ALL_TWO_KEY_WORD_LAYOUT_DISJOINT_DEPENDENCY_AUDIT`.
+**State:** Issue #13 `NO_GO_ALL_TWO_WORD_SINGLE_BOUNDARY_MITM`; Issues #10–#12 also structural NO-GO; Issue #9 constant-factor PASS; alpha=1.  
+**Next:** freeze exact two-boundary-word XOR projection cancellation audit.
 
-1. Enumerate all 28 unordered active word pairs from 4..11.
-2. For each pair enumerate all 80 internal cones.
-3. Reuse the exact target-free support criterion unchanged.
-4. PASS only if at least one of 2,240 cases has nonempty disjoint supports covering both active words.
-5. Select structurally by QR cost + fixed lexical tie rule only.
-6. Numerical target/TOTAL work opens only after structural PASS.
-7. Zero candidates closes the simple two-word single-boundary dependency-separated MITM family globally for this reduced six-round structure.
-8. No approximate dependency or multi-boundary rescue here.
+1. Do not retest another two-word placement under raw dependency support; all 28 are closed.
+2. New mechanism must test algebraic cancellation not visible in dependency unions.
+3. Freeze layout, fresh targets, split/projection set and exact half-independence gates before results.
+4. Candidate projection should be a fixed XOR of one or two internal boundary words.
+5. Forward projection must be exactly independent of one 8-bit half; backward projection exactly independent of the other on every fresh target.
+6. Only such a projection may open half-table matching/TOTAL accounting.
+7. No approximate cancellation or target-specific projection selection after inspection.
