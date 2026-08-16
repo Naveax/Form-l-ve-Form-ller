@@ -1,16 +1,10 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Repository bootstrap
-GitHub is persistent authority; local compute is allowed, authority returns to the repo.
+## 2026-08-16 — Public carry-transition family
+The plan was committed before oracle inspection. 32 pairs / 12 fresh targets were built. Carry Ridge pooled Spearman -0.07541, median target Spearman -0.03423, median top8 enrichment -0.03994, 5/12 positive, gain vs distance control -0.06990, shuffle p 0.78988. **6/6 gates failed.** Decision: `NO_GO_PUBLIC_CARRY_SIGNATURE`.
 
-## 2026-08-16 — Recovered synthetic reliability milestone
-Library recovery showed Issue #1 had already been executed in a prior session. 24-target grouped audit learned structural activity but failed true-key pair-reliability enrichment. Decision: `NO_GO_CURRENT_DESCRIPTOR_FAMILY`.
-
-## 2026-08-16 — Recovered public xor-delta milestone
-Balanced j6/j7/j8/j9 target-group CV failed every preregistered public-delta gate. Decision: `NO_GO_PUBLIC_DELTA_CLASS`.
-
-## 2026-08-16 — Additive counter-distance milestone
-Recovered frozen d1/d64/d256/d512 plan. target563 continuity matched prior counts; remaining 11 targets executed without gate changes. Primary results: mean 0.49379, median enrichment vs all -0.02447, 5/12 positive, median enrichment vs d256 +0.00868. All four gates failed. Decision: `NO_GO_PUBLIC_ADDITIVE_DISTANCE`.
+## 2026-08-16 — Structural boundary
+Public-static counter pair geometry has failed as xor delta, additive distance, and carry-transition signature. Do not reopen another public-static classifier by changing feature names.
 
 ## 2026-08-16 — Next family
-Open `V25_PUBLIC_COUNTER_CARRY_TRANSITION_SIGNATURE_AUDIT`. It tests binary-addition carry-transition structure, not another scalar delta/distance label. Public-only feature definitions, pair pool, targets, model, null and gates are frozen before oracle measurement.
+Open `V25_OUTPUT_CONDITIONED_FEEDFORWARD_BORROW_SIGNATURE_AUDIT`. This family is target/output-dependent: observed Z and the complete candidate ensemble produce subtraction-borrow descriptors, with the true candidate never identified at inference.

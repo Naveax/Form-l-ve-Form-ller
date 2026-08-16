@@ -1,0 +1,11 @@
+{
+  "milestone":"V25_PUBLIC_COUNTER_CARRY_TRANSITION_SIGNATURE_AUDIT",
+  "status":"NO_GO_PUBLIC_CARRY_SIGNATURE",
+  "targets":[428,953,433,661,615,325,211,289,362,295,425,810],
+  "pair_count":32,"unique_counters":39,"wall_total_s":349.87308502197266,"wall_median_s":29.115854144096375,"peak_rss_max_kb":539868,
+  "carry":{"pooled_spearman":-0.07540978762780454,"median_target_spearman":-0.03423286320826094,"median_top8_enrichment_vs_all":-0.03994073802541548,"positive_top8_enrichment_targets":5},
+  "distance_control":{"pooled_spearman":-0.005511587317154805,"median_target_spearman":0.02618609884495015},
+  "pooled_spearman_gain_vs_distance":-0.06989820031064974,
+  "target_block_shuffle":{"reps":256,"p":0.7898832684824902,"null_mean":-0.020403966375108603,"null_p95":0.07351568433017538},
+  "gate_pass":false
+}

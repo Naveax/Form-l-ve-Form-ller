@@ -1,33 +1,23 @@
 # FDS_KNOWLEDGE_GRAPH
 
-## Current dependency graph
-`validated reduced ARX/trail primitives`
-→ `signed/factorized second-layer evaluation`
-→ `pair score geometry`
+validated reduced trail machinery
+→ pair score/oracle evaluation
 
-### Closed selector branch
-pair derivative → Ritz → projected HVP → DAPS → C2 groups → **NO-GO static selector**
+### Killed static/public branches
+static quadratic selectors → NO-GO
+P-only xor256 score geometry → NO-GO
+score-shape/C1 supervised descriptors → `NO_GO_CURRENT_DESCRIPTOR_FAMILY`
+public xor delta → `NO_GO_PUBLIC_DELTA_CLASS`
+public additive distance → `NO_GO_PUBLIC_ADDITIVE_DISTANCE`
+public binary-addition carry signature → `NO_GO_PUBLIC_CARRY_SIGNATURE`
 
-### Closed P-only reliability branch
-top-RMS → D-opt → BJ consensus → M16/32/64 → C1 orientation → **NO-GO xor-256 P-only reliability**
+### Active target/output-dependent branch
+observed Z + candidate states
+→ exact feed-forward subtraction `Y4=Z4-S4(k)`
+→ borrow mask per candidate/counter
+→ pairwise candidate-ensemble borrow descriptors
+→ grouped true-key-rank learnability audit
+→ fresh ranking only if every gate passes
 
-### Closed supervised descriptor branch
-score-shape/C1/public-counter descriptors
-→ 24-target grouped learnability audit
-→ structural activity learnable, true-key alignment not learnable
-→ **NO_GO_CURRENT_DESCRIPTOR_FAMILY**
-
-### Closed public pair-class branches
-public xor delta j6/j7/j8/j9 → **NO_GO_PUBLIC_DELTA_CLASS**
-
-public additive distance d1/d64/d256/d512 → **NO_GO_PUBLIC_ADDITIVE_DISTANCE**
-
-### Active branch
-public binary-addition carry-transition signature
-→ deterministic 32-pair carry-diversity pool
-→ 12 fresh targets / grouped CV
-→ distance-only control + target-block shuffle null
-→ fresh ranking validation only if every primary gate passes
-
-## Claim dependency
-`alpha < 1` still requires real fresh-target TOTAL work reduction across widths, stable local slopes, preregistered CI and no hidden exponential precompute/storage. None is currently admitted.
+### If this fails
+Stop adding aggregate descriptor statistics. Next must be a non-aggregated algebraic self-consistency/syndrome across candidate trajectories or internal round boundaries.

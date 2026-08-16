@@ -1,15 +1,15 @@
 # AGENTS.md — FDS Autonomous Continuation Contract
 
-1. Resolve fresh main.
-2. Read CONTINUE_HERE, CURRENT_STATE, VISION, RESEARCH_DISCIPLINE, COMPUTE_POLICY, KNOWLEDGE_GRAPH, SOURCE_REGISTRY, VALIDATION_MATRIX, CHECKLIST, DECISION_LOG.
-3. Check open issues and Library recovery evidence before repeating an experiment.
-4. Freeze split/metric/gate/stop rule before result inspection.
-5. Never leak true-key/oracle labels into inference features.
-6. Killed families are not reopened by renaming the same mechanism.
-7. TOTAL includes preprocessing, cache/model/storage, evaluation and verification.
-8. Local Python/Numba/Rust/C++ or GitHub compute may be used; authority returns to GitHub.
-9. Milestone closure requires source/runner, tests, frozen plan, compact results, decision, manifest and continuity updates.
-10. No arbitrary-random guaranteed compression, end-to-end key-recovery, `alpha<1`, or full-round claim without its independent admission gate.
+1. Resolve fresh main and read all authority files.
+2. Check Library recovery before repeating historical work.
+3. Freeze plan/split/model/gate/stop before oracle inspection.
+4. Never leak true-key/oracle identity into inference descriptors.
+5. Killed families stay killed unless a genuinely new observable mechanism exists.
+6. TOTAL includes preprocessing, scratch/cache/model, evaluation and verification.
+7. Local compute is allowed; authority returns to GitHub.
+8. Milestone closure requires source/tests/plan/results/decision/manifest and continuity updates.
+9. Failed development gate means no validation and no second development set.
+10. No arbitrary random compression, alpha<1, end-to-end key-recovery, or full-round claim without independent gates.
 
 ## Current next task
-GitHub Issue #3: `V25_PUBLIC_COUNTER_CARRY_TRANSITION_SIGNATURE_AUDIT`.
+Issue #4: `V25_OUTPUT_CONDITIONED_FEEDFORWARD_BORROW_SIGNATURE_AUDIT`.
