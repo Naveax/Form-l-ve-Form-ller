@@ -14,6 +14,8 @@ Important limit: these are exact signed marginals, not a complete joint second-l
 
 `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` is frozen. The cap2 factorized path, independent explicit-global-before-marginalization reference path, and all-four-column `1e-12` regression have been committed.
 
+Recovery tooling now accepts either the exact canonical snapshot or an exact SHA-locked core hit from a direct file/directory/nested ZIP. A `core_only` restore is explicitly marked `snapshot_verified=false` and `runtime_complete=false`; it does not open measurement until dependencies and the historical baseline are verified.
+
 ## Current blocker — exact historical runtime bytes
 
 The exact recovered `fds_v25_bit_puncturing.py` source required by the admitted Stage0 source and active falsifier is not present in current Git `main` or the current conversation mount.
@@ -28,7 +30,13 @@ Required identities:
 - snapshot `FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip` SHA-256: `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`
 - core `fds_v25_bit_puncturing.py` SHA-256: `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`
 
-The 2026-08-16 current conversation `/mnt/data` mount, including nested ZIP contents, was recursively SHA-scanned for both hashes and returned `0 matches`.
+Search status as of the latest 2026-08-16 audit:
+
+- current conversation `/mnt/data`, including nested ZIP contents: `0 matches`;
+- broader `/mnt` + `/home/oai` + `/tmp`: 812 files / 130,949,394 bytes SHA-256 scanned; canonical snapshot/core/test/cert: `0 hits`;
+- historical recovery commit `2a94d1e...` records prior snapshot verification and `19/19 PASS`, but its Git tree does not contain the canonical core blob;
+- bootstrap raw ZIP was locally verified but was not committed as a Git object;
+- connected-account global GitHub code search and public web search produced no canonical byte source.
 
 Historical transcript text records the hashes and recovered result lineage but does not provide a verified byte-identical core.
 
@@ -38,8 +46,8 @@ This is a source-rematerialization/provenance blocker, **not a mathematical NO-G
 
 1. Obtain historical backup ZIP/source bytes.
 2. Run `scripts/rematerialize_v25_trail_dac.py <candidate-path> --restore`.
-3. Require exact snapshot/core SHA matches.
-4. Restore dependencies and reproduce historical `19/19 PASS`.
+3. Require exact snapshot SHA, or exact core SHA with explicitly incomplete snapshot/runtime provenance.
+4. Restore/verify dependencies and reproduce historical `19/19 PASS`.
 5. Execute frozen cap2 all-column transform regression.
 6. Only cap2 PASS opens packed cap3 measurement under 2 GiB RSS / 1 GiB compact gates.
 
