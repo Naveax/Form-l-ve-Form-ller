@@ -1,0 +1,25 @@
+{
+  "milestone":"V26_SINGLE_KEY_ROTATIONAL_APPLICABILITY_AUDIT",
+  "frozen_before_classification":true,
+  "scope":"assumption-level applicability audit for controlled reduced ChaCha under the canonical fixed-single-key sequential-counter source model; no attack benchmark unless applicability passes",
+  "literature_basis":[
+    "Barbero, Bellini, Makarim, Rotational analysis of ChaCha permutation, arXiv:2008.13406",
+    "Liu et al., Rotational Differential-Linear Cryptanalysis Revisited, Journal of Cryptology 2023"
+  ],
+  "canonical_source_model":{"constants":"fixed ChaCha constants","key":"one unknown fixed key for all blocks","counter_range":[1,1875],"nonce":"fixed zero","observable":"ChaCha block output P_R(S)+S only; no arbitrary raw permutation oracle"},
+  "rotations":"all nonzero word rotations r=1..31",
+  "direct_rotational_pair_requirement":"For the permutation construction, paired states must satisfy S' = Rot_r(S) word-wise before applying the same permutation.",
+  "rx_requirement":"For RX generalization, paired chosen data must have a specified/usable rotational-XOR relation; source may not substitute an unknown key-dependent RX difference post hoc.",
+  "checks":[
+    "CONST_INVARIANT: Rot_r(c_i)=c_i for all four fixed constants",
+    "SAME_KEY_GENERIC: the direct relation must hold for an arbitrary unknown fixed key without replacing it by Rot_r(K)",
+    "SOURCE_COUNTER_PAIR: at least one c,c' in 1..1875 with c'=Rot_r(c) for the direct state relation",
+    "NONCE_COMPATIBLE: fixed zero nonce is rotation-compatible",
+    "OBSERVABLE_COMPATIBLE: published permutation relation must be testable from P_R(S)+S without knowing the secret state/key or querying P_R directly",
+    "RX_KEY_DIFFERENCE_KNOWN: any required RX difference on key words must be public/controlled rather than Rot_r(K) xor K for unknown K"
+  ],
+  "stage1_gate":"At least one nonzero r must satisfy every essential direct-rotational check, OR the literature must provide a same-key source-observable RX construction whose required key/state relation is fully known/controlled in this model.",
+  "kill_rule":"If fixed constants destroy every nonzero direct rotational input pair and the only workaround requires rotated/related keys, chosen rotational states, unknown key-dependent RX differences, or a raw permutation oracle unavailable in the source model, close as NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL. Do not fabricate a statistical benchmark.",
+  "stage1_only_if_pass":"Freeze a separate same-key source-orbit rotational statistic and TOTAL implication before any measurement. A permutation distinguisher alone is never an alpha claim.",
+  "forbidden":"No related-key oracle, no rotated secret key construction, no chosen nonce/constant modification, no counters outside 1..1875, no raw permutation oracle assumption, no full-round claim."
+}
