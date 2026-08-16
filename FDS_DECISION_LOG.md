@@ -1,9 +1,10 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issue #16 reduced quarter-round Walsh trail validation
-The trail implementation passed the mandatory complete n=2 coefficient-wise FWT reconstruction. At n=5 beam4096, A0 and D3 spectra reconstruct exactly, while B1 and C2 reach only cosine² 0.7891 and 0.8813, below the frozen 0.90 gate. Compactness passes but spectrum quality does not.
+## 2026-08-16 — V25 exponent-track closure
+Historical authority was recovered through DAC, adaptive second-layer contraction, signed CP→C1, CERT90 and trail ranking. A frozen audit classified 16 branch families under the project's alpha admission rule.
 
-Decision: `NO_GO_QR_TRAIL_BEAM4096_QUALITY`. Do not enlarge the beam post-hoc or open q138 integration from this result.
+Counts: ALPHA_PASS 0; CONSTANT_FACTOR_PASS 2; METHOD_PASS_ONLY 3; NO_GO 11; UNRESOLVED 0. All historical CONTINUE/NEXT labels are superseded by later executed milestones or otherwise classified without an admitted exponent path.
 
-## Next
-Recover any later historical second-layer/trail-contraction work before designing a new pruning family.
+Decision: `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
+
+This is not a proof that future cryptanalysis cannot improve ChaCha; it closes the tested V25 search program. Future genuinely new mechanisms open as V26 with fresh preregistration.

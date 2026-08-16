@@ -1,13 +1,12 @@
 # FDS_CONTINUE_HERE
 
-**State:** historical V25 authority recovered through DAC/second-layer/CERT90/ranking; no admitted alpha<1 result.  
-**Active:** `V25_EXPONENT_TRACK_CLOSURE_AUDIT`.
+**State:** `V25_CURRENT_EXPONENT_TRACK` CLOSED; alpha<1 not demonstrated.  
+**Next:** V26, genuinely new mechanism only.
 
-1. Use frozen branch inventory and classification rules under `research/v25/exponent-closure/`.
-2. Read canonical/recovered decisions only; do not start a new mechanism during this audit.
-3. Classify every branch as ALPHA_PASS, CONSTANT_FACTOR_PASS, METHOD_PASS_ONLY, NO_GO or UNRESOLVED.
-4. Constant-factor speed/memory/rank improvements remain alpha=1 unless TOTAL exponent is explicitly below 1.
-5. Apply supersession: historical CONTINUE labels are closed if their next milestone was later executed.
-6. If ALPHA_PASS=0 and no genuine unresolved exponent branch remains, close `V25_CURRENT_EXPONENT_TRACK`.
-7. Preserve useful engineering primitives separately.
-8. Future genuinely new exponent hypotheses open as V26/new preregistered mechanisms, not hidden V25 retuning.
+1. Treat all V25 decisions as immutable evidence.
+2. Preserve V25 constant-factor/method assets; do not relabel them exponent wins.
+3. New V26 work must state why its mechanism is not SAT tuning, PNB/selector tuning, descriptor learning, boundary-screen constant-factor optimization, simple half-key MITM, or trail-beam retuning.
+4. Freeze model, scaling axis, TOTAL accounting and kill gate before measurement.
+5. Prefer cheap target-free structural falsifiers before expensive target/oracle experiments.
+6. V26 alpha admission still requires TOTAL+verification exponent <1 with fresh scaling/CI.
+7. No full-round claim without independent evidence.

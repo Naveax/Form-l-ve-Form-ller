@@ -1,11 +1,13 @@
 # FDS_VALIDATION_MATRIX
 
-| Family | Result | Verdict |
-|---|---|---|
-| Issue #9 verified screen | fresh constant-factor gates pass | PASS alpha=1 |
-| Issues #10–#15 simple exact half-key MITM | exact structural gates fail | CLOSED NO-GO |
-| Historical PNB/CPNB | R6 constant factor, R8 robust gain fails | CLOSED exponent track |
-| Bit-puncturing core | exact puncturing + published coefficient example reproduced | METHOD CORE PASS |
-| Issue #16 reduced QR trail beam4096 | exact n2 regression; B1/C2 <0.90 quality | NO-GO at frozen budget |
-| q138 trail integration | not opened | LOCKED |
-| alpha<1 | — | NOT DEMONSTRATED |
+| V25 class | Count | Meaning |
+|---|---:|---|
+| ALPHA_PASS | 0 | no tested branch demonstrates TOTAL exponent <1 |
+| CONSTANT_FACTOR_PASS | 2 | useful reduced-model speed/ranking primitives, alpha=1 |
+| METHOD_PASS_ONLY | 3 | exact/valuable machinery without admitted end-to-end exponent gain |
+| NO_GO | 11 | frozen gate failed / structural family closed |
+| UNRESOLVED | 0 | historical NEXT items superseded or completed |
+
+V25 verdict: `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
+
+No full-round impossibility/security claim.

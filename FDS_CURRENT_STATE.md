@@ -1,12 +1,21 @@
 # FDS_CURRENT_STATE
 
-## Canonical status — 2026-08-16
+## V25 closed — 2026-08-16
 
-Issue #9 remains a scoped constant-factor screen; alpha=1. Simple exact half-key MITM is closed by Issues #10–#15. PNB/CPNB exponent work is closed as R6 constant-factor only. Issue #16 beam4096 quarter-round validation is a budget/quality NO-GO, not a semantic implementation failure.
+`V25_CURRENT_EXPONENT_TRACK` is formally closed as `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
 
-Historical trail/D&C authority has now been recovered beyond Issue #16: DAC exact factorization, adaptive second-layer contraction, signed CP→C1, CERT90 signed contraction and one-word projected ranking were all already performed. CERT90 retains 4,395 C1 rows and 60,672 signed terms with certified fraction 0.9000132855 and exact signed energy 1.4649468239e-06. The full energy-selected trail family was not a robust q138 ranker (12-target median rank 704.5), and later selector families also failed robust holdout/confirm gates.
+Frozen closure audit over 16 branch families:
+- ALPHA_PASS: **0**;
+- CONSTANT_FACTOR_PASS: **2**;
+- METHOD_PASS_ONLY: **3**;
+- NO_GO: **11**;
+- UNRESOLVED: **0**.
 
-No branch currently demonstrates alpha<1 or end-to-end reduced-ChaCha key-search work below exhaustive scaling.
+Historical CONTINUE/NEXT items were checked for supersession; none remains an unexecuted hidden exponent branch.
+
+Useful V25 assets are retained separately: collision-tolerant boundary-syndrome/codegen screening, R6 PNB baseline, exact Walsh puncturing/trail core, and DAC/second-layer/CERT90 machinery.
+
+This closure says only that **tested V25 families did not demonstrate alpha<1 TOTAL work**. It is not a security proof or impossibility theorem for ChaCha.
 
 ## Next
-Open a V25 exponent-track closure audit before inventing another mechanism. Mechanically classify every tested family as exact NO-GO, constant-factor PASS, method-only PASS, or unresolved, verify no existing result satisfies the project's alpha<1 admission rule, and decide whether V25 should be formally closed or whether one genuinely untested structural family remains.
+Any new exponent-reduction hypothesis must open as **V26** with fresh preregistration and a genuinely new mechanism. Do not silently extend V25.
