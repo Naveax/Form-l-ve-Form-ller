@@ -1,0 +1,14 @@
+{
+  "milestone":"V25_ALL_TWO_KEY_WORD_LAYOUT_DISJOINT_DEPENDENCY_AUDIT",
+  "frozen_before_measurement":true,
+  "scope":"target-free exhaustive exact dependency search over all two-key-word half layouts in controlled 6-round ChaCha",
+  "active_word_pairs":"all 28 unordered pairs from state/key words 4..11",
+  "half_model":"one logical 8-bit half per active state word; orientation may be swapped after a structural candidate is found but support criterion is symmetric",
+  "cones":{"splits":[1,2,3,4,5],"words":"all 16","per_layout":80,"total_layout_cones":2240},
+  "support_rule":"Use exact word-level QR dependency propagation. For active pair {A,B}, PASS only when forward and backward active supports are nonempty, disjoint, and their union is {A,B}.",
+  "primary_gate":"candidate_count >= 1 among all 2,240 layout-cones",
+  "selection_if_pass":"minimum total QR, then lexicographically smaller active pair, then smaller split, then smaller word",
+  "stage1_only_if_pass":"Freeze fresh numerical outputs for the selected structural candidate and prove each boundary side is a function of only its assigned 8-bit half before TOTAL MITM accounting.",
+  "kill_rule":"If candidate_count=0, close simple two-word single-boundary dependency-separated MITM for every key-word pair in this reduced six-round structure.",
+  "forbidden":"No target data, approximate dependency, multi-boundary combination, cancellation assumptions, or post-hoc exclusion of dependency words."
+}
