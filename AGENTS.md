@@ -11,5 +11,5 @@
 9. Milestone closure requires source/tests/plan/results/decision/manifest + continuity.
 10. Constant-factor speedup never implies alpha<1; full-round/end-to-end claims need independent gates.
 
-## Current next task
-Freeze `V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT`; do not extend Issue #9 constant-factor screening.
+## Current task
+`V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT` using the frozen b16 W5_SINGLE 8+8 plan.

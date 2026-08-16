@@ -1,0 +1,17 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT",
+  "frozen_before_measurement":true,
+  "scope":"controlled 6-round reduced-key structural falsifier; no full-round claim",
+  "layout":{"id":"W5_SINGLE","bits":16,"field":{"state_word":5,"bit_offset":0,"width":16,"logical_shift":0}},
+  "key_split":{"low_half_bits":8,"high_half_bits":8,"mapping":"k = low | (high << 8)"},
+  "fixed_algorithm":{"counter":1,"rounds":6,"split":1,"boundary_word":0,"syndrome_width":16,"screen":"same admitted generated boundary syndrome"},
+  "fresh_targets":{"seed":168939024,"targets":[43051,21863,31754,45567]},
+  "table":"For each target evaluate the exact 16-bit syndrome for all 256x256 logical half-key pairs.",
+  "primary_exact_test":"For syndrome word S[a,b], compute R[a,b]=S[a,b] xor S[a,0] xor S[0,b] xor S[0,0]. A syndrome bit is exact XOR-separable iff that bit of R is zero for all 65,536 cells.",
+  "primary_gate":{"stable_exact_bit_positions_min":8,"same_positions_across_all_targets":true,"true_half_pair_in_match_set_targets":4,"match_pairs_max_per_target":512},
+  "match_rule":"Using only the stable exact bit positions, derive half signatures from row0/column0 and count all (low,high) pairs satisfying the zero-syndrome signature condition; do not use the true key to choose bits.",
+  "secondary_diagnostics":["GF(2) rank of each 256x256 syndrome-bit matrix","GF(2) rank of each centered residual bit matrix","residual density per bit","real SVD effective rank of centered +/-1 bit matrices"],
+  "stage1_only_if_primary_pass":"Freeze fresh widths/targets and perform explicit MITM TOTAL accounting including half-table construction, matching, collisions and exact verification. No alpha<1 claim from this b16 structural pass alone.",
+  "kill_rule":"If fewer than 8 identical syndrome bit positions are exact XOR-separable on all four fresh targets, or any target has >512 half matches under those frozen positions, close the simple 8+8 XOR-separable MITM family immediately.",
+  "forbidden":"No target/split/layout/bit-position/threshold retuning after table inspection. Approximate/SVD structure cannot rescue a failed exact primary gate."
+}
