@@ -3,76 +3,102 @@
 **Admitted state:** recovered bit-puncturing/D&C Stage0 `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.  
 **Frozen measured milestone:** `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`.  
 **Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes are missing.  
-**Active work while blocked:** mathematics-first exact Walsh tensor-network / source-conditioned quotient analysis.
+**Active work while blocked:** mathematics-first exact Walsh tensor-network / source-conditioned rank compression.
 
 Code is only a calculator/falsifier. The mathematical object is the signed Walsh tensor and its exact low-state / low-rank contraction structure.
 
 ## Current exact q138 chain
 
-For the q138 fixed-output one-quarter-round exact Walsh object, the complete global dense-message upper-bound chain is
+For the q138 fixed-output one-quarter-round exact Walsh object, the complete certified dense-message upper-bound chain remains
 
 `44 -> 42 -> 41 -> 40`.
 
-The width-40 maximum cluster splits `64|107` through six binary bits.
+The width-40 maximum cluster has 171 leaves, 40 binary external indices, and certificate split `64|107` through six binary interface bits. Its external partition is `16|24`.
 
 Left child:
 
-`rank(L_64)=48`
+`rank(L_64)=48`.
 
-uniformly over all 64 relevant fixed-u combinations.
+The exact left row space has only two classes, selected by the shared fixed bit `u2_8`.
 
-Right child:
+## Sharp physical right-map quotient
 
-- rank is input-mask conditioned;
-- do not universalize any one fixed-mask example.
+The generalized affine `p`-control analysis and its 197-state hull remain valid for the larger falsifier family, but the physical q138 parity relation fixes `p=0`.
 
-The 107-leaf right child has now been reduced to an exact five-site transfer problem.
+Physical doubled reachable hull:
 
-## Current right-map quotient
+`1024 -> 162`.
 
-Read in this order:
+Exact cumulative growth:
 
-1. `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_RIGHT_MAP_TRANSFER_CHAIN_THEOREM.md`
-2. `scripts/verify_v26_qr_q138_right_map_transfer_chain.py`
-3. `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_RIGHT_MAP_REACHABLE_HULL197_THEOREM.md`
-4. `scripts/verify_v26_qr_q138_right_map_reachable_hull197.py`
-5. `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_RIGHT_MAP_QUOTIENT_BLOCKS197_THEOREM.md`
-6. `scripts/verify_v26_qr_q138_right_map_quotient_blocks197.py`
+`15 -> 70 -> 153 -> 162 -> 162`.
 
-Exact facts:
+Copy-swap split:
 
-- sites `3,4,5,6,7` contain `18,21,21,21,26` tensor leaves;
-- every interior site cut carries exactly five binary sigma/carry bits;
-- one-copy hidden state dimension = `32`;
-- formal doubled Gram state dimension = `1024`;
-- eight interior transfer operators are indexed by `tau=(u1,u2,p)`;
-- their ambient exact ranks are `1016,575,384,397,454,537,431,315`;
-- site-3 boundary span over all controls/interface sectors = `28`;
-- cumulative closure under all eight transfers is `28 -> 150 -> 193 -> 197 -> 197`;
-- therefore the exact common invariant reachable hull has dimension `197`;
-- copy-exchange symmetry splits it as `138 + 59`;
-- restricted transfer ranks are `194,126,89,94,112,122,100,80`;
-- symmetric block ranks are `136,89,63,66,80,87,68,56`;
-- antisymmetric block ranks are `58,37,26,28,32,35,32,24`.
+`162 = 114 + 48`.
 
-Do not mistake equal exact-length span dimensions for invariance. The exact-length spans at depths two and three both have dimension 166 but are different; their union has dimension 193. The invariant object is the cumulative 197-dimensional hull.
+Read:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`
+- `scripts/verify_v26_qr_q138_physical_right_hull162.py`
+
+## Exact physical rank envelope
+
+The physical right map has twelve fixed input-mask controls:
+
+- `u1_3,...,u1_7`;
+- `u2_3,...,u2_8,u2_31`.
+
+All `4096` physical cases are now solved by exact rational transfer algebra.
+
+Right map:
+
+`11 <= rank(R_m) <= 38`.
+
+Parent 171-leaf bottleneck:
+
+`5 <= rank(M_m) <= 27`.
+
+Boundary split by `u2_31`:
+
+- `u2_31=0`: right `22..38`, parent `16..27`;
+- `u2_31=1`: right `11..19`, parent `5..8`.
+
+The shared `u2_8` bit is rank-inert after the correct left row-space class is used.
+
+Read:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md`
+- `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
+
+The theorem reproduces the previous exact fixed-mask checks `(34,23)`, `(19,8)`, `(37,26)`.
+
+Therefore every physical fixed-input/fixed-output q138 coefficient instance admits an exact bottleneck factorization across the certified `16|24` partition through at most 27 Schmidt channels.
+
+The rank basis may depend on the fixed input mask. Do not promote this to one universal 27-dimensional basis without an additional theorem.
 
 ## First unfinished mathematical pass
 
-The next pass is **quotient boundary closure and exact rank envelope**.
+The next pass is **global rank-27 reinsertion**.
 
 Work in this order:
 
-1. choose exact rational bases for the symmetric 138-dimensional and antisymmetric 59-dimensional sectors;
-2. materialize the eight exact interior transfer matrices in those quotient coordinates;
-3. express the site-3 boundary vectors in the same coordinates;
-4. contract the site-7 closing tensor against the quotient basis, including the real boundary controls such as the T2 bit-31 control rather than treating them as bulk tau bits;
-5. compute `rho_R(m)` and preferably `rho_parent(m)` over the five-site control sequences by quotient dynamic programming;
-6. search for a still smaller common invariant/sector quotient of the block-transfer algebra;
-7. identify the fixed-mask family actually reachable/relevant to the q138 source-conditioned path and prove a uniform rank envelope or finite exact class decomposition on that family;
-8. only then reinsert conditioned rank factors globally and require a complete machine-verifiable tree/work certificate before claiming `W<=39` or another work reduction.
+1. run the exact baselines:
+   - `scripts/verify_v26_qr_q138_physical_right_hull162.py`;
+   - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`;
+   - `scripts/verify_v26_qr_q138_algebraic_width40.py`;
+2. replace the certified 171-leaf bottleneck by an exact mask-conditioned rank factorization
+   - left external side: 16 binary indices;
+   - right external side: 24 binary indices;
+   - internal Schmidt bond dimension `rho_m <= 27`;
+3. use 27 as the uniform structural bond bound while keeping in mind that individual masks may use smaller ranks;
+4. rebuild the whole fixed-IO q138 one-QR hypergraph and search for a **complete** contraction tree with maximum message dimension strictly below the current `2^40` baseline;
+5. do not claim `W<40` from a small root separator or isolated low-boundary cuts; every non-root cluster must be verified;
+6. if no complete sub-40 tree closes, identify the exact residual cluster that forces 40 in that geometry and analyze its algebraic separator rather than returning to blind ordering search;
+7. separately exploit the `u2_31=1` rank-8 branch as a strong source-conditioned subclass and test whether it admits a substantially smaller complete certificate;
+8. only after exact rank/geometry mechanisms stall should certified epsilon-rank/tail approximation become active.
 
-Prefer theorem -> quotient algebra -> finite falsifier. Do not fall back to repeated full 107-leaf contractions or arbitrary 17-bit brute-force enumeration unless used only as an independent check.
+Exploratory rank-27 reinsertion already yields a very small balanced top-level separator, but one natural recursive continuation still hits a subproblem whose best split is 40. That is a scoped geometry falsifier only, not a lower bound or NO-GO for `W<40`.
 
 ## Measured execution remains frozen behind provenance
 
