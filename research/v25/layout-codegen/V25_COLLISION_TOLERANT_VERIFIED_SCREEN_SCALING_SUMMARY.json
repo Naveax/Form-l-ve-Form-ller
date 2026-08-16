@@ -1,0 +1,17 @@
+{
+  "milestone":"V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING",
+  "status":"PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1",
+  "family_gate_pass":true,
+  "exactness":{"cases":32,"syndrome_equal":696320,"direct_equal":696320,"status":"PASS"},
+  "totals":{"fresh_layout_width_cells":8,"fresh_target_layout_cases":32,"true_survival_cases":32,"verified_unique_true_cases":32,"raw_collision_cases":7,"positive_wall_cases":32},
+  "by_b":{
+    "10":{"W5_SINGLE":{"survivor_counts":[1,1,1,1],"collision_targets":0,"median_total_qr_ratio":0.779007323026851,"median_wall_speedup":1.1238686900957664,"min_wall_speedup":1.1005237185235717,"positive_wall_targets":4,"all_gates_pass":true},"W4_W6_SPLIT":{"survivor_counts":[1,1,1,1],"collision_targets":0,"median_total_qr_ratio":0.8432007400555042,"median_wall_speedup":1.070704420081292,"min_wall_speedup":1.0650100470742956,"positive_wall_targets":4,"all_gates_pass":true}},
+    "12":{"W5_SINGLE":{"survivor_counts":[1,1,2,1],"collision_targets":1,"median_total_qr_ratio":0.7780852016112626,"median_wall_speedup":1.2528523966887437,"min_wall_speedup":1.2313925238107803,"positive_wall_targets":4,"all_gates_pass":true},"W4_W6_SPLIT":{"survivor_counts":[1,1,1,1],"collision_targets":0,"median_total_qr_ratio":0.8423791534962609,"median_wall_speedup":1.1505591979533132,"min_wall_speedup":1.1296589476585097,"positive_wall_targets":4,"all_gates_pass":true}},
+    "14":{"W5_SINGLE":{"survivor_counts":[1,1,1,1],"collision_targets":0,"median_total_qr_ratio":0.7778546360815828,"median_wall_speedup":1.2733602136826163,"min_wall_speedup":1.2665257408866697,"positive_wall_targets":4,"all_gates_pass":true},"W4_W6_SPLIT":{"survivor_counts":[2,1,1,1],"collision_targets":1,"median_total_qr_ratio":0.8421737370622362,"median_wall_speedup":1.1821672838238406,"min_wall_speedup":1.1650950618441143,"positive_wall_targets":4,"all_gates_pass":true}},
+    "16":{"W5_SINGLE":{"survivor_counts":[3,1,2,1],"collision_targets":2,"median_total_qr_ratio":0.7778046218754531,"median_wall_speedup":1.2839874162092912,"min_wall_speedup":1.1714183729300143,"positive_wall_targets":4,"all_gates_pass":true},"W4_W6_SPLIT":{"survivor_counts":[2,2,1,2],"collision_targets":3,"median_total_qr_ratio":0.8421376404810205,"median_wall_speedup":1.2023427814100718,"min_wall_speedup":1.1645792194860922,"positive_wall_targets":4,"all_gates_pass":true}}
+  },
+  "fits":{"W5_SINGLE":{"algorithm_wall_log2_slope":0.9676122892121003,"baseline_wall_log2_slope":0.9964873744129419},"W4_W6_SPLIT":{"algorithm_wall_log2_slope":0.9765187736359182,"baseline_wall_log2_slope":1.0037220876580024}},
+  "algorithmic_alpha":1.0,
+  "issue8_remains_no_go":true,
+  "claim_limit":"PASS admits only reduced-model collision-tolerant constant-factor verified screening. Leading enumeration remains 2^b; alpha=1; no full-round claim."
+}

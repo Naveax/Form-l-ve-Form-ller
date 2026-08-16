@@ -1,15 +1,15 @@
 # AGENTS.md — FDS Autonomous Continuation Contract
 
-1. Resolve fresh main and authority.
+1. Resolve fresh main and mandatory authority.
 2. Check Library/history before repeating work.
-3. Freeze targets/gates/repeats before measurement.
-4. Never reinterpret a failed frozen gate after seeing outcomes.
-5. New hypotheses from failures require fresh targets and a new milestone.
-6. TOTAL includes generation/cache/storage/evaluation/survivor verification.
-7. Local compute allowed; authority returns to GitHub.
-8. No oracle leakage or post-hoc resurrection.
-9. Closure requires source/tests/plans/results/decision/continuity.
-10. alpha<1/full-round claims stay locked.
+3. Freeze plan/gate/stop before target/oracle inspection.
+4. Killed families stay killed unless the observable mechanism is genuinely different.
+5. No true-key/oracle leakage into inference features.
+6. TOTAL includes preprocessing, cache/table construction, matching, collisions, evaluation and verification.
+7. Local compute is allowed; authority returns to GitHub.
+8. Failed development gate means no second development set.
+9. Milestone closure requires source/tests/plan/results/decision/manifest + continuity.
+10. Constant-factor speedup never implies alpha<1; full-round/end-to-end claims need independent gates.
 
-## Current next
-Fresh collision-tolerant verified-screen scaling. Issue #8 remains failed and must not be rewritten as PASS.
+## Current next task
+Freeze `V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT`; do not extend Issue #9 constant-factor screening.

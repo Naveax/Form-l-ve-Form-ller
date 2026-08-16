@@ -2,13 +2,21 @@
 
 ## Canonical status — 2026-08-16
 
-The b=10 boundary-syndrome/codegen claims remain admitted: broad QR transfer across tested layouts and broad non-universal specialized wall realization.
+Issue #8 strict raw-survivor uniqueness scaling remains **NO-GO** and is not reinterpreted.
 
-The frozen `V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16` strict family gate is **NO-GO**. Full generated/generic exactness passed 522,240 syndrome values + 522,240 direct predicates, and wall/QR savings remained positive, but the 16-bit syndrome occasionally leaves a second raw survivor. W5 strict passes only b12/b14; W4+W6 strict passes only b10/b14.
+Issue #9 `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING` completed on a separately frozen fresh protocol and **PASSed all family gates**.
 
-Every extra collision was removed by the exact direct verifier; verified sets were uniquely true for every frozen target. That observation cannot rescue the failed strict milestone.
+- generated/generic exactness: 696,320 syndrome + 696,320 direct predicates PASS;
+- fresh true-key screen survival: 32/32;
+- final exact verified set `[true]`: 32/32;
+- raw collision cases: 7/32, all eliminated by exact verification;
+- positive wall-speedup cases: 32/32;
+- W5 median wall speedup b10→16: 1.1239x, 1.2529x, 1.2734x, 1.2840x;
+- W4+W6: 1.0707x, 1.1506x, 1.1822x, 1.2023x.
 
-Leading enumeration remains `2^b`; alpha=1. No full-round claim.
+Verdict: `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`.
 
-## Exact next
-Open a separate fresh `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING` protocol that judges the already-accounted end-to-end verified candidate set and TOTAL cost, not raw syndrome uniqueness.
+This closes the constant-factor verified-screen extension. Leading work remains `Theta(2^b)` and alpha=1.
+
+## Next frontier
+Return to structural exponent reduction. Do not extend this family by adding more layouts/widths merely to accumulate constant-factor evidence. Next candidate: exact/low-rank half-key separability of the boundary syndrome under a separately frozen reduced-model audit.

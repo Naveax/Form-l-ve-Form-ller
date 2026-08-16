@@ -1,0 +1,8 @@
+{
+  "milestone":"V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING",
+  "authority_parent":"b527110bc72b85b45e755a396d8747f7de262b6c",
+  "local_regression":"48 generated-vs-cache smoke comparisons PASS plus frozen full exactness 696320+696320 PASS",
+  "included_sha256":{"summary":"66113f1597da064dbf102826072561f311a5da646b3f49beb4a337e15edce9d4","decision":"aafdc99d4b2708e46489716da54d586c7e21ed80c1190e332350dcee3594b44e","exact_case_runner":"96ecb7be0161d66ed041cf246e4b1cccbb8a7a23fe64ff20152fce774cc87395","wall_runner":"aae3f34512d8077deab1845473e35be377791fe741a6ee93779dc80f0da07cf6"},
+  "heavy_per_case_timing_samples":"local scratch; compact authority records all frozen gate metrics",
+  "issue8_remains_no_go":true
+}

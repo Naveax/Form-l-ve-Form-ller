@@ -1,12 +1,12 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Boundary/codegen results
-Reduced 6-round constant-factor compute win admitted; broad b10 QR layout transfer and broad non-universal specialized wall realization admitted. Alpha remains 1.
+## 2026-08-16 — Issue #8 strict scaling
+Strict raw-survivor uniqueness family remains `NO_GO_STRICT_MULTI_LAYOUT_SCALING_GATE`. Do not reinterpret it.
 
-## 2026-08-16 — Strict multi-layout b10→16 scaling
-Frozen strict gate required raw syndrome uniqueness at every layout/b target. W5 fails b10 and b16; W4+W6 fails b12 and b16. **Decision:** `NO_GO_STRICT_MULTI_LAYOUT_SCALING_GATE`.
+## 2026-08-16 — Issue #9 collision-tolerant verified screening
+Fresh protocol completed without retuning. Generated code matched generic reference for 696,320 full syndrome values and 696,320 direct predicates. True key survived 32/32 fresh cases; exact verification returned only the true key 32/32. Seven cases had raw syndrome collisions, all removed by the already-accounted verifier. All 32 wall cases showed positive speedup; all 8 layout×width gate cells passed.
 
-All collisions were eliminated by the exact direct verifier and all frozen cases retained positive TOTAL/wall savings. This is a new hypothesis only; it does not retroactively change the failed gate.
+Decision: `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`. This admits a reduced-model end-to-end constant-factor verified-screen optimization only. Leading enumeration remains `2^b`, alpha=1, and no full-round claim is made.
 
 ## Next
-Fresh preregistered collision-tolerant verified-screen scaling, with the verified candidate set and full survivor-verification cost as the end-to-end criterion.
+Stop accumulating constant-factor variants. Reopen only structural exponent-reduction hypotheses under fresh preregistration, beginning with half-key separability of the boundary-syndrome function.

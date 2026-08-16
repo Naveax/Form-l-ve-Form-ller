@@ -2,10 +2,11 @@
 
 | Family | Result | Verdict |
 |---|---|---|
-| Boundary syndrome / b10 codegen | frozen fresh gates PASS | constant-factor win admitted |
-| Broad b10 QR layout transfer | 5/5 non-control PASS | admitted |
-| Broad b10 specialized wall | 4/5 non-control PASS | admitted, non-universal |
-| Strict W5 + W4/W6 b10→16 scaling | full exactness PASS; raw survivor uniqueness fails at multiple b | NO-GO strict family gate |
-| Collision-tolerant verified scaling | new fresh protocol not yet measured | ACTIVE NEXT |
-| alpha<1 | leading 2^b enumeration | NOT DEMONSTRATED; alpha=1 |
-| full-round relevance | — | NO CLAIM |
+| Static/reliability descriptor families | fresh transfer gates fail | NO-GO |
+| Boundary syndrome base engine | exact reduced-model compute win | PASS constant factor |
+| Reduced-key layout transfer | broad QR, non-universal wall | admitted scoped |
+| Issue #8 strict b10→16 raw uniqueness | family gate fails | NO-GO |
+| Issue #9 collision-tolerant verified screen | 696,320+696,320 exact; 32/32 final true; 8/8 cells pass | `PASS_CONSTANT_FACTOR_ALPHA1` |
+| Half-key syndrome separability | not yet frozen | NEXT |
+| alpha<1 | — | NOT DEMONSTRATED |
+| Full-round relevance | — | NO CLAIM |
