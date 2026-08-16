@@ -1,0 +1,14 @@
+{
+  "milestone":"V25_REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER",
+  "stage":"L2_EXACT_CACHE_AND_WALL_TRANSFER",
+  "frozen_before_L2_wall_measurement":true,
+  "depends_on":"L1_GENERIC_EXACT broad transfer: 5/5 non-control layouts passed",
+  "algorithm":{"split":1,"boundary_word":0,"syndrome_width":16,"layouts":"same six frozen L0/L1 layouts","targets":[813,410,917,769,850,373,572,1000]},
+  "cache_rule":"For each exact QR program, propagate candidate-dependent state-word set. Candidate-independent QR outputs are precomputed once per target and copied into the per-candidate state at the same execution point; candidate-dependent QRs execute normally. No QR is classified fixed if its input group intersects the propagated dependency set.",
+  "exactness_gate":{"cases":48,"candidates_per_case":1024,"screen_predicate_equivalence_checks":49152,"direct_predicate_equivalence_checks":49152,"required":"all cached predicates and survivor/direct sets exactly equal generic reference"},
+  "wall_benchmark":{"warmups":3,"repeats":11,"timed_scope":"target output construction + layout-specific fixed-cache construction + full 1024-candidate screen/direct loops; same logical-key patch helper in both algorithms","survivor_verification":"included in screened algorithm","order":"alternate algorithm and baseline per target; report median"},
+  "per_layout_wall_gate":{"median_wall_speedup_min":1.05,"positive_wall_targets_min":7},
+  "family_wall_interpretation":{"broad_wall_transfer":"at least 4 of 5 non-control layouts pass both wall gates","partial_wall_transfer":"2 or 3 pass","qr_only_transfer":"0 or 1 pass; retain QR transfer but do not broaden wall-time claim"},
+  "claim_limit":"Wall results can broaden only the constant-factor engineering claim. Leading candidate enumeration remains 2^b and alpha=1. No full-round claim.",
+  "forbidden":"No repeat count, target, layout, split, word, width, cache classification or benchmark scope changes after wall results."
+}

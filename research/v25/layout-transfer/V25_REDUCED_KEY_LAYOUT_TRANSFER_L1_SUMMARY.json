@@ -1,0 +1,16 @@
+{
+  "milestone":"V25_REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER",
+  "stage":"L1_GENERIC_EXACT",
+  "targets":[813,410,917,769,850,373,572,1000],
+  "non_control_pass_count":5,
+  "family_interpretation":"BROAD_TRANSFER",
+  "layouts":{
+    "W4_CONTROL":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.834499593165175,"median_speedup":1.1983229329173166,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true},
+    "W5_SINGLE":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.779007323026851,"median_speedup":1.2836849801545853,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true},
+    "W6_SINGLE":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.779007323026851,"median_speedup":1.2836849801545853,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true},
+    "W7_SINGLE":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.779007323026851,"median_speedup":1.2836849801545853,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true},
+    "W4_W8_SPLIT":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.8899918633034988,"median_speedup":1.1236057780215762,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true},
+    "W4_W6_SPLIT":{"survivor_counts":[1,1,1,1,1,1,1,1],"median_ratio":0.8432007400555042,"median_speedup":1.185957213384531,"true_survival_targets":8,"direct_unique_true_targets":8,"verified_unique_true_targets":8,"all_gates_pass":true}
+  },
+  "note":"All 48 frozen layout-target cases left exactly one width16 survivor, equal to the logical true key. L1 uses conservative QR accounting and contains no wall-time admission."
+}
