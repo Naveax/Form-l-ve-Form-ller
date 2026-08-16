@@ -1,0 +1,18 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_MODULAR_HALF_SEPARABILITY_AUDIT",
+  "frozen_before_measurement":true,
+  "scope":"controlled 6-round reduced-key exact structural falsifier; distinct from failed XOR separability",
+  "layout":{"id":"W5_SINGLE","bits":16,"field":{"state_word":5,"bit_offset":0,"width":16,"logical_shift":0}},
+  "key_split":{"low_half_bits":8,"high_half_bits":8,"mapping":"k = low | (high << 8)"},
+  "fixed_algorithm":{"counter":1,"rounds":6,"split":1,"boundary_word":0,"syndrome_width":16,"screen":"same admitted generated boundary syndrome"},
+  "fresh_targets":{"seed":182325526,"targets":[50991,1272,39506,19952]},
+  "projection_widths":[4,8,12,16],
+  "exact_test":"For modulus 2^m, Q_m[a,b]=(S[a,b]-S[a,0]-S[0,b]+S[0,0]) mod 2^m. Width m is exact modular-additive separable iff Q_m is zero for all 65,536 cells.",
+  "selection_rule":"Select the largest m in [4,8,12,16] that is exact on all four targets. This rule is frozen before inspection.",
+  "primary_gate":{"stable_exact_modulus_bits_min":8,"true_half_pair_in_match_set_targets":4,"match_pairs_max_per_target":512},
+  "match_rule":"For selected exact m, use row0/column0 modular signatures only. Count every (low,high) pair satisfying S_m(low,0)+S_m(0,high)-S_m(0,0)=0 mod 2^m. True key is used only to check inclusion after the match set is formed.",
+  "secondary_diagnostics":["zero-residual fraction per modulus","residual value count","2-adic valuation histogram of full modular residual"],
+  "stage1_only_if_primary_pass":"Freeze fresh widths/targets and explicit MITM TOTAL accounting. No alpha<1 claim from b16 structural PASS alone.",
+  "kill_rule":"If no common exact modular width >=8 exists, or any fresh target has >512 matches under the selected width, close the simple modular-additive 8+8 MITM family immediately.",
+  "forbidden":"No target/layout/split/modulus threshold retuning after results. Approximate residual concentration cannot rescue failed exact separability."
+}
