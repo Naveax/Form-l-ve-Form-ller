@@ -1,0 +1,20 @@
+{
+  "milestone":"V26_KEY_INTERACTION_GRAPH_SEPARATOR_AUDIT",
+  "frozen_before_measurement":true,
+  "novelty":"Exact key-variable factorization/separator audit from ANF monomial co-occurrence; distinct from statistical selectors, counter derivatives, output projections, cubes and rotational distinguishers.",
+  "scope":"controlled reduced ChaCha target-free forward-map structural falsifier",
+  "rounds":{"control":4,"primary":6},
+  "key_widths":[8,10,12,14,16],
+  "key_map":"existing reduced_key_multiword(k,b)",
+  "counter":1,
+  "outputs":"all 512 block-output bits",
+  "exact_anf":"complete 2^b truth tables and exact packed GF(2) Mobius transform",
+  "primal_graph":"vertices are logical key bits. For every nonzero ANF monomial coefficient in any output bit, connect every pair of key variables occurring in that monomial. Union over all 512 outputs.",
+  "hypergraph_diagnostics":["maximum active monomial degree","whether the full-support degree-b monomial occurs in any output","active monomial count"],
+  "separator_proxy":"Enumerate every vertex separator S exactly. Remove S, compute connected components of the remaining primal graph, let M(S) be the largest component size (0 if none), and define alpha_sep_proxy = min_S (|S|+M(S))/b. This is only a Stage0 factorization proxy, not an admitted solver exponent.",
+  "primary_gate":{"r6_b14_alpha_sep_proxy_max":0.75,"r6_b16_alpha_sep_proxy_max":0.75,"r6_b16_graph_density_max":0.75},
+  "stage1_only_if_pass":"Freeze a concrete variable-elimination/dynamic-programming solver on fresh widths and bill factor construction, separator assignments, component solves, memory, collisions and exact verification in TOTAL. Only that later scaling may support alpha<1.",
+  "kill_rule":"If any R6 primary gate fails, close straightforward ANF-primal-graph factorization. Do not cherry-pick output bits, delete monomials, threshold weak interactions or open a second graph definition.",
+  "secondary_control":"R4 is diagnostic only and cannot rescue R6 failure.",
+  "forbidden":"No target selection, approximate ANF, graph sparsification, output subset tuning, solver benchmark after Stage0 FAIL, or full-round claim."
+}

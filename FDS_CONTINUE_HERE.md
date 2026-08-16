@@ -1,14 +1,14 @@
 # FDS_CONTINUE_HERE
 
-**State:** rotational branch `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL`; prior V26 exact families NO-GO.  
-**Next:** `V26_KEY_INTERACTION_GRAPH_SEPARATOR_AUDIT`.
+**State:** rotational branch source-model inapplicable; prior V26 exact families NO-GO.  
+**Active:** `V26_KEY_INTERACTION_GRAPH_SEPARATOR_AUDIT`.
 
-1. Do not benchmark rotational bias after applicability failure.
-2. Preserve literature/applicability result and source constraints.
-3. Next family is target-free exact factorization structure, not another derivative/projection statistic.
-4. Freeze graph construction, widths/rounds, separator metric and kill gate before measurement.
-5. Build the primal key-interaction graph from exact output ANFs: connect key variables that co-occur in any monomial of any output bit.
-6. Measure density, connectedness, clique/lower-bound structure and balanced-separator size for R4 control/R6 primary across b8→16.
-7. Only a genuinely sparse/separable R6 graph may open variable-elimination/TOTAL scaling.
-8. Complete/dense interaction closes this straightforward factorization route.
-9. ALPHA_PASS still requires fresh TOTAL+verification exponent <1.
+1. Use frozen plan under `research/v26/key-interaction-separator/`.
+2. b=`8,10,12,14,16`, counter1, R4 control/R6 primary, all 512 block-output bits.
+3. Compute exact ANFs and union key-bit primal graph from every active monomial.
+4. Enumerate all separators exactly and compute `alpha_sep_proxy=min_S(|S|+max_component(G-S))/b`.
+5. R6 PASS requires proxy<=0.75 at b14 and b16 plus b16 graph density<=0.75.
+6. Full-support monomial/max degree are diagnostics; no monomial deletion or output cherry-picking.
+7. Only PASS opens a concrete variable-elimination/TOTAL scaling stage.
+8. FAIL closes straightforward ANF graph factorization; no second graph definition.
+9. No alpha/full-round claim from Stage0 alone.
