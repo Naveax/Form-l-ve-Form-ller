@@ -1,11 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** Issue #16 reduced-quarter-round beam4096 quality NO-GO; method core exact, attack integration not opened.  
-**Next:** recover later bit-puncturing / second-layer trail-contraction authority if present.
+**State:** historical second-layer/CERT90/ranking authority recovered; no robust end-to-end/alpha reduction exists.  
+**Next:** freeze `V25_EXPONENT_TRACK_CLOSURE_AUDIT`.
 
-1. Do not extend beam4096 post-hoc inside Issue #16.
-2. Search local/Library history for second-layer contraction, adaptive trail enumeration, signed-stream, one-word projection and certified-trail milestones.
-3. Verify recovered decisions/tests before treating them as authority.
-4. Advance GitHub to the latest actually completed historical milestone rather than re-running it.
-5. Only after recovery identify the true unfinished pass and freeze its next protocol.
-6. No alpha<1/full-round claim from Issue #16.
+1. Do not re-run DAC, second-layer, CERT90, PNB, selector, descriptor or simple MITM families.
+2. Enumerate all canonical GitHub decisions and recovered historical decisions.
+3. Classify each branch: `ALPHA_PASS`, `CONSTANT_FACTOR_PASS`, `METHOD_PASS_ONLY`, `NO_GO`, `UNRESOLVED`.
+4. Require an explicit measured/asymptotic TOTAL exponent <1 with verification for `ALPHA_PASS`.
+5. Constant-factor wall/QR/memory improvements remain alpha=1.
+6. Identify any truly unresolved mechanism only if it is not a renamed variant of a closed family.
+7. If zero ALPHA_PASS and zero genuinely unresolved structural branches remain, close V25 exponent track and preserve useful engineering primitives separately.
+8. Commit audit plan/results/decision/manifest and update continuity.
