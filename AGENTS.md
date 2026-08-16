@@ -1,12 +1,12 @@
 # AGENTS.md — FDS Autonomous Continuation Contract
 
 1. Resolve fresh main and authority.
-2. PNB exponent track and simple MITM branch are closed; do not reopen them by tuning.
-3. Current milestone is reduced quarter-round Walsh trail method validation.
-4. Fixed n=5 masks and beam caps are preregistered.
-5. Exact n=2 full-spectrum reconstruction is a mandatory implementation gate.
-6. Merge linear-hull duplicates before pruning; all expansion counts are billed.
-7. Exact FWT reference is authoritative for partial-spectrum quality.
-8. Failed beam4096 quality gate means no q138 integration in this milestone.
-9. Local compute allowed; authority returns to GitHub.
-10. No alpha<1/full-round claim without independent end-to-end scaling.
+2. Current task is a V25 exponent-track closure audit, not a new attack family.
+3. Use only frozen canonical/recovered branch decisions for classification.
+4. ALPHA_PASS requires TOTAL+verification exponent <1; constant factors never qualify.
+5. Apply supersession to historical CONTINUE labels.
+6. Do not invent or tune a new mechanism inside the closure audit.
+7. Preserve constant-factor/method engineering wins separately from exponent claims.
+8. Closure is scoped to tested V25 families, not a proof of ChaCha impossibility.
+9. Local computation allowed; authority returns to GitHub.
+10. Any future genuinely new exponent mechanism opens as separately preregistered V26 work.

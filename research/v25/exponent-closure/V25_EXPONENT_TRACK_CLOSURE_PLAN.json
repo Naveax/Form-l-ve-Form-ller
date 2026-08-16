@@ -1,0 +1,29 @@
+{
+  "milestone":"V25_EXPONENT_TRACK_CLOSURE_AUDIT",
+  "frozen_before_classification":true,
+  "scope":"canonical V25 reduced-ChaCha inversion/exponent research only; not an impossibility proof for all cryptanalysis",
+  "classes":["ALPHA_PASS","CONSTANT_FACTOR_PASS","METHOD_PASS_ONLY","NO_GO","UNRESOLVED"],
+  "alpha_pass_rule":"ALPHA_PASS requires explicit TOTAL work including preprocessing/data/memory/verification of form 2^(alpha*b+o(b)) with alpha<1, or a preregistered empirical alpha gate whose upper confidence bound is below the project threshold. Constant factors, memory-only compression, statistical signal, rank improvement without total scaling, and reduced candidate-evaluation cost with 2^b enumeration do not qualify.",
+  "supersession_rule":"A historical CONTINUE/NEXT label is not UNRESOLVED if a later canonical milestone executed that next gate and closed or classified it.",
+  "branch_inventory":[
+    "SAT_BACKBONE_PROOF_VOLUME",
+    "BIT_LOCAL_MODULAR_LIFTING",
+    "CLAUSAL_PROJECTION_QUOTIENT",
+    "LOW_DEGREE_EXACT_INVERSE_ALGEBRA",
+    "APPROXIMATE_SPECTRAL_INFORMATION",
+    "ORBIT_PNB_CPNB",
+    "BIT_PUNCTURING_WALSH_METHOD",
+    "DAC_SECOND_LAYER_CERT90_TRAIL_RANKING",
+    "STATIC_PAIR_QUADRATIC_SELECTORS",
+    "P_ONLY_OBSERVATION_RELIABILITY",
+    "SYNTHETIC_DESCRIPTOR_LEARNABILITY",
+    "MULTIDELTA_ADDITIVE_CARRY_BORROW",
+    "BOUNDARY_SYNDROME_LAYOUT_CODEGEN_VERIFIED_SCREEN",
+    "STRICT_MULTI_LAYOUT_RAW_UNIQUENESS",
+    "EXACT_HALF_KEY_MITM_FAMILIES",
+    "REDUCED_QR_TRAIL_BEAM4096"
+  ],
+  "closure_gate":"Close V25_CURRENT_EXPONENT_TRACK if ALPHA_PASS count is zero and every historical CONTINUE/NEXT item is either superseded by a later closed milestone or classified METHOD_PASS_ONLY/CONSTANT_FACTOR_PASS with no admitted exponent path. Closure means no alpha<1 demonstrated in tested V25 families; it does not claim mathematical impossibility of future mechanisms.",
+  "post_closure":"Preserve useful engineering primitives (constant-factor boundary screen, layout codegen, exact puncturing/trail and D&C/CERT90 machinery) separately. Any genuinely new exponent hypothesis opens as a new V26 preregistered mechanism rather than silently extending V25.",
+  "forbidden":"No reclassifying constant-factor gains as alpha passes; no creating a new family inside the closure audit; no dropping verification/preprocessing costs; no full-round impossibility claim."
+}
