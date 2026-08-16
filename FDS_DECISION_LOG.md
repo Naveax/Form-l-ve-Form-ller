@@ -1,9 +1,11 @@
 # FDS_DECISION_LOG
 
-## V26 first counter difference
-Feed-forward-cancelled ANF: R6 primary 0/3, NO-GO.
+## V26 counter derivatives
+First and second finite-difference exact ANF families failed all primary gates and are retired.
 
-## 2026-08-16 — V26 second counter difference
-Frozen counters `[1,257,513]` and exact second finite difference produced R6 b16 median per-bit degree reduction 0, support-exponent reduction -3.4348e-05, and zero stable sparse bits across b14/b16. Primary 0/3.
+## 2026-08-16 — Cross-word XOR projection
+Frozen exhaustive class covered all 120 unordered output-word pairs and all 32 bits for b8→b16, R4/R6. Sparse-useful projected bits were 0 at every width/round; stable R6 b14/b16 set = 0.
 
-Decision: `NO_GO_COUNTER_SECOND_DIFFERENCE_ANF`. Retire further derivative-order/stride tuning. Move to genuinely different cross-word projection structure.
+Decision: `NO_GO_CROSS_WORD_XOR_PROJECTION_ANF`. Do not rescue with pair cherry-picking, threshold changes or modular-sum reinterpretation inside this family.
+
+Next mechanism selection must be literature-grounded and structurally distinct.

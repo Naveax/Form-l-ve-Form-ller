@@ -1,0 +1,1 @@
+{"milestone":"V26_CROSS_WORD_XOR_PROJECTION_ANF_AUDIT","status":"NO_GO_CROSS_WORD_XOR_PROJECTION_ANF","projection_count":120,"projected_bits_per_width":3840,"r4_sparse_counts":{"8":0,"10":0,"12":0,"14":0,"16":0},"r6_sparse_counts":{"8":0,"10":0,"12":0,"14":0,"16":0},"r6_stable_sparse_b14_b16_count":0,"r6_stable_distinct_pairs":0,"primary_gates_passed":"0/4","primary_pass":false}
