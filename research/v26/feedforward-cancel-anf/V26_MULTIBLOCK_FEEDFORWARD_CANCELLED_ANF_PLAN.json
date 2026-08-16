@@ -1,0 +1,20 @@
+{
+  "milestone":"V26_MULTIBLOCK_FEEDFORWARD_CANCELLED_ANF_AUDIT",
+  "frozen_before_measurement":true,
+  "novelty":"Exact multi-block forward algebraic-complexity audit after cancelling the shared-key feed-forward term; distinct from V25 statistical PNB/differentials, inverse low-degree relations, selectors, MITM and constant-factor screening.",
+  "scope":"controlled reduced ChaCha only; target-free forward map structural falsifier",
+  "rounds":{"control":4,"primary":6},
+  "key_widths":[8,10,12,14,16],
+  "key_map":"existing reduced_key_multiword(k,b)",
+  "counter_pair":[1,257],
+  "single_control":"Z_single(k)=block_words(k,1,R)",
+  "cancelled_difference":"D_w(k)=(Z_w(k,257)-Z_w(k,1)-delta_feed_w) mod 2^32, where delta_feed is zero except known counter-word feed-forward delta",
+  "outputs":"all 512 output bits",
+  "exact_method":"For every output bit and key width build the complete 2^b truth table and apply exact GF(2) Möbius transform to obtain ANF coefficients. Record algebraic degree, monomial support count, and support exponent log2(max(1,support))/b.",
+  "stable_sparse_bit_rule":"A bit is sparse-useful at width b iff degree<=6 and support exponent<=0.75. Stability requires the same bit position satisfy the rule at both b14 and b16 for the R6 cancelled-difference map.",
+  "primary_gate":{"r6_b16_median_degree_reduction_vs_single_min":2.0,"r6_b16_median_support_exponent_reduction_vs_single_min":0.10,"r6_stable_sparse_bits_b14_b16_min":16},
+  "secondary_control":"Report identical metrics for R4 but R4 cannot rescue an R6 primary FAIL.",
+  "stage1_only_if_pass":"Freeze a polynomial-solving experiment using only the stable bit positions, with monomial-generation/preprocessing/memory/verification billed in TOTAL and fresh b-width scaling. No alpha claim from Stage0 alone.",
+  "kill_rule":"If any primary gate fails at R6, close this exact feed-forward-cancelled ANF family. Do not change counter pair, output-bit subset, degree threshold, support threshold or use a second development set.",
+  "forbidden":"No target/output selection, approximate ANF, learned bit selection, PNB-style condition tuning or inverse-relation reinterpretation after results. No full-round claim."
+}

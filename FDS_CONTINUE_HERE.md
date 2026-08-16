@@ -1,12 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** `V25_CURRENT_EXPONENT_TRACK` CLOSED; alpha<1 not demonstrated.  
-**Next:** V26, genuinely new mechanism only.
+**State:** V25 exponent track CLOSED with ALPHA_PASS=0.  
+**Active:** `V26_MULTIBLOCK_FEEDFORWARD_CANCELLED_ANF_AUDIT`.
 
-1. Treat all V25 decisions as immutable evidence.
-2. Preserve V25 constant-factor/method assets; do not relabel them exponent wins.
-3. New V26 work must state why its mechanism is not SAT tuning, PNB/selector tuning, descriptor learning, boundary-screen constant-factor optimization, simple half-key MITM, or trail-beam retuning.
-4. Freeze model, scaling axis, TOTAL accounting and kill gate before measurement.
-5. Prefer cheap target-free structural falsifiers before expensive target/oracle experiments.
-6. V26 alpha admission still requires TOTAL+verification exponent <1 with fresh scaling/CI.
-7. No full-round claim without independent evidence.
+1. Use frozen V26 plan under `research/v26/feedforward-cancel-anf/`.
+2. This is a target-free exact forward-map audit, not PNB tuning or inverse low-degree relation search.
+3. Compute full truth tables for b=8/10/12/14/16, counters 1 and 257, R4 control and R6 primary.
+4. Cancel the known feed-forward counter delta exactly, then compute ANF by Möbius transform for all 512 bits.
+5. R6 primary PASS requires b16 median degree reduction >=2, median support-exponent reduction >=0.10, and >=16 stable sparse bits across b14/b16.
+6. R4 cannot rescue R6 failure.
+7. Only PASS opens a fresh polynomial-solving/TOTAL scaling stage.
+8. On FAIL close this family; no counter/bit/threshold retuning or second set.
