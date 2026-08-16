@@ -2,14 +2,14 @@
 
 1. Resolve fresh main and mandatory authority.
 2. Check Library/history before repeating work.
-3. Freeze plan/gate/stop before target/oracle inspection.
-4. Killed families stay killed unless the observable mechanism is genuinely different.
-5. No true-key/oracle leakage into inference features.
-6. TOTAL includes preprocessing, cache/table construction, matching, collisions, evaluation and verification.
-7. Local compute is allowed; authority returns to GitHub.
-8. Failed development gate means no second development set.
+3. Freeze plan/gate/stop before measurement.
+4. Killed families stay killed; Issue #10 XOR separability must not be retuned/resurrected.
+5. TOTAL includes table construction, matching, collisions and verification.
+6. Local compute is allowed; authority returns to GitHub.
+7. Failed primary exact gate means no approximate rescue or second development set.
+8. Exact structural PASS is still not alpha<1 until fresh TOTAL scaling confirms it.
 9. Milestone closure requires source/tests/plan/results/decision/manifest + continuity.
-10. Constant-factor speedup never implies alpha<1; full-round/end-to-end claims need independent gates.
+10. No full-round/end-to-end claim without independent gates.
 
-## Current task
-`V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT` using the frozen b16 W5_SINGLE 8+8 plan.
+## Current next task
+Freeze exact modular-additive half-key separability on fresh targets.

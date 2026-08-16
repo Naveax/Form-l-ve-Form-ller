@@ -1,20 +1,16 @@
 # FDS_CHECKLIST
 
 ## Closed
-- [x] Boundary constant-factor engine admitted.
-- [x] Broad b10 QR layout transfer admitted.
-- [x] Broad non-universal b10 codegen wall realization admitted.
-- [x] Issue #8 strict multi-layout raw-uniqueness scaling closed NO-GO.
-- [x] Issue #9 fresh collision-tolerant protocol frozen separately.
-- [x] Issue #9 full generated/generic exactness: 696,320 + 696,320 PASS.
-- [x] Issue #9 true survival and exact verified unique true: 32/32.
-- [x] Issue #9 TOTAL QR/wall gates: 8/8 layout-width cells PASS.
-- [x] Issue #9 constant-factor PASS recorded; alpha remains 1.
+- [x] Issue #9 collision-tolerant constant-factor verified screen PASS; alpha=1.
+- [x] Issue #10 b16 W5 8+8 plan frozen before results.
+- [x] Four complete 256×256 syndrome tables evaluated.
+- [x] Exact XOR rectangle test completed.
+- [x] Stable exact bit count = 0; primary gate failed.
+- [x] GF(2) ranks dense (raw 254–256, residual 253–255).
+- [x] `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`; no scaling stage.
 
-## Active next — structural exponent reduction
-- [ ] Freeze b16 half-key separability plan before inspection.
-- [ ] Complete 256×256 syndrome table.
-- [ ] Exact rectangle/XOR separability tests.
-- [ ] GF(2) rank per syndrome bit.
-- [ ] Secondary low-rank diagnostics.
-- [ ] Explicit MITM TOTAL accounting or immediate NO-GO.
+## Next structural family
+- [ ] Freeze exact modular-additive 8+8 plan on fresh targets.
+- [ ] Evaluate full modular rectangle residual.
+- [ ] Derive exact half matching only if primary residual is identically zero.
+- [ ] Explicit TOTAL accounting before any alpha claim.

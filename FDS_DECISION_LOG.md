@@ -1,12 +1,12 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issue #8 strict scaling
-Strict raw-survivor uniqueness family remains `NO_GO_STRICT_MULTI_LAYOUT_SCALING_GATE`. Do not reinterpret it.
-
 ## 2026-08-16 — Issue #9 collision-tolerant verified screening
-Fresh protocol completed without retuning. Generated code matched generic reference for 696,320 full syndrome values and 696,320 direct predicates. True key survived 32/32 fresh cases; exact verification returned only the true key 32/32. Seven cases had raw syndrome collisions, all removed by the already-accounted verifier. All 32 wall cases showed positive speedup; all 8 layout×width gate cells passed.
+Fresh end-to-end protocol passed every constant-factor gate. Issue #8 remains NO-GO. Algorithmic alpha remains 1.
 
-Decision: `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`. This admits a reduced-model end-to-end constant-factor verified-screen optimization only. Leading enumeration remains `2^b`, alpha=1, and no full-round claim is made.
+## 2026-08-16 — Issue #10 exact XOR half-key separability
+Frozen b16 W5_SINGLE 8+8 audit built complete 256×256 syndrome tables for four fresh targets. No target had even one exact XOR-separable syndrome bit; stable exact bits = 0. Raw GF(2) ranks were 254–256 and rectangle residual ranks 253–255. The half-signature constraint therefore retained all 65,536 pairs.
+
+Decision: `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`. No MITM scaling stage and no alpha claim.
 
 ## Next
-Stop accumulating constant-factor variants. Reopen only structural exponent-reduction hypotheses under fresh preregistration, beginning with half-key separability of the boundary-syndrome function.
+Only genuinely different exact algebraic decompositions may open. First candidate: modular-additive separability mod 2^16 on a separately frozen fresh protocol.

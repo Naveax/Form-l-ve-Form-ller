@@ -1,0 +1,12 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT",
+  "status":"NO_GO_SIMPLE_8P8_XOR_SEPARABILITY",
+  "fresh_targets":[43051,21863,31754,45567],
+  "stable_exact_bit_count":0,
+  "match_pairs_per_target":[65536,65536,65536,65536],
+  "rank_range_raw_gf2":[254,256],
+  "rank_range_residual_gf2":[253,255],
+  "stage1_opened":false,
+  "not_admitted":["MITM_EXPONENT_REDUCTION","ALPHA_LT_1","FULL_ROUND_RELEVANCE"],
+  "next":"TEST_GENUINELY_DIFFERENT_EXACT_MODULAR_ADDITIVE_HALF_SEPARABILITY_ON_FRESH_TARGETS"
+}

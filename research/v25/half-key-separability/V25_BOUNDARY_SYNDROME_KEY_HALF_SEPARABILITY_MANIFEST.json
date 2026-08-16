@@ -1,0 +1,7 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT",
+  "plan_commit":"9e673b12dce791b9610b1343f112e0844acf3b74",
+  "tests":"2/2 synthetic rectangle math PASS; true-key syndrome zero checked during full tables",
+  "sha256":{"local_evaluator":"f7b05ed6ca186b50f679dddf955a1fe66829ecda01fe888443f3328140ea9638","math_test":"b1acac9f8c5a009c1256d2d99d1621e53a297367903b8e31dc6926e3bd3b0c10","full_local_result":"cf24c7b5b7bf8836aca60adc39c23d0d6d61027c0da820b99a16917a7f0cf7eb","decision":"0c795121706993d34d4152f636044b8c359cfd8fba1b46f29839c10c0c6ee5e8"},
+  "heavy_tables":"not persisted; exact compact ranks/gates are canonical"
+}

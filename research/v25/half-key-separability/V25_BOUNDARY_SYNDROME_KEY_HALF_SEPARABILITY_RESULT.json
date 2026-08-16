@@ -1,0 +1,16 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_KEY_HALF_SEPARABILITY_AUDIT",
+  "status":"NO_GO_SIMPLE_8P8_XOR_SEPARABILITY",
+  "fresh_targets":[43051,21863,31754,45567],
+  "exact_bits_per_target":[[],[],[],[]],
+  "stable_exact_bits":[],
+  "stable_exact_bit_count":0,
+  "match_pairs_per_target":[65536,65536,65536,65536],
+  "raw_gf2_rank_range":[254,256],
+  "rectangle_residual_gf2_rank_range":[253,255],
+  "primary_gate":{"stable_exact_bit_positions_min":false,"same_positions_across_all_targets":false,"true_half_pair_in_match_set_targets":true,"match_pairs_max_per_target":false},
+  "all_primary_gates_pass":false,
+  "table_cells_per_target":65536,
+  "stage1_opened":false,
+  "claim_limit":"Controlled 6-round reduced-model structural NO-GO only."
+}

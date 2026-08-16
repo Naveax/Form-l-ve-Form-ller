@@ -2,11 +2,9 @@
 
 | Family | Result | Verdict |
 |---|---|---|
-| Static/reliability descriptor families | fresh transfer gates fail | NO-GO |
-| Boundary syndrome base engine | exact reduced-model compute win | PASS constant factor |
-| Reduced-key layout transfer | broad QR, non-universal wall | admitted scoped |
-| Issue #8 strict b10→16 raw uniqueness | family gate fails | NO-GO |
-| Issue #9 collision-tolerant verified screen | 696,320+696,320 exact; 32/32 final true; 8/8 cells pass | `PASS_CONSTANT_FACTOR_ALPHA1` |
-| Half-key syndrome separability | not yet frozen | NEXT |
+| Issue #8 strict raw uniqueness | frozen family gate fails | NO-GO |
+| Issue #9 collision-tolerant verified screen | 32/32 final true; 8/8 cells pass | PASS constant factor, alpha=1 |
+| Issue #10 exact XOR 8+8 syndrome separability | 0 exact bits on 4/4; dense GF(2) ranks | NO-GO |
+| Exact modular-additive 8+8 separability | not yet frozen | NEXT |
 | alpha<1 | — | NOT DEMONSTRATED |
 | Full-round relevance | — | NO CLAIM |

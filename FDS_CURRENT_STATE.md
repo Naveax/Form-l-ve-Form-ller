@@ -2,21 +2,19 @@
 
 ## Canonical status — 2026-08-16
 
-Issue #8 strict raw-survivor uniqueness scaling remains **NO-GO** and is not reinterpreted.
+Issue #9 is admitted only as `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`; Issue #8 remains strict NO-GO. Leading enumeration is still `2^b`.
 
-Issue #9 `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING` completed on a separately frozen fresh protocol and **PASSed all family gates**.
+Issue #10 tested the first structural exponent hypothesis: exact XOR separability of the 16-bit boundary syndrome under a frozen b16 `W5_SINGLE` 8+8 logical key split.
 
-- generated/generic exactness: 696,320 syndrome + 696,320 direct predicates PASS;
-- fresh true-key screen survival: 32/32;
-- final exact verified set `[true]`: 32/32;
-- raw collision cases: 7/32, all eliminated by exact verification;
-- positive wall-speedup cases: 32/32;
-- W5 median wall speedup b10→16: 1.1239x, 1.2529x, 1.2734x, 1.2840x;
-- W4+W6: 1.0707x, 1.1506x, 1.1822x, 1.2023x.
+Result: **NO-GO**.
+- fresh targets: `[43051,21863,31754,45567]`;
+- exact XOR-separable bits: `0/16` on every target;
+- stable exact bits: `0`;
+- half-signature matches: `65,536` on every target;
+- raw GF(2) bit ranks: 254–256;
+- rectangle-residual ranks: 253–255.
 
-Verdict: `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`.
+Verdict: `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`. No MITM scaling stage was opened and alpha<1 remains unproven.
 
-This closes the constant-factor verified-screen extension. Leading work remains `Theta(2^b)` and alpha=1.
-
-## Next frontier
-Return to structural exponent reduction. Do not extend this family by adding more layouts/widths merely to accumulate constant-factor evidence. Next candidate: exact/low-rank half-key separability of the boundary syndrome under a separately frozen reduced-model audit.
+## Next
+A genuinely different exact ARX-compatible hypothesis may be tested on fresh targets: modular-additive half separability mod `2^16`. Do not retune XOR bits or use approximate rank to resurrect Issue #10.
