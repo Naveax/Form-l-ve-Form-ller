@@ -3,40 +3,48 @@
 ## Canonical status — 2026-08-16
 
 ### Admitted infrastructure / observations
-- Reduced-model source/orbit research framework çalışıyor.
-- Signed trail / second-layer contraction hattında exact-within-cap ve factorized yöntemler araştırıldı.
-- Pair-product HVP small-reference'a karşı exact doğrulandı; 60,672-term full HVP pratik maliyette ölçüldü.
-- Natural C2 grouping'de term-level diagonal sıfırken group-level off-diagonal support resurrection gözlendi.
-- Candidate-independent C1 observable bazı targetlarda branch-level gerçek correlation taşıyor.
-- Arbitrary 4-word C1 point evaluation için batch yaklaşımı repeated evaluation ile exact eşleşecek şekilde doğrulandı.
+- Reduced-model signed-trail / second-layer evaluation pipeline remains the current computational substrate.
+- Pair-product HVP and arbitrary-4-word C1 batch evaluation have exact small/reference checks in recovered snapshots.
+- Observable score geometry can predict **structural activity**, but that is not the same latent variable as true-key reliability.
 
-### Canonical NO-GO / not admitted
-- First-order pair gradient selector: NO-GO.
-- Positive Ritz spectral leverage selector: NO-GO.
-- Projected/truncated HVP binary selector: NO-GO.
-- Corrected DAPS batch-greedy: NO-GO.
-- Static natural C2 group selector: NO-GO.
-- Robust-min C2 selector / robust two-group seed: NO-GO.
-- Observation-conditioned top-RMS pair selector: aggregate signal var, robust gate geçmedi.
-- D-opt pair diversity: top-RMS ile 6/6 aynı set, distinct value yok.
-- 16-pair common-candidate footprint: 1/6 significant, NO-GO.
-- Pair-count scaling M16→M32→M64: M64 0/3 significant, M128/851 aynı statistic ile STOP.
-- C1-only pair sign orientation: 0/4 gate, NO-GO.
-- End-to-end work reduction: NOT ADMITTED.
-- `alpha < 1`: NOT DEMONSTRATED.
-- Full-round ChaCha break: NO.
+### Closed families
+- Static pair-gradient / spectral / projected-HVP / DAPS / natural-C2 selector families: `NO-GO`.
+- Current P-only xor-256 label-free reliability family: `NO-GO`.
+- Synthetic score-shape/C1/public-counter descriptor family: `NO_GO_CURRENT_DESCRIPTOR_FAMILY`.
+- Public xor-delta class j=6/7/8/9: `NO_GO_PUBLIC_DELTA_CLASS`.
+- Public additive counter-distance class d=1/64/256/512: `NO_GO_PUBLIC_ADDITIVE_DISTANCE`.
 
-### Latest key numbers
-- BJ fresh dev p-values: `[0.802, 0.315, 0.514, 0.603, 0.027, 0.148]`
-- BJ true-key ranks: `[510.5, 1014, 594, 703, 23, 498]`
-- BJ median rank: `552.25 / 1024`
-- M64 footprint significant: `0/3`
-- M64 p-values: approximately `[0.690, 0.899, 0.326]`
-- C1 branch corr targets `[715,677,888,910]`: approximately `[+0.304,-0.045,+0.221,+0.326]`
-- C1 pair agreement: `[56.25%,43.75%,50.00%,56.25%]`
+### Synthetic reliability audit — recovered canonical result
+24 frozen b=10 targets × 16 pairs (384 rows), six target-group folds.
+- Ridge tail-strength pooled Spearman: **0.73216**; shuffle p **0.003891**.
+- But median top-4 true-key-rank enrichment: **-0.02804**, positive targets **10/24**.
+- Direct true-key-rank ridge pooled Spearman: **-0.24693**.
+- Active-row logistic top-10 AUC: **0.3158**.
+Interpretation: descriptors learn activity, not unknown-key alignment.
+
+### Public xor-delta audit
+- Selected-delta mean true-key rank percentile: **0.53546**.
+- Median enrichment vs all 16: **+0.01101**.
+- Positive targets: **7/12**.
+- Median enrichment vs j=8: **+0.00672**.
+All preregistered gates failed.
+
+### Public additive-distance audit
+Recovered plan was completed without changing its frozen gates. 12/12 targets completed.
+- CV-selected mean rank percentile: **0.49379** (gate >=0.55).
+- Median enrichment vs all: **-0.02447** (gate >=+0.05).
+- Positive enrichment targets: **5/12** (gate >=8).
+- Median enrichment vs d=256: **+0.00868** (gate >=+0.02).
+- Secondary ridge pooled Spearman: **0.03128**.
+Verdict: `NO_GO_PUBLIC_ADDITIVE_DISTANCE`.
+
+### Still not admitted
+- True-key pair reliability learnability.
+- End-to-end work reduction.
+- `alpha < 1`.
+- Full-round relevance/break.
 
 ## Exact next milestone
+`V25_PUBLIC_COUNTER_CARRY_TRANSITION_SIGNATURE_AUDIT`
 
-`V25_SYNTHETIC_RELIABILITY_LEARNABILITY_AUDIT`
-
-Amaç: inference-time observable descriptorlarda oracle pair reliability hakkında **ölçülebilir ve fresh-target'a taşınabilir bilgi var mı** sorusunu cevaplamak. Yeni selector tasarımı bundan sonra gelir, önce değil.
+This next family uses public binary-addition carry-transition signatures of counter pairs, not another scalar distance/delta label or score-shape descriptor. The plan is frozen before oracle results are inspected.

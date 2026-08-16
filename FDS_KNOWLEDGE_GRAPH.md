@@ -1,66 +1,33 @@
 # FDS_KNOWLEDGE_GRAPH
 
-## Mandatory reading graph
+## Current dependency graph
+`validated reduced ARX/trail primitives`
+→ `signed/factorized second-layer evaluation`
+→ `pair score geometry`
 
-`README`
-→ `FDS_CONTINUE_HERE`
-→ `FDS_CURRENT_STATE`
-→ `FDS_VISION`
-→ `FDS_RESEARCH_DISCIPLINE`
-→ `FDS_CHECKLIST`
-→ `FDS_DECISION_LOG`
-→ source/results needed for the active milestone
+### Closed selector branch
+pair derivative → Ritz → projected HVP → DAPS → C2 groups → **NO-GO static selector**
 
-## Research dependency graph
+### Closed P-only reliability branch
+top-RMS → D-opt → BJ consensus → M16/32/64 → C1 orientation → **NO-GO xor-256 P-only reliability**
 
-### A. Source-conditioned representation
-`known deterministic source`
-→ finite-state/generative representation
-→ exact reconstruction contract
-→ TOTAL storage+compute accounting
+### Closed supervised descriptor branch
+score-shape/C1/public-counter descriptors
+→ 24-target grouped learnability audit
+→ structural activity learnable, true-key alignment not learnable
+→ **NO_GO_CURRENT_DESCRIPTOR_FAMILY**
 
-### B. Reduced ChaCha trail pipeline
-validated local ARX/Walsh pieces
-→ factorized/signed trail representation
-→ second-layer contraction
-→ candidate ranking signal
-→ fresh-target validation
-→ scaling/work accounting
+### Closed public pair-class branches
+public xor delta j6/j7/j8/j9 → **NO_GO_PUBLIC_DELTA_CLASS**
 
-### C. Quadratic selector branch
-pair derivative
-→ spectral leverage
-→ projected HVP
-→ DAPS
-→ natural C2 grouping
-→ robust group seed
-→ **NO-GO for robust static selector under current protocol**
+public additive distance d1/d64/d256/d512 → **NO_GO_PUBLIC_ADDITIVE_DISTANCE**
 
-### D. Observation-conditioned pair branch
-static pairs
-→ top-RMS
-→ D-opt diversity
-→ Berk–Jones/common-candidate footprint
-→ M16/32/64 scaling
-→ C1 label-free orientation
-→ **NO-GO for current P-only xor-256 reliability family**
-
-### E. Active branch
-observable descriptors
-→ oracle reliability labels on synthetic targets only
-→ grouped learnability audit
-→ permutation/target-shuffle null
-→ fresh descriptor-only transfer
-→ ranking integration only if transfer passes
+### Active branch
+public binary-addition carry-transition signature
+→ deterministic 32-pair carry-diversity pool
+→ 12 fresh targets / grouped CV
+→ distance-only control + target-block shuffle null
+→ fresh ranking validation only if every primary gate passes
 
 ## Claim dependency
-
-`alpha < 1` requires:
-1. real fresh-target work reduction,
-2. total accounting,
-3. multiple key widths,
-4. stable local slopes,
-5. confidence interval excluding 1 by preregistered rule,
-6. no hidden exponential precomputation/storage.
-
-Without all six: `ALPHA_REDUCTION_NOT_DEMONSTRATED`.
+`alpha < 1` still requires real fresh-target TOTAL work reduction across widths, stable local slopes, preregistered CI and no hidden exponential precompute/storage. None is currently admitted.

@@ -1,38 +1,29 @@
 # FDS_CHECKLIST
 
-## Repository bootstrap
-- [x] Repo canonical çalışma otoritesi olarak tanımlandı.
-- [x] 2026-08-16 ham conversation çalışma alanı byte-for-byte ZIP snapshot olarak kaydedildi.
-- [x] Raw import SHA-256 manifesti oluşturuldu.
-- [x] Vision / discipline / current state / knowledge graph / decision log yapısı oluşturuldu.
-- [x] 8-adımlık self-continuation zinciri oluşturuldu.
+## Closed research
+- [x] Static quadratic selector family closed.
+- [x] P-only xor-256 reliability family closed.
+- [x] 24-target synthetic reliability learnability audit recovered and admitted as `NO_GO_CURRENT_DESCRIPTOR_FAMILY`.
+- [x] Balanced j6/j7/j8/j9 public delta audit recovered and admitted as `NO_GO_PUBLIC_DELTA_CLASS`.
+- [x] Frozen additive-distance plan recovered.
+- [x] target563 continuity re-run matched `16 / 10 / 2`.
+- [x] Remaining 11 additive targets completed.
+- [x] Additive primary gate evaluated: 4/4 gate components failed.
+- [x] Additive secondary ridge checked; no rescue.
+- [x] `NO_GO_PUBLIC_ADDITIVE_DISTANCE` recorded.
 
-## Current research closure
-- [x] Static pair-gradient family falsified.
-- [x] Spectral leverage family falsified.
-- [x] Projected HVP selector falsified.
-- [x] DAPS corrected + falsified.
-- [x] Natural C2 group rescue measured.
-- [x] Static/robust C2 group selectors falsified.
-- [x] Top-RMS pair selector fresh gate completed.
-- [x] D-opt redundancy falsifier completed.
-- [x] Common-candidate Berk–Jones identifiability gate completed.
-- [x] M16→32→64 pair-count scaling completed.
-- [x] C1-only sign-orientation gate completed.
-
-## Next milestone — Synthetic reliability learnability
-- [ ] Freeze 24 synthetic target IDs/seeds before descriptor extraction.
-- [ ] Freeze 16 pair pool and descriptor schema.
-- [ ] Build corpus without mixing inference descriptors and oracle labels.
-- [ ] Implement target-shuffle + row-permutation nulls.
-- [ ] Run single-feature monotone baselines.
-- [ ] Run fixed-regularization ridge/logistic grouped CV.
-- [ ] Compare predictive transfer against preregistered effect gate.
-- [ ] If PASS: freeze mapping and open untouched fresh-target ranking validation.
-- [ ] If FAIL: mark observable-reliability branch `NO_GO_IDENTIFIABILITY`.
+## Active — carry-transition signature
+- [x] Freeze public feature definitions before oracle measurement.
+- [x] Freeze deterministic 32-pair pool before oracle measurement.
+- [x] Freeze 12 fresh targets / 3 folds before oracle measurement.
+- [x] Freeze Ridge, distance-only control, shuffle null and all primary gates.
+- [ ] Build 12-target carry corpus.
+- [ ] Run grouped carry-vs-distance control CV.
+- [ ] Run 256 target-block shuffle null.
+- [ ] Evaluate every primary gate.
+- [ ] PASS -> untouched fresh ranking validation; FAIL -> close family.
+- [ ] TOTAL accounting + result cert/manifest.
 
 ## Always
-- [ ] Update `FDS_CONTINUE_HERE.md` after admitted/killed milestone.
-- [ ] Update `FDS_CURRENT_STATE.md` and `FDS_DECISION_LOG.md`.
-- [ ] Commit source/tests/results/manifests.
-- [ ] Never silently promote post-hoc exploratory data.
+- [ ] Update authority files after each admitted/killed milestone.
+- [ ] Keep Issue #2 open until exact raw binary bundle is cryptographically materialized.

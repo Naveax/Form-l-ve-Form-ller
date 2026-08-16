@@ -1,13 +1,16 @@
 # FDS_DECISION_LOG
 
 ## 2026-08-16 — Repository bootstrap
-**Decision:** GitHub becomes the persistent canonical authority. Local compute remains allowed, but admitted/killed milestones must return source/tests/results/manifest/continuity to the repo.
+GitHub is persistent authority; local compute is allowed, authority returns to the repo.
 
-## 2026-08-16 — Static quadratic selector family
-**Decision:** NO-GO under current reduced q138 protocol. First-order pair derivative, positive Ritz leverage, projected HVP, corrected DAPS and natural/robust C2 grouping did not deliver robust fresh-target dominance.
+## 2026-08-16 — Recovered synthetic reliability milestone
+Library recovery showed Issue #1 had already been executed in a prior session. 24-target grouped audit learned structural activity but failed true-key pair-reliability enrichment. Decision: `NO_GO_CURRENT_DESCRIPTOR_FAMILY`.
 
-## 2026-08-16 — Observation-conditioned xor-256 pair reliability
-**Decision:** Current P-only label-free family is NO-GO. Top-RMS improved aggregate ranks but failed robust paired gate. D-opt collapsed to top-RMS. Common-candidate footprint was significant only 1/6 fresh targets. Increasing pair count to M64 yielded 0/3 significance. C1-only pair sign orientation passed 0/4 target gate.
+## 2026-08-16 — Recovered public xor-delta milestone
+Balanced j6/j7/j8/j9 target-group CV failed every preregistered public-delta gate. Decision: `NO_GO_PUBLIC_DELTA_CLASS`.
 
-## 2026-08-16 — Next research branch
-**Decision:** Do not ask for another unsupervised metric yet. First test whether inference-observable descriptors contain learnable information about oracle pair reliability over a larger synthetic-key corpus. If predictability is indistinguishable from shuffle/permutation null, close the observable-reliability branch as non-identifiable for this reduced system.
+## 2026-08-16 — Additive counter-distance milestone
+Recovered frozen d1/d64/d256/d512 plan. target563 continuity matched prior counts; remaining 11 targets executed without gate changes. Primary results: mean 0.49379, median enrichment vs all -0.02447, 5/12 positive, median enrichment vs d256 +0.00868. All four gates failed. Decision: `NO_GO_PUBLIC_ADDITIVE_DISTANCE`.
+
+## 2026-08-16 — Next family
+Open `V25_PUBLIC_COUNTER_CARRY_TRANSITION_SIGNATURE_AUDIT`. It tests binary-addition carry-transition structure, not another scalar delta/distance label. Public-only feature definitions, pair pool, targets, model, null and gates are frozen before oracle measurement.

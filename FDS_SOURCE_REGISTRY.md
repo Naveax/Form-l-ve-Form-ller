@@ -1,35 +1,19 @@
 # FDS_SOURCE_REGISTRY
 
-Bu registry araştırmada kullanılan bilgi sınıflarını ayırır. Bir iddia yalnız burada veya ilgili milestone manifestinde kaynak sınıfıyla eşleşiyorsa canonical sayılır.
+## Classes
+`MEASURED_LOCAL`, `VERIFIED_REFERENCE`, `FROZEN_PROTOCOL`, `AI_HYPOTHESIS`, `EXTERNAL_SOURCE`, `HISTORICAL_RECOVERED`, `EXPLORATORY_POST_HOC`, `KILLED_FAMILY`.
 
-## Sınıflar
-
-- `MEASURED_LOCAL`: yerel kodla gerçekten ölçülmüş sonuç.
-- `VERIFIED_REFERENCE`: küçük/toy/reference uygulamayla exact eşleşme.
-- `FROZEN_PROTOCOL`: sonuç görülmeden sabitlenmiş split/metric/gate.
-- `AI_HYPOTHESIS`: bağımsız model önerisi; deney yapılmadan gerçek kabul edilmez.
-- `EXTERNAL_SOURCE`: paper/docs/web kaynağı; tarih/URL/versiyon kaydedilir.
-- `HISTORICAL`: eski sohbet/deney; current authority ile çelişirse current kazanır.
-- `EXPLORATORY_POST_HOC`: sonuç görüldükten sonra hesaplanan diagnostic; promotion için kullanılamaz.
-- `KILLED_FAMILY`: falsifier/gate ile kapatılmış araştırma ailesi.
-
-## Current authority sources
-
-| ID | Class | Scope | Current status |
+## Current authority
+| ID | Class | Scope | Status |
 |---|---|---|---|
-| SRC-CURRENT-001 | MEASURED_LOCAL | BJ common-candidate 16-pair fresh development | 1/6 significant; NO-GO |
-| SRC-CURRENT-002 | MEASURED_LOCAL | Nested pair count M16/M32/M64 | M64 0/3 significant; expansion stopped |
-| SRC-CURRENT-003 | MEASURED_LOCAL | C1 label-free orientation | branch signal target-dependent; pair gate 0/4 |
-| SRC-CURRENT-004 | VERIFIED_REFERENCE | pair-product HVP | small explicit reference exact |
-| SRC-CURRENT-005 | VERIFIED_REFERENCE | arbitrary-4-word C1 batch point evaluation | repeated evaluator exact |
-| SRC-CURRENT-006 | FROZEN_PROTOCOL | synthetic reliability learnability | next unfinished canonical pass |
-| SRC-HISTORY-001 | HISTORICAL | prior chat/import bundle | archived/hash-indexed; not automatically current |
-| SRC-AI-001 | AI_HYPOTHESIS | multi-model FDS reviews | hypotheses only until locally falsified/verified |
+| SRC-V25-SYNREL | HISTORICAL_RECOVERED + MEASURED_LOCAL | 24-target synthetic reliability snapshot recovered from ChatGPT Library | `NO_GO_CURRENT_DESCRIPTOR_FAMILY` |
+| SRC-V25-MDELTA | HISTORICAL_RECOVERED + MEASURED_LOCAL | j6/j7/j8/j9 balanced public xor-delta audit | `NO_GO_PUBLIC_DELTA_CLASS` |
+| SRC-V25-ADDDIST | MEASURED_LOCAL | d1/d64/d256/d512 additive-distance audit completed from frozen recovered plan | `NO_GO_PUBLIC_ADDITIVE_DISTANCE` |
+| SRC-V25-CARRY-PLAN | FROZEN_PROTOCOL | public counter carry-transition signature audit | ACTIVE NEXT |
+| SRC-RAW-20260816 | HISTORICAL_RECOVERED | 94-file raw bootstrap manifest | binary bundle materialization tracked by Issue #2 |
 
-## Raw history
+## Recovery rule
+Library snapshots are not silently treated as current. Their progress/decision/plan files were read, source was materialized where needed, and additive target563 was re-run to match the previously recorded `16 pairs / 10 nonzero / 2 top10` continuity counts before the remaining frozen targets were executed.
 
-Bootstrap sırasında mevcut çalışma alanı 94 dosya / 4,341,402 byte olarak hash'lendi. Compact authority record `archive/RAW_IMPORT_MANIFEST.json` içindedir. Binary bulk snapshotın GitHub connector üzerinden doğrudan file-parameter aktarımı desteklenmediği için raw bytes current committe source-of-truth olarak kullanılmaz; historical claims gerektiğinde original conversation files veya yeniden materialize edilen bundle ile hash karşılaştırması yapılır.
-
-## Rule
-
-Yeni milestone kapanırken bu registry güncellenir. AI önerisi doğrudan `MEASURED_LOCAL` statüsüne terfi edemez; arada kod/deney/falsifier gerekir.
+## Promotion rule
+AI hypotheses or post-hoc class effects cannot become measured authority without frozen code/experiment. Killed families stay killed unless a genuinely new observable mechanism is introduced.

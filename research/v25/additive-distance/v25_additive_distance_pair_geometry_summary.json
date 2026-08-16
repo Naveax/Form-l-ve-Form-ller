@@ -1,0 +1,12 @@
+{
+  "milestone":"V25_ADDITIVE_COUNTER_DISTANCE_PAIR_GEOMETRY",
+  "status":"NO_GO_PUBLIC_ADDITIVE_DISTANCE",
+  "targets":[563,104,367,438,559,832,490,204,90,539,643,647],
+  "pair_count":16,
+  "wall_total_s":273.75018334388733,
+  "wall_median_s":22.667941212654114,
+  "peak_rss_max_kb":538588,
+  "primary":{"selected_mean_rank_percentile":0.4937886933854676,"median_enrichment_vs_all":-0.02446847507331379,"positive_enrichment_targets":5,"median_enrichment_vs_d256":0.008675464320625631,"gate_pass":false},
+  "secondary_ridge":{"pooled_spearman":0.0312849528324208,"per_target_median_spearman":0.011992787425010122},
+  "class_mean":{"d1":0.5566552623004236,"d64":0.4920373085695666,"d256":0.4895120560443141,"d512":0.5081256109481916}
+}
