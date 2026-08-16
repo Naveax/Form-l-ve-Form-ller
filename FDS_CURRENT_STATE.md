@@ -14,12 +14,33 @@ Important limit: these are exact signed marginals, not a complete joint second-l
 
 `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` is frozen. The cap2 factorized path, independent explicit-global-before-marginalization reference path, and all-four-column `1e-12` regression have been committed.
 
-A reproducibility blocker was found before new measurement: current Git `main` does not contain the recovered `fds_v25_bit_puncturing.py` source required by both the admitted Stage0 source and the active falsifier. The expected recovered core SHA-256 is `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`. The current conversation mount also lacks the recovered snapshot/source, while `archive/RAW_IMPORT_STATUS.md` records that historical bulk ZIP bytes were not Git objects.
+## Current blocker — exact historical runtime bytes
 
-This is a source-rematerialization blocker, not a mathematical NO-GO. No cap2/cap3 transform measurement is claimed until the exact source is restored, its SHA is verified, and the historical 19/19 baseline is re-run.
+The exact recovered `fds_v25_bit_puncturing.py` source required by the admitted Stage0 source and active falsifier is not present in current Git `main` or the current conversation mount.
+
+Canonical recovery authority:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_MISSING_CANONICAL_BYTES.md`
+- GitHub Issue #22
+
+Required identities:
+
+- snapshot `FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip` SHA-256: `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`
+- core `fds_v25_bit_puncturing.py` SHA-256: `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`
+
+The 2026-08-16 current conversation `/mnt/data` mount, including nested ZIP contents, was recursively SHA-scanned for both hashes and returned `0 matches`.
+
+Historical transcript text records the hashes and recovered result lineage but does not provide a verified byte-identical core.
+
+This is a source-rematerialization/provenance blocker, **not a mathematical NO-GO**. Do not substitute a rewritten core silently.
 
 ## Next
 
-Re-materialize the exact recovered core, verify provenance, restore runtime dependencies, re-run 19/19, then execute the frozen cap2 all-column transform regression. Only cap2 PASS opens the packed cap3 measurement under the existing 2 GiB RSS / 1 GiB compact gates.
+1. Obtain historical backup ZIP/source bytes.
+2. Run `scripts/rematerialize_v25_trail_dac.py <candidate-path> --restore`.
+3. Require exact snapshot/core SHA matches.
+4. Restore dependencies and reproduce historical `19/19 PASS`.
+5. Execute frozen cap2 all-column transform regression.
+6. Only cap2 PASS opens packed cap3 measurement under 2 GiB RSS / 1 GiB compact gates.
 
 Still not admitted: full second-layer contraction, four-inverse-round exact energy, end-to-end ranking reduction, alpha<1, or full-round relevance.
