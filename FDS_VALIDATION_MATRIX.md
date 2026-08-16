@@ -2,11 +2,10 @@
 
 | Family | Result | Verdict |
 |---|---|---|
-| Boundary syndrome b10..16 word4 | exact/QR/wall PASS | constant-factor win admitted |
-| Layout QR transfer b10 | 5/5 non-control PASS | broad QR transfer |
-| Generic layout wall | 0/5 PASS | NO-GO |
-| Specialized codegen exactness | 98,304 fresh checks PASS | exact |
-| Specialized codegen b10 wall | 4/5 non-control PASS | broad non-universal wall realization |
-| Multi-layout codegen scaling b10..16 | frozen, not measured | ACTIVE NEXT |
-| alpha<1 | leading `2^b` | NOT DEMONSTRATED; alpha=1 |
-| full-round | — | NO CLAIM |
+| Boundary syndrome / b10 codegen | frozen fresh gates PASS | constant-factor win admitted |
+| Broad b10 QR layout transfer | 5/5 non-control PASS | admitted |
+| Broad b10 specialized wall | 4/5 non-control PASS | admitted, non-universal |
+| Strict W5 + W4/W6 b10→16 scaling | full exactness PASS; raw survivor uniqueness fails at multiple b | NO-GO strict family gate |
+| Collision-tolerant verified scaling | new fresh protocol not yet measured | ACTIVE NEXT |
+| alpha<1 | leading 2^b enumeration | NOT DEMONSTRATED; alpha=1 |
+| full-round relevance | — | NO CLAIM |

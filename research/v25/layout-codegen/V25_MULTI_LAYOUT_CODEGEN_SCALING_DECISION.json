@@ -1,0 +1,13 @@
+{
+  "milestone":"V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16",
+  "status":"NO_GO_STRICT_MULTI_LAYOUT_SCALING_GATE",
+  "exactness":{"full_syndrome":522240,"direct_predicate":522240},
+  "strict_pass_widths":{"W5_SINGLE":2,"W4_W6_SPLIT":2},
+  "family_gate_pass":false,
+  "verified_unique_all_targets":true,
+  "true_survival_all_targets":true,
+  "wall_positive_all_targets":true,
+  "not_admitted":["STRICT_MULTI_LAYOUT_B10_B16_GENERALIZATION","ALPHA_REDUCTION","FULL_ROUND_RELEVANCE"],
+  "preserved_prior_claims":["BROAD_B10_QR_LAYOUT_TRANSFER","BROAD_NONUNIVERSAL_B10_CODEGEN_WALL_REALIZATION"],
+  "next":"V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING"
+}

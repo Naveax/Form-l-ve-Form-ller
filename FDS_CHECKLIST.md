@@ -1,12 +1,12 @@
 # FDS_CHECKLIST
 
-- [x] Boundary syndrome constant-factor QR/wall win.
-- [x] Broad QR layout transfer 5/5 non-control.
-- [x] Generic Python wall transfer NO-GO.
-- [x] Straight-line codegen exactness 49,152+49,152 PASS.
-- [x] Codegen wall realization 4/5 non-control PASS by frozen broad rule.
-- [x] Fresh multi-layout scaling targets/repeats frozen.
-- [ ] Full exactness W5/W4+W6 across b10/12/14/16.
-- [ ] Frozen scaling wall benchmark.
-- [ ] Fit/report slopes and TOTAL.
-- [ ] Close scaling milestone + continuity.
+- [x] Boundary constant-factor win admitted.
+- [x] Broad b10 QR layout transfer admitted.
+- [x] Broad non-universal b10 codegen wall realization admitted.
+- [x] Multi-layout b10→16 full exactness: 522,240+522,240 PASS.
+- [x] Frozen strict scaling gate evaluated without retuning.
+- [x] Strict scaling family marked NO-GO.
+- [x] Verify all extra syndrome collisions are eliminated by direct verifier.
+- [ ] Freeze fresh collision-tolerant verified-screen scaling plan.
+- [ ] Full exactness + TOTAL QR/wall on fresh targets.
+- [ ] Close follow-on without changing alpha/full-round boundaries.

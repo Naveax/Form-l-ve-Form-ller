@@ -2,13 +2,13 @@
 
 ## Canonical status — 2026-08-16
 
-`ADMIT_BROAD_NONUNIVERSAL_WALL_REALIZATION`.
+The b=10 boundary-syndrome/codegen claims remain admitted: broad QR transfer across tested layouts and broad non-universal specialized wall realization.
 
-Boundary syndrome QR transfer is broad across all five tested non-control b=10 layouts. Layout-specialized straight-line codegen realizes a real wall win on 4/5 non-control layouts: W5 1.113x, W6 1.128x, W7 1.122x, W4+W6 1.075x. W4+W8 fails at 1.008x, so the claim is broad but not universal.
+The frozen `V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16` strict family gate is **NO-GO**. Full generated/generic exactness passed 522,240 syndrome values + 522,240 direct predicates, and wall/QR savings remained positive, but the 16-bit syndrome occasionally leaves a second raw survivor. W5 strict passes only b12/b14; W4+W6 strict passes only b10/b14.
 
-Generated-vs-generic exactness: 49,152 full syndrome and 49,152 direct predicates PASS. Generator source 12,032 bytes; generation+compile ~14 ms.
+Every extra collision was removed by the exact direct verifier; verified sets were uniquely true for every frozen target. That observation cannot rescue the failed strict milestone.
 
-Leading candidate enumeration remains `2^b`; alpha=1. No full-round claim.
+Leading enumeration remains `2^b`; alpha=1. No full-round claim.
 
 ## Exact next
-`V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16`: W5_SINGLE and W4_W6_SPLIT at b=10/12/14/16 on already frozen targets.
+Open a separate fresh `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING` protocol that judges the already-accounted end-to-end verified candidate set and TOTAL cost, not raw syndrome uniqueness.
