@@ -15,41 +15,45 @@ Established source-independent results now include:
 2. one interior addition-bit tensor: exact optimal transverse TT profile `[2,3,3,2]`, so minimal maximum local TT bond dimension 3;
 3. q138 rotation/carry amplification explains huge explicit support without implying huge local generative state;
 4. full exact Parseval/orthogonality and controlled-error/residual-Gram/epsilon-rank calculus remain available for approximation work;
-5. fused-site QR path cutwidth 44 and fused-site carving width 42 are exact **only for the fused-site representation**;
-6. exact local site refinement gives a 64-factor network with a balanced 41-bond cut, proving 42 is not a universal lower bound for the full factor network;
-7. keeping the original addition-bit factors separate refines the network further; smaller balanced cuts exist, but the full refined contraction-tree optimum is not yet certified;
-8. conditioning long-range wrap variables gives an independent exact 24-state-bit DP memory route with outer boundary enumeration.
+5. fused-site QR path cutwidth 44 and fused-site carving width 42 are exact only for the fused-site representation;
+6. minimal-rank TT-core refinement now gives a complete machine-verified exact one-QR contraction tree with maximum message dimension `2^41`;
+7. the width-41 certificate contains all 568 leaves / 567 internal nodes and is checked by an independent verifier that recomputes local rational TT ranks and every boundary dimension;
+8. exploratory width-40 cuts exist but no complete width-40 tree is admitted;
+9. conditioning long-range wrap variables remains an independent exact 24-state-bit DP memory route with outer boundary enumeration.
 
 Read especially:
 
-- `V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`
-- `V26_MODADD_LOCAL_TT_RANK_THEOREM.md`
-- `V26_EXACT_QR_PATHWIDTH_THEOREM.md`
-- `V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`
-- `V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`
-- `V26_QR_SITE_FUSION_REFINEMENT.md`
-- `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`
-- plus the Parseval, residual-Gram, epsilon-rank and error-exponent notes.
+- `research/v26/recovered-bit-puncturing-dac/V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_MODADD_LOCAL_TT_RANK_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_EXACT_QR_PATHWIDTH_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_SITE_FUSION_REFINEMENT.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json`
+- `scripts/verify_v26_qr_minimal_core_width41.py`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`
 
 ## First unfinished mathematical pass
 
-The next distinct mechanism is **global contraction of minimal-rank local cores**.
+The minimal-core global-width pass has succeeded at `W <= 41`. The next pass is now **width-40-or-separator-rank**.
 
 Work in this order:
 
-1. decompose every interior modular-addition bit tensor into an exact TT with current sigma in the center and bond profile `[2,3,3,2]`;
-2. rebuild one fixed-input/fixed-output QR network from those cores, preserving XOR/rotation constraints explicitly rather than collapsing them into oversized hyperfactors;
-3. compute a rigorous global contraction-width upper bound and compare it to 44/42 fused-site baselines;
-4. if the width drops, identify which bond-3 core placement causes the reduction and derive it algebraically;
-5. if topology remains large, compute separator Schmidt/rank structure before any approximation;
-6. only after the exact minimal-core route is exhausted should epsilon-rank/tail truncation become the active mechanism.
+1. run/inspect the width-41 verifier first; treat it as the exact baseline;
+2. freeze `W <= 40` as the next exact topology target and require a complete 568-leaf tree, not isolated low-boundary cuts;
+3. reuse the current minimal-core orders unless a different exact local order is explicitly preregistered;
+4. if width-40 search stalls, stop spending effort on graph ordering and analyze the certified 340-leaf width-41 bottleneck cluster algebraically;
+5. derive exact GF(2) parity sectors, nonlinear sigma-support constraints, and Schmidt/matrix rank bounds for its boundary message;
+6. only if exact separator rank remains too large, move to certified singular-value/epsilon-rank with an explicit residual budget;
+7. separately examine the 20 conditioned wrap variables for exact meet-in-the-middle / reusable boundary-transfer structure that reduces total work, not only memory.
 
-Do **not** cite fused-site carving width 42 as a lower bound for the full exact QR tensor network. It is a certified value for one exact but over-fused representation.
+The success condition for the next exact pass is either:
 
-A successful pass must either:
+- a machine-verifiable complete tree with `W <= 40`; or
+- a rigorous algebraic message-rank reduction below the formal `2^41` width-41 boundary space.
 
-- produce a rigorously smaller exact global width/representation using minimal-rank cores; or
-- close that precise refinement as insufficient and state the remaining separator-rank bottleneck.
+Do not report partial width-40 cuts as a global result.
 
 ## Measured execution remains frozen behind provenance
 
@@ -74,4 +78,4 @@ When bytes become available:
 4. run the already-frozen cap2 all-four-column QR regression;
 5. only PASS opens packed cap3 under the existing `2 GiB RSS / 1 GiB compact` gates.
 
-Still no admitted full second-layer solution, ranking gain, alpha<1, or full-round relevance.
+Still no admitted practical exact QR evaluation, full second-layer solution, ranking gain, alpha<1, or full-round relevance.
