@@ -1,0 +1,21 @@
+{
+  "milestone":"V26_COUNTER_SECOND_DIFFERENCE_ANF_AUDIT",
+  "frozen_before_measurement":true,
+  "novelty":"Exact second finite difference across three counter-separated blocks; higher-order derivative distinct from the failed first-difference/feed-forward-cancelled family.",
+  "scope":"controlled reduced ChaCha only; target-free forward-map structural falsifier",
+  "rounds":{"control":4,"primary":6},
+  "key_widths":[8,10,12,14,16],
+  "key_map":"existing reduced_key_multiword(k,b)",
+  "counters":[1,257,513],
+  "stride":256,
+  "single_control":"Z_single(k)=block_words(k,1,R)",
+  "second_difference":"D2_w(k)=(Z_w(k,513)-2*Z_w(k,257)+Z_w(k,1)) mod 2^32. The linear feed-forward counter term cancels exactly without a manual delta term.",
+  "outputs":"all 512 output bits",
+  "exact_method":"Complete 2^b truth table for every output bit; exact GF(2) Mobius transform; record algebraic degree, monomial support, support exponent.",
+  "stable_sparse_bit_rule":"degree<=6 and support exponent<=0.75 at both b14 and b16 for the R6 second-difference map",
+  "primary_gate":{"r6_b16_median_bitwise_degree_reduction_vs_single_min":2.0,"r6_b16_median_bitwise_support_exponent_reduction_vs_single_min":0.10,"r6_stable_sparse_bits_b14_b16_min":16},
+  "secondary_control":"R4 and comparison to the already-closed first-difference map are diagnostic only and cannot rescue R6 primary failure.",
+  "stage1_only_if_pass":"Freeze fresh polynomial-solving/TOTAL scaling using only stable positions. Bill truth-table or monomial preprocessing, storage, solve and exact verification. No alpha claim from Stage0 alone.",
+  "kill_rule":"If any R6 primary gate fails, close the second-difference ANF family. No alternate stride/counter triplet/output subset/threshold or second development set.",
+  "forbidden":"No target/output selection, approximate ANF, post-hoc derivative order or stride tuning, PNB/inverse-relation reinterpretation, or full-round claim."
+}
