@@ -1,0 +1,9 @@
+{
+  "milestone":"V25_REDUCED_QUARTER_ROUND_WALSH_TRAIL_VALIDATION",
+  "status":"NO_GO_QR_TRAIL_BEAM4096_QUALITY",
+  "regression":"n2 coefficient-wise exact PASS",
+  "primary_gates":{"cosine_all":false,"support_all":false,"coeff_all":true,"ratio_all":true},
+  "stage1_opened":false,
+  "not_admitted":["Q138_TRAIL_INTEGRATION","END_TO_END_WORK_REDUCTION","ALPHA_LT_1","FULL_ROUND_RELEVANCE"],
+  "next":"RECOVER_LATER_BIT_PUNCTURING_TRAIL_SECOND_LAYER_AUTHORITY_BEFORE_NEW_DESIGN"
+}

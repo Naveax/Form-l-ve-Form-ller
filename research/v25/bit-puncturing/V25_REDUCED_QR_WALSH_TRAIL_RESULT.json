@@ -1,0 +1,9 @@
+{
+  "milestone":"V25_REDUCED_QUARTER_ROUND_WALSH_TRAIL_VALIDATION",
+  "status":"NO_GO_QR_TRAIL_BEAM4096_QUALITY",
+  "word_bits":5,
+  "exact_truth_table_size":1048576,
+  "beam4096":{"A0":{"spectral_cosine_sq":1.0,"exact_support_energy":1.0,"final_coefficients":700,"raw_expansions_total":724},"B1":{"spectral_cosine_sq":0.789060725936553,"exact_support_energy":0.7898624278604984,"final_coefficients":4096,"raw_expansions_total":228232},"C2":{"spectral_cosine_sq":0.881276395358758,"exact_support_energy":0.8819392919540405,"final_coefficients":4096,"raw_expansions_total":175498},"D3":{"spectral_cosine_sq":1.0,"exact_support_energy":1.0,"final_coefficients":1060,"raw_expansions_total":1084}},
+  "primary_gates":{"cosine_all":false,"support_all":false,"coeff_all":true,"ratio_all":true},
+  "stage1_opened":false
+}

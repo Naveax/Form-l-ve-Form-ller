@@ -1,0 +1,7 @@
+{
+  "milestone":"V25_REDUCED_QUARTER_ROUND_WALSH_TRAIL_VALIDATION",
+  "plan_commit":"c18c78c0165b72fed690e345342f1f81f39c8dea",
+  "tests":"11/11 combined PASS",
+  "n2_full_spectrum":"coefficient-wise exact within 1e-12",
+  "stage1_opened":false
+}
