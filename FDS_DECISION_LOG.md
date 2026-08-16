@@ -1,12 +1,10 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issue #9 collision-tolerant verified screening
-Fresh end-to-end protocol passed every constant-factor gate. Issue #8 remains NO-GO. Algorithmic alpha remains 1.
+## 2026-08-16 — Issue #10 XOR half separability
+0 exact bits on every fresh target; dense GF(2) ranks. `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`.
 
-## 2026-08-16 — Issue #10 exact XOR half-key separability
-Frozen b16 W5_SINGLE 8+8 audit built complete 256×256 syndrome tables for four fresh targets. No target had even one exact XOR-separable syndrome bit; stable exact bits = 0. Raw GF(2) ranks were 254–256 and rectangle residual ranks 253–255. The half-signature constraint therefore retained all 65,536 pairs.
-
-Decision: `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`. No MITM scaling stage and no alpha claim.
+## 2026-08-16 — Issue #11 modular-additive half separability
+Fresh b16 W5 8+8 tables showed no exact modular-additive width even at m4. Zero residual fraction at m4 was only ~6.9%; no common exact width; match set remains 65,536. `NO_GO_SIMPLE_MODULAR_8P8_SEPARABILITY`.
 
 ## Next
-Only genuinely different exact algebraic decompositions may open. First candidate: modular-additive separability mod 2^16 on a separately frozen fresh protocol.
+Audit exact dependency separation across internal boundaries with the two logical halves placed in separate key/state words. This targets a real bidirectional MITM prerequisite rather than another output transform.

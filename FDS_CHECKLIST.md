@@ -1,16 +1,13 @@
 # FDS_CHECKLIST
 
 ## Closed
-- [x] Issue #9 collision-tolerant constant-factor verified screen PASS; alpha=1.
-- [x] Issue #10 b16 W5 8+8 plan frozen before results.
-- [x] Four complete 256×256 syndrome tables evaluated.
-- [x] Exact XOR rectangle test completed.
-- [x] Stable exact bit count = 0; primary gate failed.
-- [x] GF(2) ranks dense (raw 254–256, residual 253–255).
-- [x] `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`; no scaling stage.
+- [x] Issue #9 constant-factor verified screening PASS, alpha=1.
+- [x] Issue #10 exact XOR half separability NO-GO.
+- [x] Issue #11 exact modular-additive half separability NO-GO; even m4 not exact.
 
-## Next structural family
-- [ ] Freeze exact modular-additive 8+8 plan on fresh targets.
-- [ ] Evaluate full modular rectangle residual.
-- [ ] Derive exact half matching only if primary residual is identically zero.
-- [ ] Explicit TOTAL accounting before any alpha claim.
+## Next structural audit
+- [ ] Freeze W4_W6_SPLIT disjoint-half dependency plan.
+- [ ] Enumerate all 80 internal cones.
+- [ ] Compute forward/backward active-half support sets.
+- [ ] PASS only on exact disjoint nonempty `{low}` / `{high}` support.
+- [ ] Numerical MITM only if structural prerequisite passes.

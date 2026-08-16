@@ -2,19 +2,13 @@
 
 ## Canonical status — 2026-08-16
 
-Issue #9 is admitted only as `PASS_COLLISION_TOLERANT_CONSTANT_FACTOR_ALPHA1`; Issue #8 remains strict NO-GO. Leading enumeration is still `2^b`.
+Issue #9 remains an admitted collision-tolerant **constant-factor** reduced-model screen; alpha=1. Issue #8 strict raw uniqueness remains NO-GO.
 
-Issue #10 tested the first structural exponent hypothesis: exact XOR separability of the 16-bit boundary syndrome under a frozen b16 `W5_SINGLE` 8+8 logical key split.
+Structural exponent audits:
+- Issue #10 exact XOR 8+8 separability: NO-GO, 0 exact bits on 4/4 targets, dense GF(2) ranks.
+- Issue #11 exact modular-additive 8+8 separability: NO-GO. No target is exact even at modulus 2^4; common exact width=0; 65,536 matches remain.
 
-Result: **NO-GO**.
-- fresh targets: `[43051,21863,31754,45567]`;
-- exact XOR-separable bits: `0/16` on every target;
-- stable exact bits: `0`;
-- half-signature matches: `65,536` on every target;
-- raw GF(2) bit ranks: 254–256;
-- rectangle-residual ranks: 253–255.
-
-Verdict: `NO_GO_SIMPLE_8P8_XOR_SEPARABILITY`. No MITM scaling stage was opened and alpha<1 remains unproven.
+No alpha<1 result exists.
 
 ## Next
-A genuinely different exact ARX-compatible hypothesis may be tested on fresh targets: modular-additive half separability mod `2^16`. Do not retune XOR bits or use approximate rank to resurrect Issue #10.
+Move from output-function factorization to structural dependency separation. Audit all 80 internal `(split,word)` cones for `W4_W6_SPLIT`: does the forward boundary depend on only one 8-bit key half while the backward boundary depends only on the other, with disjoint active-word support? This is a target-free exact prerequisite for a genuine bidirectional MITM.

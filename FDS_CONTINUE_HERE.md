@@ -1,16 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** Issue #10 exact XOR 8+8 separability NO-GO; Issue #9 constant-factor PASS; alpha still 1.  
-**Active:** `V25_BOUNDARY_SYNDROME_MODULAR_HALF_SEPARABILITY_AUDIT`.
+**State:** Issues #10 XOR and #11 modular 8+8 separability are NO-GO; Issue #9 constant-factor PASS; alpha=1.  
+**Next:** freeze exact disjoint-half dependency-cone MITM audit.
 
-1. Use frozen modular plan under `research/v25/modular-half-separability/`.
-2. W5_SINGLE b16, logical 8+8, fresh targets `[50991,1272,39506,19952]` only.
-3. Build exact 256×256 low16 syndrome table per target.
-4. Test modular rectangle residual for m=`4,8,12,16`.
-5. Select largest m exact on all four targets; PASS requires m>=8, true half-pair retained 4/4 and <=512 matches on every target.
-6. Residual concentration/2-adic diagnostics cannot rescue exact FAIL.
-7. Only on PASS open a separately frozen MITM TOTAL scaling stage.
-8. On FAIL close this simple modular-additive family; no second target set.
-9. Commit source/tests/results/decision/manifest + continuity.
-
-No alpha<1/full-round claim from this structural audit alone.
+1. New audit is structural/target-free first.
+2. Use b16 logical halves placed in separate active state words via `W4_W6_SPLIT` (low half word4, high half word6).
+3. Enumerate all 80 split1..5 / word0..15 cones.
+4. For each cone derive active key-half support needed by forward initial-state cone and backward implied-final-state cone.
+5. Primary structural PASS requires the two sides to be nonempty, disjoint, and together cover both halves, i.e. `{low}` vs `{high}` in either orientation.
+6. Only such a cone may open exact numerical MITM equality and TOTAL tests.
+7. If none exists, close simple single-boundary dependency-separated MITM immediately.
+8. No target tuning or approximate dependency rescue.

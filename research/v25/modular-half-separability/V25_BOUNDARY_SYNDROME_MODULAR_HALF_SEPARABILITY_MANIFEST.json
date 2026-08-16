@@ -1,0 +1,6 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_MODULAR_HALF_SEPARABILITY_AUDIT",
+  "plan_commit":"ceb2f7229d2f9941772cd105a9d2c65b83ff756c",
+  "tests":"2/2 synthetic modular rectangle math PASS",
+  "sha256":{"local_evaluator":"82b1aac4afc642be98cc022371e687b2066b244ac1b13703a53209b2f126f7b2","math_test":"0eed8374ef7e5e755bb098b62e72bc43669688e8ea771e338fd3df72d7ca2329","full_local_result":"1510d46d6e61e9b40f9c7a5b31f8f596265c53f462076644da0f5f8f44a7265e","decision":"1c6a9c5df75e78ac5c717ca6448e14a77ff8a923b6c272c3f86c289fcfd9ac31"}
+}

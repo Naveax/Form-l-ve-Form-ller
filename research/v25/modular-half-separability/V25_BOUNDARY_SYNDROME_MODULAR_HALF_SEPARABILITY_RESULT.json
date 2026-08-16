@@ -1,0 +1,13 @@
+{
+  "milestone":"V25_BOUNDARY_SYNDROME_MODULAR_HALF_SEPARABILITY_AUDIT",
+  "status":"NO_GO_SIMPLE_MODULAR_8P8_SEPARABILITY",
+  "fresh_targets":[50991,1272,39506,19952],
+  "projection_widths":[4,8,12,16],
+  "exact_widths_per_target":[[],[],[],[]],
+  "common_exact_widths":[],
+  "selected_exact_width":0,
+  "match_pairs_per_target":[65536,65536,65536,65536],
+  "zero_residual_fraction_by_target":{"50991":{"4":0.068817138671875,"8":0.0116424560546875,"12":0.0079803466796875,"16":0.0077972412109375},"1272":{"4":0.0699310302734375,"8":0.0115814208984375,"12":0.0080108642578125,"16":0.0078125},"39506":{"4":0.0692596435546875,"8":0.0115966796875,"12":0.0080413818359375,"16":0.0078277587890625},"19952":{"4":0.069854736328125,"8":0.0117950439453125,"12":0.0080718994140625,"16":0.0078125}},
+  "primary_gate":{"stable_exact_modulus_bits_min":false,"true_half_pair_in_match_set_targets":true,"match_pairs_max_per_target":false},
+  "stage1_opened":false
+}
