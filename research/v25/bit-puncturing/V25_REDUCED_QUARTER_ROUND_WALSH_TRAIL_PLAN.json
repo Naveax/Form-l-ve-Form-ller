@@ -1,0 +1,20 @@
+{
+  "milestone":"V25_REDUCED_QUARTER_ROUND_WALSH_TRAIL_VALIDATION",
+  "frozen_before_spectrum_inspection":true,
+  "scope":"method-validation only; reduced ARX quarter-round, no key-recovery/full-round claim",
+  "word_bits":5,
+  "state_input_bits":20,
+  "exact_truth_table_size":1048576,
+  "rotation_rule":"ChaCha rotations (16,12,8,7) reduced modulo n=5 => (1,2,3,2)",
+  "quarter_round":"a+=b; d^=a; d=rotl(d,1); c+=d; b^=c; b=rotl(b,2); a+=b; d^=a; d=rotl(d,3); c+=d; b^=c; b=rotl(b,2)",
+  "fixed_output_masks":[{"name":"A0","masks":[1,0,0,0]},{"name":"B1","masks":[0,2,0,0]},{"name":"C2","masks":[0,0,4,0]},{"name":"D3","masks":[0,0,0,8]}],
+  "beam_caps":[64,256,1024,4096],
+  "trail_engine":"Propagate masks backward through exact XOR/rotation rules and the verified modular-addition Walsh coefficients. After every modular-addition expansion, merge duplicate four-word input masks into linear-hull coefficients, then retain the beam_cap largest absolute merged coefficients with lexical mask tuple tie-break.",
+  "exact_reference":"Vectorized complete 2^20 truth table for each output mask followed by normalized Walsh FWT over all 20 input bits.",
+  "metrics":{"spectral_cosine_sq":"dot(exact,approx)^2/(||exact||^2||approx||^2)","exact_support_energy":"sum exact_coeff^2 over approximate nonzero support / total exact energy","full_l2_error":"exact missing energy plus coefficient error on emitted support","merged_coefficient_count":"final partial spectrum size","trail_expansions":"all addition-expansion children before merge/prune"},
+  "regression":"At n=2 with no beam pruning, complete trail enumeration must reproduce the exact quarter-round Walsh spectrum coefficient-wise within 1e-12 for a fixed output mask.",
+  "primary_gate":{"regression_exact":true,"max_beam_spectral_cosine_sq_min_each_mask":0.90,"max_beam_exact_support_energy_min_each_mask":0.90,"max_final_coefficients":4096,"exact_truth_table_to_coeff_count_ratio_min":256},
+  "stage1_only_if_pass":"Only on method-validation PASS may the trail engine be integrated into the existing q138/source-orbit punctured-map ranking, with offline trail construction, memory, pair processing, sorting and exact verification billed in TOTAL.",
+  "kill_rule":"If n=2 exact reconstruction fails, stop as implementation invalid. If any fixed n=5 mask misses either 0.90 spectral-cosine^2 or 0.90 exact-support energy at beam4096, do not integrate this beam-trail engine into key recovery; record method-quality NO-GO at this budget.",
+  "forbidden":"No output-mask reselection, beam-cap extension, threshold retuning or source-orbit ranking rescue after spectrum inspection inside this milestone."
+}
