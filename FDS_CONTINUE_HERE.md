@@ -1,15 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** `ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN`  
-**Next:** `REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER`.
+**State:** `ADMIT_BROAD_QR_LAYOUT_TRANSFER_NO_GENERIC_WALL_TRANSFER`  
+**Next:** `V25_LAYOUT_SPECIALIZED_CODEGEN_WALL_REALIZATION`.
 
-1. Resolve fresh main and read authority.
-2. Use the frozen boundary-syndrome engine: split1, word0, width16.
-3. Do not retune split/word/width from layout outcomes.
-4. Freeze b=10 key-bit layouts and fresh targets before measuring transfer.
-5. For every layout, derive candidate-dependent QR groups structurally and cache only truly candidate-independent groups.
-6. Compare exact syndrome-screen TOTAL QR and fair direct-word baseline under the same layout; verify true candidate exactly.
-7. Measure wall only after exact QR/equivalence passes.
-8. If the win disappears when active bits span multiple key words/groups, scope the admitted result to one-word layout; if it transfers, enlarge the claim only to the tested layouts.
-
-Stop: no alpha<1 claim; no full-round claim; no post-hoc layout/width selection.
+1. Fresh main + authority read.
+2. Keep split1/word0/width16 and all six layouts fixed.
+3. Generate straight-line layout-specialized screen and equally specialized direct baseline from frozen structural classifications.
+4. Fresh targets are `[404,274,285,190,939,749,785,460]`; do not reuse L1 wall targets for admission.
+5. Full 48×1024 generated-vs-generic exactness must pass before wall admission.
+6. Benchmark warmup3/repeat11 with alternating order; include target cache setup and survivor verification.
+7. Wall gate per layout: median >=1.05, positive >=7/8, exact unique true 8/8.
+8. Broad wall realization requires >=4/5 non-control layouts. No alpha/full-round claim regardless.

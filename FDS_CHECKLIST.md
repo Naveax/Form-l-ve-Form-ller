@@ -1,23 +1,24 @@
 # FDS_CHECKLIST
 
-## Boundary syndrome — closed/admitted
-- [x] Stage0 80 dependency cones enumerated.
-- [x] 10,240 exact partial/full checks PASS.
-- [x] Stage1 widths/targets frozen; width16 selected by frozen rule.
-- [x] Stage2 untouched 12-target confirmation PASS.
-- [x] Candidate-ensemble cache exact vs generic reference.
-- [x] Cached Stage2 QR + wall win on 12/12.
-- [x] Stage3 b10/12/14/16 scaling PASS.
-- [x] Boundary regression 6/6 PASS; py_compile PASS.
-- [x] Admit reduced-model constant-factor compute win.
-- [x] Record alpha=1 / no exponent reduction.
+## Boundary syndrome
+- [x] Stage0 exact dependency cone.
+- [x] Stage1/2 frozen survivor confirmation.
+- [x] b10..16 constant-factor scaling.
+- [x] Specialized word4 wall win admitted in prior scope.
 
-## Active — layout transfer falsifier
-- [ ] Freeze tested b=10 active-bit layouts.
-- [ ] Freeze fresh targets before measurement.
-- [ ] Derive exact candidate-dependent QR/cache cost per layout.
-- [ ] Exact generic-vs-specialized equivalence tests.
-- [ ] Survivor correctness and TOTAL QR per layout.
-- [ ] Fair wall benchmark only after exactness passes.
-- [ ] Scope or extend admitted claim based on frozen gates.
+## Layout transfer
+- [x] Six layouts + fresh targets frozen.
+- [x] Structural QR cost derived before survivor results.
+- [x] L1 exact/correctness gates: 5/5 non-control PASS.
+- [x] Broad QR transfer admitted.
+- [x] Generic cache 49,152+49,152+49,152 equivalence checks PASS.
+- [x] Generic wall transfer gate: 0/5 non-control PASS.
+
+## Active codegen wall realization
+- [x] Fresh target list frozen.
+- [x] Generator rule / fair specialized baseline frozen.
+- [ ] Generate straight-line functions.
+- [ ] 48×1024 exactness gate.
+- [ ] Frozen 11-repeat wall benchmark.
+- [ ] Classify broad/partial/not-general wall realization.
 - [ ] Commit source/tests/results/manifest + continuity.

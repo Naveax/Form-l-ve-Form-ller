@@ -1,0 +1,18 @@
+{
+  "milestone":"V25_LAYOUT_SPECIALIZED_CODEGEN_WALL_REALIZATION",
+  "frozen_before_codegen_fresh_target_measurement":true,
+  "depends_on":"broad QR transfer admitted; generic cache wall transfer failed",
+  "fixed_algorithm":{"rounds":6,"b":10,"counter":1,"split":1,"boundary_word":0,"syndrome_width":16},
+  "layouts":"exact same six layouts from V25_REDUCED_KEY_LAYOUT_TRANSFER_PLAN.json; no additions/removals",
+  "fresh_target_seed":5351201,
+  "fresh_targets":[404,274,285,190,939,749,785,460],
+  "generator_rule":"Generate layout-specific straight-line Python screen and direct functions from the frozen QR op classification. No runtime Op loop, candidate-flag branch, zip over operations, or dynamic group lookup in the candidate hot path. Fixed target-dependent QR outputs are stored in a compact cache; candidate-dependent QRs are emitted as explicit quarter_round/inverse_quarter_round calls. Logical-key word patch expressions are emitted per frozen layout.",
+  "baseline":"Generate an equally specialized straight-line direct-word0 verifier for the same layout; do not compare specialized screen against generic baseline.",
+  "exactness_gate":{"cases":48,"candidates_per_case":1024,"required":"generated screen full syndrome and generated direct predicate exactly match generic reference for every candidate"},
+  "wall_benchmark":{"warmups":3,"repeats":11,"order":"alternate screen algorithm and specialized direct baseline by repeat parity","timed_scope":"target output + target fixed-cache setup + all 1024 candidates + survivor direct verification; layout-static source generation/compile is measured separately but not repeated per target"},
+  "total_accounting":["generated source bytes","one-time generation/compile wall","target cache setup","candidate loops","survivor verification"],
+  "per_layout_gate":{"median_wall_speedup_min":1.05,"positive_wall_targets_min":7,"exact_unique_true_targets":8},
+  "family_interpretation":{"broad_wall_realization":"at least 4 of 5 non-control layouts pass all gates","partial_wall_realization":"2 or 3 pass","specialized_wall_not_general":"0 or 1 pass"},
+  "claim_limit":"Only constant-factor reduced-model engineering may be admitted. Leading candidate enumeration remains 2^b; alpha=1. No full-round claim.",
+  "forbidden":"No target/layout/split/word/width/repeat/gate retuning after generated fresh-target results."
+}

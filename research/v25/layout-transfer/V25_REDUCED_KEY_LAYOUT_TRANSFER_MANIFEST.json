@@ -1,0 +1,6 @@
+{
+  "tests":"8/8 layout-transfer+boundary regression PASS; py_compile PASS",
+  "exactness":{"full_syndrome":49152,"screen_predicate":49152,"direct_predicate":49152},
+  "sha256":{"fds_v25_key_layout.py":"dc0b90977ab5e682ac2a6805ca150fdebde773e132d1a55250ebbcc3bb53dfc4","fds_v25_layout_cache.py":"42dcb0a227ca45003f8abe7acf02dcd22443cc7129469651809a48ffecb7b58c","test_fds_v25_layout_transfer.py":"generated closure regression; see Git blob","reproduce_v25_layout_transfer.py":"generated closure runner; see Git blob","decision":"06e8d11cb3218d65d5720cd69904d52effaba9d018dda15bd4aacad062ff8c7c"},
+  "note":"Raw per-target timing JSON is reproducible and not required as persistent authority; compact medians/gates are in the decision file."
+}
