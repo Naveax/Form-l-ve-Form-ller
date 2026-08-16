@@ -2,11 +2,11 @@
 
 1. Resolve fresh main and authority.
 2. Issues #10–#13 structural families are closed NO-GO and immutable.
-3. Do not reopen raw two-key-word dependency placement; all 28 pairs are exhausted.
-4. Any next exponent hypothesis must use a genuinely different exact mechanism.
-5. Current candidate mechanism is algebraic cancellation in boundary-word XOR projections.
-6. Freeze projection set, fresh targets and exact independence gates before results.
-7. Approximate cancellation cannot rescue exact failure.
-8. Numerical MITM/TOTAL opens only after exact half-independence PASS.
-9. Constant-factor wins remain alpha=1.
+3. Raw dependency placement is exhausted; do not reopen it.
+4. Current mechanism is exact algebraic cancellation in one/two-word boundary XOR projections.
+5. Projection family, fresh targets and exact independence gates are frozen before measurement.
+6. Approximate independence and target-specific projection selection are forbidden.
+7. Numerical MITM/TOTAL opens only after a stable exact candidate passes all frozen targets.
+8. Local compute allowed; authority returns to GitHub.
+9. Constant-factor wins remain alpha=1 until explicit TOTAL scaling proves otherwise.
 10. No full-round claim without independent gates.
