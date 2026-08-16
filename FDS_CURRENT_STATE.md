@@ -12,56 +12,46 @@ Important limit: these are exact signed marginals inside the frozen bounded trai
 
 ## Mathematics-first structural track
 
-The research center is now the exact/controlled-error mathematics of the signed Walsh/trail tensor. Code is a calculator/falsifier, not the object of study.
+The research center is now the exact/controlled-error mathematics of the signed Walsh tensor. Code is a calculator/falsifier, not the object of study.
 
 ### Controlled-error results
 
-Canonical notes establish:
-
-- exact tensor/Kronecker factorization for capped column subsets and 2|2 flattenings;
-- full-exact QR/double-round Parseval and orthogonality: every normalized subset marginal has squared l2 norm 1 and whole-column singular spectra are invariant under exact local QR basis changes;
-- coherent signed-tail bounds: individual trail-square sums are not safe hull-error bounds before signed endpoint merge;
-- published one-addition sigma shell/energy recurrences and exact residual Gram DPs, including side-mask extension for reversible ChaCha addition gates;
-- explicit separation between published hard-per-addition sigma and unresolved recovered `max_sigma_weight` semantics;
-- cap4 Stage0 Parseval residual floors `1`, `0.2793271761`, `0.2687631657`, `1` for C0..C3 under compatible normalization;
-- epsilon-rank bridge `delta_r(M) <= epsilon + delta_r(M_K)`;
-- local-to-global error telescoping through QR/layer/round composition;
-- error-representation exponent `theta=log(r)/(-log(q))` when certified residual decays as `q^K` and cost grows as `r^K`.
+Canonical notes establish exact tensor/Kronecker factorization, full-exact Parseval/orthogonality, coherent signed-tail bounds, published one-addition sigma shell/residual-Gram calculus, explicit separation from unresolved project `max_sigma_weight` semantics, Stage0 Parseval residual floors, the epsilon-rank bridge, local-to-global error telescoping, and the error-representation exponent `theta=log(r)/(-log(q))` when certified residual/cost scaling exists.
 
 ### Exact Walsh tensor-network results
 
-A stronger exact direction is now active:
-
-- `V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`: the complete n-bit modular-addition Walsh tensor has an exact tensor-train/MPO representation with binary carry/sigma bond dimension at most 2 and O(n) local factors. Exponential explicit support is not an exponential representation lower bound.
-- `V26_Q138_ROTATION_CARRY_AMPLIFICATION.md`: q138 wiring explains explicit support explosion algebraically; after the first 22-term `w=2^3` addition family, ROR8 moves masks to MSB 27, where the next full addition columns contain roughly 0.40–0.81 billion nonzero coefficients even though low-sigma shells can carry most local l2 energy.
-- `V26_Q138_HARD_CAP_QR_ERROR_EXAMPLE.md`: the mathematical hard-per-addition K=2/K=3 model collapses to zero over one inverse QR despite strong local concentration; exact residual-Gram values demonstrate coherent kept/omitted interference. This is a semantic diagnostic, not a project-cap result.
-- `V26_EXACT_QR_PATHWIDTH_THEOREM.md`: after fixing input/output masks and locally eliminating `u3_i,u4_i`, one exact QR coefficient reduces to n bit-site tensors linked by four nearest-neighbor sigma bonds plus binary offset-8 and offset-12 bonds. A contiguous bit sweep exposes at most 44 binary bonds, independent of word size n for fixed offsets.
-- `V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`: for n=32 the weighted path cutwidth is exactly 44; arbitrary linear bit reordering cannot improve it.
-- `V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`: the weighted carving width is exactly 42. Thus an arbitrary ordinary binary contraction tree can improve topology only from 44 to 42 binary frontier bonds. Topology-only contraction ordering is now exhausted for this reduced fixed-IO QR network.
-- `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`: conditioning the 20 cyclic offset-8/offset-12 wrap variables opens the network into a chain with only 24 dynamic state bits (8 delayed `v4` + 12 delayed `v3` + 4 sigma). This lowers exact memory to a `2^24` state table while moving work into `2^20` boundary enumeration; it is an exact memory/time tradeoff, not a work reduction.
+- `V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`: the full n-bit modular-addition Walsh tensor has an exact O(n) MPO/TT representation with binary longitudinal carry/sigma bond dimension at most 2.
+- `V26_MODADD_LOCAL_TT_RANK_THEOREM.md`: one interior five-leg addition-bit tensor has exact optimal transverse TT profile `[2,3,3,2]`; minimum possible maximum local TT bond dimension is exactly 3. All 2|3 flattenings containing current sigma `s` have rank 4; pairs avoiding `s` have rank 3.
+- `V26_Q138_ROTATION_CARRY_AMPLIFICATION.md`: q138 rotations explain explicit support explosion while low-sigma local energy can remain concentrated.
+- `V26_Q138_HARD_CAP_QR_ERROR_EXAMPLE.md`: the mathematical hard-per-addition K=2/K=3 model can still collapse over a composed QR; exact residual-Gram values show kept/omitted coherent interference.
+- `V26_EXACT_QR_PATHWIDTH_THEOREM.md`: a fixed-IO QR coefficient admits an exact bit-site network with bounded word-size-independent frontier; a natural sweep has 44 binary bonds.
+- `V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`: the **fused-site** weighted path cutwidth is exactly 44.
+- `V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`: the **fused-site** weighted carving width is exactly 42.
+- `V26_QR_SITE_FUSION_REFINEMENT.md`: 42 is not a universal lower bound for the full factor network. Exact local factorization `S_i=A_i B_i` gives a 64-factor hypergraph with a balanced 41-bond cut; the global refined width is unresolved but at most 42.
+- Keeping the original four addition-bit factors separate refines the network further; balanced cuts below the fused-site 42 frontier exist, so global width must be studied on minimal-rank local cores rather than on prematurely fused sites.
+- `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`: conditioning 20 cyclic long-range wrap variables opens the network into a chain with 24 dynamic state bits, trading memory for boundary-enumeration work exactly.
 
 ## Current sharp mathematical bottleneck
 
-For the reduced fixed-input/fixed-output exact QR network:
+The earlier statement “topology is exhausted at 42” was too strong and has been corrected.
 
-- exact local representation is compact (bond-2 addition MPOs);
-- optimal linear topology frontier = 44 binary bonds;
-- optimal general binary topology frontier = 42 binary bonds;
-- conditioning can reduce dynamic memory to 24 state bits but not automatically total work.
+What is now exact:
 
-Therefore the first genuinely new mechanism capable of beating the exact topology barrier is **algebraic compression of the width-42 separator tensor/message**:
+1. modular addition has longitudinal bond-2 structure;
+2. each local addition-bit tensor has optimal transverse bond-3 structure;
+3. fusing all local factors into one bit-site produces exact width certificates 44/42, but fusion hides exploitable rank structure;
+4. splitting sites into `(4,2)` and `(3,1)` pairs already yields a balanced 41-bond cut;
+5. splitting all the way back to original addition-bit factors yields still smaller balanced cuts in heuristic search, but no full contraction-tree optimum is yet certified.
 
-- exact Schmidt/matrix rank;
-- parity/conservation sectors;
-- singular-value decay / epsilon-rank;
-- low-rank boundary transfer factorization;
-- reusable transfer subproblems / meet-in-the-middle over conditioned wrap variables.
+Therefore the active exact problem is now:
 
-Another bit ordering or ordinary contraction tree is no longer a new research direction.
+> build the QR tensor network from **minimal-rank local cores**, then determine its true global contraction width/rank before introducing any approximation.
+
+The promising mechanisms are local TT-core placement, refined hypergraph contraction, nonlinear sigma support constraints, separator Schmidt structure, and only then certified epsilon-rank.
 
 ## Active measured QR-transform falsifier
 
-`V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` remains frozen. Its cap2 factorized/reference implementation and all-four-column `1e-12` regression are committed. No new canonical transform measurement is admitted while provenance is missing.
+`V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json` remains frozen. No new canonical project-cap measurement is admitted while provenance is missing.
 
 ## Current blocker — exact historical runtime bytes
 
@@ -81,12 +71,12 @@ Latest recovery audit remains negative. This is a provenance blocker, **not a ma
 
 ## Next mathematics
 
-1. Analyze one certified width-42 QR separator algebraically instead of materializing `2^42` states.
-2. Derive linear/parity constraints among its crossing sigma, `v3`, and `v4` indices.
-3. Compute exact small-instance separator Schmidt spectra and search for a stable rank law.
-4. If exact rank remains large, combine a certified residual with singular-value decay through the epsilon-rank bridge.
-5. In parallel, analyze the 20-wrap-variable transfer operator for exact low-rank/MITM reuse that reduces total work, not merely memory.
-6. Only after a controlled separator representation exists should the same construction be lifted to double-round cross-column contraction.
+1. Replace every five-leg addition-bit factor by an exact optimal TT core chain with max local bond dimension 3, choosing leg order to keep current sigma in the center.
+2. Reconstruct the fixed-IO QR hypergraph without premature site fusion, including exact XOR/rotation mask constraints.
+3. Compute/certify the new global weighted contraction width or a rigorous upper bound.
+4. Derive nonlinear support/parity sectors and exact separator Schmidt ranks on the best refined cut.
+5. If exact width/rank is still impractical, introduce certified epsilon-rank only after an explicit residual budget.
+6. Keep the 20-wrap-variable time-memory formulation as a separate exact route and test whether boundary-transfer rank/MITM can reduce total work.
 
 ## Next measured execution after byte recovery
 
