@@ -1,0 +1,18 @@
+{
+  "milestone":"V26_RECOVERED_BIT_PUNCTURING_SECOND_LAYER_SEPARATOR_AUDIT",
+  "frozen_before_measurement":true,
+  "reason_for_recovery":"Library/runtime audit found a previously unfinished V25 branch that had verified first-layer D&C trail contraction and an explicit CONTINUE_TO_SECOND_LAYER_TENSOR_CONTRACTION decision; it was not a killed family and was omitted from the later mechanism-exhaustion ledger.",
+  "scope":"controlled reduced-round ChaCha bit-puncturing/trail-enumeration research only; no full-round claim",
+  "recovered_snapshot":{"path":"FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip","sha256":"fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6","core_source_sha256":"ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130","tests":"19/19 PASS after restoring canonical fds_v25_chacha.py + fds_v25_pnb_orbit.py dependencies","cert_status":"PASS_WITH_LIMITS"},
+  "recovered_admitted":["METHOD_CORE_REPRODUCED","TOPK_EXACT_PUNCTURED_SPECTRUM_CONCENTRATION_REPRODUCED","ONE_DOUBLE_ROUND_FACTOR_CONTRACTION_EXACT_ENERGY_REPRODUCED","DIVIDE_AND_CONQUER_MEMORY_REDUCTION_DEMONSTRATED"],
+  "recovered_not_admitted":["END_TO_END_WORK_REDUCTION","ALPHA_REDUCTION","FULL_ROUND_RELEVANCE","FOUR_INVERSE_ROUND_EXACT_TRAIL_ENERGY"],
+  "fixed_component":{"output_mask":"q138 component: state word4 bit10","word_bits":32,"sigma_caps":[2,3,4],"next_columns":[0,1,2,3]},
+  "separator_object":"For each next column, compute the exact signed marginal of the first-double-round factorized hull onto the four word-mask interfaces consumed by that column. Marginalize the other three words inside each diagonal-QR factor before joining branches. Preserve signed coefficients; do not use sum of squared trails as a substitute.",
+  "exact_validation":{"caps":[2,3],"require_all_four_columns":true,"reference":"explicit first-double-round global hull materialization","coefficient_abs_error_max":1e-12,"support_exact":true,"energy_abs_error_max":1e-12},
+  "cap4_measurement":{"global_raw_trails_reference":222660480,"global_compact_24byte_reference":5343851520,"never_materialize_global_cartesian":true,"measure":["per-column exact merged marginal support if feasible","per-branch marginal support product counts","union mask support by interface word","wall time","peak RSS","compact sparse-byte estimate","signed marginal energy"]},
+  "engineering_go_gate":{"small_exact_validation_pass":true,"cap4_all_four_columns_exact_marginals_required":true,"cap4_peak_rss_bytes_max":2147483648,"cap4_total_compact_sparse_bytes_max":1073741824},
+  "interpretation":"Passing Stage0 only establishes an exact/practical second-layer boundary representation. It does NOT establish full second-layer/four-round contraction, ranking improvement, alpha<1, or full-round relevance.",
+  "next_only_if_pass":"Freeze a separate pairwise/balanced second-layer contraction plan that preserves cross-column correlations, validates cap2/3 against explicit four-inverse-round materialization where feasible, and counts factor generation + contraction + ranking + verification in TOTAL.",
+  "kill_rule":"If cap2/3 signed marginals do not match explicit materialization exactly, or cap4 exact marginal construction exceeds the frozen 2 GiB RSS / 1 GiB compact representation budget, close the exact single-column separator route. Approximation/top-K requires a separate frozen plan with explicit error bounds; no threshold retuning.",
+  "forbidden":"No global Cartesian cap4/cap5 materialization, no treating local-cap exactness as unbounded-ChaCha exactness, no hiding exact-FWT preprocessing, no AI-proposed separator threshold treated as a theorem, no full ChaCha20 claim."
+}

@@ -1,13 +1,14 @@
 # FDS_CONTINUE_HERE
 
-**State:** V25 exponent track CLOSED; V26 exact structural families currently exhausted through complete ANF interaction graph.  
-**Next:** `V26_MECHANISM_EXHAUSTION_AND_EXTERNAL_IDEA_SOLICITATION`.
+**State:** later V26 NO-GO ledger preserved, but an unfinished verified bit-puncturing/D&C branch was recovered from Library/runtime authority.  
+**Active:** `V26_RECOVERED_BIT_PUNCTURING_SECOND_LAYER_SEPARATOR_AUDIT`.
 
-1. Treat all closed V25/V26 families as immutable first-class evidence.
-2. Do not open nearby rescues: threshold changes, output subsets, higher counter derivatives, alternate cube bases/dimensions, rotational proxy statistics, ANF graph sparsification or another simple half split.
-3. Build one compact mechanism-exhaustion matrix: mechanism, required observable/control, why it failed/inapplicable, and what genuinely new ingredient would be required.
-4. Review current primary reduced-ChaCha cryptanalysis for mechanism classes not already represented.
-5. If no clearly source-compatible distinct local mechanism emerges, prepare one common AI research prompt for independent models.
-6. Prompt must include source orbit, fixed single key/nonce, TOTAL accounting, full kill ledger, exact negative evidence, and demand mathematical construction + fastest falsifier.
-7. AI responses are idea generators only; deduplicate by mechanism and implement/falsify locally. No voting.
-8. ALPHA_PASS still requires fresh TOTAL+verification exponent <1.
+1. Use the frozen plan under `research/v26/recovered-bit-puncturing-dac/`.
+2. Recovered snapshot SHA-256 is `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`; core tests reproduce 19/19 PASS.
+3. Do not reinterpret prior four-round global-beam collapse as zero correlation.
+4. Build exact signed first-layer marginals onto each of the four next-column interfaces.
+5. cap2/cap3 must match explicit global materialization support/coefficient/energy exactly for all four columns.
+6. cap4 must avoid the 222,660,480 global Cartesian trails and construct all four exact column marginals under frozen memory budgets.
+7. Passing this gate opens only a separately frozen cross-column/pairwise contraction stage. It is not an alpha result.
+8. If exact marginal validation or cap4 budget fails, close exact single-column separator; approximation needs a separate error-bounded plan.
+9. No new AI prompt until the real separator support/cardinality has been measured.

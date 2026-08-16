@@ -1,16 +1,17 @@
 # FDS_CHECKLIST
 
-## Closed
-- [x] V25 exponent track ALPHA_PASS=0.
-- [x] V26 derivatives / projection / cube families NO-GO.
-- [x] V26 rotational branch source-model inapplicable.
-- [x] V26 key-interaction graph plan frozen before measurement.
-- [x] Exact ANF graph b8→16 R4/R6 complete.
-- [x] R6 b14/b16 graph density=1, separator proxy=1.
-- [x] Graph regressions 3/3 PASS.
-- [x] `NO_GO_ANF_PRIMAL_GRAPH_FACTORIZATION`.
+## Preserved closed work
+- [x] V25/V26 families already killed/inapplicable remain closed.
+- [x] ALPHA_PASS remains 0.
 
-## Next
-- [ ] Mechanism-exhaustion matrix.
-- [ ] Primary-literature gap scan.
-- [ ] Common external-AI idea-generation prompt only if no distinct local mechanism survives.
+## Recovered unfinished branch
+- [x] Trail/D&C snapshot located and SHA-256 verified.
+- [x] Recovered core regression 19/19 PASS.
+- [x] Recovered cert status `PASS_WITH_LIMITS`.
+- [x] First-layer exact factorization evidence restored.
+- [x] Second-layer separator plan frozen before new measurement.
+- [ ] cap2 exact signed column-marginal validation ×4.
+- [ ] cap3 exact signed column-marginal validation ×4.
+- [ ] cap4 exact column separator cardinality/time/RSS ×4 without global Cartesian materialization.
+- [ ] Stage0 PASS/NO-GO decision.
+- [ ] Only on PASS freeze cross-column contraction Stage1.

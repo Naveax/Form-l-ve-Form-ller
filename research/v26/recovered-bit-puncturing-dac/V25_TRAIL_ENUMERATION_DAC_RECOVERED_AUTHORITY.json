@@ -1,0 +1,11 @@
+{
+  "origin":"recovered V25 snapshot/library authority",
+  "snapshot_sha256":"fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6",
+  "status":"CONTINUE_TO_SECOND_LAYER_TENSOR_CONTRACTION",
+  "first_layer":{"cap5_raw_trails":43071961472,"cap5_factorized_nonzero_entries":3438542,"cap5_compact_factor_bytes":82525008,"cap5_global_compact_bytes":1033727075328,"memory_reduction_x":12526.228114125115,"cap5_exact_merged_energy_under_local_cap":0.695971894718241},
+  "cap3_validation":{"raw_trails":973952,"unique_masks":925568,"exact_merged_energy":0.18123245239257812,"explicit_factor_match":true},
+  "strict_limits":["cap5 energy is exact only relative to sigma<=5 local hull enumeration","top-K screens used exhaustive exact FWT maps and do not establish practical map-construction cost","global beam collapse at four inverse rounds is truncation failure, not proof of zero true correlation"],
+  "source_file_sha256":"ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130",
+  "test_file_sha256":"30284e9db228032b2d76aeaf872c1903405e1c86ab1a364eec4feab9a62c0350",
+  "cert_summary_sha256":"576b0f13d0983a76fb7e07f2e5a224ad890bd6d14b4ca2614a8c0ea012f5ee20"
+}
