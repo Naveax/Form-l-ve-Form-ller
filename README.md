@@ -17,7 +17,7 @@ Bu repo FDS araştırmasının **canonical devam noktasıdır**. Amaç yalnızca
 - Alpha reduction: **NOT DEMONSTRATED**
 - Full-round ChaCha break claim: **NO**
 
-Bir sonraki ana gate: **Synthetic Target Observable → Oracle Pair Reliability Learnability Audit**.
+Bir sonraki ana gate: **Synthetic Target Observable → Oracle Pair Reliability Learnability Audit**. GitHub Issue **#1** bu milestone'un executable checklist'idir.
 
 ## Mandatory reading order
 
@@ -26,18 +26,23 @@ Bir sonraki ana gate: **Synthetic Target Observable → Oracle Pair Reliability 
 3. `FDS_VISION.md`
 4. `FDS_RESEARCH_DISCIPLINE.md`
 5. `FDS_KNOWLEDGE_GRAPH.md`
-6. `FDS_CHECKLIST.md`
-7. `FDS_DECISION_LOG.md`
-8. `archive/RAW_IMPORT_MANIFEST.json` gerektiğinde ham tarih için
+6. `FDS_SOURCE_REGISTRY.md`
+7. `FDS_VALIDATION_MATRIX.md`
+8. `FDS_CHECKLIST.md`
+9. `FDS_DECISION_LOG.md`
+10. `archive/RAW_IMPORT_MANIFEST.json` gerektiğinde historical/raw provenance için
 
 ## Ham kaynak snapshotı
 
-Bu bootstrap sırasında konuşma çalışma alanında bulunan tüm dosyalar byte-for-byte şu arşive alındı:
+Bootstrap sırasında o anda `/mnt/data` altında görünen **94 dosya / 4,341,402 byte** byte-for-byte hash'lendi ve yerelde tek ZIP olarak doğrulandı:
 
-`archive/raw-import-2026-08-16.zip`
+- archive SHA-256: `b21a45f80d7af4fdf745d490daf8c100d620e40b89dc6b49a158a8c0f4263863`
+- exact archive size: `1,566,535 byte`
 
-Dosya bazında SHA-256 ve boyutlar `archive/RAW_IMPORT_MANIFEST.json` içinde bulunur.
+`archive/RAW_IMPORT_MANIFEST.json` compact authority kaydıdır.
+
+**Önemli:** Bu ChatGPT/GitHub connector oturumunda GitHub write API UTF-8 içerik/blob kabul ediyor fakat yerel binary dosyayı file-parameter olarak aktaran bir köprü sunmuyor; ortamda authenticated `gh` de bulunmuyor. Bu yüzden 1.57 MB raw ZIP'i repoda varmış gibi göstermiyoruz. Canonical çalışma dosyaları ve provenance/hash kaydı GitHub'dadır; bulk raw byte snapshotı bu committe Git object değildir. Araştırma authority'si raw dump değil, root continuity + source/results/cert zinciridir.
 
 ## Çalışma ilkesi
 
-Yerelde hesap yapmak serbesttir. GitHub'a her ara cache'i gömmek zorunlu değildir. Ancak **admitted milestone** sonrası kaynak, test, sonuç özeti, karar, manifest/hash ve continuity dosyaları repoya dönmelidir. Scratch yeniden üretilebiliyorsa manifestte tarif edilip repo dışında kalabilir.
+Yerelde hesap yapmak serbesttir. GitHub'a her ara cache'i gömmek zorunlu değildir. Ancak **admitted veya killed milestone** sonrası kaynak, test, frozen plan, sonuç özeti, karar, manifest/hash ve continuity dosyaları repoya dönmelidir. Scratch yeniden üretilebiliyorsa manifestte tarif edilip repo dışında kalabilir.
