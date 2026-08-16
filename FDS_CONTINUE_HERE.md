@@ -3,66 +3,50 @@
 **Admitted state:** recovered bit-puncturing/D&C separator Stage0 `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.  
 **Frozen measured milestone:** `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`.  
 **Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes are missing.  
-**Active work while blocked:** mathematics-first full-exact / controlled-error tensor analysis.
+**Active work while blocked:** mathematics-first exact Walsh tensor-network / controlled-error analysis.
 
-Do not reduce the project to code recovery. Code is only a calculator/falsifier. The mathematical object is the signed Walsh/trail tensor and its exact or certified approximate contraction.
+Do not reduce the project to code recovery. Code is only a calculator/falsifier. The mathematical object is the signed Walsh tensor, its exact local tensor-network representation, and exact or certified approximate contraction.
 
-## Mathematics authority
+## Current mathematical chain
 
-Read, in this order, under `research/v26/recovered-bit-puncturing-dac/`:
+The source-independent work has established:
 
-1. `V26_TENSOR_RANK_MATHEMATICAL_REFRAMING.md`
-2. `V26_FULL_QR_PARSEVAL_LEMMA.md`
-3. `V26_COHERENT_TRAIL_TAIL_BOUNDS.md`
-4. `V26_MODADD_SIGMA_SHELL_THEOREM.md`
-5. `V26_SIGMA_SEMANTICS_SEPARATION.md`
-6. `V26_STAGE0_PARSEVAL_GAP_BOUNDS.md`
-7. `V26_EPSILON_RANK_BRIDGE_THEOREM.md`
-8. `V26_LOCAL_TO_GLOBAL_ERROR_TELESCOPING.md`
-9. `V26_MODADD_RESIDUAL_GRAM_THEOREM.md`
-10. `V26_ERROR_REPRESENTATION_EXPONENT.md`
+1. exact modular-addition Walsh coefficients admit a binary carry/sigma MPO of bond dimension 2;
+2. q138 rotations turn short carry tails into high-bit masks, explaining explicit support explosion without implying large local representation state;
+3. published hard-sigma local truncations have exact shell/residual Gram calculus, but are not identified with historical project `max_sigma_weight`;
+4. full exact QR/double-round Walsh operators obey Parseval/orthogonality, so bounded-cap zeros are not full-exact zeros;
+5. capped low rank can transfer to full-exact epsilon-rank only after a certified residual exists;
+6. local residuals can telescope through QR/layers/rounds;
+7. for one fixed-IO 32-bit QR coefficient, exact local elimination gives a site network with four nearest-neighbor sigma bonds plus offset-8 and offset-12 binary bonds;
+8. exact weighted path cutwidth is 44;
+9. exact weighted carving width is 42, so ordinary topology-only contraction ordering is exhausted;
+10. conditioning the 20 cyclic long-range wrap variables yields an exact 24-state-bit open-chain DP, trading memory for boundary-enumeration work.
 
-Core mathematical chain:
+Relevant notes under `research/v26/recovered-bit-puncturing-dac/` include:
 
-`local/on-orbit Walsh residual`
-
-`-> Gram-aware local error`
-
-`-> QR/layer telescoping`
-
-`-> certified global epsilon`
-
-`-> capped 2|2 singular/rank structure`
-
-`-> full-exact epsilon-rank`
-
-`-> controlled contraction / downstream score error`
-
-`-> error-vs-cost exponent theta`.
-
-Established facts:
-
-- full exact QR/double-round Walsh operators are orthogonal and every normalized subset marginal has squared norm 1;
-- cap4 C0/C3 zero marginals therefore cannot be full-exact zeros;
-- under compatible normalization, cap4 Stage0 residual floors for C0..C3 are `1`, `0.2793271761`, `0.2687631657`, `1`;
-- exact capped rank is brittle under tails; epsilon-rank is the robust invariant;
-- fixed small hard per-addition published-sigma caps are not uniformly accurate over masks;
-- do not identify that published hard-cap model with project `max_sigma_weight` until the missing core proves the semantics;
-- for the published hard-cap addition model, local source-conditioned residuals can be computed exactly as `eta^2=c^T G_res c` using a polynomial-time four-state bit DP rather than enumerating `(u,v)` or trails;
-- if residual decays `q^K` and representation grows `r^K`, the natural controlled-representation exponent is `theta=log(r)/(-log(q))`.
+- `V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`
+- `V26_EXACT_QR_PATHWIDTH_THEOREM.md`
+- `V26_QR_WEIGHTED_CUTWIDTH_CERTIFICATE.md`
+- `V26_QR_WEIGHTED_CARVING_WIDTH_CERTIFICATE.md`
+- `V26_QR_EXACT_TIME_MEMORY_TRADEOFF.md`
+- plus the earlier Parseval, tail, residual-Gram, epsilon-rank and error-exponent notes.
 
 ## First unfinished mathematical pass
 
-Turn the abstract error-cost theory into the strongest possible **source-conditioned factor-graph certificate** without guessing missing project cap semantics:
+**Do not search another site ordering.** The next distinct mechanism is algebraic compression of the certified width-42 separator.
 
-1. characterize which local mask families are actually reached symbolically by the q138 ChaCha wiring, independently of cap implementation details where possible;
-2. derive mask-family residual bounds or Gram structures for local modular additions;
-3. formulate the adaptive local error-budget problem over four-addition QR and alternating column/diagonal layers;
-4. derive a global epsilon bound by telescoping;
-5. combine epsilon with 2|2 singular tails to obtain a full-exact epsilon-rank bound;
-6. state the first preregistrable theta protocol: residual-decay sequence, representation/work growth sequence, scaling family, and kill/pass conditions.
+Work in this order:
 
-Prefer theorem -> lemma -> finite falsifier. Use terminal code only to validate finite identities or evaluate formulas.
+1. choose one width-42 cut from the certified carving decomposition;
+2. write the crossing indices explicitly by type: sigma, offset-8 `v4`, offset-12 `v3`;
+3. derive every exact linear/parity conservation law induced by the sigma recurrence and fixed boundary masks;
+4. determine how many formal `2^42` boundary states are immediately impossible;
+5. derive a factorized Gram or transfer representation of the contracted-side boundary message;
+6. compute exact small-instance Schmidt/rank spectra only as a finite falsifier for the derived algebra;
+7. if exact rank is still large, move to certified singular-value/epsilon-rank analysis rather than another graph permutation;
+8. separately examine whether the 20 conditioned wrap variables admit meet-in-the-middle or low-rank boundary-transfer reuse that reduces **total work**, not only memory.
+
+The success condition for this mathematical pass is a rigorous reduction in effective separator dimension/rank below the topology-only 42-bond space, or a scoped NO-GO showing that the chosen algebraic mechanism does not reduce it.
 
 ## Measured execution remains frozen behind provenance
 
