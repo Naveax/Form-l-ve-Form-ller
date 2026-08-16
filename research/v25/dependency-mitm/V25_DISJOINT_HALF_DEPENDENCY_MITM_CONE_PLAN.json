@@ -1,0 +1,14 @@
+{
+  "milestone":"V25_DISJOINT_HALF_DEPENDENCY_BIDIRECTIONAL_MITM_CONE_AUDIT",
+  "frozen_before_measurement":true,
+  "scope":"target-free exact dependency prerequisite for a controlled 6-round reduced-key MITM",
+  "layout":{"id":"W4_W6_SPLIT","bits":16,"low_half":{"state_word":4,"width":8,"logical_shift":0},"high_half":{"state_word":6,"width":8,"logical_shift":8}},
+  "rounds":6,
+  "cones":{"splits":[1,2,3,4,5],"words":"all 16","count":80},
+  "support_definition":"For each boundary word, propagate exact word-level QR dependency backward to the initial state for the forward side and forward through original rounds to the final state for the inverse side. Intersect each terminal dependency set with active words {4,6}.",
+  "primary_gate":"At least one cone must have nonempty disjoint active supports whose union is {4,6}: forward={4},backward={6} or forward={6},backward={4}.",
+  "selection_if_multiple":"minimum total QR cone, then smaller split, then smaller word",
+  "stage1_only_if_pass":"Numerically verify that the selected boundary values are functions of only their assigned 8-bit half, then freeze exact half-table matching/TOTAL accounting on fresh outputs. Expected candidate-side enumeration would be 2^8+2^8 before collisions/verification.",
+  "kill_rule":"If zero of 80 cones satisfy exact disjoint-half coverage, close the simple single-word single-boundary dependency-separated MITM family immediately.",
+  "forbidden":"No target tuning, approximate dependency, dropping a dependency word, or multi-boundary rescue inside this milestone."
+}
