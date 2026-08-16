@@ -6,15 +6,29 @@ Bu dosya yeni oturumların başlangıç otoritesidir. Yeni bir çalışma oturum
 
 **Date:** 2026-08-16  
 **State:** `P_ONLY_LABELFREE_RELIABILITY_NO_GO_CURRENT_XOR256_FAMILY`  
-**Next:** `SYNTHETIC_TARGET_OBSERVABLE_TO_ORACLE_RELIABILITY_LEARNABILITY_AUDIT`
+**Next:** `SYNTHETIC_TARGET_OBSERVABLE_TO_ORACLE_RELIABILITY_LEARNABILITY_AUDIT`  
+**Executable backlog:** GitHub Issue `#1`
+
+## Mandatory reading order
+
+1. `AGENTS.md`
+2. `FDS_CONTINUE_HERE.md`
+3. `FDS_CURRENT_STATE.md`
+4. `FDS_VISION.md`
+5. `FDS_RESEARCH_DISCIPLINE.md`
+6. `FDS_COMPUTE_POLICY.md`
+7. `FDS_KNOWLEDGE_GRAPH.md`
+8. `FDS_SOURCE_REGISTRY.md`
+9. `FDS_VALIDATION_MATRIX.md`
+10. `FDS_CHECKLIST.md` + `FDS_DECISION_LOG.md`
 
 ## 8-adımlık devam zinciri
 
 ### 1. Fresh authority + continuity verification
 - Fresh `main` HEAD'i kaydet.
-- README → CURRENT_STATE → VISION → DISCIPLINE → KNOWLEDGE_GRAPH → CHECKLIST → DECISION_LOG sırasını oku.
+- Yukarıdaki mandatory reading order'ı tamamen uygula.
+- Açık GitHub issue'ları kontrol et; canonical next milestone ile çelişiyorsa önce continuity uyuşmazlığını çöz.
 - Önceki milestone hash/manifestleri ile local çalışma alanını karşılaştır.
-- Çelişki varsa yeni deney yapmadan önce continuity uyuşmazlığını çöz.
 
 ### 2. Synthetic reliability corpus v1
 - Frozen seed ile **24 random reduced-key target** üret.
@@ -56,7 +70,9 @@ Her admitted veya killed milestone sonunda:
 - `FDS_CHECKLIST.md` tiklerini güncelle.
 - `FDS_DECISION_LOG.md` içine tarihli karar ekle.
 - `FDS_KNOWLEDGE_GRAPH.md` dependency/status ilişkilerini güncelle.
-- Source + test + result summary + cert/manifest commit et.
+- `FDS_SOURCE_REGISTRY.md` ve `FDS_VALIDATION_MATRIX.md` current authority'yi yansıtacak şekilde güncelle.
+- Source + test + frozen plan + result summary + cert/manifest commit et.
+- İlgili GitHub issue'yu güncelle/kapat.
 - Sonraki exact unfinished pass'i bu dosyada açıkça yaz.
 
 ## Stop rules
