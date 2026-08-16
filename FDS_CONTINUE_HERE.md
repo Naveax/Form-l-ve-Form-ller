@@ -6,7 +6,7 @@
 
 1. Use the frozen plan in `research/v26/recovered-bit-puncturing-dac/V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json`.
 2. Preserve all prior NO-GO/inapplicable results and Stage0 separator evidence.
-3. First re-materialize the recovered bit-puncturing core and require SHA-256 `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`; do not substitute a rewritten core silently.
+3. First re-materialize the recovered runtime with `scripts/rematerialize_v25_trail_dac.py <candidate-path> --restore`. It must locate snapshot SHA-256 `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6` and core SHA-256 `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`; do not substitute a rewritten core silently.
 4. Restore the recovered runtime dependencies and re-run the historical `19/19 PASS` baseline before new measurement.
 5. The cap2 falsifier implementation/reference/test are committed. Run all four columns only after the provenance gate passes.
 6. cap2 equality requires exact support plus every signed coefficient and energy within `1e-12`.
