@@ -1,15 +1,9 @@
 # FDS_DECISION_LOG
 
-## V25
-Exponent track closed with ALPHA_PASS=0; scoped constant-factor engines remain engineering assets only.
+## 2026-08-16 — V26 rotational applicability
+Primary ChaCha rotational construction requires word-wise rotationally related permutation inputs. Under the fixed single-key source model, no nonzero rotation preserves all fixed constants, no arbitrary unknown key is generically equal to its rotation, and the corresponding same-key RX key difference is secret-dependent. The source exposes block outputs rather than a raw permutation oracle. Some rotated counter pairs exist, but they cannot repair the full-state incompatibility.
 
-## V26 closed families
-First/second counter finite differences and exhaustive cross-word XOR ANF projections are NO-GO.
-
-## 2026-08-16 — Source-orbit counter cube
-Frozen 8-D cube audit used only counters 512..767 and 1024..1279. Exact cube-sum key ANFs showed R6 b16 median per-bit degree reduction 0 at both bases, support-exponent reductions only ~5e-05/~3e-05, and no sparse/stable bits. All five primary gates failed.
-
-Decision: `NO_GO_SOURCE_ORBIT_COUNTER_CUBE_ANF`. No cube retuning or superpoly solve.
+Decision: `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL`. No rotational benchmark or Stage1.
 
 ## Next
-Audit ChaCha rotational cryptanalysis assumptions against the fixed single-key sequential-counter source model. Close as inapplicable if related-key/rotated-input control is essential.
+Audit exact key-variable interaction/separator structure before attempting any new factorized solver.

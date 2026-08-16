@@ -2,13 +2,18 @@
 
 ## Canonical status — 2026-08-16
 
-V25 exponent track remains closed with `ALPHA_PASS=0`; scoped constant-factor engineering assets remain admitted only in their original bounds.
+V25 exponent track remains closed with `ALPHA_PASS=0`. Closed V26 exact families now include first/second counter derivatives, cross-word XOR projection, source-orbit 8-D counter cube, and the rotational applicability branch.
 
-Closed V26 target-free families: feed-forward-cancelled first counter difference ANF; counter second finite-difference ANF; exhaustive cross-word XOR projection ANF; source-orbit 8-D counter cube/superpoly ANF.
+Rotational applicability result: `NOT_APPLICABLE_TO_FDS_SINGLE_KEY_SOURCE_MODEL`.
+- nonzero rotations preserving all four fixed ChaCha constants: none;
+- generic arbitrary same-key direct rotations: none;
+- public/generic same-key RX key differences: none;
+- direct applicable rotations: none;
+- raw permutation oracle: unavailable.
 
-Issue #19 used only source counters `512..767` and `1024..1279`, 512 distinct observed blocks. R6 b16 gave median per-bit degree reduction `0` at both bases, support-exponent reductions only `5.09e-05` and `2.62e-05`, and zero stable sparse bits. Primary gates: `0/5`.
+Source counter pairs exist for some rotations, so data volume is not the fundamental blocker. Fixed constants, fixed unknown key relation and block-function observability are.
 
-No superpoly-solving stage opens. `alpha<1` remains NOT DEMONSTRATED; no full-round claim.
+No rotational Stage1 opens. `alpha<1` remains NOT DEMONSTRATED; no full-round claim.
 
 ## Next
-`V26_SINGLE_KEY_ROTATIONAL_APPLICABILITY_AUDIT`: determine from primary ChaCha rotational literature whether its essential related-key/rotated-state assumptions can exist in the fixed single-key sequential-counter source model before any expensive benchmark.
+Open a mechanism-distinct exact key-interaction graph/separator audit using existing exact ANF infrastructure. Goal: determine whether the R6 key-variable interaction graph admits any nontrivial separator/factorization before building another solver.
