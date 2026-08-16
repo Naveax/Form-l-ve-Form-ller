@@ -1,13 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** V25 exponent track CLOSED with ALPHA_PASS=0.  
-**Active:** `V26_MULTIBLOCK_FEEDFORWARD_CANCELLED_ANF_AUDIT`.
+**State:** V25 exponent track CLOSED; V26 feed-forward-cancelled ANF family `NO_GO`.  
+**Next:** freeze a genuinely distinct target-free V26 structural mechanism before measurement.
 
-1. Use frozen V26 plan under `research/v26/feedforward-cancel-anf/`.
-2. This is a target-free exact forward-map audit, not PNB tuning or inverse low-degree relation search.
-3. Compute full truth tables for b=8/10/12/14/16, counters 1 and 257, R4 control and R6 primary.
-4. Cancel the known feed-forward counter delta exactly, then compute ANF by Möbius transform for all 512 bits.
-5. R6 primary PASS requires b16 median degree reduction >=2, median support-exponent reduction >=0.10, and >=16 stable sparse bits across b14/b16.
-6. R4 cannot rescue R6 failure.
-7. Only PASS opens a fresh polynomial-solving/TOTAL scaling stage.
-8. On FAIL close this family; no counter/bit/threshold retuning or second set.
+1. Treat the cancelled-ANF counter pair `[1,257]`, all-bit output scope and thresholds as retired.
+2. Do not open polynomial solving from this result; stable sparse bit set is empty.
+3. Preserve exact vectorized ChaCha + packed Möbius evaluator as reusable infrastructure.
+4. New V26 family must state why its mechanism is not first counter difference/feed-forward cancellation.
+5. Prefer exact target-free falsifiers before any oracle/target work.
+6. Freeze scaling axis, TOTAL implications and kill gate before results.
+7. ALPHA_PASS still requires fresh TOTAL+verification exponent <1.
+8. No full-round claim without independent evidence.

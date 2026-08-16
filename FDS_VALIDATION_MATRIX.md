@@ -1,13 +1,10 @@
 # FDS_VALIDATION_MATRIX
 
-| V25 class | Count | Meaning |
-|---|---:|---|
-| ALPHA_PASS | 0 | no tested branch demonstrates TOTAL exponent <1 |
-| CONSTANT_FACTOR_PASS | 2 | useful reduced-model speed/ranking primitives, alpha=1 |
-| METHOD_PASS_ONLY | 3 | exact/valuable machinery without admitted end-to-end exponent gain |
-| NO_GO | 11 | frozen gate failed / structural family closed |
-| UNRESOLVED | 0 | historical NEXT items superseded or completed |
-
-V25 verdict: `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
-
-No full-round impossibility/security claim.
+| Family | Result | Verdict |
+|---|---|---|
+| V25 structural exponent track | all admitted tests fail alpha gate | CLOSED, ALPHA_PASS=0 |
+| V25 constant-factor engines | scoped QR/wall wins | admitted engineering only |
+| V26 feed-forward-cancelled exact ANF | R6 primary 0/3; stable sparse bits 0 | NO-GO |
+| V26 next exact structural family | not frozen | NEXT |
+| alpha<1 | — | NOT DEMONSTRATED |
+| full-round relevance | — | NO CLAIM |

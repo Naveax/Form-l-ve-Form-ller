@@ -1,10 +1,9 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — V25 exponent-track closure
-Historical authority was recovered through DAC, adaptive second-layer contraction, signed CP→C1, CERT90 and trail ranking. A frozen audit classified 16 branch families under the project's alpha admission rule.
+## V25
+Current exponent-reduction track closed with ALPHA_PASS=0. Constant-factor boundary/codegen assets remain scoped engineering wins only.
 
-Counts: ALPHA_PASS 0; CONSTANT_FACTOR_PASS 2; METHOD_PASS_ONLY 3; NO_GO 11; UNRESOLVED 0. All historical CONTINUE/NEXT labels are superseded by later executed milestones or otherwise classified without an admitted exponent path.
+## 2026-08-16 — V26 feed-forward-cancelled ANF
+Frozen target-free audit computed exact ANFs for b8–b16, R4/R6, all 512 bits after cancelling the known counter feed-forward delta across counters1/257. R6 b16 median per-bit degree reduction was 0, median support-exponent reduction was negative ~5.64e-05, and stable sparse b14/b16 bits were 0. All 3 primary gates failed.
 
-Decision: `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
-
-This is not a proof that future cryptanalysis cannot improve ChaCha; it closes the tested V25 search program. Future genuinely new mechanisms open as V26 with fresh preregistration.
+Decision: `NO_GO_FEEDFORWARD_CANCELLED_ANF`. No polynomial-solving stage, no threshold/output/counter retuning, no alpha claim.

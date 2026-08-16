@@ -1,21 +1,19 @@
 # FDS_CURRENT_STATE
 
-## V25 closed — 2026-08-16
+## Canonical status — 2026-08-16
 
-`V25_CURRENT_EXPONENT_TRACK` is formally closed as `CLOSE_V25_CURRENT_EXPONENT_TRACK_NO_ALPHA_PASS`.
+V25 exponent track remains closed with `ALPHA_PASS=0`; its constant-factor engineering assets remain admitted only in their scoped form.
 
-Frozen closure audit over 16 branch families:
-- ALPHA_PASS: **0**;
-- CONSTANT_FACTOR_PASS: **2**;
-- METHOD_PASS_ONLY: **3**;
-- NO_GO: **11**;
-- UNRESOLVED: **0**.
+V26 first structural family, `V26_MULTIBLOCK_FEEDFORWARD_CANCELLED_ANF_AUDIT`, is **NO-GO**.
 
-Historical CONTINUE/NEXT items were checked for supersession; none remains an unexecuted hidden exponent branch.
+Frozen target-free audit covered b=8/10/12/14/16, R4/R6, counters 1 and 257, and all 512 output bits with exact ANF Möbius transforms.
 
-Useful V25 assets are retained separately: collision-tolerant boundary-syndrome/codegen screening, R6 PNB baseline, exact Walsh puncturing/trail core, and DAC/second-layer/CERT90 machinery.
+R6 b16:
+- median per-bit degree reduction: `0` (gate >=2);
+- median per-bit support-exponent reduction: `-5.6438e-05` (gate >=0.10);
+- stable sparse bits b14/b16: `0` (gate >=16).
 
-This closure says only that **tested V25 families did not demonstrate alpha<1 TOTAL work**. It is not a security proof or impossibility theorem for ChaCha.
+All 3 primary gates fail. No polynomial-solving stage opens. No alpha<1 or full-round claim.
 
 ## Next
-Any new exponent-reduction hypothesis must open as **V26** with fresh preregistration and a genuinely new mechanism. Do not silently extend V25.
+V26 may continue only with a genuinely different exact structural mechanism. Do not retune counter pair/output subset/thresholds inside the cancelled-ANF family.

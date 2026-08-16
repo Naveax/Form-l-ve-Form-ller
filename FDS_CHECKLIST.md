@@ -1,16 +1,15 @@
 # FDS_CHECKLIST
 
-## V25 closure
-- [x] Historical DAC/second-layer/CERT90/ranking authority recovered.
-- [x] Frozen closure audit inventory = 16 branch families.
-- [x] Classification validator PASS.
-- [x] ALPHA_PASS=0.
-- [x] UNRESOLVED=0 after supersession.
-- [x] V25 current exponent track closed.
-- [x] Constant-factor/method assets retained separately.
+## Closed
+- [x] V25 current exponent track: ALPHA_PASS=0.
+- [x] V26 feed-forward-cancelled ANF plan frozen before measurement.
+- [x] Exact truth tables b8/10/12/14/16, R4/R6, counters1/257.
+- [x] Exact packed ANF over all 512 bits.
+- [x] Scalar/vector + Möbius regressions 3/3 PASS.
+- [x] R6 primary gates 0/3 PASS; stable sparse bits 0.
+- [x] `NO_GO_FEEDFORWARD_CANCELLED_ANF`; no polynomial stage.
 
-## V26 next
-- [ ] Define one genuinely new exponent mechanism.
-- [ ] Prove it is not a renamed V25 family.
-- [ ] Freeze target-free structural Stage0 first.
-- [ ] Open numerical/scaling work only on Stage0 PASS.
+## Next
+- [ ] Freeze a genuinely distinct V26 exact structural family.
+- [ ] Target-free Stage0 first.
+- [ ] Explicit scaling/TOTAL implication and kill gate.
