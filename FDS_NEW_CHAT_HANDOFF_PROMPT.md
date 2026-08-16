@@ -1,16 +1,16 @@
 # FDS / V26 — Yeni Chat Eksiksiz Devam Promptu
 
-Sen önceki uzun FDS araştırma sohbetinin **birebir devamısın**. Bu yeni sohbeti sıfırdan bir proje gibi ele alma. Kullanıcı senden daha önceki araştırmayı, GitHub authority'yi, deney disiplinini, NO-GO ledger'ını ve active frozen milestone'u aynen sürdürmeni istiyor.
+Sen önceki uzun FDS araştırma sohbetinin doğrudan devamısın. Projeyi sıfırlama ve kullanıcıya yeniden roadmap sorma.
 
-## 0. TEK OTORİTE KURALI
+## 0. Canonical authority
 
-Canonical repository:
+Repository:
 
 `Naveax/Form-l-ve-Form-ller`
 
-İLK İŞİN GitHub'dan **fresh `main`** çözmek olsun. Prompttaki herhangi bir durum GitHub'dan eskiyse **GitHub kazanır**. Force-push, stale parent overwrite veya eski closure tree'yi yeni `main`e zorla taşıma yok.
+İlk iş fresh `main` çöz. Bu prompt GitHub'dan eskiyse GitHub kazanır.
 
-Başlangıçta şu dosyaları fresh main'den sırayla oku:
+Fresh main'den sırayla oku:
 
 1. `AGENTS.md`
 2. `FDS_CONTINUE_HERE.md`
@@ -19,283 +19,161 @@ Başlangıçta şu dosyaları fresh main'den sırayla oku:
 5. `FDS_RESEARCH_DISCIPLINE.md`
 6. `FDS_COMPUTE_POLICY.md`
 7. `FDS_KNOWLEDGE_GRAPH.md`
-8. `FDS_VALIDATION_MATRIX.md`
-9. `FDS_CHECKLIST.md`
-10. `FDS_DECISION_LOG.md`
-11. active `research/v26/...` plan/progress/source/result dosyaları
+8. `FDS_SOURCE_REGISTRY.md`
+9. `FDS_VALIDATION_MATRIX.md`
+10. `FDS_CHECKLIST.md`
+11. `FDS_DECISION_LOG.md`
+12. active `research/v26/...` authority/plan files
 
-Fresh main'in SHA'sını çalışma kaydına al. Bu prompt hazırlanırken gözlenen HEAD:
+Chat hafızası yardımcıdır; GitHub authority'dir.
 
-`b7f2a4c95890786d64e933e49e7c10d78171e521`
+## 1. Current canonical state
 
-Bu SHA yalnız handoff checkpointidir; yeni chatte daha yeni HEAD varsa onu kullan.
+- All prior killed/inapplicable V25/V26 families remain closed.
+- `ALPHA_PASS = 0`.
+- End-to-end work reduction is not admitted.
+- `alpha < 1` is not demonstrated.
+- Full-round ChaCha relevance/break claim: NO.
 
-## 1. PROJENİN ANA VİZYONU
+Recovered bit-puncturing/D&C separator Stage0 remains admitted:
 
-FDS, bilgi yalnız decoder/precompute/model/cache içine taşınarak “sıkıştırıldı” denilen sahte kazançları kabul etmeyen exact/controlled source-conditioned generative representation araştırmasıdır.
+`PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`
 
-Ana uzun vadeli soru:
+Stage0 evidence retained:
 
-- Bilinen deterministic finite-state kaynaklardan üretilmiş büyük veriyi exact biçimde daha küçük bir source representation ile saklamak mümkün mü?
-- Post-hoc reconstruction/inversion işini brute-force exponentinden gerçekten aşağı çekebilen yapısal mekanizma var mı?
-- Başarı yalnız sabit-faktör hızlanma değil, TOTAL accounting altında stabil `alpha < 1` ise exponent reduction olarak admitted olabilir.
+- cap2/cap3 exact signed first-layer marginals matched explicit global materialization on all four second-layer column interfaces;
+- cap4 avoided the 222,660,480 global Cartesian trails;
+- cap4 packed exact separator supports were `[0,11846464,26912,0]`;
+- total 24-byte compact estimate ~285 MB;
+- measured peak RSS ~839 MiB.
 
-Kilitle:
+Important limit: these are exact signed single-column marginals, not the complete joint second-layer distribution. Zero marginals on columns0/3 do not prove absent joint coupling.
 
-- `FULL_ROUND_CLAIM = NO`
-- `ALPHA_REDUCTION = NOT_DEMONSTRATED`
-- reduced-round/reduced-key deney sonucu full ChaCha20 kırımı değildir.
-- arbitrary random data için evrensel 100x/1000x lossless garanti iddia edilmez.
-- source-conditioned representation ile arbitrary-string compression aynı şey değildir.
+## 2. Active milestone
 
-## 2. ARAŞTIRMA DİSİPLİNİ — ASLA GEVŞETME
+`V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`
 
-Her yeni family/deney için:
+Frozen plan:
 
-1. Önce mekanizmanın önceki kill ledger'dan gerçekten farklı olduğunu kanıtla.
-2. Model, source orbit, key widths, rounds, metric, gate, TOTAL implication ve kill-rule sonuç görülmeden dondurulur.
-3. Plan/prereg **sonuçtan önce** GitHub authority'ye gider.
-4. Failed Stage0 sonrası threshold/mask/bit/base/dimension değiştirip rescue yok.
-5. İkinci development seti ile failed yöntemi diriltmek yok.
-6. Validation yalnız prereg gate PASS ise açılır.
-7. Post-hoc exploratory sonuç promotion için kullanılamaz.
-8. Negative result silinmez; NO-GO first-class result olarak source+summary+decision+manifest ile GitHub'a döner.
-9. Precompute, training, cache, metadata, model, selector, verification, false-positive ve storage maliyetleri TOTAL'a dahildir.
-10. `ALPHA_PASS` yalnız fresh TOTAL+verification scaling'de exponent <1 açıkça gösterilirse mümkün.
+`research/v26/recovered-bit-puncturing-dac/V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER_PLAN.json`
 
-Kullanıcı “imkânsız deme” diye baskı yapsa bile fizik/matematik/veri tersini gösteriyorsa sonucu saklama; fakat mümkün yeni mekanizma aramayı da erken bırakma.
+The cap2 factorized path, independent explicit-global-before-marginalization reference path and all-four-column `1e-12` regression are already committed.
 
-## 3. COMPUTE / GITHUB POLİTİKASI
+## 3. Current execution blocker — provenance bytes
 
-- Heavy numeric compute, Python/Numba/Rust, exhaustive truth tables, ANF/Möbius, cache ve profiling local/container'da daha kolaysa orada yap.
-- GitHub persistent authority, plans, source, tests, compact results, certs, decisions, manifests ve issues içindir.
-- Reproducible giant scratch/cache repoya zorla gömülmek zorunda değildir; build recipe + hash + byte accounting yeterlidir.
-- Her admitted/killed milestone sonunda authority GitHub'a geri dönmelidir.
-- GitHub fresh main senden ilerideyse local eski state'i ASLA force etme; rebase/reconstruct from fresh authority.
+Canonical blocker authority:
 
-## 4. TARİHSEL KILL LEDGER — AYNI FİKİRLERİ YENİ İSİMLE TEKRARLAMA
+`research/v26/recovered-bit-puncturing-dac/V26_MISSING_CANONICAL_BYTES.md`
 
-### V25 exponent track
-Canonical olarak CLOSED, `ALPHA_PASS=0`.
+GitHub Issue:
 
-Daha önce falsify edilen başlıca aileler:
+`#22 — Restore exact recovered V25 trail-DAC runtime bytes`
 
-- first-order pair derivative selector
-- positive Ritz / spectral leverage selector
-- projected/truncated HVP binary selector
-- corrected DAPS batch-greedy
-- natural/robust C2 group quadratic selectors
-- observation-conditioned top-RMS pair selector
-- D-opt pair diversity
-- Berk–Jones/common-candidate label-free footprint
-- M16→M32→M64 xor-256 pair-count scaling
-- C1-only label-free pair orientation
-- simple 8+8 exact XOR-separable half-key syndrome MITM
+Preferred missing artifact:
 
-Özellikle XOR half-key exponent falsifierinde dört fresh targetta:
+`FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip`
 
-- exact XOR-separable syndrome bit: `0/16`
-- raw syndrome-bit GF(2) ranks: `254–256`
-- centered/rectangle residual ranks: `253–255`
-- stable bit count: `0`
-- half-match set: `65,536`
-- enumeration reduction: yok
+Required SHA-256:
 
-Bu family SVD/threshold/bit cherry-picking ile rescue edilmez.
+`fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`
 
-Ayrıca collision-tolerant verified screen / boundary syndrome türü çalışmalar reduced modelde gerçek **constant-factor engines** verdi, fakat width scaling exponent yaklaşık 1 kaldı. Sabit-faktör win'i exponent win diye yeniden adlandırma.
+Critical missing core:
 
-### V26 closed families
+`fds_v25_bit_puncturing.py`
 
-GitHub canonical state'e göre şu exact target-free families CLOSED NO-GO:
+Required SHA-256:
 
-1. feed-forward-cancelled first counter difference ANF
-2. counter second finite-difference ANF
-3. exhaustive cross-word XOR projection ANF
+`ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`
 
-Cross-word audit:
+Useful exact-runtime companions if recovered from the same snapshot:
 
-- all 120 unordered output-word pairs
-- all 32 projected bits
-- b8→b16
-- R4 and R6
-- sparse-useful projected bits: `0` at every width/round
-- stable R6 b14/b16 useful set: `0`
+- `fds_v25_chacha.py`
+- `fds_v25_pnb_orbit.py`
+- recovered bit-puncturing/trail-DAC tests
+- `V25_TRAIL_ENUMERATION_DAC_PROGRESS.md`
+- `V25_TRAIL_ENUMERATION_DAC_DECISION.json`
+- `certify_v25_trail_enumeration_dac.py`
+- `v25_trail_enumeration_dac_cert/summary.json`
 
-Bunları pair cherry-pick, threshold change veya modular-sum reinterpretation ile aynı family içinde diriltme.
+The 2026-08-16 current conversation `/mnt/data` mount, including nested ZIP contents, was SHA-scanned for both canonical hashes and returned **0 matches**.
 
-## 5. ŞU ANKİ ACTIVE FROZEN MILESTONE
+Historical transcript text records these hashes and the recovered results but does not contain a verified byte-identical core.
 
-Bu handoff hazırlanırken fresh GitHub main'in active planı:
+Do not silently rewrite the core and call it canonical. A reimplementation must be labelled separately and cannot satisfy provenance restoration unless its bytes match the canonical SHA.
 
-`V26_SOURCE_ORBIT_COUNTER_CUBE_SUPERPOLY_ANF_AUDIT`
+## 4. Exact continuation chain
 
-Plan yolu:
+When historical backup bytes become available:
 
-`research/v26/source-orbit-counter-cube/V26_SOURCE_ORBIT_COUNTER_CUBE_SUPERPOLY_ANF_PLAN.json`
+1. Run:
+   `python scripts/rematerialize_v25_trail_dac.py <candidate-path> --restore`
+2. Require exact snapshot/core SHA matches.
+3. Restore runtime dependencies.
+4. Re-run historical recovered baseline: `19/19 PASS`.
+5. Run cap2 transformed-marginal exact validation on columns `[0,1,2,3]`.
+6. Require exact support and every signed coefficient/energy within `1e-12`.
+7. Only cap2 PASS opens cap3.
+8. cap3 must use cached local QR hulls + packed signed merge; no global joint materialization.
+9. cap3 engineering gates remain `<= 2 GiB peak RSS` and `<= 1 GiB total 24-byte compact representation`.
+10. Apply frozen PASS/NO-GO mechanically.
+11. Only PASS opens a separately frozen pairwise/junction-tree cross-column contraction stage.
+12. Close/update GitHub Issue #22 and root continuity files after provenance restoration.
 
-Bu plan **measurement öncesi frozen**. İlk teknik iş bu Stage0'u implement edip çalıştırmaktır, ANCAK yeni chatte fresh main daha ileri gitmişse fresh authority'nin active pass'ine geç.
+## 5. Research discipline
 
-### Mekanizma
+Do not weaken these rules:
 
-Exact 8-dimensional Boolean counter cube/integral. Bu, closed 1-D modular finite-difference ve output-projection familylerinden structurally distinct.
+- preregister hypothesis, axes, gates and kill rules before measurement;
+- failed development does not open validation;
+- do not resurrect killed families with a second development set;
+- post-hoc exploratory signal is not admitted evidence;
+- signed hull coefficients must be merged before energy calculations;
+- global beam/truncation collapse is not proof that the true correlation is zero;
+- local-cap exactness is not unbounded/full ChaCha exactness;
+- preprocessing, cache, model, metadata, ranking and verification all count in TOTAL;
+- cap4/cap5 global Cartesian materialization is forbidden when the frozen plan forbids it.
 
-Literature basis:
+## 6. Historical kill ledger
 
-- Dinur–Shamir cube attacks / public-variable cube framework
-- cube/integral higher-order derivative framework
+Do not reopen these as if new without a genuinely distinct mechanism:
 
-### Source constraints
+- SAT exponent claim track;
+- naive modular bit lifting;
+- tested low-degree exact inverse relations;
+- low-complexity approximate spectral predictors;
+- robust R8 PNB/CPNB gain;
+- first-order pair/branch covariance selectors;
+- positive Ritz spectral leverage;
+- projected HVP binary selector;
+- corrected DAPS;
+- natural/robust C2 group selectors;
+- top-RMS/D-opt observation pair selection;
+- Berk–Jones common-candidate footprint;
+- M16→M64 xor-256 pair-count scaling;
+- C1-only label-free pair orientation.
 
-- controlled reduced ChaCha
-- target-free Stage0
-- fixed nonce
-- source counter orbit only `1..1875`
-- no chosen IV/nonce extension
+Reduced R6 structural effects and constant-factor gains may remain real, but no exponent/full-round claim follows.
 
-Frozen cube bases/ranges:
+## 7. Compute/GitHub policy
 
-- base `512`, counters `512..767`
-- base `1024`, counters `1024..1279`
+Use local/container for heavy numeric work when easier. Use GitHub for persistent authority, plans, tests, compact results, decisions and continuity. Large reproducible scratch may stay outside GitHub if build recipe, hashes and size accounting are preserved.
 
-Low 8 counter bits = cube variables. Her cube tam 256 assignment içerir.
+Every admitted/killed milestone must return authority to GitHub.
 
-### Frozen scaling axes
+## 8. User working style
 
-Key widths:
+If the user says `devam et`, `sıradaki adımı yap`, or `ne gerekiyorsa yap`, do the work instead of asking unnecessary clarification.
 
-`b = [8,10,12,14,16]`
+Give concise progress updates during long tool work. Do not promise background work.
 
-Rounds:
+## 9. What to do immediately in the new chat
 
-- R4 = diagnostic control
-- R6 = primary
+1. Resolve fresh GitHub `main`.
+2. Read `FDS_CONTINUE_HERE.md`, `FDS_CURRENT_STATE.md`, the missing-byte authority and frozen QR-transform plan.
+3. Check whether the canonical snapshot/core has since appeared in GitHub, attached files, `/mnt/data`, releases or artifacts.
+4. SHA-scan any supplied historical ZIPs recursively, including nested ZIPs.
+5. If canonical bytes are found, restore them and continue the exact chain immediately.
+6. If bytes are still absent, do not invent measurements; report the provenance blocker and point to Issue #22.
+7. Do not start an AI round while this blocker is purely source-rematerialization.
 
-Outputs:
-
-- all 16 words / all 512 output bits
-
-Key map:
-
-`existing reduced_key_multiword(k,b)`
-
-### Exact computation
-
-Her base / round / key-width için:
-
-1. Her candidate reduced key için 256 counter outputunu üret.
-2. Her 512 output bitinde cube XOR sum'u hesapla.
-3. Aynı base'in single-counter output truth table'ını control olarak oluştur.
-4. Cube ve control key truth tables üzerinde exact GF(2) Möbius transform uygula.
-5. Her bit için exact ANF:
-   - algebraic degree
-   - monomial support
-   - support exponent
-   ölç.
-6. Packed word XOR kullanmak 32 parallel bit cube sums ile exact eşdeğer olmalı; regression test ekle.
-
-### Stable-useful bit kuralı
-
-Bir output biti ancak R6 altında **iki base için de**, b14 ve b16'da:
-
-- cube-superpoly degree `<= 6`
-- support exponent `<= 0.75`
-
-ise stable-useful.
-
-### Primary PASS gate
-
-Her iki R6 base ayrı ayrı b16'da:
-
-- median per-bit algebraic-degree reduction vs same-base control `>= 2.0`
-- median per-bit support-exponent reduction vs same-base control `>= 0.10`
-
-VE:
-
-- b14/b16, both bases boyunca aynı stable-useful bitlerden `>=16` tane olmalı.
-
-### Kill rule
-
-Aşağıdakilerden biri olursa Stage0 FAIL ve family kapanır:
-
-- R6 b16 base'lerden biri degree-reduction gate'i kaçırır
-- base'lerden biri support-exp reduction gate'i kaçırır
-- stable cross-base b14/b16 useful bit count `<16`
-
-FAIL sonrası:
-
-- cube dimension değiştirme yok
-- cube base değiştirme yok
-- output bit cherry-pick yok
-- threshold değiştirme yok
-- approximate ANF rescue yok
-- ikinci development family yok
-
-### Stage1 yalnız PASS ise
-
-Ancak Stage0 PASS olursa:
-
-- fresh source-orbit cube base(s) dondur
-- actual superpoly solving / ranking / TOTAL scaling aç
-- observed blocks, cube summation, ANF preprocessing, superpoly storage, solve ve exact verification maliyetlerini bill et
-- Stage0'dan tek başına alpha claim çıkarma
-
-## 6. İLK UYGULAMA TALİMATI
-
-Yeni chatte kullanıcı başka bir şey söylemezse doğrudan şu işi yap:
-
-1. Fresh GitHub main ve active planı tekrar doğrula.
-2. Active plan hâlâ `V26_SOURCE_ORBIT_COUNTER_CUBE_SUPERPOLY_ANF_AUDIT` ise planı değiştirmeden implementation source + tests oluştur.
-3. Önce küçük b4/b6 toy/reference regression ile Möbius/packed cube XOR exactness'i doğrula.
-4. Sonra frozen Stage0 axes'in tamamını çalıştır.
-5. Sonuçları primary gate'e mekanik uygula.
-6. PASS/FAIL kararını pazarlık etme.
-7. Compact result + source + tests + progress + decision + manifest + root continuity update hazırla.
-8. Fresh main parent guard uygula; başka commit geldiyse force etmeden fresh authority üzerine yeniden base et.
-9. GitHub'a closure yaz.
-10. PASS ise Stage1'i AYRI prereg commit/issue olarak dondur; FAIL ise literature-grounded, kill-ledger-distinct bir sonraki family seçimine dön.
-
-## 7. OTONOM ÇALIŞMA TARZI
-
-Kullanıcı genellikle “sıradaki adımı yap”, “devam et”, “ne gerekiyorsa yap” şeklinde çalışıyor. Bu durumda:
-
-- gereksiz clarification sorma
-- makul teknik kararları kendin al
-- uzun çalışma varsa kısa progress update ver
-- sonuçları test etmeden başarı ilan etme
-- gerektiğinde primary literature/web research yap
-- external AI'lere yalnız gerçekten yeni matematiksel bottleneck varsa ve local falsifierlar tüketildiyse prompt hazırla; AI cevabını oy sayımıyla değil implement/falsify ederek değerlendir
-- 6–10 adımlık continuity zincirini kendin sürdür
-
-Kullanıcı “hepsini yap” dediğinde sonuçları uydurmak değil, mevcut araçlarla gerçekten çalıştırmak kastediliyor.
-
-## 8. GITHUB CLOSURE CONTRACT
-
-Her milestone sonunda minimum:
-
-- frozen plan
-- implementation source
-- regression/reference tests
-- compact raw/aggregate result JSON
-- progress MD
-- decision JSON/MD
-- manifest / hashes
-- `FDS_CURRENT_STATE.md`
-- `FDS_CONTINUE_HERE.md`
-- `FDS_VALIDATION_MATRIX.md`
-- `FDS_DECISION_LOG.md`
-- gerekiyorsa checklist / knowledge graph
-
-NO-GO'ları silme.
-
-## 9. PROVENANCE / MEMORY
-
-Bu sohbetin 2026-08-16 exportu ayrı continuity kaynağı olarak saklandı. GitHub bootstrap'ta raw import provenance için per-file SHA-256 manifesti oluşturuldu; binary aggregate archive materialization infrastructure Issue #2'de açık kalabilir ve aktif araştırmayı bloklamaz.
-
-Yeni chatte eski sohbetin tüm metnine erişemesen bile **fresh GitHub authority bu projenin belleğidir**. Bu prompt yalnız bootloader'dır.
-
-## 10. ŞİMDİ BAŞLA
-
-Bu mesajı okuduktan sonra bana “ne yapmak istersin?” diye sorma.
-
-Fresh `main`i oku, current authority'yi özetle ve **ilk unfinished frozen pass'i yapmaya başla**. Eğer GitHub bu prompttan daha ilerideyse, prompttaki active milestone'u değil GitHub'ın latest `FDS_CONTINUE_HERE.md` state'ini uygula.
+**First unfinished canonical pass:** exact snapshot/core rematerialization → SHA verification → historical `19/19 PASS` → cap2 ×4 exact QR-transform gate → cap3 packed measurement → frozen PASS/NO-GO → GitHub closure.
