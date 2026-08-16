@@ -1,13 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** `ADMIT_BROAD_QR_LAYOUT_TRANSFER_NO_GENERIC_WALL_TRANSFER`  
-**Next:** `V25_LAYOUT_SPECIALIZED_CODEGEN_WALL_REALIZATION`.
+**State:** `ADMIT_BROAD_NONUNIVERSAL_WALL_REALIZATION`  
+**Next:** `V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16`.
 
-1. Fresh main + authority read.
-2. Keep split1/word0/width16 and all six layouts fixed.
-3. Generate straight-line layout-specialized screen and equally specialized direct baseline from frozen structural classifications.
-4. Fresh targets are `[404,274,285,190,939,749,785,460]`; do not reuse L1 wall targets for admission.
-5. Full 48×1024 generated-vs-generic exactness must pass before wall admission.
-6. Benchmark warmup3/repeat11 with alternating order; include target cache setup and survivor verification.
-7. Wall gate per layout: median >=1.05, positive >=7/8, exact unique true 8/8.
-8. Broad wall realization requires >=4/5 non-control layouts. No alpha/full-round claim regardless.
+1. Fresh main + authority.
+2. Use only W5_SINGLE and W4_W6_SPLIT representative layouts from the frozen scaling plan.
+3. b=10/12/14/16 targets and benchmark repeats are already frozen.
+4. Keep split1/word0/width16/codegen rule unchanged.
+5. Full generated-vs-generic exactness across every candidate/case precedes scaling wall admission.
+6. Each layout/b requires true unique 3/3, median wall >=1.05 and positive >=2/3.
+7. Both layouts must pass all four b values for family scaling PASS.
+8. Report slopes but alpha remains 1 by leading 2^b enumeration; no full-round claim.

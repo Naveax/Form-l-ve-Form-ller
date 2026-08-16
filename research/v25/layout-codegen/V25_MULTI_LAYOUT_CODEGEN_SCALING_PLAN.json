@@ -1,0 +1,15 @@
+{
+  "milestone":"V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16",
+  "frozen_before_scaling_measurement":true,
+  "fixed_algorithm":{"rounds":6,"counter":1,"split":1,"boundary_word":0,"syndrome_width":16,"generator_rule":"identical straight-line generator from prior admitted codegen milestone"},
+  "representative_layouts":{"W5_SINGLE":"all b logical bits in state/key word5 bits0..b-1","W4_W6_SPLIT":"for even b, low b/2 bits in word4 and high b/2 bits in word6"},
+  "key_widths":[10,12,14,16],
+  "targets_by_b":{"10":{"seed":5351310,"targets":[128,828,1022]},"12":{"seed":5351312,"targets":[2418,3039,241]},"14":{"seed":5351314,"targets":[3682,2365,16104]},"16":{"seed":5351316,"targets":[28124,21497,46696]}},
+  "exactness_gate":"generated full syndrome and direct predicate must equal generic reference for every candidate in every frozen layout/b/target case",
+  "wall_protocol":{"warmups_by_b":{"10":2,"12":2,"14":1,"16":1},"repeats_by_b":{"10":9,"12":7,"14":5,"16":3},"order":"alternate algorithm/baseline by repeat parity","timed_scope":"target output + specialized target cache + all 2^b candidates + survivor verification"},
+  "per_layout_per_b_gate":{"true_key_unique_verified_targets":3,"median_wall_speedup_min":1.05,"positive_wall_targets_min":2},
+  "family_gate":"both representative layouts must pass all gates at all four b values",
+  "accounting":"report survivor counts, structural QR ratio, wall speedup, generated source bytes and generation/compile wall; fit log2 wall slopes as diagnostics",
+  "claim_limit":"Scaling may broaden only the tested-layout constant-factor wall claim. Leading candidate enumeration remains 2^b and algorithmic alpha=1 by construction. No full-round claim.",
+  "forbidden":"No width/layout/target/repeat/gate/codegen-rule retuning after scaling results."
+}

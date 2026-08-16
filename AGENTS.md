@@ -1,15 +1,15 @@
 # AGENTS.md — FDS Autonomous Continuation Contract
 
-1. Resolve fresh main and authority before work.
-2. Check Library/history before repeating experiments.
-3. Freeze targets/layouts/gates before measurement.
-4. Keep killed families killed unless mechanism changes.
-5. No true-key/oracle leakage.
-6. TOTAL includes generation/cache/storage/evaluation/verification.
+1. Resolve fresh main and authority.
+2. Check Library/history before repeating work.
+3. Freeze all targets/gates/repeats before measurement.
+4. Killed mechanisms remain killed unless mechanism changes.
+5. No oracle leakage.
+6. TOTAL includes code generation/cache/storage/evaluation/verification.
 7. Local compute allowed; authority returns to GitHub.
-8. Failed gate cannot be resurrected on a second development set.
-9. Closure requires source/tests/plans/results/decision/manifest/continuity.
-10. alpha<1/full-round claims remain locked.
+8. No second development set resurrection.
+9. Closure requires source/tests/plans/results/decision/continuity.
+10. alpha<1/full-round claims stay locked.
 
 ## Current next
-`V25_LAYOUT_SPECIALIZED_CODEGEN_WALL_REALIZATION` using the already frozen plan and fresh targets. Mathematical split/word/width/layouts may not be retuned.
+Run the already-frozen `V25_MULTI_LAYOUT_CODEGEN_SCALING_B10_B16` plan. No retuning.

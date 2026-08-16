@@ -1,16 +1,12 @@
 # FDS_KNOWLEDGE_GRAPH
 
-reduced ARX machinery
-→ failed selector/reliability families
-→ internal boundary syndrome
-→ exact cone + fresh confirmation + b10..16 constant-factor win
-→ layout transfer
-   → single-word moves PASS QR
-   → same-group two-word split PASS QR
-   → cross-group two-word split PASS QR
-   → generic Python cache wall transfer FAIL
-→ active: layout-specialized straight-line codegen
-   → exact generated/generic equivalence
-   → fresh wall realization
+boundary syndrome
+→ broad QR layout transfer 5/5
+→ generic cache wall transfer NO-GO
+→ straight-line codegen
+   → exactness PASS
+   → wall transfer W5/W6/W7/W4+W6 PASS
+   → same-column W4+W8 wall FAIL
+→ active scaling: W5 + cross-group W4/W6, b10→16
 
-Current claims: broad QR constant-factor transfer across tested layouts; prior specialized word4 wall win only. Alpha=1; no full-round relevance.
+Claim: broad non-universal constant-factor wall realization in tested b=10 layouts. Alpha=1; no full-round relevance.
