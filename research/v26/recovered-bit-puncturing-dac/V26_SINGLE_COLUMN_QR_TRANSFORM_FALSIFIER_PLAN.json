@@ -1,0 +1,16 @@
+{
+  "milestone":"V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER",
+  "frozen_before_measurement":true,
+  "parent_stage":"V26_RECOVERED_BIT_PUNCTURING_SECOND_LAYER_SEPARATOR_AUDIT / PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0",
+  "scope":"controlled reduced-round ChaCha bit-puncturing/trail-enumeration only; exact relative to the same bounded local sigma-cap family",
+  "component":{"output_mask":"q138 state word4 bit10","word_bits":32,"next_columns":[0,1,2,3]},
+  "transform":"For each exact signed next-column marginal M_c(x0,x1,x2,x3), apply the same bounded inverse_qr_linear_hull operator linearly to every input mask tuple and signed-merge identical output tuples. This equals marginalize-after-global-column-propagation if the marginal representation/operator implementation is exact.",
+  "cap2_exact_validation":{"sigma_cap":2,"all_four_columns":true,"reference":"explicit first-layer global hull, then apply the corresponding next-column inverse QR globally with beam=None/local_beam=None, then marginalize that column","support_exact":true,"coefficient_abs_error_max":1e-12,"energy_abs_error_max":1e-12},
+  "cap3_measurement":{"sigma_cap":3,"all_four_columns_complete":true,"global_joint_materialization_forbidden":true,"backend":"packed sparse signed merge; cache local inverse-QR hull by exact 4-word input mask tuple","measure":["input marginal support","unique local QR inputs","raw local trail outputs before signed merge","transformed support","signed energy","wall time","peak RSS","24-byte compact estimate"]},
+  "engineering_go_gate":{"cap2_exact_validation_pass":true,"cap3_all_four_transforms_complete":true,"cap3_peak_rss_bytes_max":2147483648,"cap3_total_compact_sparse_bytes_max":1073741824},
+  "zero_marginal_rule":"Columns whose exact signed input marginal is identically zero remain exactly zero under a linear QR transform. This does not imply zero joint cross-column correlation and must not be used to drop those variables in a future joint contraction.",
+  "next_only_if_pass":"Freeze a pairwise/junction-tree cross-column contraction Stage2 that preserves joint correlations, validates cap2 against explicit two-column/global propagation, and counts factor generation + contraction + storage + later ranking/verification in TOTAL.",
+  "kill_rule":"If cap2 transformed marginals fail exact support/coefficient/energy equality, or cap3 exact transformed marginals cannot all be completed under the frozen 2 GiB RSS / 1 GiB compact-representation budgets, close the exact single-column-transform route. Any approximation/top-K path requires a separate preregistered error-bounded plan.",
+  "not_admitted_even_on_pass":["FULL_SECOND_LAYER_JOINT_CONTRACTION","FOUR_INVERSE_ROUND_EXACT_ENERGY","END_TO_END_RANKING_WIN","ALPHA_LT_1","FULL_ROUND_RELEVANCE"],
+  "forbidden":"No beam/truncation for the exact gate, no cap/column threshold retuning after results, no treating zero marginals as absent joint correlations, no global cap3/cap4 second-layer Cartesian materialization, no hidden FWT preprocessing, no full ChaCha20 claim."
+}
