@@ -11,53 +11,54 @@ Do not reduce the project to code recovery. Code is only a calculator/falsifier.
 
 The source-independent/local results establish bond-2 longitudinal modular-addition MPO structure, exact local TT rank `[2,3,3,2]`, semantic ternary equality classes `00/11/unequal`, class-parity conservation, Parseval/orthogonality, residual-Gram calculus and epsilon-rank machinery.
 
-For the q138 fixed-output one-quarter-round exact Walsh network, the global structural chain is now
+For the q138 fixed-output one-quarter-round exact Walsh network, the global structural chain is
 
 `44 -> 42 -> 41 -> 40`.
 
-Read especially:
+Core authority:
 
-- `research/v26/recovered-bit-puncturing-dac/V26_EXACT_MODADD_WALSH_MPO_THEOREM.md`
-- `research/v26/recovered-bit-puncturing-dac/V26_MODADD_LOCAL_TT_RANK_THEOREM.md`
-- `research/v26/recovered-bit-puncturing-dac/V26_MODADD_TERNARY_CLASS_CORE_THEOREM.md`
-- `research/v26/recovered-bit-puncturing-dac/V26_MODADD_CLASS_PARITY_CONSERVATION.md`
-- `research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_THEOREM.md`
-- `research/v26/recovered-bit-puncturing-dac/V26_QR_WIDTH41_SEPARATOR_TOPOLOGICAL_RANK_BOUND.md`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_LEFT_MAP_RANK528_THEOREM.md`
 - `scripts/verify_v26_qr_width41_left_rank528.py`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_THEOREM.md`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json`
 - `scripts/verify_v26_qr_q138_algebraic_width40.py`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_WIDTH40_BOTTLENECK_RANK64_BOUND.md`
 
 The width-40 proof chain is:
 
-1. the certified width-41 34-leaf child has topology-only interface dimension `3072`;
-2. for q138 fixed output its exact rational left-map rank is `528`;
-3. replace that child by an exact rank factorization `X --(528)-- Z`;
-4. reconstruct the modified 536-leaf hypergraph;
-5. verify a complete 535-internal-node binary contraction tree;
-6. maximum message dimension is exactly `2^40`, attained on a 171-leaf cluster crossing 40 binary indices.
+1. width-41 bottleneck child topology-only interface dimension `3072`;
+2. q138 exact rational rank `528`;
+3. exact replacement by `X --(528)-- Z`;
+4. modified 536-leaf network;
+5. complete 535-internal-node tree;
+6. maximum message exactly `2^40` on a 171-leaf cluster crossing 40 binary indices.
 
-This proves `W <= 40` for the stated q138 fixed-output one-QR representation. It does **not** prove optimality, arithmetic work `O(2^40)`, arbitrary-mask QR width 40, double-round width 40, or practical exact evaluation.
+The new 171-leaf maximum cluster itself has certificate split `64|107`:
+
+- 16 of the 40 parent-external bits are on the 64-leaf side;
+- 24 are on the 107-leaf side;
+- the child interface is only six binary bits.
+
+Therefore the 40-bit parent flattening has rank `<=64`. The 64-leaf child can itself be constructed with peak message `2^22`.
+
+`W <= 40` remains the admitted complete-tree global message-width bound. The rank-64 child factorization has not yet produced a complete `W<40` global certificate.
 
 ## First unfinished mathematical pass
 
-The next distinct mechanism is **algebraic compression of the certified 40-bit bottleneck**.
+The next pass is **rank-64 reinsertion / actual child rank**.
 
 Work in this order:
 
-1. run both exact verifier dependencies first:
-   - `scripts/verify_v26_qr_width41_left_rank528.py`;
-   - `scripts/verify_v26_qr_q138_algebraic_width40.py`;
-2. reconstruct the 171-leaf cluster that realizes the `2^40` maximum;
-3. identify a useful child split or minimum terminal interface and preregister the corresponding topology-only Schmidt bound;
-4. gauge binary endpoint TT bonds to physical/sigma legs where valid and use semantic `00/11/unequal` sectors for rank-3 states;
-5. derive projected class-parity/nonlinear support laws rather than counting local constraints before projection;
-6. compute exact rational rank of the smaller child map if its dimensions are tractable;
-7. if strict rank deficiency exists, replace it by an exact rank factor and require a new **complete global tree certificate** before claiming any width below 40;
-8. if exact algebraic rank is effectively full, only then activate certified epsilon-rank/tail approximation on this separator.
+1. rerun the rank-528 and width-40 verifiers as baseline;
+2. reconstruct the unique 171-leaf maximum cluster and its 64|107 child split;
+3. compile the 64-leaf child map `L_64 : 2^16 -> 2^6` exactly, initially using a rank-64 factorization through the six interface bits;
+4. reinsert that factorization into the already rank-528-compressed global q138 network;
+5. search for a complete global tree below 40 and require machine verification of every cluster before claiming success;
+6. if `W<=39` does not close, compute the exact rational rank of the `2^16 x 64` map. A rank `<64` is the next genuine algebraic compression mechanism;
+7. if the map has full rank 64 and topology still stalls, analyze the opposite 107-leaf map and/or a different 40-bit separator partition before activating approximation;
+8. only after exact algebraic routes stall should certified epsilon-rank/tail truncation become active.
 
-Do not return to fused-site ordering searches and do not claim `W<40` from isolated low-boundary cuts.
+Do not claim `W<=39` from partial separators. A preliminary search on one natural rank-64 continuation did not close 39; that is not a lower bound.
 
 ## Measured execution remains frozen behind provenance
 
