@@ -1,14 +1,12 @@
 # FDS_CONTINUE_HERE
 
-**State:** Issue #14 single/pair XOR cancellation NO-GO.  
-**Active:** `V25_FULL_LINEAR_BOUNDARY_WORD_XOR_NULLSPACE_AUDIT`.
+**State:** Issue #15 `NO_GO_FULL_LINEAR_XOR_CANCELLATION`; simple exact half-key/single-boundary MITM branch is closed. Issue #9 constant-factor engine remains admitted, alpha=1.  
+**Next:** pivot away from simple MITM. Preferred unresolved structural branch: orbit-constrained conditional PNB / syncopation, which previously showed repeatable neutrality but no admitted key-recovery gain.
 
-1. Use frozen W4_W6_SPLIT b16 plan and fresh targets `[25053,23109,35877,44733]`.
-2. Do not enumerate projection arity manually; cover all 65,535 nonzero GF(2) masks by exact 16-variable nullspace algebra.
-3. For each split/orientation build forward half-variation equation span.
-4. Add opposite-half backward equation spans for all four fresh outputs.
-5. Rank16 means nullity0 and kills all nonzero masks at once.
-6. Only stable nonzero masks may form 256+256 equality-match tables.
-7. PASS requires true pair 4/4 and <=512 matches on every target.
-8. No approximate nullspace, target-specific mask or second target set.
-9. Only exact PASS opens fresh TOTAL exponent scaling.
+1. Do not create another boundary projection/operator variant without a genuinely new mechanism.
+2. Recover the latest PNB/orbit authority from Library/history before repeating experiments.
+3. Preserve the fixed source orbit, nontrivial differential and candidate PNB bits from prior certified work.
+4. Reopen only conditional/syncopated neutrality with frozen train/holdout conditions and full DATA/WORK/TOTAL accounting.
+5. Any condition must be inference-available or guessed bits must be billed explicitly.
+6. PASS requires reduced end-to-end work vs brute force on fresh reduced-key widths, not merely larger gamma.
+7. No full ChaCha20 claim.

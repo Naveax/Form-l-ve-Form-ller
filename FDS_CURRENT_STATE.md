@@ -2,17 +2,18 @@
 
 ## Canonical status — 2026-08-16
 
-Issue #9 remains a scoped constant-factor reduced-model PASS; leading enumeration remains `2^b`, alpha=1.
+Issue #9 remains the admitted reduced-model collision-tolerant constant-factor screen; enumeration remains `2^b`, alpha=1.
 
-Exact exponent hypotheses closed NO-GO now include:
-- #10 XOR 8+8 output separability;
-- #11 modular-additive 8+8 output separability;
-- #12/#13 raw single-boundary half-dependency separation across all two-key-word layouts;
-- #14 single/pair boundary-word XOR cancellation.
+Simple exact half-key MITM hypotheses are now closed across several structurally different mechanisms:
+- #10 XOR half-output separability;
+- #11 modular-additive half-output separability;
+- #12/#13 raw dependency-separated single-boundary MITM across all two-key-word placements;
+- #14 single/pair boundary XOR cancellation;
+- #15 the entire nonzero linear XOR span of all 16 boundary words.
 
-Issue #14 searched 680 split/projections. Forward produced 156 exact half-oriented candidates; the first frozen fresh output target left **0** exact opposite-half backward candidates. Stable candidate count is therefore 0.
+Issue #15 result is especially broad: all ten split/orientation combined spaces are rank16/nullity0 after the first fresh backward target; stable nonzero linear mask count is 0.
 
 No alpha<1 result exists.
 
-## Next
-If XOR cancellation is pursued once more, do it exhaustively: solve for the entire GF(2) nullspace of all 65,535 nonzero linear masks over the 16 boundary words and intersect forward/opposite-backward half-independence spaces. Do not enumerate triples/quadruples piecemeal.
+## Next frontier
+Stop extending simple half-key MITM by changing boundary projection syntax. Return to a different structural family with prior positive evidence, such as the orbit-constrained conditional-PNB/syncopation branch, or formally open another mechanism only after a new preregistration. Do not add nonlinear boundary transforms merely because linear ones failed.

@@ -1,0 +1,10 @@
+{
+  "milestone":"V25_FULL_LINEAR_BOUNDARY_WORD_XOR_NULLSPACE_AUDIT",
+  "status":"NO_GO_FULL_LINEAR_XOR_CANCELLATION",
+  "first_fresh_target":25053,
+  "stable_nonzero_mask_count":0,
+  "primary_valid_count":0,
+  "stage1_opened":false,
+  "not_admitted":["LINEAR_BOUNDARY_XOR_MITM","ALPHA_LT_1","FULL_ROUND_RELEVANCE"],
+  "next":"CLOSE_SIMPLE_EXACT_HALF_MITM_BRANCH_AND_PIVOT_TO_NON_MITM_STRUCTURAL_FAMILY"
+}

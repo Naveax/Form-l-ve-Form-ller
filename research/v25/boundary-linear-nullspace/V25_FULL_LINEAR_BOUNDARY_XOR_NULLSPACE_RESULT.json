@@ -1,0 +1,20 @@
+{
+  "milestone":"V25_FULL_LINEAR_BOUNDARY_WORD_XOR_NULLSPACE_AUDIT",
+  "status":"NO_GO_FULL_LINEAR_XOR_CANCELLATION",
+  "fresh_targets":[25053,23109,35877,44733],
+  "combined_spaces":[
+    {"split":1,"orientation":"high_forward","rank":16,"nullity":0,"rank_trace":[4,16]},
+    {"split":1,"orientation":"low_forward","rank":16,"nullity":0,"rank_trace":[4,16]},
+    {"split":2,"orientation":"high_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":2,"orientation":"low_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":3,"orientation":"high_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":3,"orientation":"low_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":4,"orientation":"high_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":4,"orientation":"low_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":5,"orientation":"high_forward","rank":16,"nullity":0,"rank_trace":[16,16]},
+    {"split":5,"orientation":"low_forward","rank":16,"nullity":0,"rank_trace":[16,16]}
+  ],
+  "stable_nonzero_mask_count":0,
+  "primary_valid_count":0,
+  "stage1_opened":false
+}

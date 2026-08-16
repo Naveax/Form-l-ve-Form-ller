@@ -1,0 +1,7 @@
+{
+  "milestone":"V25_FULL_LINEAR_BOUNDARY_WORD_XOR_NULLSPACE_AUDIT",
+  "plan_commit":"950aa5ed4e2719c996a5b5a92665cb71c43ec60f",
+  "tests":"2/2 PASS",
+  "first_target_early_kill":"25053 makes all ten combined split/orientation spaces rank16/nullity0",
+  "stage1_opened":false
+}
