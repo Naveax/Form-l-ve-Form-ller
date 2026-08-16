@@ -1,15 +1,15 @@
 # FDS_CONTINUE_HERE
 
-**State:** `NO_GO_BORROW_SIGNATURE`  
-**Next:** `V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT` Stage0.
+**State:** `ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN`  
+**Next:** `REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER`.
 
-1. Fresh main + authority.
-2. Use frozen `research/v25/boundary-syndrome/V25_INTERNAL_ROUND_BOUNDARY_SYNDROME_CONE_PLAN.json`.
-3. Enumerate exact word-level QR dependency cones for splits 1..5 and all 16 boundary words.
-4. Select minimum total cone by structural cost only, tie smaller split then word.
-5. Implement partial forward/inverse execution and compare target word exactly with full-state reference on random states.
-6. If cone is not <24 QR or equivalence fails, close immediately.
-7. If PASS, explicitly record constant-factor-only status; only then freeze Stage1 syndrome selectivity/cost targets.
-8. Commit source/tests/results/decision/manifest and update continuity.
+1. Resolve fresh main and read authority.
+2. Use the frozen boundary-syndrome engine: split1, word0, width16.
+3. Do not retune split/word/width from layout outcomes.
+4. Freeze b=10 key-bit layouts and fresh targets before measuring transfer.
+5. For every layout, derive candidate-dependent QR groups structurally and cache only truly candidate-independent groups.
+6. Compare exact syndrome-screen TOTAL QR and fair direct-word baseline under the same layout; verify true candidate exactly.
+7. Measure wall only after exact QR/equivalence passes.
+8. If the win disappears when active bits span multiple key words/groups, scope the admitted result to one-word layout; if it transfers, enlarge the claim only to the tested layouts.
 
-Stop: no target-output tuning in Stage0, no solver/ML rescue, no alpha claim from QR-count reduction.
+Stop: no alpha<1 claim; no full-round claim; no post-hoc layout/width selection.

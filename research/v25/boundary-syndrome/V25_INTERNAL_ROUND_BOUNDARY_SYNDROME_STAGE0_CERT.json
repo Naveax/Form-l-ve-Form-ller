@@ -1,0 +1,14 @@
+{
+  "milestone": "V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage": "STAGE0_DEPENDENCY_CONE_FEASIBILITY",
+  "status": "PASS_CONSTANT_FACTOR_ONLY",
+  "baseline_full_qr": 24,
+  "selected": {"split": 1,"word": 0,"forward_qr": 1,"backward_qr": 17,"total_qr": 18},
+  "qr_reduction_fraction": 0.25,
+  "histogram_total_qr": {"18": 80},
+  "equivalence_random_states": 64,
+  "equivalence_checks": 10240,
+  "equivalence": "PASS",
+  "claim_limit": "constant-factor only; candidate enumeration remains 2^b; alpha reduction not demonstrated",
+  "full_80_result_sha256": "2d354f9d78bed91d3d6cfd6ac991afde2ffc1b98042c1bff5d06c17344289f63"
+}

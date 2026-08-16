@@ -1,0 +1,15 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage":"STAGE3_CONSTANT_FACTOR_SCALING",
+  "frozen_before_stage3_measurement":true,
+  "algorithm":{"syndrome_width":16,"split":1,"word":0,"candidate_cache":true,"screen_candidate_qr":15,"screen_fixed_qr":3,"survivor_verify_qr":17,"survivor_verify_fixed_qr":3},
+  "baseline":{"direct_word0_candidate_qr":18,"fixed_qr":3},
+  "key_widths":[10,12,14,16],
+  "targets_by_b":{"10":{"seed":5351178,"targets":[456,317,229,956]},"12":{"seed":5351180,"targets":[2668,1294,3216,2442]},"14":{"seed":5351182,"targets":[12666,5168,4507,13595]},"16":{"seed":5351184,"targets":[17096,20959,31891,28478]}},
+  "target_rule":"Four deterministic random targets per b; b10 additionally excludes all prior recovered IDs. No target result was inspected before this list was frozen.",
+  "qr_formula":{"algorithm":"15*2^b + 6 + 17*N_survivors","baseline":"18*2^b + 3"},
+  "wall_benchmark_reps":{"10":21,"12":11,"14":5,"16":3},
+  "gates":{"true_key_survives_all":true,"median_qr_ratio_each_b_max":0.86,"median_wall_speedup_each_b_min":1.05,"wall_positive_targets_each_b_min":3},
+  "scaling_interpretation":"Leading term remains C*2^b for both methods. Stage3 can admit stable constant-factor reduction only; algorithmic alpha remains exactly 1 regardless of measured fit.",
+  "forbidden":"Do not retune syndrome width, split, word, cache rule, target list or timing repetitions after results."
+}

@@ -1,0 +1,14 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage":"STAGE0_DEPENDENCY_CONE_FEASIBILITY",
+  "status":"PASS_CONSTANT_FACTOR_ONLY",
+  "selected":{"split":1,"word":0,"forward_qr":1,"backward_qr":17,"total_qr":18},
+  "full_state_baseline_qr":24,
+  "direct_one_output_word_baseline_qr":21,
+  "all_80_total_qr":18,
+  "equivalence_checks":10240,
+  "equivalence":"PASS",
+  "admitted":["EXACT_PARTIAL_BOUNDARY_WORD_EVALUATION","25_PERCENT_QR_COUNT_REDUCTION_VS_FULL_STATE"],
+  "not_admitted":["SUBEXPONENTIAL_KEY_SEARCH","ALPHA_REDUCTION","FULL_ROUND_RELEVANCE"],
+  "next":"STAGE1_FROZEN_SURVIVOR_SELECTIVITY_AND_TOTAL_QR_AUDIT"
+}

@@ -12,4 +12,4 @@
 10. alpha<1/full-round/end-to-end claims remain locked behind independent gates.
 
 ## Current next task
-Issue #5: `V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT`, Stage0 dependency-cone feasibility.
+`REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER`: test whether the admitted boundary-syndrome constant-factor win survives active-bit placement outside the one-word word4 layout. Freeze layouts/targets before measuring.

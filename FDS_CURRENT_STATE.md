@@ -2,24 +2,23 @@
 
 ## Canonical status — 2026-08-16
 
-Closed NO-GO families now include static quadratic selectors, P-only xor256 reliability, synthetic score-shape/C1/public-counter descriptor learning, public xor-delta class, public additive-distance class, public carry-transition signature, and output-conditioned aggregate feed-forward borrow descriptors.
+The first robust reduced-model compute win is admitted for the internal boundary-syndrome family, under a narrow layout scope.
 
-### Borrow result
-12 fresh b=10 targets × reused 32 pairs; 15 candidate-ensemble borrow features. **6/6 gates failed**:
-- pooled Spearman **-0.11838**;
-- median target Spearman **-0.12260**;
-- median top8 enrichment **+0.00122**;
-- positive top8 targets **7/12**;
-- gain vs public-carry control **-0.04629**;
-- permutation p **0.78210**.
-Carry control pooled Spearman: **-0.07209**.
-Accounting: 345.42 s total, 28.72 s median/target, 531.8 MiB max RSS. Combined regression suite **26/26 PASS**.
+### Boundary syndrome result
+- Stage0: all 80 split/word cones cost 18 QR vs 24 full-state; 10,240 exact equality checks PASS.
+- Frozen selection: split1 / word0.
+- Stage1 selected width16 without retuning.
+- Stage2 untouched b=10: one survivor on 12/12, true key retained 12/12.
+- Candidate-ensemble cache: fair formula `15*2^b + 6 + 17*N` vs direct `18*2^b + 3`.
+- Cached Stage2 median QR speedup 1.1984x; median wall speedup 1.1313x; wall positive 12/12.
+- Stage3 b=10,12,14,16: all gates PASS; 16/16 true keys retained.
+- Median wall speedup range 1.1199x–1.1556x; QR speedup ~1.20x.
+- Exact algorithm QR slope 0.99967; measured wall slope 1.00113.
 
-### Structural boundary
-The negative result now spans both public-static pair geometry and aggregate target-dependent candidate-ensemble descriptors. Stop adding summary-statistic descriptors under new names.
+### Claim boundary
+`ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN` only for the controlled 6-round layout where active reduced-key bits are confined to key/state word4. Leading work remains `15*2^b`; algorithmic alpha is exactly 1.
 
-### Next
-`V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT`
-Stage0 asks whether an exact partial internal-boundary word can be computed with materially fewer quarter-rounds than full 6-round verification. Even PASS is only a constant-factor opportunity, not alpha<1.
+Not admitted: alpha reduction, subexponential search, full-round relevance, arbitrary key-layout generality, arbitrary data compression.
 
-Still not admitted: true-key reliability mapping, end-to-end work reduction, alpha<1, full-round relevance.
+## Exact next
+`REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER`: move/distribute the same b=10 active bits across multiple ChaCha key words and test whether the exact cache/syndrome advantage transfers.

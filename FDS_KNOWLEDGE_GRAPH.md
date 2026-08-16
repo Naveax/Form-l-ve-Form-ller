@@ -1,17 +1,25 @@
 # FDS_KNOWLEDGE_GRAPH
 
 validated reduced ARX/trail machinery
-→ selector/reliability experiments
+→ selector/reliability families NO-GO
 → static public geometry NO-GO
 → aggregate target-dependent descriptors NO-GO
+→ internal candidate-trajectory boundary syndrome
+→ exact dependency cone PASS
+→ frozen survivor selectivity PASS
+→ untouched confirmation PASS
+→ common-subexpression cache PASS
+→ b=10..16 stable constant-factor compute win ADMITTED
 
-Closed: quadratic selectors; P-only score geometry; score-shape/C1 learning; xor-delta; additive-distance; public carry; feed-forward borrow summaries.
+Current limitation:
+active reduced-key bits are confined to state/key word4.
 
-Active:
-internal candidate trajectory algebra
-→ split 6-round permutation at an internal boundary
-→ exact word-level forward/backward dependency cone
-→ partial boundary syndrome equivalence
-→ Stage1 survivor-selectivity/TOTAL cost only if Stage0 passes.
+Active next:
+reduced-key layout transfer
+→ move active bits to other key words
+→ distribute bits across words/groups
+→ structurally recompute candidate-dependent QR cache sets
+→ exact correctness/TOTAL QR/wall gates
+→ scope or extend admitted constant-factor claim.
 
-A smaller QR cone is at most a constant-factor compute win while candidate enumeration stays 2^b. alpha<1 remains unproven.
+Leading enumeration remains 2^b. `alpha < 1` is not demonstrated.

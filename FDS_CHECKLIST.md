@@ -1,21 +1,23 @@
 # FDS_CHECKLIST
 
-## Closed
-- [x] Public carry signature NO-GO.
-- [x] Borrow plan/hash frozen before oracle results.
-- [x] Borrow arithmetic reference 3/3 PASS.
-- [x] Borrow 12-target corpus completed.
-- [x] Borrow grouped CV/control/null completed.
-- [x] Borrow 6/6 gates failed.
-- [x] Borrow combined tests 26/26 PASS.
-- [x] `NO_GO_BORROW_SIGNATURE` recorded.
+## Boundary syndrome — closed/admitted
+- [x] Stage0 80 dependency cones enumerated.
+- [x] 10,240 exact partial/full checks PASS.
+- [x] Stage1 widths/targets frozen; width16 selected by frozen rule.
+- [x] Stage2 untouched 12-target confirmation PASS.
+- [x] Candidate-ensemble cache exact vs generic reference.
+- [x] Cached Stage2 QR + wall win on 12/12.
+- [x] Stage3 b10/12/14/16 scaling PASS.
+- [x] Boundary regression 6/6 PASS; py_compile PASS.
+- [x] Admit reduced-model constant-factor compute win.
+- [x] Record alpha=1 / no exponent reduction.
 
-## Active — internal boundary syndrome Stage0
-- [x] Freeze splits 1..5 / all 16 words / QR-count metric / tie rule.
-- [ ] Enumerate forward/backward dependency cones.
-- [ ] Pick structural minimum without target data.
-- [ ] Implement partial forward/inverse cone execution.
-- [ ] Random-state exact equivalence tests.
-- [ ] Record min QR count vs full 24.
-- [ ] Decide Stage0 PASS/NO-GO.
-- [ ] Only on PASS, freeze Stage1 target/syndrome selectivity protocol.
+## Active — layout transfer falsifier
+- [ ] Freeze tested b=10 active-bit layouts.
+- [ ] Freeze fresh targets before measurement.
+- [ ] Derive exact candidate-dependent QR/cache cost per layout.
+- [ ] Exact generic-vs-specialized equivalence tests.
+- [ ] Survivor correctness and TOTAL QR per layout.
+- [ ] Fair wall benchmark only after exactness passes.
+- [ ] Scope or extend admitted claim based on frozen gates.
+- [ ] Commit source/tests/results/manifest + continuity.

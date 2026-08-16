@@ -1,0 +1,324 @@
+{
+  "milestone": "V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "status": "ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN",
+  "stage0": {
+    "milestone": "V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+    "stage": "STAGE0_DEPENDENCY_CONE_FEASIBILITY",
+    "status": "PASS_CONSTANT_FACTOR_ONLY",
+    "baseline_full_qr": 24,
+    "selected": {
+      "split": 1,
+      "word": 0,
+      "forward_qr": 1,
+      "backward_qr": 17,
+      "total_qr": 18
+    },
+    "qr_reduction_fraction": 0.25,
+    "histogram_total_qr": {
+      "18": 80
+    },
+    "equivalence_random_states": 64,
+    "equivalence_checks": 10240,
+    "equivalence": "PASS",
+    "claim_limit": "constant-factor only; candidate enumeration remains 2^b; alpha reduction not demonstrated",
+    "wall_s": 0.11206166700048925,
+    "peak_rss_kb": 110788,
+    "full_80_result_sha256": "2d354f9d78bed91d3d6cfd6ac991afde2ffc1b98042c1bff5d06c17344289f63",
+    "source_sha256": {
+      "fds_v25_boundary_syndrome.py": "22613b7982fdada92943eb8407e9aa30c335774cf666df5d801d11ca27951726",
+      "test_fds_v25_boundary_syndrome.py": "50fb32835c154dbe60ddb6eac06082ae5d190422f4b4f49f55723bac80c507e4",
+      "evaluate_v25_boundary_syndrome_stage0.py": "5ae3de305f6b6b89b615c2a696364d88bb244d33e50b4281dea7bdf2d6fe3d9a"
+    }
+  },
+  "stage1": {
+    "status": "PASS_STAGE1_CONSTANT_FACTOR_SCREEN",
+    "selected_width": 16,
+    "selected": {
+      "survivors": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "median_survivors": 1.0,
+      "median_total_qr": 18453.0,
+      "median_ratio": 0.8581194196428571,
+      "mean_ratio": 0.8581194196428571,
+      "positive_savings_targets": 12,
+      "true_survival_targets": 12
+    },
+    "gates": {
+      "true_key_survives_all_widths_all_targets": true,
+      "selected_width_median_total_ratio_max": true,
+      "selected_width_positive_savings_targets_min": true
+    },
+    "all_gates_pass": true,
+    "direct_unique_true_targets": 12
+  },
+  "stage2": {
+    "status": "PASS_CONFIRMED_CONSTANT_FACTOR_QR_WIN",
+    "width": 16,
+    "targets": [
+      97,
+      893,
+      583,
+      182,
+      336,
+      321,
+      815,
+      165,
+      878,
+      515,
+      935,
+      906
+    ],
+    "median_survivors": 1.0,
+    "survivor_counts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "median_total_ratio": 0.8581194196428571,
+    "median_qr_speedup": 1.165338969273289,
+    "positive_savings_targets": 12,
+    "true_survival_targets": 12,
+    "direct_unique_true_targets": 12,
+    "verified_exact_true_targets": 12,
+    "gates": {
+      "true_key_survives_12_of_12": true,
+      "median_survivors_max": true,
+      "median_total_ratio_max": true,
+      "positive_savings_targets_min": true
+    },
+    "all_gates_pass": true
+  },
+  "cached_stage2": {
+    "stage": "STAGE2B_CANDIDATE_ENSEMBLE_CACHE_ENGINEERING",
+    "status": "PASS_ACTUAL_WALL_AND_QR_CONSTANT_FACTOR",
+    "targets": [
+      97,
+      893,
+      583,
+      182,
+      336,
+      321,
+      815,
+      165,
+      878,
+      515,
+      935,
+      906
+    ],
+    "survivor_counts": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "exact_verified_targets": 12,
+    "baseline_unique_targets": 12,
+    "median_qr_ratio": 0.8344453485218335,
+    "median_qr_speedup": 1.1984008320873691,
+    "median_wall_speedup": 1.1313238244338146,
+    "wall_speedup_min": 1.1081900038495838,
+    "wall_speedup_positive_targets": 12,
+    "qr_accounting": "screen cache 3 inverse QR/target + 15 QR/candidate; direct-survivor cache 3 forward QR/target + 17 QR/survivor; direct baseline 3 forward QR/target +18 QR/candidate",
+    "claim_limit": "constant-factor reduced b=10 only; leading candidate enumeration remains 2^b",
+    "wall_s": 19.061876573000518,
+    "peak_rss_kb": 111212
+  },
+  "stage3": {
+    "milestone": "V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+    "stage": "STAGE3_CONSTANT_FACTOR_SCALING",
+    "status": "PASS_STABLE_CONSTANT_FACTOR_SCALING",
+    "by_b": {
+      "10": {
+        "targets": [
+          456,
+          317,
+          229,
+          956
+        ],
+        "survivor_counts": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "median_survivors": 1.0,
+        "median_qr_ratio": 0.8344453485218335,
+        "median_qr_speedup": 1.1984008320873691,
+        "median_wall_speedup": 1.134116879330938,
+        "wall_speedup_min": 1.116115107347022,
+        "wall_positive_targets": 4,
+        "true_survival_targets": 4,
+        "verified_unique_true_targets": 4,
+        "direct_unique_true_targets": 4
+      },
+      "12": {
+        "targets": [
+          2668,
+          1294,
+          3216,
+          2442
+        ],
+        "survivor_counts": [
+          1,
+          2,
+          1,
+          1
+        ],
+        "median_survivors": 1.0,
+        "median_qr_ratio": 0.833611371065088,
+        "median_qr_speedup": 1.1995997592047247,
+        "median_wall_speedup": 1.1297484148316457,
+        "wall_speedup_min": 1.1180089116360725,
+        "wall_positive_targets": 4,
+        "true_survival_targets": 4,
+        "verified_unique_true_targets": 4,
+        "direct_unique_true_targets": 4
+      },
+      "14": {
+        "targets": [
+          12666,
+          5168,
+          4507,
+          13595
+        ],
+        "survivor_counts": [
+          1,
+          2,
+          1,
+          1
+        ],
+        "median_survivors": 1.0,
+        "median_qr_ratio": 0.8334028448875099,
+        "median_qr_speedup": 1.1998999117107367,
+        "median_wall_speedup": 1.119896971264449,
+        "wall_speedup_min": 1.1003963607092573,
+        "wall_positive_targets": 4,
+        "true_survival_targets": 4,
+        "verified_unique_true_targets": 4,
+        "direct_unique_true_targets": 4
+      },
+      "16": {
+        "targets": [
+          17096,
+          20959,
+          31891,
+          28478
+        ],
+        "survivor_counts": [
+          4,
+          3,
+          1,
+          2
+        ],
+        "median_survivors": 2.5,
+        "median_qr_ratio": 0.8333723279173246,
+        "median_qr_speedup": 1.199943850516192,
+        "median_wall_speedup": 1.155619411858701,
+        "wall_speedup_min": 1.1048391420265287,
+        "wall_positive_targets": 4,
+        "true_survival_targets": 4,
+        "verified_unique_true_targets": 4,
+        "direct_unique_true_targets": 4
+      }
+    },
+    "gates": {
+      "true_key_survives_all": true,
+      "median_qr_ratio_each_b_max": true,
+      "median_wall_speedup_each_b_min": true,
+      "wall_positive_targets_each_b_min": true
+    },
+    "all_gates_pass": true,
+    "fits": {
+      "algorithm_exact_qr_log2_slope": 0.9996666280166968,
+      "baseline_exact_qr_log2_slope": 0.9999631298410042,
+      "algorithm_wall_log2_slope": 1.0011323802445484,
+      "baseline_wall_log2_slope": 1.004777555765618
+    },
+    "algorithmic_alpha": 1.0,
+    "reason_alpha": "Leading algorithm term is 15*2^b; fixed-width survivor term is lower-constant exponential and does not change exponent.",
+    "all_true_survival": 16,
+    "all_targets": 16,
+    "all_verified_unique": 16,
+    "claim_limit": "Admit stable reduced-model constant-factor compute improvement only; alpha<1 remains false/not demonstrated; no full-round relevance."
+  },
+  "claim": {
+    "milestone": "V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+    "status": "ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN",
+    "stage0": {
+      "qr": 18,
+      "full_state_qr": 24,
+      "equivalence_checks": 10240
+    },
+    "stage2": {
+      "width": 16,
+      "untouched_targets": 12,
+      "median_qr_speedup": 1.165338969273289,
+      "true_survival": "12/12"
+    },
+    "cached_stage2": {
+      "median_qr_speedup": 1.1984008320873691,
+      "median_wall_speedup": 1.1313238244338146,
+      "wall_positive": "12/12"
+    },
+    "stage3": {
+      "b": [
+        10,
+        12,
+        14,
+        16
+      ],
+      "targets": 16,
+      "true_survival": "16/16",
+      "qr_speedup_approx": 1.2,
+      "wall_speedup_median_range": [
+        1.119896971264449,
+        1.155619411858701
+      ],
+      "algorithm_exact_qr_log2_slope": 0.9996666280166968,
+      "algorithm_wall_log2_slope": 1.0011323802445484
+    },
+    "alpha": 1.0,
+    "not_admitted": [
+      "ALPHA_REDUCTION",
+      "SUBEXPONENTIAL_KEY_SEARCH",
+      "FULL_ROUND_RELEVANCE",
+      "ARBITRARY_KEY_LAYOUT_GENERALITY"
+    ],
+    "next": "REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER"
+  },
+  "raw_summary_sha256": {
+    "v25_boundary_syndrome_stage1_summary.json": "14cf0af1874f9bd992343528665031674c2f3864c266284e19f628d6954284eb",
+    "v25_boundary_syndrome_stage2_summary.json": "f6a7c6c36166eb81e0c7714af331683e05689c68754799142e1e736205a30f7a",
+    "v25_boundary_syndrome_cached_summary.json": "92088abb811b2e02520f673a458a2f88936bf2c08424d0a16fb0e82886231bb0",
+    "v25_boundary_syndrome_stage3_scaling_summary.json": "661f7cf7a1e3e15ce193ae883cc959f4a0a1bb7f9dabf778fcd480a05e9ce663"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage":"STAGE1_SURVIVOR_SELECTIVITY_TOTAL_QR",
+  "frozen_before_stage1_target_measurement":true,
+  "reduced_model":{"b":10,"rounds":6,"counter":1,"candidate_count":1024},
+  "stage0_selected":{"split":1,"word":0,"forward_qr":1,"backward_qr":17,"screen_qr_per_candidate":18},
+  "syndrome":"xor of exact partial-forward and partial-inverse boundary word; candidate survives width m iff low m syndrome bits are zero",
+  "widths":[1,2,4,8,16,32],
+  "target_seed":5351137,
+  "target_generation":"Python random.Random(seed), shuffle keys 1..1023, exclude every recovered prior target ID visible under /mnt/data/fds_recovered, take first 12",
+  "prior_target_id_count_excluded":92,
+  "targets":[385,60,692,958,933,273,650,752,441,518,1,988],
+  "fair_baseline":{"method":"direct exact final output word0 cone","qr_per_candidate":21,"total_qr":21504},
+  "accounting":{"screen_total_qr":18432,"survivor_verification_qr_per_candidate":21,"total_formula":"18432 + 21*N_survivors","note":"Conservative: no QR reuse credit between screen and survivor verifier."},
+  "selection_rule":"Among frozen widths, choose width with minimum median TOTAL QR over the 12 Stage1 targets; ties choose smaller width.",
+  "stage1_gate":{"true_key_survives_all_widths_all_targets":true,"selected_width_median_total_ratio_max":0.95,"selected_width_positive_savings_targets_min":10},
+  "claim_limit":"PASS is constant-factor screening only. Candidate enumeration remains 2^b and alpha<1 is not demonstrated.",
+  "next_if_pass":"Freeze selected width and run an untouched fresh-target Stage2 total-cost confirmation before admitting a robust ranking/work constant-factor win.",
+  "next_if_fail":"Close boundary-word syndrome as an end-to-end compute shortcut under this split/word; do not retune split/word because Stage0 found all 80 structural QR counts tied."
+}

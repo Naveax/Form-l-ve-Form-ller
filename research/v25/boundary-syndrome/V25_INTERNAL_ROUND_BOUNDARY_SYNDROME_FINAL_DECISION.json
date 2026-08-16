@@ -1,0 +1,11 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "status":"ADMIT_REDUCED_MODEL_CONSTANT_FACTOR_COMPUTE_WIN",
+  "stage0":{"qr":18,"full_state_qr":24,"equivalence_checks":10240},
+  "stage2":{"width":16,"untouched_targets":12,"median_qr_speedup":1.165338969273289,"true_survival":"12/12"},
+  "cached_stage2":{"median_qr_speedup":1.1984008320873691,"median_wall_speedup":1.1313238244338146,"wall_positive":"12/12"},
+  "stage3":{"b":[10,12,14,16],"targets":16,"true_survival":"16/16","qr_speedup_approx":1.2,"wall_speedup_median_range":[1.119896971264449,1.155619411858701],"algorithm_exact_qr_log2_slope":0.9996666280166968,"algorithm_wall_log2_slope":1.0011323802445484},
+  "alpha":1.0,
+  "not_admitted":["ALPHA_REDUCTION","SUBEXPONENTIAL_KEY_SEARCH","FULL_ROUND_RELEVANCE","ARBITRARY_KEY_LAYOUT_GENERALITY"],
+  "next":"REDUCED_KEY_LAYOUT_TRANSFER_FALSIFIER"
+}

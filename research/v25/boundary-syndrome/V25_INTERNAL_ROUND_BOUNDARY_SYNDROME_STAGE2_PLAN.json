@@ -1,0 +1,15 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage":"STAGE2_UNTOUCHED_TOTAL_COST_CONFIRMATION",
+  "frozen_before_stage2_measurement":true,
+  "selected_from_stage1":{"width":16,"rule":"minimum median TOTAL QR; tie smaller width","stage1_median_ratio":0.8581194196428571},
+  "reduced_model":{"b":10,"rounds":6,"counter":1,"candidate_count":1024,"split":1,"word":0},
+  "target_seed":5351138,
+  "target_generation":"Python random.Random(seed), shuffle 1..1023, exclude every recovered/prior Stage1 target visible locally, take first 12",
+  "targets":[97,893,583,182,336,321,815,165,878,515,935,906],
+  "cost":{"screen_qr_per_candidate":18,"direct_word_qr_per_candidate":21,"screen_total_qr":18432,"total_formula":"18432 + 21*N_survivors","baseline_qr":21504,"no_screen_verify_reuse_credit":true},
+  "primary_gate":{"true_key_survives_12_of_12":true,"median_survivors_max":2,"median_total_ratio_max":0.90,"positive_savings_targets_min":12},
+  "equivalence_check":"Run direct 21-QR word0 baseline on all 1024 candidates and verify every screen survivor with the same direct predicate; true key must be retained.",
+  "wall_time":"secondary diagnostic only: warm both paths and report repeated local timing; admission is QR accounting plus exact survivor correctness, not Python interpreter timing",
+  "claim_limit":"A PASS admits only a b=10 reduced-model constant-factor QR-count screening win. Candidate enumeration remains 2^b; alpha=1 leading exponent is unchanged; no full-round claim."
+}
