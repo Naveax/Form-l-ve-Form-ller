@@ -1,0 +1,14 @@
+{
+  "provenance":"RECOVERED_LOCAL_CANONICAL_2026_08_16",
+  "status":"NO_ALPHA_REDUCTION_DEMONSTRATED",
+  "r6_status":"REDUCED_R6_CONSTANT_FACTOR_KEY_RANKING_ADMITTED",
+  "r8_status":"R8_ORBIT_SYNCOPATION_NO_ROBUST_GAIN",
+  "full20_status":"NO_KEY_RECOVERY_IMPROVEMENT_DEMONSTRATED",
+  "source_orbit_j8_unordered_pairs":851,
+  "canonical_raw":{"pnb_bits":[0,1,2,3,4,5,6,7,8,9],"output_bit":138,"xor_bit":8,"pair_budget":16},
+  "canonical_cpnb":{"pnb_bits":[0,1,2,3,4,5,6,7,8],"condition":[8,"syncopation_sub",1],"required_guessed_bit":9,"output_bit":138,"xor_bit":8,"pair_budget":32},
+  "admission_rule":"upper_95pct_CI_alpha_below_0.95",
+  "decision":"STOP_PNB_AS_EXPONENT_TRACK; RETAIN_R6_CONSTANT_FACTOR_BASELINE; PIVOT_TO_BIT_PUNCTURING",
+  "final_pnb_track_status":"REDUCED_R6_CONSTANT_FACTOR_ONLY",
+  "r8_final_holdout":{"keys":64,"samples":58560,"surviving":8314,"survival":0.141974043715847,"epsilon_before":0.426844262295082,"epsilon_after":0.4305989896560019,"gain_abs":0.0037547273609199183,"se_after":0.0109671804667355,"gain_over_se":0.342365741}
+}

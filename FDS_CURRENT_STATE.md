@@ -2,18 +2,16 @@
 
 ## Canonical status — 2026-08-16
 
-Issue #9 remains the admitted reduced-model collision-tolerant constant-factor screen; enumeration remains `2^b`, alpha=1.
+Issue #9 remains the admitted reduced-model constant-factor screen; alpha=1.
 
-Simple exact half-key MITM hypotheses are now closed across several structurally different mechanisms:
-- #10 XOR half-output separability;
-- #11 modular-additive half-output separability;
-- #12/#13 raw dependency-separated single-boundary MITM across all two-key-word placements;
-- #14 single/pair boundary XOR cancellation;
-- #15 the entire nonzero linear XOR span of all 16 boundary words.
+Simple exact half-key/single-boundary MITM is closed by Issues #10–#15. Issue #15 exhausts all 65,535 nonzero linear XOR masks and finds stable nullspace size zero.
 
-Issue #15 result is especially broad: all ten split/orientation combined spaces are rank16/nullity0 after the first fresh backward target; stable nonzero linear mask count is 0.
+Historical PNB/CPNB authority has now been recovered: the exponent track was already closed as `REDUCED_R6_CONSTANT_FACTOR_ONLY`; final R8 syncopation gain was below one standard error.
 
-No alpha<1 result exists.
+Historical bit-puncturing authority is also recovered. The core Walsh puncturing/trail coefficient method is reproduced and exact puncturing shows reduced-map statistical benefit, but preprocessing/construction cost prevents an admitted attack shortcut.
 
-## Next frontier
-Stop extending simple half-key MITM by changing boundary projection syntax. Return to a different structural family with prior positive evidence, such as the orbit-constrained conditional-PNB/syncopation branch, or formally open another mechanism only after a new preregistration. Do not add nonlinear boundary transforms merely because linear ones failed.
+## Active frontier
+`V25_REDUCED_QUARTER_ROUND_WALSH_TRAIL_VALIDATION`.
+Extend the verified addition/subtraction Walsh engine through one complete reduced ChaCha quarter-round and compare frozen partial-trail spectra to exact FWT truth-table spectra before attempting any key-recovery scaling.
+
+No alpha<1 or full-round result exists.
