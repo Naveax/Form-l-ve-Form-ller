@@ -9,96 +9,98 @@ Code is only a calculator/falsifier. The mathematical object is the signed Walsh
 
 ## Current exact q138 chain
 
-For the q138 fixed-output one-quarter-round exact Walsh object, the complete certified dense-message upper-bound chain remains
+For the full physical fixed-mask family, the complete certified dense-message upper-bound chain remains
 
 `44 -> 42 -> 41 -> 40`.
 
 The width-40 maximum cluster has 171 leaves, 40 binary external indices, and certificate split `64|107` through six binary interface bits. Its external partition is `16|24`.
 
-Left child:
+Exact physical rank facts:
 
-`rank(L_64)=48`.
+- left 64-leaf child rank = `48`;
+- physical right doubled reachable hull = `162 = 114 + 48`;
+- over all 4096 physical fixed masks, right rank = `11..38`;
+- parent 171-leaf bottleneck rank = `5..27`;
+- `u2_31=0`: parent rank `16..27`;
+- `u2_31=1`: parent rank `5..8`.
 
-The exact left row space has only two classes, selected by the shared fixed bit `u2_8`.
-
-## Sharp physical right-map quotient
-
-The generalized affine `p`-control analysis and its 197-state hull remain valid for the larger falsifier family, but the physical q138 parity relation fixes `p=0`.
-
-Physical doubled reachable hull:
-
-`1024 -> 162`.
-
-Exact cumulative growth:
-
-`15 -> 70 -> 153 -> 162 -> 162`.
-
-Copy-swap split:
-
-`162 = 114 + 48`.
-
-Read:
+Core authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_right_hull162.py`
-
-## Exact physical rank envelope
-
-The physical right map has twelve fixed input-mask controls:
-
-- `u1_3,...,u1_7`;
-- `u2_3,...,u2_8,u2_31`.
-
-All `4096` physical cases are now solved by exact rational transfer algebra.
-
-Right map:
-
-`11 <= rank(R_m) <= 38`.
-
-Parent 171-leaf bottleneck:
-
-`5 <= rank(M_m) <= 27`.
-
-Boundary split by `u2_31`:
-
-- `u2_31=0`: right `22..38`, parent `16..27`;
-- `u2_31=1`: right `11..19`, parent `5..8`.
-
-The shared `u2_8` bit is rank-inert after the correct left row-space class is used.
-
-Read:
-
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
 
-The theorem reproduces the previous exact fixed-mask checks `(34,23)`, `(19,8)`, `(37,26)`.
+## New complete conditioned global result
 
-Therefore every physical fixed-input/fixed-output q138 coefficient instance admits an exact bottleneck factorization across the certified `16|24` partition through at most 27 Schmidt channels.
+For the physical subclass
 
-The rank basis may depend on the fixed input mask. Do not promote this to one universal 27-dimensional basis without an additional theorem.
+`u2_31 = 1`,
+
+the 171-leaf bottleneck can be replaced exactly by a Schmidt bond of dimension at most 8.
+
+After reinserting a uniform dimension-8 bond into the rank-528-compressed global network, a complete machine-verified contraction tree now exists with
+
+`367` leaves and `366` internal nodes.
+
+Its maximum exact message dimension is
+
+`528 * 2^30 = 566,935,683,072`,
+
+so
+
+`W <= 39.04439411935845... < 40`.
+
+The maximizing 230-leaf cluster crosses
+
+- 27 binary indices;
+- one dimension-528 bond;
+- one dimension-8 bond.
+
+Read:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_U2_31_ONE_RANK8_GLOBAL_SUB40_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_U2_31_ONE_RANK8_GLOBAL_SUB40_CERTIFICATE.json`
+- `scripts/verify_v26_qr_q138_u2_31_one_rank8_global_sub40.py`
+
+Proof dependency:
+
+- `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
+
+For this subclass the admitted exact structural chain is therefore
+
+`44 -> 42 -> 41 -> 40 -> 39.044394119...`.
+
+Do **not** generalize this conditioned sub-40 result to `u2_31=0`, the whole physical fixed-mask family, arbitrary masks, double round or full round.
 
 ## First unfinished mathematical pass
 
-The next pass is **global rank-27 reinsertion**.
+Two routes are now distinct. Continue in this priority order.
 
-Work in this order:
+### Route 1 — conditioned `u2_31=1`: target `W<=39`
 
-1. run the exact baselines:
-   - `scripts/verify_v26_qr_q138_physical_right_hull162.py`;
+1. rerun:
    - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`;
-   - `scripts/verify_v26_qr_q138_algebraic_width40.py`;
-2. replace the certified 171-leaf bottleneck by an exact mask-conditioned rank factorization
-   - left external side: 16 binary indices;
-   - right external side: 24 binary indices;
-   - internal Schmidt bond dimension `rho_m <= 27`;
-3. use 27 as the uniform structural bond bound while keeping in mind that individual masks may use smaller ranks;
-4. rebuild the whole fixed-IO q138 one-QR hypergraph and search for a **complete** contraction tree with maximum message dimension strictly below the current `2^40` baseline;
-5. do not claim `W<40` from a small root separator or isolated low-boundary cuts; every non-root cluster must be verified;
-6. if no complete sub-40 tree closes, identify the exact residual cluster that forces 40 in that geometry and analyze its algebraic separator rather than returning to blind ordering search;
-7. separately exploit the `u2_31=1` rank-8 branch as a strong source-conditioned subclass and test whether it admits a substantially smaller complete certificate;
-8. only after exact rank/geometry mechanisms stall should certified epsilon-rank/tail approximation become active.
+   - `scripts/verify_v26_qr_q138_u2_31_one_rank8_global_sub40.py`;
+2. reconstruct the unique 230-leaf cluster realizing `528*2^30`;
+3. treat its boundary as `27 binary + rank528 + rank8` and identify a useful child/interface partition;
+4. derive topology-only Schmidt bounds first;
+5. then compute exact algebraic rank of the smaller child map where tractable;
+6. one eliminated binary degree of freedom is already enough to cross the clean `W<=39` threshold;
+7. if rank deficiency is found, reinsert it and require another **complete** global tree certificate before changing the bound.
 
-Exploratory rank-27 reinsertion already yields a very small balanced top-level separator, but one natural recursive continuation still hits a subproblem whose best split is 40. That is a scoped geometry falsifier only, not a lower bound or NO-GO for `W<40`.
+A fixed-topology dynamic program shows `39.044394...` is optimal only inside the preserved old outside-tree topology. A targeted split search on the current 231-leaf parent found no balanced `<=39` split; only extreme singleton peeling survives. These are scoped topology observations, not a global lower bound or NO-GO for `W<=39`.
+
+### Route 2 — full physical family: rank-27 global reinsertion
+
+1. replace the certified 171-leaf bottleneck by a mask-conditioned Schmidt factorization with bond dimension `rho_m<=27`;
+2. use 27 as a safe uniform structural bond dimension, zero-padding smaller ranks;
+3. rebuild the complete global network;
+4. seek a complete sub-40 contraction tree;
+5. the preserved old outside-tree topology still reaches 40, so do not waste effort pretending that topology is a lower bound;
+6. if a different global geometry still stalls, isolate the exact residual cluster and attack its algebraic separator rather than returning to blind ordering search.
+
+Only after exact algebraic/geometry mechanisms stall should certified epsilon-rank/tail approximation become active.
 
 ## Measured execution remains frozen behind provenance
 
@@ -123,4 +125,4 @@ When bytes become available:
 4. run the frozen cap2 all-four-column QR regression;
 5. only PASS opens packed cap3 under the existing resource gates.
 
-Still no admitted practical exact QR evaluation, exact end-to-end arithmetic-work reduction, full second-layer solution, ranking gain, `alpha<1`, or full-round relevance.
+Still not admitted: practical exact QR evaluation, exact end-to-end arithmetic-work reduction, full second-layer solution, ranking gain, `alpha<1`, or full-round relevance.
