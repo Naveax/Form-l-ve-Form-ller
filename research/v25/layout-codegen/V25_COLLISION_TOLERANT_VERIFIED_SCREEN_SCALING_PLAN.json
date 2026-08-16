@@ -1,0 +1,18 @@
+{
+  "milestone":"V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING",
+  "frozen_before_fresh_measurement":true,
+  "relation_to_issue8":"new fresh end-to-end protocol; does not reinterpret or rescue the failed strict raw-survivor-uniqueness gate",
+  "fixed_algorithm":{"rounds":6,"counter":1,"split":1,"boundary_word":0,"syndrome_width":16,"generator_rule":"same admitted straight-line layout codegen"},
+  "layouts":{"W5_SINGLE":"all b logical bits in state/key word5","W4_W6_SPLIT":"low b/2 logical bits in word4 and high b/2 in word6"},
+  "key_widths":[10,12,14,16],
+  "fresh_targets_by_b":{"10":{"seed":5351410,"targets":[553,316,836,930]},"12":{"seed":5351412,"targets":[2304,249,587,1711]},"14":{"seed":5351414,"targets":[15571,7641,13953,13325]},"16":{"seed":5351416,"targets":[6960,33781,8503,22003]}},
+  "correctness_definition":"raw syndrome survivors may collide; every survivor is passed to the exact specialized direct-word verifier. Success requires true key survives and the final verified set equals exactly [true key]. Raw survivor count is diagnostic only.",
+  "qr_accounting":{"W5_SINGLE":{"screen":"4 + 14*2^b","verification":"3 + 18*N_survivors","baseline":"3 + 18*2^b"},"W4_W6_SPLIT":{"screen":"2 + 16*2^b","verification":"2 + 19*N_survivors","baseline":"2 + 19*2^b"}},
+  "exactness_gate":"generated full syndrome and direct predicate equal generic reference for every candidate in every frozen case",
+  "wall_protocol":{"warmups_by_b":{"10":2,"12":2,"14":1,"16":1},"repeats_by_b":{"10":9,"12":7,"14":5,"16":3},"order":"alternate screened algorithm and specialized direct baseline by repeat parity","timed_scope":"target output + target cache setup + all candidates + exact verification of every survivor"},
+  "per_layout_per_b_gate":{"true_key_survives_targets":4,"verified_unique_true_targets":4,"median_total_qr_ratio_max":0.95,"median_wall_speedup_min":1.05,"positive_wall_targets_min":3},
+  "family_gate":"both layouts must pass every gate at every b=10,12,14,16",
+  "diagnostics":["raw survivor counts","collision rate","wall log2 slopes","baseline wall log2 slopes","generated source bytes","one-time generation/compile wall"],
+  "claim_limit":"A PASS admits only collision-tolerant constant-factor verified screening over the tested reduced layouts/widths. Leading candidate enumeration remains 2^b; alpha=1. No full-round claim.",
+  "forbidden":"No target/layout/width/syndrome/generator/repeat/gate retuning after fresh results. Issue #8 remains NO-GO regardless of this result."
+}

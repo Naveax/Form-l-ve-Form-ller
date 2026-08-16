@@ -1,13 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** `NO_GO_STRICT_MULTI_LAYOUT_SCALING_GATE` while prior b10 constant-factor claims remain admitted.  
-**Next:** `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING`.
+**State:** strict Issue #8 scaling is NO-GO; prior b10 constant-factor claims remain admitted.  
+**Active:** `V25_COLLISION_TOLERANT_VERIFIED_SCREEN_SCALING`.
 
-1. Fresh main + authority.
-2. Do not reinterpret or reopen Issue #8 strict gate.
-3. Use fresh targets only for the collision-tolerant follow-on.
-4. Keep W5_SINGLE + W4_W6_SPLIT, split1/word0/width16 and the same straight-line generator fixed.
-5. Success is based on true survival, exact verified set, TOTAL QR and wall including all survivor verification.
-6. Raw syndrome survivor count is diagnostic, not the new correctness gate.
-7. Full generated/generic exactness precedes admission.
-8. Leading work remains 2^b; alpha=1 and no full-round claim.
+1. Use the frozen fresh targets in the collision-tolerant plan.
+2. W5_SINGLE + W4_W6_SPLIT only; b10/12/14/16 only.
+3. Keep split1/word0/width16 and straight-line codegen fixed.
+4. Full generated/generic exactness precedes admission.
+5. Raw syndrome collisions are diagnostic. Correctness is true survival plus final exact verified set `[true]`.
+6. TOTAL QR and wall include verification of every survivor.
+7. Both layouts must pass all gates at all four b values.
+8. Issue #8 remains failed. No alpha<1 or full-round claim.
