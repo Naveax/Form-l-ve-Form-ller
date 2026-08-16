@@ -11,6 +11,11 @@
 - [x] Exact missing-artifact authority written: `research/v26/recovered-bit-puncturing-dac/V26_MISSING_CANONICAL_BYTES.md`.
 - [x] GitHub Issue #22 opened for canonical runtime restoration.
 - [x] Current conversation `/mnt/data`, including nested ZIP contents, SHA-scanned for canonical snapshot/core: `0 matches`.
+- [x] Extended `/mnt` + `/home/oai` + `/tmp` SHA scan: 812 files / 130,949,394 bytes; canonical snapshot/core/test/cert: `0 hits`.
+- [x] Historical recovery commit `2a94d1e...` tree audited: canonical core is not a Git blob there; direct historical core paths return 404.
+- [x] Bootstrap raw archive provenance corrected: locally verified ZIP was not committed as a Git object.
+- [x] Recovery helper supports nested exact snapshot recovery and exact SHA-locked `core_only` fallback without claiming complete snapshot/runtime provenance.
+- [x] Recovery helper regression: nested snapshot + nested core-only synthetic cases `2 passed`.
 - [ ] Recover `FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip` with SHA `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`, OR exact core bytes from the same lineage.
 - [ ] Recover `fds_v25_bit_puncturing.py` with SHA `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`.
 - [ ] Store recovered exact bytes in a durable GitHub-accessible location and update source registry.
@@ -18,7 +23,7 @@
 ## Active — single-column QR transform
 - [x] Transform plan frozen before measurement.
 - [x] cap2 factorized/reference implementation and all-four-column regression committed.
-- [ ] Re-materialize exact recovered runtime and verify snapshot/core SHA-256.
+- [ ] Re-materialize exact recovered runtime and verify canonical source provenance.
 - [ ] Re-run recovered `19/19` baseline with restored dependencies.
 - [ ] cap2 explicit transformed-marginal exact validation ×4.
 - [ ] cap3 all-column exact transformed support/energy measurement.
