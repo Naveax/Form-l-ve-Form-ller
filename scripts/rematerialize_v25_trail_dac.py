@@ -3,10 +3,11 @@ from __future__ import annotations
 
 """Locate and restore the exact recovered V25 trail-D&C runtime from trusted bytes.
 
-The script never accepts a rewritten substitute as canonical. It first finds a ZIP
-whose SHA-256 equals the frozen recovered snapshot hash, then extracts runtime files
-only from that verified container. The recovered bit-puncturing core receives an
-additional file-level SHA-256 check.
+The script never accepts a rewritten substitute as canonical. It prefers a ZIP
+whose SHA-256 equals the frozen recovered snapshot hash and restores runtime files
+only from that verified container. If the complete snapshot is unavailable, it may
+restore the exact canonical bit-puncturing core by its file-level SHA-256 alone,
+while explicitly marking snapshot/runtime provenance incomplete.
 """
 
 import argparse
@@ -38,9 +39,8 @@ def _is_zip(data: bytes) -> bool:
     return len(data) >= 4 and data[:4] == b"PK\x03\x04"
 
 
-def _find_snapshot_bytes(data: bytes, label: str, depth: int = 0):
-    digest = sha256_bytes(data)
-    if digest == SNAPSHOT_SHA256:
+def _find_hash_bytes(data: bytes, label: str, target_sha256: str, depth: int = 0):
+    if sha256_bytes(data) == target_sha256:
         return data, label
     if depth >= MAX_RECURSION or not _is_zip(data):
         return None
@@ -56,19 +56,21 @@ def _find_snapshot_bytes(data: bytes, label: str, depth: int = 0):
                 continue
             child = zf.read(info)
             child_label = f"{label}!{info.filename}"
-            if sha256_bytes(child) == SNAPSHOT_SHA256:
+            if sha256_bytes(child) == target_sha256:
                 return child, child_label
             if info.filename.lower().endswith(".zip") or _is_zip(child):
-                found = _find_snapshot_bytes(child, child_label, depth + 1)
+                found = _find_hash_bytes(child, child_label, target_sha256, depth + 1)
                 if found is not None:
                     return found
     return None
 
 
-def find_snapshot(path: Path):
+def find_hashed_bytes(path: Path, target_sha256: str):
     path = path.resolve()
     if path.is_file():
-        return _find_snapshot_bytes(path.read_bytes(), str(path))
+        if path.stat().st_size > MAX_ENTRY_BYTES:
+            return None
+        return _find_hash_bytes(path.read_bytes(), str(path), target_sha256)
 
     if not path.is_dir():
         raise FileNotFoundError(path)
@@ -76,10 +78,18 @@ def find_snapshot(path: Path):
     for candidate in sorted(p for p in path.rglob("*") if p.is_file()):
         if candidate.stat().st_size > MAX_ENTRY_BYTES:
             continue
-        found = _find_snapshot_bytes(candidate.read_bytes(), str(candidate))
+        found = _find_hash_bytes(candidate.read_bytes(), str(candidate), target_sha256)
         if found is not None:
             return found
     return None
+
+
+def find_snapshot(path: Path):
+    return find_hashed_bytes(path, SNAPSHOT_SHA256)
+
+
+def find_core(path: Path):
+    return find_hashed_bytes(path, CORE_SHA256)
 
 
 def inspect_verified_snapshot(snapshot: bytes, locator: str) -> dict:
@@ -87,7 +97,11 @@ def inspect_verified_snapshot(snapshot: bytes, locator: str) -> dict:
         raise ValueError("snapshot hash mismatch")
 
     runtime: dict[str, dict] = {}
-    hash_hits: dict[str, list[dict]] = {"core": [], "test": [], "cert": []}
+    hash_hits: dict[str, list[dict]] = {
+        "core": [],
+        "test": [],
+        "cert": [],
+    }
 
     with zipfile.ZipFile(BytesIO(snapshot)) as zf:
         for info in zf.infolist():
@@ -160,9 +174,31 @@ def restore(report: dict, repo_root: Path) -> Path:
     return target
 
 
+def restore_core_only(core: bytes, locator: str, repo_root: Path) -> Path:
+    if sha256_bytes(core) != CORE_SHA256:
+        raise ValueError("core hash mismatch")
+    target = repo_root / "research" / "v25" / "bit-puncturing" / "recovered-runtime"
+    target.mkdir(parents=True, exist_ok=True)
+    (target / "fds_v25_bit_puncturing.py").write_bytes(core)
+    manifest = {
+        "recovery_mode": "core_only",
+        "core_locator": locator,
+        "core_sha256": CORE_SHA256,
+        "core_verified": True,
+        "snapshot_verified": False,
+        "runtime_complete": False,
+        "restored_to": str(target.relative_to(repo_root)),
+        "warning": "Exact canonical core restored without the canonical snapshot; companion runtime provenance remains unresolved until separately verified.",
+    }
+    (target / "RECOVERED_CORE_PROVENANCE.json").write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return target
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("source", type=Path, help="snapshot ZIP, outer raw ZIP, or directory")
+    parser.add_argument("source", type=Path, help="snapshot/core file, outer ZIP, or directory")
     parser.add_argument(
         "--repo-root",
         type=Path,
@@ -177,29 +213,52 @@ def main() -> int:
     args = parser.parse_args()
 
     found = find_snapshot(args.source)
-    if found is None:
-        print(
-            json.dumps(
-                {
-                    "ok": False,
-                    "reason": "exact recovered snapshot SHA-256 not found",
-                    "expected_snapshot_sha256": SNAPSHOT_SHA256,
-                },
-                indent=2,
-            )
+    if found is not None:
+        snapshot, locator = found
+        report = inspect_verified_snapshot(snapshot, locator)
+        report["recovery_mode"] = "snapshot"
+        report["snapshot_verified"] = True
+        report["core_verified"] = True
+        report["runtime_complete"] = all(name in report["runtime"] for name in RUNTIME_BASENAMES)
+        if args.restore:
+            restored = restore(report, args.repo_root.resolve())
+            report["restored_to"] = str(restored)
+        report.pop("_runtime_private", None)
+        report["ok"] = True
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0
+
+    core_found = find_core(args.source)
+    if core_found is not None:
+        core, locator = core_found
+        report = {
+            "ok": True,
+            "recovery_mode": "core_only",
+            "core_locator": locator,
+            "core_sha256": CORE_SHA256,
+            "core_verified": True,
+            "snapshot_verified": False,
+            "runtime_complete": False,
+            "warning": "Exact canonical core found without the canonical snapshot; do not claim full snapshot provenance or run new measurements until dependencies and the historical baseline are verified.",
+        }
+        if args.restore:
+            restored = restore_core_only(core, locator, args.repo_root.resolve())
+            report["restored_to"] = str(restored)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0
+
+    print(
+        json.dumps(
+            {
+                "ok": False,
+                "reason": "exact recovered snapshot/core SHA-256 not found",
+                "expected_snapshot_sha256": SNAPSHOT_SHA256,
+                "expected_core_sha256": CORE_SHA256,
+            },
+            indent=2,
         )
-        return 2
-
-    snapshot, locator = found
-    report = inspect_verified_snapshot(snapshot, locator)
-    if args.restore:
-        restored = restore(report, args.repo_root.resolve())
-        report["restored_to"] = str(restored)
-
-    report.pop("_runtime_private", None)
-    report["ok"] = True
-    print(json.dumps(report, indent=2, sort_keys=True))
-    return 0
+    )
+    return 2
 
 
 if __name__ == "__main__":
