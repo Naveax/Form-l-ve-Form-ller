@@ -17,12 +17,10 @@ from typing import Dict, Iterable, Mapping, Tuple
 EXPECTED_BP_SHA256 = "ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130"
 Mask4 = Tuple[int, int, int, int]
 
-# Make the already-committed ChaCha helper and the intended recovered bit-puncturing
-# source location importable from a clean checkout without relying on a caller's
-# ad-hoc PYTHONPATH. The bit-puncturing file itself is intentionally NOT substituted.
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parents[2]
 for dep_dir in (
+    REPO_ROOT / "research" / "v25" / "bit-puncturing" / "recovered-runtime",
     REPO_ROOT / "research" / "v25" / "bit-puncturing",
     REPO_ROOT / "research" / "v25" / "boundary-syndrome",
 ):
@@ -35,8 +33,9 @@ try:
 except ModuleNotFoundError as exc:
     raise RuntimeError(
         "Missing canonical recovered dependency fds_v25_bit_puncturing.py. "
-        "Restore it under research/v25/bit-puncturing/ with SHA-256 "
-        f"{EXPECTED_BP_SHA256} before running this falsifier."
+        "Run scripts/rematerialize_v25_trail_dac.py on a source containing the exact "
+        "recovered snapshot, then retry. Expected core SHA-256: "
+        f"{EXPECTED_BP_SHA256}."
     ) from exc
 
 import fds_v26_second_layer_separator as sep
