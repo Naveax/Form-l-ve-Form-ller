@@ -1,18 +1,15 @@
 # FDS_CONTINUE_HERE
 
-**State:** `NO_GO_PUBLIC_CARRY_SIGNATURE`  
-**Next:** `V25_OUTPUT_CONDITIONED_FEEDFORWARD_BORROW_SIGNATURE_AUDIT`  
-**Backlog:** GitHub Issue #4 after creation.
+**State:** `NO_GO_BORROW_SIGNATURE`  
+**Next:** `V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT` Stage0.
 
-## Continuation
-1. Fresh main + mandatory authority reading.
-2. Use frozen borrow plan under `research/v25/borrow-transition/`.
-3. Build exactly 12 fresh targets over the reused 32-pair pool.
-4. Compute word4 feed-forward subtraction borrow descriptors over all 1,024 candidates without singling out the true key.
-5. Fixed Ridge(alpha=1) grouped CV vs fresh-target public-carry control.
-6. Run 256 within-target label-permutation null; all six gates must pass.
-7. PASS -> untouched descriptor-only ranking validation. FAIL -> stop summary-statistic descriptor search and pivot to non-aggregated algebraic self-consistency across trajectories/round boundaries.
-8. TOTAL accounting + source/tests/results/manifest + continuity closure to GitHub.
+1. Fresh main + authority.
+2. Use frozen `research/v25/boundary-syndrome/V25_INTERNAL_ROUND_BOUNDARY_SYNDROME_CONE_PLAN.json`.
+3. Enumerate exact word-level QR dependency cones for splits 1..5 and all 16 boundary words.
+4. Select minimum total cone by structural cost only, tie smaller split then word.
+5. Implement partial forward/inverse execution and compare target word exactly with full-state reference on random states.
+6. If cone is not <24 QR or equivalence fails, close immediately.
+7. If PASS, explicitly record constant-factor-only status; only then freeze Stage1 syndrome selectivity/cost targets.
+8. Commit source/tests/results/decision/manifest and update continuity.
 
-## Stop rules
-No second development set; no score-shape/RMS/tail/C1 features added to rescue borrow; no feature threshold retuning after oracle inspection; no alpha/full-round claim.
+Stop: no target-output tuning in Stage0, no solver/ML rescue, no alpha claim from QR-count reduction.

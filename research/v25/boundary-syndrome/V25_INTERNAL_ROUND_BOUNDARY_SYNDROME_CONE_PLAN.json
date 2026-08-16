@@ -1,0 +1,16 @@
+{
+  "milestone":"V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT",
+  "stage":"STAGE0_DEPENDENCY_CONE_FEASIBILITY",
+  "frozen_before_target_oracle_measurement":true,
+  "reduced_rounds":6,
+  "baseline_full_state_qr_count":24,
+  "splits_to_audit":[1,2,3,4,5],
+  "boundary_words_to_audit":"all 16 words",
+  "round_schedule":"ChaCha alternating column round for even zero-based round index and diagonal round for odd index",
+  "cost_metric":"number of exact quarter-round evaluations required by the word-level dependency cone; feed-forward word add/sub and comparison accounted separately",
+  "selection_rule":"Choose the minimum total forward+backward QR cone. Break ties by smaller split, then smaller word index. This choice uses structure/cost only, never target outputs or oracle ranks.",
+  "verification":"For random 16-word states, partial forward cone target word must equal full forward state at the split; partial inverse cone target word must equal full inverse state at the split.",
+  "stage0_gate":{"exact_partial_equivalence":true,"qr_count_strictly_less_than_full24":true},
+  "claim_limit":"Even a PASS here is only a constant-factor computation opportunity. It is not alpha<1. If the minimum cone remains Theta(rounds) and candidate enumeration remains 2^b, record that explicitly.",
+  "stage1_only_if_pass":"Freeze a small boundary syndrome bit-width and fresh reduced-key targets, then measure survivor selectivity and TOTAL cost against direct full verification. No solver/ML rescue in Stage0."
+}

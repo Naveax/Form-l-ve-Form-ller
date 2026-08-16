@@ -2,32 +2,24 @@
 
 ## Canonical status — 2026-08-16
 
-### Closed families
-- Static pair-gradient / spectral / projected-HVP / DAPS / C2 selectors: NO-GO.
-- P-only xor-256 reliability: NO-GO.
-- Synthetic score-shape/C1/public-counter descriptors: `NO_GO_CURRENT_DESCRIPTOR_FAMILY`.
-- Public xor delta j6/j7/j8/j9: `NO_GO_PUBLIC_DELTA_CLASS`.
-- Public additive distance d1/d64/d256/d512: `NO_GO_PUBLIC_ADDITIVE_DISTANCE`.
-- Public binary-addition carry-transition signature: `NO_GO_PUBLIC_CARRY_SIGNATURE`.
+Closed NO-GO families now include static quadratic selectors, P-only xor256 reliability, synthetic score-shape/C1/public-counter descriptor learning, public xor-delta class, public additive-distance class, public carry-transition signature, and output-conditioned aggregate feed-forward borrow descriptors.
 
-### Carry-transition result
-32 public pairs, 12 fresh b=10 targets, three grouped folds. All 6/6 frozen gates failed:
-- pooled Spearman **-0.07541**;
-- median target Spearman **-0.03423**;
-- median top-8 enrichment **-0.03994**;
-- positive top-8 targets **5/12**;
-- gain vs distance-only **-0.06990**;
-- target-block shuffle p **0.78988**.
-Distance-only pooled Spearman: **-0.00551**.
-Accounting: 349.87 s total target build wall, 29.12 s median, 527.2 MiB max RSS.
+### Borrow result
+12 fresh b=10 targets × reused 32 pairs; 15 candidate-ensemble borrow features. **6/6 gates failed**:
+- pooled Spearman **-0.11838**;
+- median target Spearman **-0.12260**;
+- median top8 enrichment **+0.00122**;
+- positive top8 targets **7/12**;
+- gain vs public-carry control **-0.04629**;
+- permutation p **0.78210**.
+Carry control pooled Spearman: **-0.07209**.
+Accounting: 345.42 s total, 28.72 s median/target, 531.8 MiB max RSS. Combined regression suite **26/26 PASS**.
 
-### Structural conclusion
-Three successive public-static pair geometry families fail robust transfer: xor-delta class, additive-distance class, and carry-transition signature. Do not create another static public counter classifier under a new label.
+### Structural boundary
+The negative result now spans both public-static pair geometry and aggregate target-dependent candidate-ensemble descriptors. Stop adding summary-statistic descriptors under new names.
 
-### Still not admitted
-True-key pair reliability learnability; end-to-end work reduction; `alpha<1`; full-round relevance.
+### Next
+`V25_INTERNAL_ROUND_BOUNDARY_CANDIDATE_TRAJECTORY_SYNDROME_AUDIT`
+Stage0 asks whether an exact partial internal-boundary word can be computed with materially fewer quarter-rounds than full 6-round verification. Even PASS is only a constant-factor opportunity, not alpha<1.
 
-## Exact next milestone
-`V25_OUTPUT_CONDITIONED_FEEDFORWARD_BORROW_SIGNATURE_AUDIT`
-
-This family is target/output-dependent. It uses observed Z and the complete candidate ensemble to summarize feed-forward subtraction borrow geometry in key word4, while never identifying the true candidate at inference.
+Still not admitted: true-key reliability mapping, end-to-end work reduction, alpha<1, full-round relevance.

@@ -1,0 +1,11 @@
+{
+  "milestone":"V25_OUTPUT_CONDITIONED_FEEDFORWARD_BORROW_SIGNATURE_AUDIT",
+  "status":"NO_GO_BORROW_SIGNATURE",
+  "targets":[437,170,984,376,453,1007,343,990,787,440,418,355],
+  "pair_count":32,"wall_total_s":345.4229075908661,"wall_median_s":28.71655535697937,"peak_rss_max_kb":544560,
+  "borrow":{"pooled_spearman":-0.11837959383878795,"median_target_spearman":-0.12259974717317891,"median_top8_enrichment_vs_all":0.0012218963831866492,"positive_top8_enrichment_targets":7},
+  "public_carry_control":{"pooled_spearman":-0.07208642744292644,"median_target_spearman":0.040345958874237114},
+  "pooled_spearman_gain_vs_public_carry":-0.04629316639586151,
+  "target_block_shuffle":{"reps":256,"p":0.7821011673151751,"null_mean":-0.0684162627362696,"null_p95":0.030906612223052413},
+  "gate_pass":false
+}
