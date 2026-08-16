@@ -10,7 +10,7 @@ The active work while historical measured-runtime provenance is blocked is mathe
 
 ## Exact q138 one-QR structural chain
 
-For the q138 fixed-output exact one-quarter-round Walsh object, the complete certified dense-message upper-bound chain remains
+For the full physical fixed-mask family of the q138 fixed-output exact one-quarter-round Walsh object, the complete certified dense-message upper-bound chain remains
 
 `44 -> 42 -> 41 -> 40`.
 
@@ -25,137 +25,141 @@ Width-40 authority:
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json`
 - `scripts/verify_v26_qr_q138_algebraic_width40.py`
 
-`W<=40` is an exact message-dimension upper bound for this q138 fixed-output one-QR representation. It is not an optimality theorem, arithmetic-work bound, arbitrary-mask result, double-round result or practical-memory claim.
+`W<=40` remains the unconditional physical-family exact message-dimension upper bound. It is not an optimality theorem, arithmetic-work bound, arbitrary-mask result, double-round result or practical-memory claim.
 
-## Width-40 bottleneck
+## Width-40 bottleneck algebra
 
 The unique `2^40` maximum cluster contains 171 leaves and splits `64|107` through six binary interface bits. Its 40 parent-external bits partition `16|24`.
 
 ### Left child
 
-The 64-leaf map
-
-`L_64 : 2^16 -> 2^6`
-
-has exact rational rank 48 for all 64 combinations of its six relevant fixed T1/T2 input bits.
+The 64-leaf map `L_64 : 2^16 -> 2^6` has exact rational rank 48 for all 64 relevant fixed T1/T2 input-bit combinations. Its exact 48-dimensional row space has only two classes, selected solely by the shared bit `u2_8`.
 
 Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_WIDTH40_LEFT_CHILD_RANK48_THEOREM.md`
 - `scripts/verify_v26_qr_q138_width40_left_rank48.py`
 
-A stronger row-space fact is now known: the exact 48-dimensional left row space has only two classes, selected solely by the shared bit `u2_8`. The other five left fixed bits do not change the row space.
+### Physical right-map quotient
 
-## Five-site right-map transfer structure
+The 107-leaf right map is an exact five-site transfer chain. The formal doubled Gram state has dimension 1024, but the physical q138 parity law fixes the generalized affine parity control to `p=0`.
 
-The opposite 107-leaf map factors exactly over sites `3,4,5,6,7`, with site sizes
+The sharp physical reachable hull is
 
-`18,21,21,21,26`.
+`1024 -> 162`,
 
-Every interior site cut carries exactly five binary sigma/carry bits, so
+with cumulative growth
 
-- one-copy hidden state dimension = `32`;
-- doubled Gram state dimension = `1024`.
+`15 -> 70 -> 153 -> 162 -> 162`
 
-The earlier generalized affine-control family allowed `tau=(u1,u2,p)` and gave an exact common reachable hull of dimension 197 with copy-swap split `138+59`. That theorem remains valid for that larger model.
+and exact copy-swap split
 
-However the physical q138 parity relation is exactly
-
-`u4_i xor v3_{i+12} xor w2_i = 0`,
-
-so `p_i=0` is not a physical fixed-mask control.
-
-## Sharp physical quotient: `1024 -> 162`
-
-Restricting to the four physical interior transfer types `(u1,u2,p=0)` gives exact cumulative reachable dimensions
-
-`15 -> 70 -> 153 -> 162 -> 162`.
-
-Therefore the sharp physical doubled reachable hull is
-
-`dim U_phys = 162`.
-
-Copy exchange splits it exactly as
-
-`162 = 114 + 48`
-
-with symmetric/antisymmetric sectors.
-
-In `(u1,u2)=00,01,10,11` order, transfer ranks restricted to the physical hull are
-
-`159,79,99,97`.
-
-Symmetric-block ranks:
-
-`112,56,71,66`.
-
-Antisymmetric-block ranks:
-
-`47,23,28,31`.
+`162 = 114 + 48`.
 
 Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_right_hull162.py`
 
-Do not use the 197-state generalized hull as the sharp physical q138 state space. It remains useful only as an independent larger-family check.
+The earlier 197-state theorem remains valid only for the larger generalized affine-control falsifier family; it is not the sharp physical state space.
 
 ## Exact physical fixed-mask rank envelope
 
-The actual right-map fixed controls are
+The physical right map has twelve fixed input-mask controls:
 
 - `u1_3,...,u1_7`;
 - `u2_3,...,u2_8,u2_31`.
 
-There are exactly `2^12=4096` physical fixed-mask cases.
+All `2^12=4096` physical cases are solved by exact rational transfer algebra.
 
-Exact rational transfer enumeration over this finite family gives
+Right-map envelope:
 
 `11 <= rank(R_m) <= 38`.
 
-The shared `u2_8` bit is right-rank inert.
-
-The bit-31 boundary control creates a strong split:
-
-- `u2_31=0`: right rank `22..38`;
-- `u2_31=1`: right rank `11..19`.
-
-Combining each right Gram space with the correct one of the two exact left row-space classes gives the 171-leaf parent envelope
+Parent 171-leaf bottleneck envelope:
 
 `5 <= rank(M_m) <= 27`.
 
 More sharply:
 
-- `u2_31=0`: parent rank `16..27`;
-- `u2_31=1`: parent rank `5..8`.
+- `u2_31=0`: right rank `22..38`, parent rank `16..27`;
+- `u2_31=1`: right rank `11..19`, parent rank `5..8`.
 
-The previous fixed-mask checks are reproduced exactly:
-
-- zero representative: `(right,parent)=(34,23)`;
-- all-one representative: `(19,8)`;
-- previous high representative: `(37,26)`.
+The shared `u2_8` bit is rank-inert after the correct left row-space class is used.
 
 Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
 
-Thus every physical fixed-input/fixed-output q138 coefficient instance has an exact Schmidt factorization of the formal 40-bit parent bottleneck through at most 27 channels across the certified `16|24` partition.
+Thus every physical fixed-input/fixed-output q138 coefficient instance has an exact Schmidt factorization of the formal 40-bit bottleneck through at most 27 channels across the certified `16|24` partition. The rank basis may depend on the fixed mask.
 
-The rank basis may depend on the fixed mask. This is a uniform rank-dimension envelope, not a claim of one universal 27-dimensional basis for all masks simultaneously.
+## New conditioned global result: `u2_31=1`
 
-## Current sharp mathematical bottleneck
+The strong physical subclass
 
-The active problem is now **global reinsertion of the uniform physical rank envelope**.
+`u2_31=1`
 
-1. Use the exact `rank(M_m)<=27` factorization for the certified 171-leaf bottleneck.
-2. Rebuild the global q138 fixed-IO one-QR network with the parent kept factorized through a bond of dimension at most 27.
-3. Seek a complete contraction tree/work certificate strictly below the current `W<=40` dense-message baseline.
-4. Require a complete machine-verifiable tree before changing the admitted global width.
-5. If pure geometry stalls, analyze whether the rank-27 family itself has a common sector decomposition or mask-conditioned transfer basis that can be attached to the outside network without dense parent materialization.
-6. Only after exact algebraic routes stall should certified epsilon-rank/tail approximation become active.
+has parent bottleneck rank at most 8 for every compatible fixed-mask instance.
 
-Exploratory reinsertion already shows very small top-level balanced separators, but one natural recursive geometry still encounters a subproblem that cannot split below 40. This is only a scoped geometry result, not a lower bound or mathematical NO-GO for `W<40`.
+Replace the certified 171-leaf bottleneck by two exact factors connected by a dimension-8 Schmidt bond, padding ranks 5, 6 or 7 with zeros when needed. Retain the pre-existing exact rank-528 compression elsewhere.
+
+The resulting exact structural network has
+
+- 367 tensor leaves;
+- 366 internal nodes in the certified binary contraction tree;
+- 467 nontrivial indices;
+- 371 binary indices;
+- 94 ternary indices;
+- one dimension-528 bond;
+- one dimension-8 Schmidt bond.
+
+The complete machine-verified tree has maximum message dimension
+
+`D_max = 528 * 2^30 = 566,935,683,072`,
+
+so
+
+`log2(D_max) = 39.04439411935845... < 40`.
+
+The maximizing cluster contains 230 leaves and crosses exactly
+
+- 27 binary indices;
+- the rank-528 bond;
+- the rank-8 Schmidt bond.
+
+Therefore the exact source-conditioned chain is now
+
+`44 -> 42 -> 41 -> 40 -> 39.044394119...`
+
+for the physical `u2_31=1` subclass.
+
+Authority:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_U2_31_ONE_RANK8_GLOBAL_SUB40_THEOREM.md`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_U2_31_ONE_RANK8_GLOBAL_SUB40_CERTIFICATE.json`
+- `scripts/verify_v26_qr_q138_u2_31_one_rank8_global_sub40.py`
+- algebraic dependency: `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
+
+This is the first admitted complete global message-width result below 40 in the exact q138 line, but it is explicitly conditioned on `u2_31=1`.
+
+It does **not** prove `W<=39`, global optimality, an arithmetic-work exponent reduction, a universal mask-independent rank-8 basis, or a sub-40 result for `u2_31=0`.
+
+## Current sharp mathematical bottlenecks
+
+Two exact directions remain active.
+
+### A. General physical family
+
+Use the exact uniform `rank(M_m)<=27` envelope to seek a complete sub-40 global tree for all physical fixed masks. The old outside-tree topology is insufficient by itself: exact dynamic programming over placements still reaches 40. That is a scoped topology result, not a lower bound or NO-GO.
+
+If another global geometry does not close below 40, isolate the exact residual cluster and analyze its algebraic separator rather than returning to blind ordering search.
+
+### B. Strong `u2_31=1` subclass
+
+The new maximum is `528*2^30`, only about 0.0444 bits above the clean threshold 39. The next exact target is to remove at least one binary degree of freedom from that maximizing message, or algebraically compress the rank-528/binary separator, and then require another complete tree certificate before claiming `W<=39`.
+
+Only after exact rank/geometry mechanisms stall should certified epsilon-rank/tail approximation become active.
 
 ## Measured-execution blocker
 
