@@ -6,6 +6,7 @@
   "archive": "archive/raw-import-2026-08-16.zip",
   "archive_bytes": 1566535,
   "archive_sha256": "b21a45f80d7af4fdf745d490daf8c100d620e40b89dc6b49a158a8c0f4263863",
+  "archive_git_object": false,
   "notable_files": {
     "ai": {"bytes": 86151, "sha256": "41d4e21535d01756985097b5f30fcb85cbec609aa5d6779540187ee10f7c202c"},
     "ai(1)": {"bytes": 88929, "sha256": "1d336a58382f18eac3db895efebb9a5c28713fbfb60013f6672ef2b5827a6d8c"},
@@ -14,5 +15,5 @@
     "Downloads(4).zip": {"bytes": 51080, "sha256": "a027ee88a407e74a02e48b0298bdcae9ca155fca4a1ca28c8b6cb9fee439257b"},
     "Downloads(5).zip": {"bytes": 46042, "sha256": "048ff59a0ad1d84fcca9b625d2e1d15e5f2621aa88cc97bac42325768269ebbe"}
   },
-  "verification": "Full per-file name/size/SHA-256 manifest exists in the local bootstrap snapshot and was verified before upload. The repository keeps this compact authority record plus the byte-for-byte ZIP archive."
+  "verification": "Full per-file name/size/SHA-256 manifest exists in the bootstrap authority and the raw ZIP was locally verified before GitHub transfer. The repository stores the compact authority record and full hash manifest, but the byte-for-byte raw ZIP itself was not committed as a Git object; see RAW_IMPORT_STATUS.md."
 }
