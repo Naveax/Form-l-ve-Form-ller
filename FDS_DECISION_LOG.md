@@ -1,9 +1,10 @@
 # FDS_DECISION_LOG
 
-## 2026-08-16 — Issue #13 exhaustive two-key-word dependency search
-All 28 unordered active key/state-word pairs and all 80 internal cones per layout were enumerated target-free under the unchanged exact support rule. **0/2,240** layout-cones provided nonempty disjoint active-half support. 0/28 layouts had any candidate.
+## 2026-08-16 — Issue #13 exhaustive raw dependency MITM
+0/2,240 structural candidates across all 28 two-key-word layouts. Simple raw dependency-separated single-boundary MITM closed.
 
-Decision: `NO_GO_ALL_TWO_WORD_SINGLE_BOUNDARY_MITM`. This closes simple raw-dependency-separated single-boundary MITM across every tested two-key-word placement.
+## 2026-08-16 — Issue #14 single/pair boundary XOR cancellation
+Fresh exact numerical family searched 680 projection-splits. Forward yielded 156 half-oriented candidates, but fresh target61681 yielded zero candidates with exact opposite-half inverse/output independence. Decision: `NO_GO_SINGLE_PAIR_XOR_CANCELLATION`.
 
 ## Next
-If exponent reduction work continues, require a new algebraic cancellation mechanism. First candidate: XOR projections of boundary words, tested by exact function independence on fresh targets rather than dependency-union heuristics.
+If linear boundary cancellation continues, exhaust the whole 16-word GF(2) mask space by nullspace algebra rather than extending projection arity one step at a time.

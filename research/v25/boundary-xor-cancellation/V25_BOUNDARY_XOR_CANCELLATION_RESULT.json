@@ -1,0 +1,11 @@
+{
+  "milestone":"V25_BOUNDARY_WORD_XOR_PROJECTION_CANCELLATION_AUDIT",
+  "status":"NO_GO_SINGLE_PAIR_XOR_CANCELLATION",
+  "projection_splits":680,
+  "forward_orientation_candidates":156,
+  "first_fresh_target":61681,
+  "backward_opposite_half_candidates_on_first_target":0,
+  "stable_exact_orientation_count":0,
+  "primary_valid_count":0,
+  "stage1_opened":false
+}

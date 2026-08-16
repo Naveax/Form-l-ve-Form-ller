@@ -1,0 +1,7 @@
+{
+  "milestone":"V25_BOUNDARY_WORD_XOR_PROJECTION_CANCELLATION_AUDIT",
+  "plan_commit":"eced1d6f89e1c20e9a6e0a57f2f217ce6e822df5",
+  "tests":"2/2 PASS",
+  "first_target_early_kill":"61681 reduces 156 forward orientations to 0 opposite-half backward orientations",
+  "stage1_opened":false
+}

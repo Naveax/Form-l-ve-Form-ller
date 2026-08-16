@@ -1,14 +1,15 @@
 # FDS_CHECKLIST
 
 ## Closed
-- [x] Issue #9 constant-factor verified screen PASS, alpha=1.
-- [x] Issue #10 exact XOR output separability NO-GO.
-- [x] Issue #11 exact modular output separability NO-GO.
-- [x] Issue #12 W4_W6 raw dependency MITM: 0/80.
-- [x] Issue #13 all 28 two-key-word layouts: 0/2,240 candidates, 2/2 regression PASS.
-- [x] Simple two-word single-boundary dependency-separated MITM family closed.
+- [x] Issue #13 all two-key-word raw dependency layouts: 0/2,240.
+- [x] Issue #14 plan frozen before fresh outputs.
+- [x] 680 single/pair projection-splits audited.
+- [x] 156 forward half-oriented candidates found.
+- [x] First fresh target leaves 0 opposite-half backward candidates.
+- [x] Regression 2/2 PASS; `NO_GO_SINGLE_PAIR_XOR_CANCELLATION`.
 
 ## Next
-- [ ] Freeze exact boundary-word XOR cancellation plan.
-- [ ] Evaluate exact half-independence, not dependency unions.
-- [ ] Numerical match/TOTAL only on exact cancellation PASS.
+- [ ] Freeze full 16-word GF(2) linear-mask nullspace audit.
+- [ ] Compute forward nullspaces per split/orientation.
+- [ ] Intersect with fresh-output backward opposite-half nullspaces.
+- [ ] Half-table matching only for nonzero stable masks.
