@@ -1,15 +1,14 @@
 # FDS_CHECKLIST
 
 ## Closed
-- [x] V25 current exponent track: ALPHA_PASS=0.
-- [x] V26 feed-forward-cancelled ANF plan frozen before measurement.
-- [x] Exact truth tables b8/10/12/14/16, R4/R6, counters1/257.
-- [x] Exact packed ANF over all 512 bits.
-- [x] Scalar/vector + Möbius regressions 3/3 PASS.
-- [x] R6 primary gates 0/3 PASS; stable sparse bits 0.
-- [x] `NO_GO_FEEDFORWARD_CANCELLED_ANF`; no polynomial stage.
+- [x] V25 exponent track ALPHA_PASS=0.
+- [x] V26 first counter-difference/feed-forward-cancelled ANF NO-GO.
+- [x] V26 second counter-difference plan frozen before results.
+- [x] b8→16 R4/R6 exact second-difference ANF complete.
+- [x] Issue #18 primary gates 0/3; stable sparse bits 0.
+- [x] Counter finite-difference order/stride family retired.
 
 ## Next
-- [ ] Freeze a genuinely distinct V26 exact structural family.
-- [ ] Target-free Stage0 first.
-- [ ] Explicit scaling/TOTAL implication and kill gate.
+- [ ] Freeze exhaustive cross-word XOR projection class and gates.
+- [ ] Exact target-free ANF Stage0.
+- [ ] Open solving/TOTAL only on exact stable sparse PASS.

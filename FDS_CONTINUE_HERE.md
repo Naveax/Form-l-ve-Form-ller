@@ -1,13 +1,13 @@
 # FDS_CONTINUE_HERE
 
-**State:** V25 exponent track CLOSED; V26 first-difference/feed-forward-cancelled ANF `NO_GO`.  
-**Active:** `V26_COUNTER_SECOND_DIFFERENCE_ANF_AUDIT`.
+**State:** V26 first- and second-counter-difference ANF families NO-GO.  
+**Next:** freeze exact cross-word XOR projection ANF audit.
 
-1. Use frozen plan under `research/v26/counter-second-difference-anf/`.
-2. Counters exactly `[1,257,513]`, stride256, b=`8,10,12,14,16`, R4 control/R6 primary, all 512 bits.
-3. Compute `D2 = Z513 - 2*Z257 + Z1 mod 2^32`; do not manually subtract feed-forward because the second difference cancels its linear counter term exactly.
-4. Run exact packed ANF/Möbius metrics.
-5. R6 PASS requires b16 median per-bit degree reduction >=2, median per-bit support-exponent reduction >=0.10, and >=16 stable sparse bits across b14/b16.
-6. R4/first-difference diagnostics cannot rescue R6 failure.
-7. Only PASS opens separately frozen polynomial-solving/TOTAL scaling.
-8. On FAIL close this family; no stride/counter/order/output/threshold retuning.
+1. Retire counter derivative order/stride tuning.
+2. Preserve exact vectorized ChaCha + packed Möbius infrastructure.
+3. New family must be target-free and exhaustive over a frozen projection class, not post-hoc output selection.
+4. Candidate next class: all 120 unordered output-word XOR pairs, all 32 bit positions, R4 control/R6 primary, b8→16.
+5. Freeze sparse/stability gates before measurement.
+6. Only exact stable sparse projections may open polynomial-system/TOTAL scaling.
+7. Failed Stage0 gets no second set or approximate rescue.
+8. alpha<1 remains NOT DEMONSTRATED; no full-round claim.

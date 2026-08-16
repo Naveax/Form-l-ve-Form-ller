@@ -2,18 +2,16 @@
 
 ## Canonical status — 2026-08-16
 
-V25 exponent track remains closed with `ALPHA_PASS=0`; its constant-factor engineering assets remain admitted only in their scoped form.
+V25 exponent track remains closed with ALPHA_PASS=0. V26 first exact family (feed-forward-cancelled first counter difference) is NO-GO.
 
-V26 first structural family, `V26_MULTIBLOCK_FEEDFORWARD_CANCELLED_ANF_AUDIT`, is **NO-GO**.
+V26 second exact family, counter second finite-difference ANF, is also **NO-GO** under frozen Issue #18.
 
-Frozen target-free audit covered b=8/10/12/14/16, R4/R6, counters 1 and 257, and all 512 output bits with exact ANF Möbius transforms.
+R6 b16 second difference `[1,257,513]`:
+- median per-bit degree reduction: 0;
+- median per-bit support-exponent reduction: -3.4348e-05;
+- stable sparse b14/b16 bits: 0.
 
-R6 b16:
-- median per-bit degree reduction: `0` (gate >=2);
-- median per-bit support-exponent reduction: `-5.6438e-05` (gate >=0.10);
-- stable sparse bits b14/b16: `0` (gate >=16).
-
-All 3 primary gates fail. No polynomial-solving stage opens. No alpha<1 or full-round claim.
+All 3 primary gates fail. Counter-derivative order/stride tuning is retired; no polynomial stage, alpha<1 or full-round claim.
 
 ## Next
-V26 may continue only with a genuinely different exact structural mechanism. Do not retune counter pair/output subset/thresholds inside the cancelled-ANF family.
+Move away from counter derivatives. Next target-free exact family: exhaustive cross-word XOR projections over all 120 word pairs, testing whether correlated dense outputs cancel high-degree ANF structure.

@@ -1,12 +1,12 @@
 # AGENTS.md — FDS Autonomous Continuation Contract
 
 1. Resolve fresh main and authority.
-2. V25 exponent track is closed; do not reopen it.
-3. V26 first-difference/feed-forward-cancelled ANF is closed NO-GO.
-4. Current mechanism is exact counter second finite difference across `[1,257,513]`.
-5. Use all frozen widths, R4/R6 and all 512 bits; no output/stride/counter retuning.
-6. Preserve exact vectorized ChaCha + packed Möbius infrastructure.
-7. Failed Stage0 means no approximate rescue or second development set.
-8. ALPHA_PASS requires fresh TOTAL+verification exponent <1; Stage0 structure alone is insufficient.
+2. V25 exponent track closed; V26 first/second counter derivative ANF families closed NO-GO.
+3. Do not tune derivative order, stride, counters, outputs or thresholds to resurrect them.
+4. Preserve exact vectorized ChaCha and packed Möbius infrastructure.
+5. New V26 family must be mechanism-distinct and frozen before measurement.
+6. Prefer exhaustive target-free projection classes over cherry-picked outputs.
+7. Failed exact Stage0 means no approximate rescue/second set.
+8. ALPHA_PASS requires fresh TOTAL+verification exponent <1.
 9. Local compute allowed; authority returns to GitHub.
 10. No full-round claim without independent evidence.
