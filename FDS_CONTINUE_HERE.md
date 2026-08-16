@@ -7,7 +7,7 @@
 
 Do not reduce the project to code recovery. Code is only a calculator/falsifier. The mathematical object is the signed Walsh/trail tensor and its exact or certified approximate contraction.
 
-## Mathematics authority added
+## Mathematics authority
 
 Read, in this order, under `research/v26/recovered-bit-puncturing-dac/`:
 
@@ -19,42 +19,50 @@ Read, in this order, under `research/v26/recovered-bit-puncturing-dac/`:
 6. `V26_STAGE0_PARSEVAL_GAP_BOUNDS.md`
 7. `V26_EPSILON_RANK_BRIDGE_THEOREM.md`
 8. `V26_LOCAL_TO_GLOBAL_ERROR_TELESCOPING.md`
+9. `V26_MODADD_RESIDUAL_GRAM_THEOREM.md`
+10. `V26_ERROR_REPRESENTATION_EXPONENT.md`
 
 Core mathematical chain:
 
-`local/on-orbit Walsh approximation error`
+`local/on-orbit Walsh residual`
+
+`-> Gram-aware local error`
 
 `-> QR/layer telescoping`
 
-`-> certified global residual epsilon`
+`-> certified global epsilon`
 
 `-> capped 2|2 singular/rank structure`
 
-`-> full-exact epsilon-rank bound`
+`-> full-exact epsilon-rank`
 
-`-> controlled tensor contraction / downstream score error`.
+`-> controlled contraction / downstream score error`
 
-Important facts already established:
+`-> error-vs-cost exponent theta`.
+
+Established facts:
 
 - full exact QR/double-round Walsh operators are orthogonal and every normalized subset marginal has squared norm 1;
 - cap4 C0/C3 zero marginals therefore cannot be full-exact zeros;
 - under compatible normalization, cap4 Stage0 residual floors for C0..C3 are `1`, `0.2793271761`, `0.2687631657`, `1`;
-- exact capped rank is brittle under omitted tails; epsilon-rank is the robust invariant;
+- exact capped rank is brittle under tails; epsilon-rank is the robust invariant;
 - fixed small hard per-addition published-sigma caps are not uniformly accurate over masks;
-- do **not** identify that published hard-cap model with project `max_sigma_weight` until the missing core proves the semantics;
-- local source-conditioned/on-orbit error is the promising route, because uniform worst-case operator error can be useless.
+- do not identify that published hard-cap model with project `max_sigma_weight` until the missing core proves the semantics;
+- for the published hard-cap addition model, local source-conditioned residuals can be computed exactly as `eta^2=c^T G_res c` using a polynomial-time four-state bit DP rather than enumerating `(u,v)` or trails;
+- if residual decays `q^K` and representation grows `r^K`, the natural controlled-representation exponent is `theta=log(r)/(-log(q))`.
 
 ## First unfinished mathematical pass
 
-Derive the strongest source-independent/on-orbit error certificate possible without guessing project cap semantics. In particular, work toward a dynamic error-budget formulation over the ChaCha factor graph:
+Turn the abstract error-cost theory into the strongest possible **source-conditioned factor-graph certificate** without guessing missing project cap semantics:
 
-- local mask-conditioned residual bounds;
-- Gram-aware combination when residual columns overlap;
-- telescoping through four-addition QR and alternating column/diagonal layers;
-- resulting `epsilon_K` supplied to the epsilon-rank bridge;
-- downstream contraction/ranking stability stated with explicit error margins.
+1. characterize which local mask families are actually reached symbolically by the q138 ChaCha wiring, independently of cap implementation details where possible;
+2. derive mask-family residual bounds or Gram structures for local modular additions;
+3. formulate the adaptive local error-budget problem over four-addition QR and alternating column/diagonal layers;
+4. derive a global epsilon bound by telescoping;
+5. combine epsilon with 2|2 singular tails to obtain a full-exact epsilon-rank bound;
+6. state the first preregistrable theta protocol: residual-decay sequence, representation/work growth sequence, scaling family, and kill/pass conditions.
 
-Prefer theorem/lemma/falsifier order. Use code only to check finite identities or explore candidate bounds.
+Prefer theorem -> lemma -> finite falsifier. Use terminal code only to validate finite identities or evaluate formulas.
 
 ## Measured execution remains frozen behind provenance
 
@@ -79,6 +87,6 @@ When bytes become available:
 4. run the already-frozen cap2 all-four-column QR regression;
 5. only PASS opens packed cap3 under the existing `2 GiB RSS / 1 GiB compact` gates.
 
-Do not retune the frozen QR plan. Do not turn pure mathematical lemmas into numerical project claims without the missing semantic/provenance bridge.
+Do not retune the frozen QR plan. Do not turn source-independent mathematical lemmas into project-specific numerical claims without the missing semantic/provenance bridge.
 
 Still no admitted full second-layer solution, ranking gain, alpha<1, or full-round relevance.
