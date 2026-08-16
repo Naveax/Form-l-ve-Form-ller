@@ -1,13 +1,14 @@
 # FDS_CONTINUE_HERE
 
-**State:** V26 counter-derivative and pairwise XOR-projection ANF families closed NO-GO.  
-**Next:** literature-grounded mechanism selection before another frozen Stage0.
+**State:** V26 counter-derivative and cross-word XOR ANF families NO-GO.  
+**Active:** `V26_SOURCE_ORBIT_COUNTER_CUBE_SUPERPOLY_ANF_AUDIT`.
 
-1. Keep V25 and the three closed V26 families immutable.
-2. Do not extend pairwise XOR into cherry-picked masks/modular sums as a rescue.
-3. Inspect primary reduced-ChaCha cryptanalysis literature for mechanism-distinct families not already tested: e.g. rotational/linear/differential-linear/cube-integral or exact state constraints.
-4. Map each candidate against the existing kill ledger before choosing one.
-5. Prefer a target-free exact falsifier if possible.
-6. Freeze model, scaling axis, TOTAL implication and kill gate before measurement.
-7. Only a later fresh TOTAL+verification scaling result may set ALPHA_PASS.
-8. No full-round claim without independent evidence.
+1. Use frozen plan under `research/v26/source-orbit-counter-cube/`.
+2. Source counters only: cubes 512..767 and 1024..1279; fixed nonce; no chosen-IV extension.
+3. Low 8 counter bits are the cube variables; XOR all 256 outputs per cube.
+4. b=`8,10,12,14,16`; R4 control/R6 primary; all 512 output bits.
+5. Exact packed key-ANF for cube sums and same-base single-counter controls.
+6. Each R6 base at b16 must show median per-bit degree reduction >=2 and support-exp reduction >=0.10.
+7. >=16 identical bits must be sparse-useful at b14/b16 for both bases.
+8. Only PASS opens fresh source-orbit superpoly solving/TOTAL scaling.
+9. FAIL closes this cube dimension/base family; no retuning.
