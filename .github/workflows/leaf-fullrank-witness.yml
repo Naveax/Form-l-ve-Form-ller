@@ -1,0 +1,20 @@
+name: Leaf full-rank witness search
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_leaf_fullrank_witness.py'
+      - '.github/workflows/leaf-fullrank-witness.yml'
+  workflow_dispatch:
+
+jobs:
+  leaf-witness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet opt_einsum python-flint
+      - run: python scripts/verify_v26_q138_leaf_fullrank_witness.py
