@@ -1,0 +1,23 @@
+name: signed-block2-d11-transfer-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_signed_block2_d11_transfer_no_gain.py'
+      - 'scripts/verify_v26_q138_signed_block2_extend12_rank21888.py'
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_SIGNED_BLOCK2_D11_TRANSFER_NO_GAIN.md'
+      - '.github/workflows/signed-block2-d11-transfer-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact D11 one-bit no-gain theorem
+        run: python scripts/verify_v26_q138_signed_block2_d11_transfer_no_gain.py
