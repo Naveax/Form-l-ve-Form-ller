@@ -7,7 +7,7 @@
 **d>=2 exact representation law:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
 **d2:** `683.1007639817401...`.  
 **ALPHA_PASS=0`.  
-**Active work:** extend the new D-sector-overlap mechanism in d=1, then semi-open B and fully-open multi-site coupling; arithmetic work remains separate.
+**Active work:** simple one-bit/local d=1 extensions are now closed negatively; move to genuine merged block1/block2 multi-site carry/repeated-D coupling, then semi-open B and fully-open multi-site coupling. Arithmetic work remains separate.
 
 Code is only a calculator/falsifier. New finite claims require clean-checkout execution.
 
@@ -82,6 +82,51 @@ One complete factor contains
 
 scalar entries. This is not a compute win.
 
+## New exact no-gain closures after rank21888
+
+### D11 one-bit repeated-variable extension
+
+Take the next repeated external variable `D11`, appearing in j1 bit11 and j2 bit27. Since site11 is outside S1, `D11` remains a column variable.
+
+Exact facts:
+
+- j1 bit11 transfer has rank2 for fixed `D11=0` and rank2 for fixed `D11=1`;
+- j2 bit27 transfer also has rank2 in each fixed-D11 slice;
+- the sixteen `D12..15` high-sector vectors remain rank16 separately in each D11 slice.
+
+Thus the new transfers are injective on the carry interfaces, preserve the old `448/448/intersection424` D16 geometry, preserve the sixteen-prefix direct sum, and leave block2 rank exactly
+
+`21888`.
+
+No d=1 exponent gain results from this one-bit D11 occurrence closure.
+
+Clean run `32038491628`: success.
+
+Authority:
+
+- `V26_Q138_SIGNED_BLOCK2_D11_TRANSFER_NO_GAIN.md`;
+- `scripts/verify_v26_q138_signed_block2_d11_transfer_no_gain.py`.
+
+The same verifier finds isolated C12 physical-row rank2, so C12 cannot help as a one-site append with open neighbouring carries.
+
+### Block1 contiguous C12..C14 carry extension
+
+Extend the clean rank16 block1 through j2 bits14,13,12 using physical row bits `C14,C13,C12`.
+
+Exact ranks:
+
+- block1 + `C13,C14`: `64=16*4`;
+- block1 + `C12,C13,C14`: `128=16*8`.
+
+So even the natural contiguous C12 carry extension reaches the full naive rank and gives no compression.
+
+Clean run `32038564342`: success.
+
+Authority:
+
+- `V26_Q138_BLOCK1_C12_C14_EXTENSION_NO_GAIN.md`;
+- `scripts/verify_v26_q138_s1_local_extension_falsifiers.py`.
+
 ## Overflow correction, do not regress
 
 Temporary four-site candidates96/208 and resulting bounds84.0279/83.7283 are revoked.
@@ -119,18 +164,22 @@ Current law:
 - naive internal-sector direct sums can be worse than blind products;
 - direct fully-open minimal-TT S3 cut86, worse than fused65;
 - block1 + C13,C14 carry extension exact rank64=`16*4`;
-- block1 + A1,B1,D1 occurrence-closed one-step extension exact rank128=`16*8` locally; add a clean regression before treating this as frozen authority;
+- block1 + C12,C13,C14 contiguous carry extension exact rank128=`16*8`, clean run `32038564342`;
+- block1 + A1,B1,D1/A2,B2,D2 occurrence-closed two-site extension exact union rank1024=`16*2^6`, clean run `32033943549`;
+- block2 one-bit D11 repeated-variable extension preserves rank21888, clean run `32038491628`;
+- isolated C12 local row map rank2;
 - corrected relaxed adjacent four-site S1 blocks are full rank256;
 - historical leaf witness run `32011941759` ended exit143 and is not authority.
 
 ## First unfinished mathematical pass
 
-1. **Generalize the new D-sector overlap.** The 58/57 gain came from `D16=0/1` j1 subspace intersection424 together with a1D bit0 intersection. Search the same mechanism one bit farther or in the block1 side, using exact subspace intersections rather than dense integer Grams.
-2. **Try block2 + another occurrence-closed raw bit group.** Remaining S1 raw bits are all A/B/C/D on sites1..5 plus C12,C13,C14. Site12 A/B/D are now consumed; C12 remains.
-3. **d=1 work accounting.** Message/storage is85.41785 but output-size alone is the same exponent. No work gain yet.
-4. **semi-open B<55.** Respect rotation7 output and offset16 D reuse; pair/carry routes are closed.
-5. **fully-open <63.562.** Need genuine multi-site row-space overlap, not direct-sum sector splitting.
-6. Recount every complete relevant tree and clean-checkout every finite claim before changing authority.
+1. **Stop repeating isolated local appends. Build the smallest merged block1/block2 multi-site factor.** The easy block1 side, C12 contiguous side, and one-bit D11 side are now exact NO-GAIN. A new gain must use a coupling that is absent from those separate maps. Natural target: bridge the j2 carry structure between the block1 `C12..16` segment and the block2 high-sector side while closing every repeated S1 D variable whose second occurrence enters that bridge.
+2. **Use incremental exact subspace intersections, not a huge dense Gram.** The next tractable probe is the repeated-D block1 chain beyond the clean D0..2 two-site result: add D3 with both its j1 and j2 occurrences, then D4/D5 only if a nontrivial overlap appears. Any claimed gain must beat the naive rank exactly.
+3. **If the merged carry bridge still stays full rank, test joint block1 x block2 channel overlap directly.** The current product `16*21888` is only an upper bound; shared retained columns may make the joint row space smaller even when each local append is injective.
+4. **d=1 work accounting.** Message/storage is85.41785 but output-size alone is the same exponent. No work gain yet.
+5. **semi-open B<55.** Respect rotation7 output and offset16 D reuse; pair/carry routes are closed.
+6. **fully-open <63.562.** Need genuine multi-site row-space overlap, not direct-sum sector splitting.
+7. Recount every complete relevant tree and clean-checkout every finite claim before changing authority.
 
 All admitted reductions are exact, `epsilon=0`. Approximation remains inactive while exact routes are open.
 
