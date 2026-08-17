@@ -1,0 +1,21 @@
+name: bit0-universal-shared-v312-geometry
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_bit0_universal_shared_v312_geometry.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BIT0_UNIVERSAL_SHARED_V312_GEOMETRY.md'
+      - '.github/workflows/bit0-universal-shared-v312-geometry.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify universal bit0 shared-v3_12 geometry
+        run: python scripts/verify_v26_q138_bit0_universal_shared_v312_geometry.py
