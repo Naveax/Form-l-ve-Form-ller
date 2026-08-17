@@ -14,27 +14,25 @@ For all4096 physical fixed-mask cases:
 
 `W_1<=38.768184324776925...<39`, sharp peak `218*2^31`.
 
-Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; all64 left maps share an exact48-dimensional interface row space.
+Old support216 /13 support classes /rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; all64 left maps share an exact48-dimensional interface row space.
 
 ## d=1 canonical ledgers
 
 Keep separate:
 
 - topology-only `W_2_topo<=236`;
-- coefficient-blind static method `W_static,blind=95`;
+- coefficient-blind static `W_static,blind=95`;
 - exact representation existence
   `W_repr(1)<=73+log2(3829)=84.90275194485017...`;
 - coefficient-aware materialized-factor generation
   `W_factor-gen<=84.90275194485017...`;
 - arithmetic-work reduction: **not admitted**.
 
-The new dyadic leaf results below do **not** lower either complete-factor bound yet because their residual tail is unresolved.
+The dyadic results below create large low-rank exact prefixes but do **not** lower the complete-factor bounds while their residual tail is unresolved.
 
 ## Exact S1 center
 
-`S1={0,1,2,3,4,5,12,13,14,15,16}`.
-
-All44 S1 physical row bits are occurrence-closed.
+`S1={0,1,2,3,4,5,12,13,14,15,16}`. All44 S1 physical row bits are occurrence-closed.
 
 Low23: `A0..5,B0..5,D0..5,C12..16`.  
 High/gap21: `A12..16,B12..16,D12..16,C0..5`.
@@ -46,7 +44,7 @@ Key exact structure:
 - j2 bits22..31 bridge rank32/32, clean `32041617140`;
 - j2 bits1..11 rank66/128, kernel62, clean `32042410012`;
 - fixed-D16 minimal loop misses that kernel, clean `32042794811`;
-- D16 after closing C1..5: `64,64,intersection63`, uniform over `q=(v3_12,sigma2_11)`, clean `32043345651`;
+- D16 after closing C1..5: `64,64,intersection63`, uniform over shared `q=(v3_12,sigma2_11)`, clean `32043345651`;
 - j1 D16 geometry `448,448,intersection424`.
 
 Per high prefix rank is `30632*n`;16 prefixes are direct:
@@ -55,13 +53,13 @@ Per high prefix rank is `30632*n`;16 prefixes are direct:
 
 Clean full run `32043410513`.
 
-With generic predecessor-leaf exponent44:
+Generic predecessor-leaf exponent44 gives
 
 `dim_factor<=3829*2^73`,
 
 `W_repr(1)<=84.90275194485017...`.
 
-Factor-generation constructivity matches this message/storage bound; clean `32043554316`.
+Factor-generation message/storage constructivity matches this bound; clean `32043554316`.
 
 ## d=1 arithmetic-route gates
 
@@ -69,48 +67,37 @@ Per high prefix the D16 union decomposes dimensionally as
 
 `26712n common +1960n private0 +1960n private1 =30632n`.
 
-Explicit complete factor materialization emits
+Explicit complete factor materialization emits `3829*2^73` scalars; clean gate `32044123499`.
 
-`3829*2^73 =36,163,882,525,815,743,046,483,968`
+Complete low/high star mode envelopes `2^45` and `3829*2^28` have Cartesian product exactly `3829*2^73`; clean `32055881609`.
 
-scalars; clean gate `32044123499`.
+Monotone complement interleaving using only raw/topological center certificates plus generic leaf Hilbert ranks cannot certify below84.90275; clean `32056604049`.
 
-Complete low/high star mode envelopes are `2^45` and `3829*2^28`; their Cartesian product exactly recreates `3829*2^73`. Clean `32055881609`.
+Retained-only j1 gap6..11 is rank4/4; clean `32043801142`.
 
-Monotone complement interleaving with raw central extension/topology plus only generic leaf Hilbert ranks cannot certify below84.90275. At the unavoidable44-added-row layer the coefficient certificate is85.90275194485 and exact topology+leaf MILP optimum is86. Clean `32056604049`.
+A work improvement therefore must use actual predecessor-leaf coefficients before complete low/high Cartesian materialization.
 
-Retained-only j1 gap6..11 is rank4/4, clean `32043801142`.
+## Predecessor-leaf dyadic coefficient authority
 
-Therefore a work improvement must use actual predecessor-leaf coefficient algebra before the complete low/high Cartesian joint is formed.
+Leaf topology cut11 is exact on every critical frozen HT partition, so topology alone cannot beat generic `2^11=2048`.
 
-## Predecessor-leaf dyadic coefficient structure
+Old dense coefficient full-rank run `32011941759` is non-authoritative: exit143 before a result. Exploratory 2048x2048 minor `32054802994` is also non-authoritative: bad contraction path /32-GiB failure before rank output.
 
-The reduced exact leaf topology has terminal cut11 on every critical frozen HT partition. Topology alone cannot improve the generic `2^11=2048` single-leaf rank. Clean historical run `32010227963`.
+### Natural coefficient lattices
 
-Old dense coefficient full-rank workflow `32011941759` is non-authoritative: exit143 before a mathematical result. Exploratory 2048x2048 minor run `32054802994` is also non-authoritative: a bad contraction path required a `2^64` intermediate and failed on32-GiB allocation before rank output.
+Exact carry/sign descent gives
 
-### Dyadic denominators
+`L_A,L_D in 2^-92 Z`,
 
-Exact carry/sign algebra gives:
+`L_B,L_C in 2^-121 Z`.
 
-- formal four-addition carry exponent124;
-- A/D weight124 impossible;
-- B/C weight124 internal rank124/nullity4, sign polar rank2, affine Gauss sums `0,+8,-8`;
-- A/D j4 output is identically zero, giving
-  `L_A,L_D in 2^-92 Z`;
-- B/C carry-sector descent gives
-  `L_B,L_C in 2^-121 Z`.
+Clean top-carry `32057838229`; lattice descent `32058413111`.
 
-Clean runs:
+### A/D first and second dyadic layers
 
-- top-carry cancellation `32057838229`;
-- position-dependent descent `32058413111`.
+Set `M_A=2^92L_A`, `M_D=2^92L_D`.
 
-### First A/D residue
-
-Set `M_A=2^92 L_A`, `M_D=2^92 L_D`.
-
-Modulo2 only three affine-indicator sectors survive, each S1 communication rank1. Hence
+First residue:
 
 `rank_F2(M_A mod2)<=3`,
 
@@ -118,171 +105,155 @@ Modulo2 only three affine-indicator sectors survive, each S1 communication rank1
 
 Clean `32058931522`.
 
-This is not rational leaf Schmidt rank<=3.
+Choose an integer rank<=3 first lift and write `M=M0+2M1`.
 
-### Second A/D residue
+The original sector-sum theorem gave309/310, clean `32062712987`. Exact predecessor-input activity sharpening supersedes those bounds:
 
-Choose an integer first-layer lift `M0` of rank at most3 and write
+- A has271 affine rank-one pieces but at most181 can be simultaneously active for any fixed128-bit predecessor input;
+- D has274 pieces but at most171 can be active;
+- adding the full signed-quadratic budgets38/36 gives
 
-`2^92 L = M0 +2 M1`.
+`rank_F2(M1_A mod2)<=219`,
 
-Only carry weights93,92,91 affect `M1 mod2`. Exact elimination gives:
+`rank_F2(M1_D mod2)<=207`.
 
-- A:181 reachable weight91 rank-one affine supports,90 reachable weight92 nullity-one rank-one supports, and three signed quadratic supports with cross ranks11,10,11;
-- D:183 reachable weight91 rank-one supports,91 reachable weight92 nullity-one supports, and three signed quadratic supports with cross ranks10,10,10.
-
-Therefore
-
-`rank_F2(M1_A mod2)<=309`,
-
-`rank_F2(M1_D mod2)<=310`.
-
-Clean `32062712987`.
+The activity optima have matching MILP primal/dual values and zero gap. Clean theorem run `32065522597`.
 
 Authority:
 
-- `V26_Q138_PREDECESSOR_LEAF_AD_SECOND_DYADIC_RANK310.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py`.
+- `V26_Q138_PREDECESSOR_LEAF_AD_ACTIVITY_RANK219_207.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py`.
 
-### First B/C residue
+Cheap follow-ups closed:
 
-Set `M_B=2^121 L_B`, `M_C=2^121 L_C`.
+- canonical duplicate-support XOR gives no further A/D gain (`32064086782` probe);
+- homogeneous affine Fourier unions saturate all `2^11` left and `2^21` right frequencies (`32065783472` probe).
 
-Only carry weights124..121 can affect parity. Exact quotient-matroid, affine consistency and Gauss analysis gives:
+### B/C first residue and explicit Fourier-aligned lift
 
-- exactly484 weight121 internal-rank128 triples; B reaches484, C reaches480;
-- after collecting weight121, weight122-nullity1, weight123 and top-weight124 affine contributions and cancelling even canonical multiplicities, exactly103 odd affine support systems remain for each position;
-- B odd-support intersection distribution: `d2:9,d3:63,d4:31`, affine rank bound1036;
-- C: `d2:2,d3:60,d4:41`, affine rank bound1144;
-- the four weight122 unique-solution sectors share one support of intersection dimension2; their combined sign XOR has cross-bilinear rank2, adding at most16.
+Set `M_B=2^121L_B`, `M_C=2^121L_C`.
 
-Hence
+The clean carry-sector theorem first proved
 
 `rank_F2(M_B mod2)<=1052`,
 
-`rank_F2(M_C mod2)<=1160`.
+`rank_F2(M_C mod2)<=1160`,
 
-Both are strictly below2048.
+clean `32063042288`.
 
-Clean `32063042288`.
+Input-mask mutual exclusion cannot improve those sector-sum bounds: all103 odd affine supports plus the signed common support can be active simultaneously. Clean NO-GAIN `32065964357`.
+
+However the 103 affine supports share extremely small homogeneous Walsh frequency sets. Exact union:
+
+- B: only16 S1 left frequencies;
+- C: only64 S1 left frequencies.
+
+Affine shifts depend on the predecessor input but do not change these frequency sets. Thus ordinary integer affine lifts have rational ranks<=16 and<=64.
+
+The four-sector signed Boolean term has common-support intersection dimension2 and cross-bilinear rank2. Decompose into at most4 affine rectangles; on each rectangle a Boolean quadratic cross-rank2 matrix has rational rank<=`2^2+1=5`. Hence the signed integer lift rank is<=20.
+
+Therefore explicit coefficient-aligned integer first layers exist:
+
+`M_B = K_B +2R_B`, `rank_Q(K_B)<=36`,
+
+`M_C = K_C +2R_C`, `rank_Q(K_C)<=84`.
+
+These **supersede1052/1160 as dyadic first-layer envelopes** while preserving the old residue theorem historically.
+
+Clean Fourier-lift run `32066435545`.
 
 Authority:
 
-- `V26_Q138_PREDECESSOR_LEAF_BC_FIRST_DYADIC_RANK1160.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py`.
+- `V26_Q138_PREDECESSOR_LEAF_BC_FOURIER_LIFT_RANK36_84.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_bc_fourier_lift_rank36_84.py`.
 
-## Exact dyadic product layers
+No full rational leaf Schmidt-rank claim follows; residuals `R_B,R_C` remain.
 
-A GF(2) rank-r factorization of an integer matrix modulo2 lifts to an integer rational-rank-at-most-r matrix `K` whose difference from the original matrix is even. Therefore every residue bound above gives an exact dyadic low-rank layer, without implying that the remaining residual has low full rank.
+## Fourier-sharpened exact dyadic product prefix
 
-### First four-leaf layer
+Natural four-leaf scaling is `2^426`.
 
-Natural common predecessor scaling is
+Use current envelopes
 
-`2^(92+121+121+92)=2^426`.
+A: `[3,219,2048,2048,...]`,
 
-First per-leaf residue bounds are A3, B1052, C1160, D3. Thus the first four-leaf product layer has rank at most
+B: `[36,2048,2048,...]`,
 
-`3*1052*1160*3 =10,982,880`,
+C: `[84,2048,2048,...]`,
 
-exponent `23.38875308074955...`.
+D: `[3,207,2048,2048,...]`.
 
-Attach the exact center `3829*2^29`:
+Unresolved residues use only the universal2048 S1 row cap.
 
-first complete-S1 dyadic layer channels
+Four-leaf layer bounds are
 
-`22,577,272,722,806,538,240`,
+- k0 `27,216`;
+- k1 `6,076,512`;
+- k2 `528,287,760`;
+- k3 `22,588,489,728`;
+- k4 `499,782,844,416`;
+- k5 `5,718,621,093,888`;
+- k6 `33,271,289,282,560`.
 
-exponent `64.2915050255997...`.
+The exact prefix k0..k5 sums to
 
-Clean `32063409809`.
+`6,241,526,819,520`.
 
-### First two four-leaf layers
-
-Use A/D second-residue bounds309/310 and only the universal row cap2048 for unresolved B/C second residues. The second four-leaf product layer has rank at most
-
-`2,306,905,824`.
-
-First two leaf layers cumulative:
-
-`2,317,888,704`,
-
-exponent `31.110164149389277...`.
-
-Clean `32063572894`.
-
-### Five-layer prefix gate
-
-Recursively use the universal2048 row cap for every still-unknown single-leaf residue. Four-leaf product layer bounds are
-
-- k0 `10,982,880`;
-- k1 `2,306,905,824`;
-- k2 `140,380,802,112`;
-- k3 `2,067,939,590,144`;
-- k4 `13,446,096,486,400`;
-- k5 `49,193,897,820,160`.
-
-The exact prefix k0..k4 sums to
-
-`15,656,734,767,360`,
-
-which is still below the old generic four-leaf budget
+Generic four-leaf S1 Hilbert budget:
 
 `2^44=17,592,186,044,416`.
 
-Remaining leaf-channel headroom is
+Current unresolved leaf-tail budget:
 
-`1,935,451,277,056`,
+`11,350,659,224,896`.
 
-or only `0.168151398415024...` bits.
+Prefix headroom is `1.49496387304805...` bits.
 
-Attach the center: the first-five complete-S1 layers have cumulative exponent
+Attach exact center `3829*2^29`: complete-S1 k0..k5 prefix has
 
-`84.73460054643513...`,
+`12,830,573,875,979,191,540,776,960`
 
-still `0.16815139841503...` bits below the current complete-factor exponent84.90275194485017.
+channels, exponent
 
-But k5 generic fallback alone is `49,193,897,820,160`, about25.4173 times the entire remaining tail budget. Therefore the full dyadic route succeeds only if
+`83.4077880718021...`.
 
-`sum_{k>=5} rank(layer_k) <1,935,451,277,056`.
+This is1.494963873 bits below the current complete-factor exponent84.90275194485017, but the unresolved k>=6 tail prevents any full bound reduction.
 
-Clean prefix-gate run `32063775688`.
+Generic k6 is `33,271,289,282,560`, only2.9312208765x the entire current tail budget. Clean six-layer gate `32066572887`.
 
 Authority:
 
-- `V26_Q138_FOUR_LEAF_FIRST_DYADIC_STAR_LAYER.md`;
-- `V26_Q138_FOUR_LEAF_TWO_DYADIC_LAYERS.md`;
-- `V26_Q138_DYADIC_FIVE_LAYER_PREFIX_GATE.md`.
+- `V26_Q138_DYADIC_FOURIER_SHARPENED_SIX_LAYER_GATE.md`;
+- `scripts/verify_v26_q138_dyadic_fourier_sharpened_six_layer_gate.py`.
 
-This does **not** lower `W_repr(1)` or `W_factor-gen`; the dyadic tail remains unresolved.
+Older five-layer gates and the old depth warning remain historically valid for their superseded envelopes, but are no longer the current search criterion.
 
-## Dyadic depth warning
+## Current dyadic tail target
 
-The k5 tail cannot be fixed merely by solving one next residue family. Even under the impossible optimistic assumption
+A complete dyadic improvement now requires
 
-`r_A2=r_D2=r_B1=r_C1=0`,
+`sum_{k>=6} rank(layer_k) <11,350,659,224,896`.
 
-k5 remains `2,067,939,590,144`, still `132,488,313,088` above the entire tail budget.
+Generic k6 misses this by only2.9312x.
 
-Even also setting
+For k6, with unknown next residues
 
-`r_A3=r_D3=r_B2=r_C2=0`,
+`a2=A third`, `d2=D third`, `b1=B second`, `c1=C second`,
 
-k5 remains `2,004,408,467,456`, still `68,957,190,400` above budget.
+moderate compression already matters. Useful search thresholds from the exact k6 polynomial:
 
-Therefore a successful tail proof must either reach at least one deeper residue layer or sharpen an already-certified early residue bound. This is currently a derived search guide; no new full-factor claim follows from it.
+- if all four next ranks are equal, k6 fits the tail budget at about `1386.8` or below;
+- if A/D next remain2048, B/C next both about `<=968` makes k6 fit;
+- if B/C next remain2048, A/D next both about `<=785` makes k6 fit.
 
-## Closed / revoked d=1 routes
+These are k6 search thresholds, not sufficient conditions for the entire later tail.
 
-- block2 D11 one-bit extension: no gain;
-- contiguous C12..C14 alone: no gain;
-- repeated-D D0..5 alone: no gain;
-- direct shared `v3_12` alone: product exact;
-- 39-bit natural bridge before C1..5: old center exactly;
-- fixed-D16 minimal gap loop: no gain;
-- j1 retained gap6..11: no gain;
-- explicit materialization, separate full low/high bases and generic monotone complement interleaving: scoped work NO-GAIN routes;
-- old four-site ranks96/208 and W84/W83 claims revoked due int32 overflow.
+## Current exploratory next probes
+
+- B/C second-residue weight120 unique-solution Fourier saturation probe is active; it uses the4D top-nullspace quotient and stops if S1 frequency union reaches2048.
+- A/D third-residue weight90 rank128 sector Fourier-union probe is active over the8281 special-zero triples.
+
+Neither probe is authority until converted to theorem + clean verifier where applicable.
 
 No canonical frozen `outer128` predecessor mask is available; source-specific leaf claims remain provenance-gated.
 
@@ -296,10 +267,10 @@ Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic5
 
 ## Current sharp blockers / next mathematics
 
-1. **Dyadic tail:** beat the exact remaining budget `1,935,451,277,056` for all four-leaf layers k>=5. Generic2048 fallback is insufficient by25.417x already at k5.
-2. **Sharpen early residue ranks:** current A/D second-residue values309/310 are upper bounds assembled from many symbolic pieces; exact canonical cancellations may lower them and have very high k5 leverage.
-3. **Higher residues:** B/C second residues alone cannot finish the tail. A successful proof must also reach deeper A/D/B/C residues or sharpen earlier layers.
-4. **Leaf-central evaluator:** only after a controlled total layer-rank sum exists, fuse layers into the D16 `common+private+private` central decomposition and count total arithmetic work.
+1. **Next single-leaf residues:** compute A/D third residues and B/C second residues using the explicit coefficient-aligned lifts; target k6 reductions roughly in the785–1387 range depending on which families move.
+2. **Total dyadic tail:** even after k6 fits, control the complete `k>=6` sum below `11,350,659,224,896`; only then may the complete representation/factor-generation ledger be reconsidered.
+3. **Product-level cancellation:** subadditive convolution may itself be loose; cross-leaf dyadic cancellation is an allowed alternative to reducing every single-leaf residue separately.
+4. **Leaf-central evaluator:** only after a controlled total layer-rank sum exists, fuse it into the D16 `common+private+private` central decomposition and count total arithmetic work.
 5. Other nonlocal center regroupings, semi-open B<55 and fully-open S3<63.562 remain separate exact problems.
 
 Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round relevance.
