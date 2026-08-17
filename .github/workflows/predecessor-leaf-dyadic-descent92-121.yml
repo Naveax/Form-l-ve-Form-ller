@@ -1,0 +1,23 @@
+name: predecessor-leaf dyadic descent 92-121
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_DYADIC_DESCENT92_121.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_dyadic_descent92_121.py'
+      - '.github/workflows/predecessor-leaf-dyadic-descent92-121.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify top-carry cancellation dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_top_carry_cancellation.py
+      - name: Verify dyadic descent 92/121
+        run: python scripts/verify_v26_q138_predecessor_leaf_dyadic_descent92_121.py
