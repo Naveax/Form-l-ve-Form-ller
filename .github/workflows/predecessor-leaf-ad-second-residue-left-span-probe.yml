@@ -1,0 +1,22 @@
+name: predecessor-leaf A-D second residue left span probe
+
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_predecessor_leaf_ad_second_residue_left_span.py'
+      - '.github/workflows/predecessor-leaf-ad-second-residue-left-span-probe.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify A/D second residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py
+      - name: Probe fixed-mask left-factor spans
+        run: python scripts/probe_v26_q138_predecessor_leaf_ad_second_residue_left_span.py
