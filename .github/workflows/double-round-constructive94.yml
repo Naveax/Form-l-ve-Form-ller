@@ -1,0 +1,33 @@
+name: Coefficient-aware constructive94
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_constructive94.py'
+      - 'scripts/verify_v26_q138_signed_block1_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_physical_row_bridge.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_CONSTRUCTIVE94_THEOREM.md'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_SIGNED_BLOCK2_PHYSICAL_ROW_BRIDGE_THEOREM.md'
+      - '.github/workflows/double-round-constructive94.yml'
+  workflow_dispatch:
+
+jobs:
+  constructive94:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify old constructive95 dependency
+        run: python scripts/verify_v26_q138_double_round_constructive95.py
+      - name: Verify block1 explicit factor
+        run: python scripts/verify_v26_q138_signed_block1_explicit_factor.py
+      - name: Verify block2 explicit factor
+        run: python scripts/verify_v26_q138_signed_block2_explicit_factor.py
+      - name: Verify block2 physical-row bridge
+        run: python scripts/verify_v26_q138_signed_block2_physical_row_bridge.py
+      - name: Verify constructive94 ledger
+        run: python scripts/verify_v26_q138_double_round_constructive94.py
