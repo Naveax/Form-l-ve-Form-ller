@@ -1,5 +1,8 @@
 name: A-D third weight90 input activity probe
 on: [workflow_dispatch, push]
+permissions:
+  contents: read
+  statuses: write
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -10,3 +13,12 @@ jobs:
         with:
           python-version: '3.11'
       - run: python scripts/probe_v26_q138_predecessor_leaf_ad_third_weight90_input_activity.py
+      - name: Exact condition grouping
+        run: python scripts/probe_v26_q138_ad_third_weight90_condition_groups.py | tee /tmp/adgroups.txt
+      - name: Publish grouping status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DESC=$(grep '^STATUS_DESC=' /tmp/adgroups.txt | sed 's/^STATUS_DESC=//')
+          gh api --method POST "repos/${{ github.repository }}/statuses/${GITHUB_SHA}" \
+            -f state=success -f context='math/ad-third-condition-groups' -f description="$DESC"
