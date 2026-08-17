@@ -4,7 +4,7 @@
 
 `ALPHA_PASS=0`.
 
-Historical measured execution remains frozen behind missing exact recovered V25 runtime bytes. Active work is mathematics-first exact Walsh/tensor analysis; code is only a calculator/falsifier and every admitted finite claim requires clean-checkout verification.
+Historical measured V25/V26 execution remains frozen behind missing exact recovered-runtime bytes. Active progress is mathematics-first exact Walsh/tensor algebra. Code is only a calculator/falsifier; every admitted finite claim requires clean-checkout execution.
 
 ## One-QR exact authority
 
@@ -12,191 +12,250 @@ For all4096 physical fixed-mask cases:
 
 `44 -> 42 -> 41 -> 40 -> 38.768184324776925... <39`.
 
-Current sharp peak `218*2^31`. Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; `epsilon=0`. Physical right rank11..38, parent rank5..27, right doubled hull162, all64 left maps share an exact48-dimensional interface row space.
+Current sharp peak is `218*2^31`. All admitted one-QR reductions are exact, `epsilon=0`.
 
-Gram-image objects (`G_m=R_mR_m^T`, span124/U47 diagnostics) are rank-space objects, not single-copy coefficient amplitudes.
-
-## d=1 ledgers
+## d=1 ledgers — NEW canonical bound
 
 Keep distinct:
 
 - topology-only `W_2_topo<=236`;
 - coefficient-blind static reduced-central-graph + four-generic-leaf method `W_2_static,blind=95`, method-optimal inside that representation;
-- coefficient-aware materialized-factor generation `W_2_factor-gen<=78+log2(171)=85.4178525148859...`;
-- exact representation existence `W_repr(1)<=78+log2(171)=85.4178525148859...`.
+- exact representation existence
+  `W_repr(1)<=73+log2(3829)=84.90275194485017...`;
+- coefficient-aware materialized-factor generation
+  `W_factor-gen<=73+log2(3829)=84.90275194485017...`;
+- arithmetic work: **not reduced/admitted**.
 
-The last two are message/storage constructivity bounds, not arithmetic-work bounds. Unrestricted scalar streaming/recomputation has no canonical width without a work budget.
+The previous exact representation/factor-generation bound
 
-### Static coefficient-blind95
+`78+log2(171)=85.4178525148859...`
 
-Clean MILP cardinality minima for central graph smaller-side sizes11..16 are `51,52,55,54,55,56`. Adding four generic leaf costs gives `95,100,107,110,115,120`. Balanced-edge lemma forces some11..16 edge in every32-leaf binary tree; existing tree attains95. Clean run `32028136767`.
+is superseded for the first two exact/message ledgers above. Exact exponent improvement:
 
-### Block1 and extended block2
+`log2(5472/3829)=0.5151005700357...`.
 
-Block1 exact rank16 on physical rows `A0,B0,C15,C16,D0`.
+### Full S1 physical set
 
-Historical block2 rank2784 is exact.
+`S1={0,1,2,3,4,5,12,13,14,15,16}`.
 
-Extended block2 adds physical `A12,B12,D12`, closing D12 at j1 bit12 and j2 bit28. Physical rows are
+There are44 physical S1 row bits. The new merged decomposition consumes all44; no raw S1 physical bit remains.
 
-`A12..16,B12..16,D12..16,C0`.
+Low 23-bit set:
 
-Exact geometry:
+`A0..5,B0..5,D0..5,C12..16`.
 
-- fixed D12..16 j1 rank448;
-- fixed D12..15, D16 pair union472, intersection424;
-- sixteen j2-high D12..15 vectors independent;
-- D16 bit0 spaces rank2+2, union3, intersection1;
-- per high prefix1368;
-- total `rank(block2_ext)=16*1368=21888`.
+High/gap 21-bit set:
 
-Naive old block2 times three raw bits is22272, so the exact gain is58/57.
+`A12..16,B12..16,D12..16,C0..5`.
 
-Clean run `32033308335`.
+These are disjoint and cover the complete S1 physical row set.
+
+## Exact low block and bridge structure
+
+### Repeated-D low chain through D5
+
+The complete occurrence-closed low repeated-D chain has
+
+`rank(D0..5)=524288=16*2^15=2^19`.
+
+The key structural identity is that the relevant old carry graph is invariant under pure carry-slice swap, so its graph operator satisfies `G^2=I`. The local repeated-D rank24/32 kernels remain unreachable through D5.
+
+Clean D5 run `32041446052`: success.
 
 Authority:
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_SIGNED_BLOCK2_EXTEND12_RANK21888_THEOREM.md`;
-- `scripts/verify_v26_q138_signed_block2_extend12_rank21888.py`.
+- `V26_Q138_BLOCK1_D5_INVOLUTION_FIBER_NO_GAIN.md`;
+- `scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py`.
 
-### d=1 representation and factor generation
+### C12..C14 bridge
 
-Central S1 rank bound:
+The three physical C carry sites form a universal rank16/16 operator on their complete domain. Therefore they multiply any incoming rank by exactly `2^3`.
 
-`16*21888*2^23 =171*2^34`.
+Applying them to D0..5 gives the exact low merged rank
 
-Four predecessor leaves contribute exponent44, so
+`n=2^22`.
 
-`W_repr(1)<=W_factor-gen<=78+log2(171)=85.4178525148859...`.
+Clean merged-C run `32040887484`: success.
 
-Clean factor-generation run `32033507588`.
+Authority:
 
-A complete materialized factor still contains
+- `V26_Q138_BLOCK1_C12_D04_MERGED_NO_GAIN.md`;
+- `scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py`.
 
-`171*2^78 = 51,681,578,788,525,397,218,689,024`
+### j2 bits22..31 high bridge
 
-scalars. No arithmetic-work reduction is admitted.
+The physical/domain coordinates are `(sigma2_21,D12..15)`, dimension32. An explicit 32x32 dyadic minor has full rank modulo65521, proving exact Q rank32/32.
 
-## Exact d=1 no-gain closures
+Thus the bridge is injective and the sixteen D12..15 high prefixes remain direct after attaching the low block.
 
-### Block2 D11
+Clean run `32041617140`: success.
 
-The next repeated external D11 one-bit transfer is injective on the relevant j1/j2 carry interfaces and preserves block2 rank21888.
+Authority:
 
-Clean run `32038491628`.
+- `V26_Q138_J2_BRIDGE22_31_INJECTIVE.md`;
+- `scripts/verify_v26_q138_j2_bridge22_31_injective.py`.
 
-### Block1 C12..C14
+## Exact gap mechanism: the first useful merged overlap
 
-- block1 + C13,C14 rank64=`16*4`;
-- block1 + C12,C13,C14 rank128=`16*8`.
+### Local j2 bits1..11 gap rank66
 
-No compression. Clean run `32038564342`.
+Rows `(C1..C5,sigma2_0,sigma2_11)` have naive dimension128. The implicit retained-column space has `2^28` assignments.
 
-### Block1 repeated-D through D3
+A four-state paired-carry exact Gram DP sums the entire column space without materializing it and gives
 
-The occurrence-closed D0..2 block has rank1024=`16*2^6`.
+`rank(M M^T)=rank(M)=66`.
 
-The D3 local coupled-carry map has rank24/32 with an explicit8D kernel. However both old s2 projections have rank1024, so the local kernel misses the actual incoming space.
+So the local gap has a real62-dimensional kernel.
 
-Thus
+Clean run `32042410012`: success.
 
-`rank(D0..3)=8192=16*2^9`.
+Authority:
 
-No gain. Clean run `32039125472`.
+- `V26_Q138_J2_GAP1_11_RANK66.md`;
+- `scripts/verify_v26_q138_j2_gap1_11_rank66.py`.
 
-### New: D3 boundary fibers and D4 closure
+The fixed-D16 minimal block1+C12..14+bit0 loop nevertheless misses this kernel: its boundary graph is an exact rank124 projector on a248-dimensional fixed-sigma2_11 projection, and both relevant gap pencils are rank32. Minimal-loop rank remains full8192.
 
-Let V be the exact D0..2 row space and define
+Clean run `32042794811`: success.
 
-`J(u0,u1)=(u1,-u0)`
+Authority:
 
-on its two s2 coordinate slices.
+- `V26_Q138_MINIMAL_GAP_LOOP_NO_GAIN.md`;
+- `scripts/verify_v26_q138_minimal_gap_loop_no_gain.py`.
 
-The verifier constructs the exact rational basis of V and reduces `V+J(V)` modulo the prime
+### D16 sectors after closing C1..5
 
-`p=2147483647`.
+The useful mechanism appears only when the two D16 sectors are kept together.
 
-It obtains the maximum possible modular rank2048. Since valid reduction modulo p cannot increase rational rank, this full modular rank proves exactly over Q that
+For physical rows `(D16,C0..C5)`:
 
-`V intersect J(V)={0}`.
+- fixed D16=0 rank64;
+- fixed D16=1 rank64;
+- union rank65;
+- intersection dimension63.
 
-The two fixed-D3 j2 transfer spaces each have exact rank2 and union rank4, so they form a direct sum.
+Crucially, the exact same63-dimensional coefficient relation occurs in every fixed shared retained slice
 
-Therefore the exact D0..3 space V3 satisfies
+`q=(v3_12,sigma2_11)`.
 
-`rank(P_s3=0 V3)=8192`,
+Therefore for any incoming row space W on q, `dim W=n`, the lifted local sector geometry is universally
 
-`rank(P_s3=1 V3)=8192`.
+`64n,64n,intersection63n`.
 
-Both one-slice fiber dimensions are zero.
+Clean local run `32043345651`: success.
 
-The generic next-site local map is the same rank24/32 coupled-carry map with an8D pair kernel. Because V3 has no one-slice s3 fibers, that kernel again has zero intersection with the actual domain.
+Authority:
+
+- `V26_Q138_BIT0_GAP1_11_SECTOR_RANK65.md`;
+- `scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py`.
+
+This supersedes the old pre-gap universal bit0 geometry `2n,2n,intersection n` for the new merged factor.
+
+## New full S1 central rank
+
+For every fixed D12..15 high prefix, the certified extended-block2 j1 D16 spaces remain
+
+`448,448,intersection424`.
+
+Combine them with the new local D16 geometry for low rank `n=2^22`:
+
+`448*(64n)+448*(64n)-424*(63n)`
+
+`=30632*n`.
+
+The sixteen D12..15 prefixes are direct, so
+
+`rank_center(S1) <= 16*30632*2^22`
+
+`=3829*2^29`
+
+`=2,055,678,722,048`.
+
+The old center was `171*2^34`. Exact center gain:
+
+`(171*2^34)/(3829*2^29)=5472/3829`.
+
+Clean full theorem/tree run `32043410513`: success.
+
+Authority:
+
+- `V26_Q138_FULL_S1_GAP_RANK3829_THEOREM.md`;
+- `scripts/verify_v26_q138_full_s1_gap_rank3829.py`;
+- `.github/workflows/full-s1-gap-rank3829.yml`.
+
+## Complete frozen HT-tree recount
+
+The S1 critical message dimension is
+
+`(3829*2^29)*2^44 =3829*2^73`.
 
 Hence
 
-`rank(D0..4)=65536=16*2^12`.
+`W_repr(1)<=73+log2(3829)=84.90275194485017...`.
 
-No gain. Clean run `32040273839`: success.
+S2 remains `31*2^79`, exponent below the new S1 value. Every noncritical frozen-tree node remains at most `2^80`. Therefore S1 still controls the complete tree.
 
-Authority:
+## Coefficient-aware factor-generation constructivity
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_D4_BOUNDARY_FIBER_NO_GAIN.md`;
-- `scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py`;
-- `.github/workflows/block1-d4-boundary-fiber-no-gain.yml`.
+The new representation rank is also constructive in the materialized-factor memory/message ledger.
 
-### New: direct block1 x block2 shared-v3_12 overlap
+Let `R<=3829*2^29` be the true central row rank. There are `2^44` physical S1 rows and a51-bit central boundary.
 
-The rank16 block1 and block2 bit0 factor share the retained internal coordinate `v3_12`. The coordinate was merged exactly instead of duplicated.
+An exact streaming Gaussian can select actual physical row basis elements while storing only a pivot minor/inverse of at most `R^2` entries:
 
-For fixed D16 the merged spaces have exact ranks
+`log2(R^2)<=81.8055038897003...`.
 
-`32,32`,
+This is below the final factor table.
 
-with union rank48 and intersection dimension16.
+The physical-row -> rank-coordinate transform costs at most
 
-This is exactly the old standalone bit0 geometry `2,2,intersection1` scaled by block1 rank16.
+`2^44*R <=3829*2^73`,
 
-Combining it with the certified D16 j1 geometry
+which equals the factor-table envelope. A single complete physical central row has only `2^51` entries.
 
-`448,448,intersection424`
+Because selected rank rows are actual physical S1 assignments, the clean21-site complement-entry tree is reused unchanged at peak80. Leaf generation remains44.
 
-gives, for every independent D12..15 high prefix,
+Therefore
 
-`448*32 + 448*32 - 424*16 =21888`.
+`W_factor-gen<=73+log2(3829)=84.90275194485017...`.
 
-Across the16 independent high prefixes the exact joint rank is
-
-`16*21888=350208`,
-
-which equals the existing product `rank(block1)*rank(block2_ext)`.
-
-Thus the direct shared-v3_12 channel does not make the product bound loose.
-
-Clean run `32040428488`: success. The same checkout first reverified the rank21888 prerequisite.
+Clean run `32043554316`: success.
 
 Authority:
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_BLOCK2_SHARED_V312_NO_GAIN.md`;
-- `scripts/verify_v26_q138_block1_block2_shared_v312_no_gain.py`;
-- `.github/workflows/block1-block2-shared-v312-no-gain.yml`.
+- `V26_Q138_FACTOR_GENERATION_RANK3829_THEOREM.md`;
+- `scripts/verify_v26_q138_factor_generation_rank3829.py`;
+- `.github/workflows/factor-generation-rank3829.yml`.
 
-## Overflow correction / revoked candidates
+This is a memory/message constructivity theorem only. Streaming Gaussian/recomputation may have enormous arithmetic work.
 
-Temporary four-site candidate ranks96 and208 and derived W84/W83 claims are revoked. Cause: int32 overflow in an optimized NumPy path. Corrected odd-prime ranks for both relaxed adjacent four-site candidates are256/256. Clean correction run `32032617791`.
+A complete materialized factor still contains
 
-Do not revive the revoked ranks without a mathematically independent derivation.
+`3829*2^73 = 36,163,882,525,815,743,046,483,968`
 
-## d>=2 authority
+scalar entries.
 
-Frozen S3:
+## Important no-gain / revoked routes
 
-`{4,5,11,12,13,19,20,21,27,28,29}`.
+- block2 one-bit D11 extension preserves rank21888;
+- block1 contiguous C12..C14 alone is full naive rank;
+- repeated-D route D0..5 is full naive rank despite local kernels;
+- direct block1×block2 shared `v3_12` alone equals the product bound;
+- the 39-bit natural bridge without C1..5 reproduces the old `171*2^34` center exactly;
+- fixed-D16 minimal gap loop misses the rank66 kernel;
+- old adjacent four-site ranks96/208 and derived W84/W83 claims are **revoked** due int32 overflow. Corrected ranks are256/256.
 
-Central rank exponent34.52163149454245.
+Do not revive revoked results without a mathematically independent derivation.
+
+## d>=2 authority — unchanged
+
+Frozen `S3={4,5,11,12,13,19,20,21,27,28,29}`.
+
+Central exponent34.52163149454245.
 
 Fully-open:
 
-`rank<=189*2^56`, exponent63.562242424221076. Clean run `32023025384`.
+`rank<=189*2^56`, exponent63.562242424221076.
 
 Semi-open:
 
@@ -205,7 +264,7 @@ Semi-open:
 - C `243*2^47`, exp54.92481250360578;
 - D `3429*2^42`, exp53.74357218893564.
 
-Current depth law for every d>=2:
+Current depth law for every `d>=2` remains
 
 `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.
 
@@ -214,32 +273,19 @@ Examples:
 - d2 `683.1007639817401...`;
 - d3 `1191.5987033755086...`.
 
-## Scoped falsifiers already closed
-
-- semi-open physical `i<->i+16` pair full rank55 A/B/C/D;
-- B `[4,5]` interval insufficient;
-- B site11->13 carry-only no gain;
-- direct fully-open minimal-TT S3 cut86, worse than fused65;
-- block1 C12..C14 no gain;
-- block1 repeated-D D0..4 no gain through the new boundary-fiber theorem;
-- block2 D11 no gain;
-- direct block1 x block2 shared-v3_12 overlap equals the product exactly;
-- relaxed adjacent four-site W84/W83 candidates revoked after overflow correction;
-- historical leaf witness run `32011941759` ended exit143 and is not authority.
-
 ## Storage/work status
 
-One-QR RL218 width optimization still has a dense-work proxy about4.016x worse than rank27 source topology. d=1 factor-generation message/storage is85.41785, but output-size alone has the same exponent. No arithmetic-work, ranking, search, or alpha gain is admitted.
+One-QR dense-work proxy remains worse than the source topology. For d=1, representation and coefficient-aware factor generation are now84.90275, but the materialized output itself has more than `3.616e25` scalar entries.
 
-## Current sharp blockers
+No arithmetic-work reduction, practical evaluator, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance is admitted.
 
-1. **d=1 S1: build a genuine merged multi-site carry bridge.** Simple local appends are closed through C12..C14, repeated-D D0..4, block2 D11, and the only direct shared retained coordinate v3_12. Any new reduction below `171*2^34` must include additional central factors so that a carry/repeated-D coupling exists which is absent from the separate rank16 and rank21888 descriptions. Natural first target: enlarge around the block1 j2 C12..16 side and the extended-block2 high/wrap side while closing every S1 D reuse entering the bridge.
-2. **Repeated-D secondary route:** before considering D5, characterize the new D0..4 boundary fibers. Do not materialize D5 blindly.
-3. **d=1 work:** message/storage constructivity is exact; arithmetic work is not reduced.
-4. **Semi-open B:** remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
-5. **Fully-open S3:** may still fall below63.562 only through genuine multi-site row-space overlap.
-6. **Coefficient-specific predecessor leaves:** require a clean uniform/parametric theorem or explicitly frozen outer128 mask.
+## Current sharp blockers / next mathematics
 
-All admitted reductions remain exact, `epsilon=0`. Approximation remains inactive while exact routes are open.
+1. **d=1 arithmetic work is now the main blocker.** Find a contraction/evaluation method that exploits the 63-channel D16 overlap without materializing `3829*2^73` entries. Any claimed work gain must include generation, contraction, recomputation and storage traffic.
+2. **d=1 secondary representation pass.** Test nonlocal regroupings not covered by the complete natural j2 bridge, especially the retained-only j1 carry gap between the low sites0..5 and high sites12..16, and any additional shared retained-coordinate overlap. The new canonical center to beat is `3829*2^29`.
+3. **Coefficient-specific predecessor leaves.** Any further leaf compression needs a clean uniform/parametric theorem or an explicitly frozen outer128 mask.
+4. **Semi-open B<55.** Must respect rotation7 output wiring plus offset16 D reuse.
+5. **Fully-open S3<63.562.** Needs genuine multi-site row-space overlap.
+6. Recount every complete relevant tree and clean-checkout every finite claim before changing authority.
 
-Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance.
+All admitted reductions remain exact, `epsilon=0`. Approximation remains inactive while exact routes remain open.
