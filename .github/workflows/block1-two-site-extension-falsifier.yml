@@ -1,0 +1,19 @@
+name: Block1 two-site extension falsifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_two_site_extension_falsifier.py'
+      - '.github/workflows/block1-two-site-extension-falsifier.yml'
+  workflow_dispatch:
+
+jobs:
+  block1-two-site:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_block1_two_site_extension_falsifier.py
