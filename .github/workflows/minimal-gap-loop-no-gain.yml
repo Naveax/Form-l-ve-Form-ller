@@ -1,0 +1,24 @@
+name: minimal-gap-loop-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_minimal_gap_loop_no_gain.py'
+      - 'scripts/verify_v26_q138_j2_gap1_11_rank66.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_MINIMAL_GAP_LOOP_NO_GAIN.md'
+      - '.github/workflows/minimal-gap-loop-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify exact gap rank66 theorem
+        run: python scripts/verify_v26_q138_j2_gap1_11_rank66.py
+      - name: Verify minimal gap-loop accessibility theorem
+        run: python scripts/verify_v26_q138_minimal_gap_loop_no_gain.py
