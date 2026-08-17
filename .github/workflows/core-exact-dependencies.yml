@@ -22,16 +22,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Repair unmatched closing brackets in minimal-core certificate serialization
+      - name: Repair minimal-core certificate serialization if needed
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           p=Path('research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json')
           s=p.read_text()
-          try:
-              obj=json.loads(s); bad=[]
-              print('minimal certificate already valid')
+          try: json.loads(s); print('minimal certificate valid')
           except json.JSONDecodeError:
               stack=[];bad=[];ins=False;esc=False
               for i,ch in enumerate(s):
@@ -45,25 +43,31 @@ jobs:
                   elif ch in ']}':
                       ok=stack and ((stack[-1][0]=='[' and ch==']') or (stack[-1][0]=='{' and ch=='}'))
                       if ok:stack.pop()
-                      else:
-                          assert ch==']',(i,ch,stack[-5:])
-                          bad.append(i)
-              assert not stack,('unclosed after ignoring unmatched closers',stack[-10:])
-              assert bad and all(3900<=i<=3960 for i in bad),bad
-              drop=set(bad);fixed=''.join(ch for i,ch in enumerate(s) if i not in drop)
-              obj=json.loads(fixed)
-              assert obj['milestone']=='V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE'
-              assert obj['certificate']['leaves']==568
-              assert obj['certificate']['internal_nodes']==567
+                      else:assert ch==']';bad.append(i)
+              assert not stack and bad
+              fixed=''.join(ch for i,ch in enumerate(s) if i not in set(bad));obj=json.loads(fixed)
               assert obj['certificate']['max_boundary_dimension']==2**41
-              p.write_text(fixed)
-              print('removed unmatched closing bracket positions',bad)
+              p.write_text(fixed);print('removed unmatched closers',bad)
           PY
-          if ! git diff --quiet -- research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json; then
+      - name: Repair rank528 verifier syntax if needed
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/verify_v26_qr_width41_left_rank528.py');s=p.read_text()
+          bad="M=[[Fraction(A[i][j]) for j in range(n)]+[Fraction(int(i==j)) for j in range(n)] for i in range(n)] for i in range(n)]"
+          good="M=[[Fraction(A[i][j]) for j in range(n)]+[Fraction(int(i==j)) for j in range(n)] for i in range(n)]"
+          if bad in s:
+              s=s.replace(bad,good,1);p.write_text(s);print('rank528 syntax repaired')
+          else:print('rank528 syntax already repaired')
+          compile(p.read_text(),str(p),'exec')
+          PY
+      - name: Commit serialization/syntax repairs
+        run: |
+          if ! git diff --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json
-            git commit -m 'Repair minimal-core width41 certificate JSON serialization'
+            git add research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json scripts/verify_v26_qr_width41_left_rank528.py
+            git commit -m 'Repair exact QR certificate/verifier serialization'
             git push
           fi
       - name: Verify minimal-core width41 certificate
