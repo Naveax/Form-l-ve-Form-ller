@@ -1,109 +1,33 @@
-# V26 q138 exact d=1 four-site signed-rank theorem
+# REVOKED: V26 q138 d=1 four-site signed84 candidate
 
-## Statement
+This file records a **revoked candidate**, not an admitted theorem.
 
-For the q138 fixed-output inverse-double-round five-QR star, the d=1 S1 central matricization admits the exact bound
+The earlier draft claimed exact ranks96 and208 for two relaxed four-site Gram constructions and derived candidate d=1 bounds84.0279 and83.7283. Clean-checkout CI rejected the first rank96 assertion.
 
-`rank_center(S1) <= 261 * 2^32`,
+Root cause: the draft used NumPy arrays with int32 inputs in an optimized `einsum` and requested `dtype=int64`. On the relevant builds the optimized einsum result remained int32; the subsequent Gram multiplication therefore overflowed. The overflow created artificial zero rows and false rank deficiency.
 
-and therefore the frozen complete HT tree satisfies
+The corrected verifier casts the tensor inputs to int64 **before** einsum and asserts the resulting contraction dtype. With the corrected arithmetic:
 
-`W_repr(1) <= 76 + log2(261) = 84.02790599656988...`.
+- special block `{2,3,18,19}`: odd-prime rank256/256;
+- generic block such as `{4,5,20,21}`: odd-prime rank256/256;
+- neither corrected Gram has zero rows.
 
-This improves the previous signed85 bound by
+Thus these relaxed four-site blocks are full row rank and provide no compression.
 
-`log2(8/3)=1.415037499278844...` bits.
+Consequently the candidate bounds
 
-All arithmetic is exact and `epsilon=0`.
+- `W_repr(1)<=84.027905996...`,
+- `W_repr(1)<=83.728345714...`,
+- and associated factor-generation84/83 claims
 
-## Starting point
+are revoked.
 
-The previous exact S1 factorization used
+Canonical d=1 authority remains the clean signed85 / factor-generation85 line until superseded by a new clean exact result:
 
-- block1 rank16 on five physical row bits;
-- block2 rank2784 on thirteen disjoint physical row bits;
-- twenty-six remaining physical row bits passed raw.
+`W_repr(1)<=W_factor-gen<=79+log2(87)=85.44294349584872...`.
 
-Among those raw bits, take all eight physical input-mask bits on sites2 and3:
-
-`A2,B2,C2,D2,A3,B3,C3,D3`.
-
-They are disjoint from block1 and block2.
-
-## Occurrence-closed four-site block
-
-The physical D bits occur twice in the fused exact central QR representation:
-
-- `D2` occurs as `d0` at site2 and as `d1` at site18;
-- `D3` occurs as `d0` at site3 and as `d1` at site19.
-
-Therefore use the four fused sites
-
-`{2,3,18,19}`
-
-as one local block. This includes every central occurrence of the eight physical row variables.
-
-The exact q138 output has `b0=Bout[i+7]=1` only at site3; it is0 at sites2,18,19.
-
-Within each adjacent pair `(2,3)` and `(18,19)`, contract the four longitudinal modular-addition carry channels exactly. Retain the pair-boundary carries as column/interface variables. The long-range fused K/z channels are deliberately relaxed as independent retained columns. This relaxation can only enlarge row rank; re-identifying/contracting those columns in the true network is a linear map on the column side and cannot increase the row rank.
-
-The complement physical bits `D18,D19` are retained/summed as column variables while their two occurrences are identified between the main and complement pairs.
-
-## Exact rank96
-
-The resulting relaxed coefficient map has256 physical rows. Rather than materializing its enormous column space, the verifier constructs the exact integer Gram matrix after a common scale.
-
-Its row structure is exceptionally simple:
-
--64 Gram rows are exactly zero;
-- the other192 rows form96 equality/sign pairs;
-- therefore `rank_Q(Gram)<=96`;
-- rank modulo the odd prime1000003 is96, so a96x96 integer minor is nonzero and `rank_Q(Gram)>=96`.
-
-Hence
-
-`rank_Q(Gram)=96`.
-
-For a real/rational coefficient matrix M,
-
-`rank(M M^T)=rank(M)`,
-
-so the relaxed four-site coefficient map itself has exact rational rank96.
-
-The signed-class structure also makes the factor explicit: each nonzero physical row is exactly `+1` or `-1` times one of96 physical-row basis directions;64 physical rows vanish.
-
-## New S1 rank
-
-Replace eight raw row bits, formerly dimension256, by the exact96-channel block. The other eighteen formerly-raw bits remain trivial. Thus
-
-`rank_center(S1) <= 16 * 2784 * 96 * 2^18`.
-
-Since
-
-`16*2784*96*2^18 = 261*2^32`,
-
-this is exactly a factor `3/8` of the previous `87*2^35` bound.
-
-With four generic predecessor-leaf Hilbert exponents44,
-
-`dim_message(S1) <= 261*2^76`,
-
-hence
-
-`W_S1 <= 76+log2(261)=84.02790599656988...`.
-
-The previous S2 exact message remains
-
-`31*2^79`, exponent `83.95419631038688...`,
-
-and all noncritical frozen-tree nodes remain at most80. Therefore S1 still wins, but only by about0.07371 bits.
-
-## Scope
-
-This is an exact representation upper bound. It is not a lower bound or optimality statement. The long-range-channel relaxation is safe only in the direction used here: it may lose additional compression, never create a falsely small rank.
-
-The associated materialized-factor constructivity is certified separately because the rank96 signed classes have an explicit physical-row basis.
-
-Verifier:
+Correction verifier:
 
 `scripts/verify_v26_q138_double_round_signed84_multisite.py`.
+
+This incident is also a standing rule: exact integer Gram claims must ensure the contraction itself is performed in a nonoverflowing dtype; casting only the accumulator after an int32 matrix product is insufficient.
