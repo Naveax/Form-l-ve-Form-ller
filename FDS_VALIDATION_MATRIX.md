@@ -28,12 +28,18 @@
 | Predecessor-leaf topology | terminal cut11 on all frozen HT critical partitions | TOPOLOGY CANNOT BEAT GENERIC `2^11` (`32010227963`) |
 | Historical predecessor-leaf fullrank witness | runner shutdown/exit143 before result | NON-AUTHORITATIVE |
 | Exploratory predecessor-leaf S1 minor | greedy path predicts `2^64` intermediate;32-GiB allocation failure before rank | NON-AUTHORITATIVE IMPLEMENTATION FAILURE (`32054802994`) |
+| Predecessor-leaf formal top-carry layer | A/D weight124 impossible; B/C rank124/nullity4, sign polar rank2, Gauss sums `{0,+/-8}` | ADMITTED EXACT COEFFICIENT CANCELLATION (`32057838229`) |
+| Predecessor-leaf dyadic denominator A/D | all j4 carries zero; top weight93 internal rank127; `L_A,L_D in 2^-92 Z` | ADMITTED EXACT COEFFICIENT LATTICE (`32058413111`) |
+| Predecessor-leaf dyadic denominator B/C | weight123/122 sector classification; four weight122 rank128 sectors share identical external consistency system; `L_B,L_C in 2^-121 Z` | ADMITTED EXACT COEFFICIENT LATTICE (`32058413111`) |
+| A/D first 2-adic S1 residue | `rank_F2((2^92 L_A) mod2)<=3` and same for D | ADMITTED EXACT FIRST-RESIDUE BOUND (`32058931522`); NOT A RATIONAL RANK<=3 CLAIM |
+| A/D higher 2-adic residues | next object `M1=(2^92 L-M0)/2` | ACTIVE EXACT LIFTING |
+| B/C first 2-adic parity-Schmidt object | natural scale `2^121`; finite carry-sector/Gauss decomposition available | ACTIVE EXACT LIFTING |
 | Source-specific predecessor-leaf rank | no canonical frozen outer128 mask currently available | PROVENANCE-GATED |
-| Scalar-on-the-fly d=1 evaluator | now requires coefficient-specific/uniform leaf-central joint algebra | ACTIVE / WORK NOT DEMONSTRATED |
+| Scalar-on-the-fly d=1 evaluator | requires compact dyadic leaf layers fused into central common/private blocks | ACTIVE / WORK NOT DEMONSTRATED |
 | Revoked four-site 96/208 candidates | int32 overflow; corrected ranks256/256 | REVOKED / DO NOT USE |
 | d>=2 exact representation | `W_repr(d)<=508.4979393937686...d-333.8951148057971...` | ADMITTED EXACT |
 | Semi-open B | generic55 | ACTIVE EXACT SEARCH |
 | Fully-open multi-site | `189*2^56`, exponent63.562242424221076 | ACTIVE EXACT SEARCH |
-| Arithmetic work reduction | materialization/separate-mode/generic-monotone routes closed; coefficient-aware scalar evaluator open | NOT DEMONSTRATED |
+| Arithmetic work reduction | materialization/separate-mode/generic-monotone routes closed; dyadic coefficient-aware scalar evaluator open | NOT DEMONSTRATED |
 | alpha<1 | — | NOT DEMONSTRATED |
 | full-round relevance | — | NO CLAIM |
