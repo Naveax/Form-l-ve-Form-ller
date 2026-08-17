@@ -99,7 +99,7 @@ class Dinic:
     def add(self,u,v,c):
         self.g[u].append([v,c,len(self.g[v])]);self.g[v].append([u,0,len(self.g[u])-1])
     def flow(self,s,t):
-        ans=0;INF=10**18
+        ans=0;INF=10**30
         while True:
             lv=[-1]*len(self.g);lv[s]=0;q=deque([s])
             while q:
@@ -129,26 +129,32 @@ class Dinic:
                 if c and v not in seen:seen.add(v);q.append(v)
         return ans,seen
 
-def mincut(h):
-    # Unit-cost hypergraph cut gives a rigorous lower bound on the true log2-dimension cut,
-    # because every nontrivial index has dimension at least2. Standard directed reduction:
-    # for hyperedge e, source-side incidence forces e_in source; sink-side incidence forces
-    # e_out sink; the only finite arc e_in->e_out costs one if the hyperedge is split.
-    edges=list(h.dim);F=len(h.factors);SRC=F+2*len(edges);SNK=SRC+1;D=Dinic(SNK+1);INF=10**6
+def cut_with_cost(h,capfn):
+    edges=list(h.dim);F=len(h.factors);SRC=F+2*len(edges);SNK=SRC+1;D=Dinic(SNK+1);INF=10**12
     for k,e in enumerate(edges):
-        a=F+2*k;b=a+1;D.add(a,b,1)
+        a=F+2*k;b=a+1;D.add(a,b,capfn(e))
         ent=list(h.inc[e])
         if e in h.term:ent.append(SRC if h.term[e] else SNK)
         for v in ent:D.add(v,a,INF);D.add(b,v,INF)
-    val,reach=D.flow(SRC,SNK);assert val==86,val
-    cut=[]
+    val,reach=D.flow(SRC,SNK);cut=[]
     for k,e in enumerate(edges):
         a=F+2*k;b=a+1
         if a in reach and b not in reach:cut.append(e)
-    assert len(cut)==86
-    assert Counter(h.dim[e] for e in cut)==Counter({2:86})
-    # Lower bound: every real log2(dim) cut costs >= its number of split hyperedges >=86.
-    # Upper bound: this exact unit min-cut uses only binary edges, so its real cost is exactly86.
+    return val,cut
+
+def mincut(h):
+    # First prove cardinality mincut =86.
+    val0,_=cut_with_cost(h,lambda e:1);assert val0==86,val0
+    # Then select lexicographically among min-cardinality cuts: minimize ternary count.
+    # M exceeds the number of hyperedges, so one fewer cut edge dominates all tie penalties.
+    M=10000
+    val,cut=cut_with_cost(h,lambda e:M+(1 if h.dim[e]==3 else 0))
+    card=val//M;tern=val%M
+    assert card==86,(card,tern)
+    assert tern==0,(card,tern,Counter(h.dim[e] for e in cut))
+    assert len(cut)==86 and Counter(h.dim[e] for e in cut)==Counter({2:86})
+    # Every true log2(dim) cut costs at least its cardinality >=86; this all-binary
+    # witness has true log2 cost exactly86. Hence the weighted optimum is exactly86.
     return cut
 
 def main():
@@ -163,7 +169,8 @@ def main():
     mincut(h)
     print('PASS V26_Q138_FULLY_OPEN_REFINED_S3_CUT86')
     print('factors=888 indices=1268 binary=1024 ternary=244 external_terminals=256')
-    print('unit_hypergraph_mincut=86; witness_cut=86_binary => exact log2_dimension_mincut=86')
-    print('known_fused_common_tree_cap=65; refined minimal-TT opening does not improve the slope cap')
+    print('unit_hypergraph_mincut=86; lexicographic_min_ternary_count=0')
+    print('exact_log2_dimension_mincut=86 via 86-binary witness')
+    print('known_fused common-tree fully-open cap is lower; direct minimal-TT opening does not improve it')
     print('scope=scoped refined-hypergraph topology falsifier, not a lower bound on true Walsh Schmidt rank')
 if __name__=='__main__':main()
