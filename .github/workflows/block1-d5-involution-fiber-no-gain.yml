@@ -1,0 +1,26 @@
+name: block1-d5-involution-fiber-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py'
+      - 'scripts/verify_v26_q138_block1_two_site_extension_falsifier.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_D5_INVOLUTION_FIBER_NO_GAIN.md'
+      - '.github/workflows/block1-d5-involution-fiber-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify D4 prerequisite
+        run: python scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py
+      - name: Verify exact D5 involution-fiber theorem
+        run: python scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py
