@@ -1,0 +1,26 @@
+name: Fully-open signed slope law
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FULLY_OPEN_S3_LOCAL_RANK_CERTIFICATE.json'
+      - 'scripts/verify_v26_q138_fully_open_s3_local_signed_rank.py'
+      - 'scripts/verify_v26_q138_depth_fully_open_signed_slope.py'
+      - '.github/workflows/depth-fully-open-signed-slope.yml'
+  workflow_dispatch:
+
+jobs:
+  fully-open-signed-slope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify central joint-sector dependency
+        run: python scripts/verify_v26_q138_depth_joint_sector_law.py
+      - name: Verify fully-open local signed ranks
+        run: python scripts/verify_v26_q138_fully_open_s3_local_signed_rank.py
+      - name: Verify improved depth slope
+        run: python scripts/verify_v26_q138_depth_fully_open_signed_slope.py
