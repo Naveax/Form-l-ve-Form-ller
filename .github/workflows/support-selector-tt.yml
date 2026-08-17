@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'scripts/verify_v26_qr_q138_left_i9_gram_support.py'
-      - 'scripts/verify_v26_qr_q138_support_selector_tt.py'
+      - 'scripts/verify_v26_qr_q138_general_rank27_support218_global_sub39.py'
       - '.github/workflows/support-selector-tt.yml'
   workflow_dispatch:
 
@@ -23,3 +23,5 @@ jobs:
           python-version: '3.11'
       - name: Verify exact Gram-diagonal I9 support
         run: python scripts/verify_v26_qr_q138_left_i9_gram_support.py
+      - name: Verify corrected support-218 global sub-39 tree
+        run: python scripts/verify_v26_qr_q138_general_rank27_support218_global_sub39.py
