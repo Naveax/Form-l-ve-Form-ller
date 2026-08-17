@@ -1,0 +1,24 @@
+name: Right Gram family verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_qr_q138_right_gram_family_tt.py'
+      - '.github/workflows/right-gram-family.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: right-gram-family-main
+  cancel-in-progress: true
+
+jobs:
+  right-gram:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact right Gram family and TT profile
+        run: python scripts/verify_v26_qr_q138_right_gram_family_tt.py
