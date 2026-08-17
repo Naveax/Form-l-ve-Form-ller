@@ -1,0 +1,24 @@
+name: Support selector TT verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_qr_q138_support_selector_tt.py'
+      - '.github/workflows/support-selector-tt.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: support-selector-main
+  cancel-in-progress: true
+
+jobs:
+  support-selector:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify support selector TT profile
+        run: python scripts/verify_v26_qr_q138_support_selector_tt.py
