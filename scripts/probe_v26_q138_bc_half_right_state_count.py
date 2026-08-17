@@ -11,6 +11,7 @@ import probe_v26_q138_predecessor_leaf_bc_half_correction_active_fast as F
 
 def state_count(pos,input128):
     eq=H.common_support_data(pos,input128)
+    stable=F.support_table(eq)
     phase=[]
     for z in H.SECTORS:
         qleft,cross,terms=H.sector_phase_data(pos,z,input128)
@@ -19,8 +20,7 @@ def state_count(pos,input128):
     syn=0;y=0;prev=0
     qR=[d[2] for d in phase];shift=[0]*4
     states=set();active_states=set()
-    Nright=1<<21
-    for step in range(Nright):
+    for step in range(1<<21):
         if step:
             gray=step^(step>>1);diff=gray^prev;t=(diff&-diff).bit_length()-1
             oldy=y
@@ -30,13 +30,12 @@ def state_count(pos,input128):
             for j,(lm,rm,rhs) in enumerate(eq):
                 if (rm>>t)&1:syn^=1<<j
             y^=1<<t;prev=gray
-        st=syn
-        sh=8
+        st=syn;sh=8
         for i in range(4):
-            st |= shift[i]<<sh;sh+=11
-            st |= qR[i]<<sh;sh+=1
+            st|=shift[i]<<sh;sh+=11
+            st|=qR[i]<<sh;sh+=1
         states.add(st)
-        if F.support_table(eq)[syn]:active_states.add(st)
+        if stable[syn]:active_states.add(st)
     return len(states),len(active_states)
 
 
@@ -45,10 +44,10 @@ def main():
         can=N.residue_objects(pos)[0][-1]
         sol=T.rref(N.input_equations(can),n=128);assert sol is not None
         rank,x0,basis=sol;assert rank==5
-        for j,x in [('base',x0)]+[(f'shift{k}',x0^basis[k]) for k in range(3)]:
+        for name,x in [('base',x0)]+[(f'shift{k}',x0^basis[k]) for k in range(3)]:
             ns,na=state_count(pos,x)
-            print('position',pos,'case',j,'right_state_count',ns,'active_support_state_count',na,flush=True)
+            print('position',pos,'case',name,'right_state_count',ns,'active_support_state_count',na,flush=True)
     print('PASS PROBE V26_Q138_BC_HALF_RIGHT_STATE_COUNT')
-    print('scope=distinct exact right-state signatures controlling half-correction columns; state count is a uniform rank upper bound for each tested fixed input')
+    print('scope=distinct exact right-state signatures controlling half-correction columns; tested fixed inputs only')
 
 if __name__=='__main__':main()
