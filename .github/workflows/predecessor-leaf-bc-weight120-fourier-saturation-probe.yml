@@ -1,0 +1,22 @@
+name: predecessor-leaf B-C weight120 Fourier saturation probe
+
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_predecessor_leaf_bc_weight120_fourier_saturation.py'
+      - '.github/workflows/predecessor-leaf-bc-weight120-fourier-saturation-probe.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify B/C Fourier first-lift dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_fourier_lift_rank36_84.py
+      - name: Probe weight120 Fourier saturation
+        run: python scripts/probe_v26_q138_predecessor_leaf_bc_weight120_fourier_saturation.py
