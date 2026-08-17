@@ -23,27 +23,31 @@
 - [x] Close block2 D11 one-bit route: no gain (`32038491628`).
 - [x] Close block1 C12..C14 alone: no gain (`32038564342`).
 - [x] Close repeated-D D0..3 kernel route: no gain (`32039125472`).
-- [x] Characterize D3 boundary fibers and close D4: rank65536, no gain (`32040273839`).
-- [x] Close direct shared `v3_12` block1×block2 product-overlap probe (`32040428488`).
-- [x] Prove C12..14 three-site carry operator universally injective; merged D0..4 bridge no gain (`32040887484`).
-- [x] Prove low repeated-D graph involution `G^2=I` and close D5; rank `2^19`, no gain (`32041446052`).
-- [x] Prove j2 bits22..31 bridge exact rank32/32; preserve16 D12..15 high prefixes (`32041617140`).
-- [x] Prove universal pre-gap bit0 geometry `2n,2n,intersection n` (`32041743643`).
-- [x] Close the 39-bit natural bridge without C1..5; reproduces old `171*2^34` center (`32041805632`).
-- [x] Find exact j2 bits1..11 gap rank66/128, kernel62 (`32042410012`).
-- [x] Show fixed-D16 minimal loop misses the gap kernel (`32042794811`).
-- [x] Keep both D16 sectors and prove new local geometry `64,64,intersection63`, uniform over shared `(v3_12,sigma2_11)` (`32043345651`).
-- [x] Combine with j1 D16 geometry and16 high prefixes: new center `3829*2^29` (`32043410513`).
-- [x] Recount complete frozen HT tree: `W_repr(1)<=73+log2(3829)=84.90275194485017...` (`32043410513`).
-- [x] Consume all44 S1 physical row bits; raw S1 bits=0.
-- [x] Make new rank constructive in coefficient-aware materialized-factor memory/message ledger: `W_factor-gen<=84.90275194485017...` (`32043554316`).
-- [x] Close direct retained-only j1 carry gap sites6..11: endpoint rank4/4 injective (`32043801142`).
-- [x] Scoped arithmetic NO-GO for explicit full-factor materialization: output alone is `3829*2^73` scalars (`32044123499`).
-- [x] Record exact per-prefix D16 common/private decomposition `26712n +1960n+1960n` for scalar-evaluator work.
-- [ ] Build scalar-on-the-fly evaluator preserving the common/private D16 decomposition; do not materialize the complete factor.
-- [ ] Compute exact predecessor-leaf 11|21 Schmidt ranks uniformly, or freeze an explicit outer128 mask before coefficient-specific claims.
+- [x] Characterize D3 boundary fibers and close D4 (`32040273839`).
+- [x] Close direct shared `v3_12` block1×block2 probe (`32040428488`).
+- [x] Prove C12..14 universal injectivity (`32040887484`).
+- [x] Close D5 using low repeated-D involution; rank `2^19` (`32041446052`).
+- [x] Prove j2 bits22..31 bridge rank32/32 (`32041617140`).
+- [x] Close 39-bit natural bridge before C1..5; old center reproduced (`32041805632`).
+- [x] Find j2 gap rank66/128, kernel62 (`32042410012`).
+- [x] Show fixed-D16 minimal loop misses gap kernel (`32042794811`).
+- [x] Prove D16 local geometry `64,64,intersection63`, uniform over shared q (`32043345651`).
+- [x] New S1 center `3829*2^29`; all44 S1 physical rows consumed (`32043410513`).
+- [x] Frozen HT recount `W_repr(1)<=84.90275194485017...` (`32043410513`).
+- [x] Coefficient-aware factor generation `W_factor-gen<=84.90275194485017...` (`32043554316`).
+- [x] Close retained-only j1 gap6..11: rank4/4 (`32043801142`).
+- [x] Explicit materialization arithmetic NO-GO: output `3829*2^73` scalars (`32044123499`).
+- [x] Record D16 common/private decomposition `26712n+1960n+1960n`.
+- [x] Prove low/high full-star mode envelopes `2^45` and `3829*2^28`; their Cartesian product is exactly `3829*2^73` (`32055881609`).
+- [x] Close monotone raw complement-interleaving + generic-leaf certificate class: unavoidable layer44 coefficient certificate85.90275; topology+leaf MILP optimum86 (`32056604049`).
+- [x] Leaf reduced topology cut11 on frozen HT critical partitions (`32010227963`).
+- [x] Mark old leaf full-rank witness `32011941759` non-authoritative: exit143 before result.
+- [x] Mark exploratory leaf S1 minor `32054802994` non-authoritative: greedy path `2^64` intermediate /32-GiB allocation failure before rank result.
+- [ ] Build scalar-on-the-fly evaluator using coefficient-specific or uniform leaf-central joint algebra; generic leaf Hilbert interleaving is now closed as a route below84.90275.
+- [ ] Resolve uniform predecessor-leaf 11|21 coefficient saturation with a small streaming/sparse/direct algebraic certificate.
+- [ ] Freeze a real outer128 predecessor mask before any source-specific leaf-rank claim.
 - [ ] Count multiply/add, factor generation, recomputation, memory traffic and output in one TOTAL arithmetic-work ledger.
-- [ ] Test remaining nonlocal retained-coordinate regroupings only against the new center `3829*2^29`.
+- [ ] Test remaining nonlocal retained-coordinate regroupings only against center `3829*2^29`.
 - [x] Keep revoked int32-overflow ranks96/208 and derived W84/W83 bounds permanently non-authoritative.
 
 ## d>=2 exact track
@@ -59,6 +63,6 @@
 - [x] Exact reductions use `epsilon=0` authority.
 - [x] Code is treated as calculator/falsifier, not the mathematical object.
 - [x] Finite admitted claims require clean-checkout/CI verification.
-- [x] Representation, factor-generation message/storage and arithmetic work are kept as separate ledgers.
+- [x] Representation, factor-generation message/storage and arithmetic work are kept separate.
 - [ ] No arithmetic-work reduction claim until scalar evaluator TOTAL accounting passes.
 - [ ] No `alpha<1` claim until TOTAL work, ranking, verification, preprocessing and storage all support it.
