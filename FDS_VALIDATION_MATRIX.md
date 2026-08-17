@@ -15,6 +15,7 @@
 | Block2 D11 one-bit repeated-variable extension | j1/j2 fixed-D11 transfers rank2, high-prefix rank16 by slice, block rank remains21888; clean run `32038491628` | EXACT NO-GAIN / ROUTE CLOSED |
 | Block1 C12..C14 contiguous carry extension | rank128=`16*8`; clean run `32038564342` | EXACT NO-GAIN / ROUTE CLOSED |
 | Block1 repeated-D D1/D2 two-site extension | exact union rank1024=`16*2^6`; clean run `32033943549` | EXACT NO-GAIN / ROUTE CLOSED |
+| Block1 repeated-D D3 extension | local coupled-carry operator rank24/32 with explicit8D kernel, but old D0..2 s2 projections both rank1024 so kernel intersection is zero; exact rank8192=`16*2^9`; clean run `32039125472` | EXACT NO-GAIN / D3 ROUTE CLOSED |
 | Revoked four-site 96/208 candidates | caused by int32 einsum/Gram overflow; corrected ranks256/256 | REVOKED / DO NOT USE |
 | d>=2 exact representation | `W_repr(d)<=508.4979393937686...d-333.8951148057971...`; d2 `683.1007639817401...` | ADMITTED EXACT REPRESENTATION BOUND |
 | Semi-open B | generic55; pair and short carry routes failed to improve | ACTIVE EXACT SEARCH |
