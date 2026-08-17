@@ -7,7 +7,7 @@
 **d>=2 exact representation law:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
 **d2:** `683.1007639817401...`.  
 **ALPHA_PASS=0`.  
-**Active work:** simple one-bit/local d=1 extensions are now closed negatively; move to genuine merged block1/block2 multi-site carry/repeated-D coupling, then semi-open B and fully-open multi-site coupling. Arithmetic work remains separate.
+**Active work:** simple one-bit/local d=1 extensions through block1 C12..C14, repeated-D D0..3, and block2 D11 are now closed negatively; move to genuine merged block1/block2 multi-site carry/repeated-D coupling or a new boundary-fiber mechanism. Arithmetic work remains separate.
 
 Code is only a calculator/falsifier. New finite claims require clean-checkout execution.
 
@@ -82,7 +82,7 @@ One complete factor contains
 
 scalar entries. This is not a compute win.
 
-## New exact no-gain closures after rank21888
+## Exact no-gain closures after rank21888
 
 ### D11 one-bit repeated-variable extension
 
@@ -127,6 +127,35 @@ Authority:
 - `V26_Q138_BLOCK1_C12_C14_EXTENSION_NO_GAIN.md`;
 - `scripts/verify_v26_q138_s1_local_extension_falsifiers.py`.
 
+### Block1 repeated-D chain through D3
+
+The clean occurrence-closed D0..2 block has exact rank
+
+`1024=16*2^6`.
+
+For the next site D3, the isolated coupled-carry local operator on `(A3,B3,D3,s2,s18)` has rank24/32 and an explicit 8D kernel. The eight kernel relations are exactly the pairs
+
+`(A3=0,s2=1) == (A3=1,s2=0)`
+
+for fixed `(B3,D3,s18)`.
+
+However the old D0..2 row space has projection rank1024 onto both fixed-s2 column slices. Therefore it contains no nonzero vector supported wholly in either s2 slice, so the local 8D kernel has zero intersection with the actual domain `F^8 tensor V`.
+
+Hence the D3 extension is injective on the actual old row space and the exact new rank is
+
+`8192=16*2^9`.
+
+No gain.
+
+Clean run `32039125472`: success.
+
+Authority:
+
+- `V26_Q138_BLOCK1_D3_EXTENSION_KERNEL_NO_GAIN.md`;
+- `scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py`.
+
+This kernel/fiber mechanism is more informative than another brute-force local rank. Future repeated-D work should inspect boundary-fiber geometry before adding D4/D5.
+
 ## Overflow correction, do not regress
 
 Temporary four-site candidates96/208 and resulting bounds84.0279/83.7283 are revoked.
@@ -165,7 +194,8 @@ Current law:
 - direct fully-open minimal-TT S3 cut86, worse than fused65;
 - block1 + C13,C14 carry extension exact rank64=`16*4`;
 - block1 + C12,C13,C14 contiguous carry extension exact rank128=`16*8`, clean run `32038564342`;
-- block1 + A1,B1,D1/A2,B2,D2 occurrence-closed two-site extension exact union rank1024=`16*2^6`, clean run `32033943549`;
+- block1 + D1/D2 occurrence-closed two-site extension exact union rank1024=`16*2^6`, clean run `32033943549`;
+- block1 + D3 occurrence-closed extension exact rank8192=`16*2^9`, despite a local24/32 operator kernel; clean run `32039125472`;
 - block2 one-bit D11 repeated-variable extension preserves rank21888, clean run `32038491628`;
 - isolated C12 local row map rank2;
 - corrected relaxed adjacent four-site S1 blocks are full rank256;
@@ -173,9 +203,9 @@ Current law:
 
 ## First unfinished mathematical pass
 
-1. **Stop repeating isolated local appends. Build the smallest merged block1/block2 multi-site factor.** The easy block1 side, C12 contiguous side, and one-bit D11 side are now exact NO-GAIN. A new gain must use a coupling that is absent from those separate maps. Natural target: bridge the j2 carry structure between the block1 `C12..16` segment and the block2 high-sector side while closing every repeated S1 D variable whose second occurrence enters that bridge.
-2. **Use incremental exact subspace intersections, not a huge dense Gram.** The next tractable probe is the repeated-D block1 chain beyond the clean D0..2 two-site result: add D3 with both its j1 and j2 occurrences, then D4/D5 only if a nontrivial overlap appears. Any claimed gain must beat the naive rank exactly.
-3. **If the merged carry bridge still stays full rank, test joint block1 x block2 channel overlap directly.** The current product `16*21888` is only an upper bound; shared retained columns may make the joint row space smaller even when each local append is injective.
+1. **Do not blindly append D4. Characterize the new D3 boundary fibers first.** The D3 local operator has a real kernel, but D0..2 misses it. The next question is whether the D0..3 row space develops nonzero fibers on both new j1-carry slices; only then can the same local kernel reduce the D4 extension. Compute exact slice-projection ranks/intersections without materializing the full D0..3 matrix.
+2. **In parallel, build the smallest merged block1/block2 multi-site factor.** The easy block1 side, C12 contiguous side, D3 side, and one-bit D11 side are all exact NO-GAIN. A new gain likely needs a coupling absent from those separate maps. Natural target: bridge the j2 carry structure between the block1 `C12..16` segment and the block2 high-sector side while closing every repeated S1 D variable whose second occurrence enters that bridge.
+3. **Test joint block1 x block2 channel overlap directly.** The current product `16*21888` is only an upper bound; shared retained columns may make the joint row space smaller even when isolated append maps are injective.
 4. **d=1 work accounting.** Message/storage is85.41785 but output-size alone is the same exponent. No work gain yet.
 5. **semi-open B<55.** Respect rotation7 output and offset16 D reuse; pair/carry routes are closed.
 6. **fully-open <63.562.** Need genuine multi-site row-space overlap, not direct-sum sector splitting.
