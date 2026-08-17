@@ -1,0 +1,36 @@
+name: full-natural-bridge-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_full_natural_bridge_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py'
+      - 'scripts/verify_v26_q138_j2_bridge22_31_injective.py'
+      - 'scripts/verify_v26_q138_bit0_universal_shared_v312_geometry.py'
+      - 'scripts/verify_v26_q138_signed_block2_extend12_rank21888.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FULL_NATURAL_BRIDGE_NO_GAIN.md'
+      - '.github/workflows/full-natural-bridge-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify D0..5 low repeated-D theorem
+        run: python scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py
+      - name: Verify universal C12..14 injective bridge lemma
+        run: python scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py
+      - name: Verify j2 bridge22..31 injectivity
+        run: python scripts/verify_v26_q138_j2_bridge22_31_injective.py
+      - name: Verify universal D16 bit0 shared-v3_12 geometry
+        run: python scripts/verify_v26_q138_bit0_universal_shared_v312_geometry.py
+      - name: Reverify extended block2 rank21888 geometry
+        run: python scripts/verify_v26_q138_signed_block2_extend12_rank21888.py
+      - name: Verify full natural bridge rank accounting
+        run: python scripts/verify_v26_q138_full_natural_bridge_no_gain.py
