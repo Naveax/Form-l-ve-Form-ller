@@ -1,0 +1,23 @@
+name: dyadic tail depth gate
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DYADIC_TAIL_DEPTH_GATE.md'
+      - 'scripts/verify_v26_q138_dyadic_tail_depth_gate.py'
+      - '.github/workflows/dyadic-tail-depth-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify five-layer prefix dependency
+        run: python scripts/verify_v26_q138_dyadic_five_layer_prefix_gate.py
+      - name: Verify dyadic tail depth gate
+        run: python scripts/verify_v26_q138_dyadic_tail_depth_gate.py
