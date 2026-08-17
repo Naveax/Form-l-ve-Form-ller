@@ -8,6 +8,10 @@ on:
       - '.github/workflows/exact-math-verifiers.yml'
   workflow_dispatch:
 
+concurrency:
+  group: exact-math-main
+  cancel-in-progress: true
+
 jobs:
   mask-coefficient:
     runs-on: ubuntu-latest
