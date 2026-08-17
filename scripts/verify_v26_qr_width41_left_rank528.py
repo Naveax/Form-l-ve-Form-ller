@@ -29,7 +29,7 @@ def rref_rank_pivcols(M):
 
 def invert(A):
     n=len(A)
-    M=[[Fraction(A[i][j]) for j in range(n)]+[Fraction(int(i==j)) for j in range(n)] for i in range(n)] for i in range(n)]
+    M=[[Fraction(A[i][j]) for j in range(n)]+[Fraction(int(i==j)) for j in range(n)] for i in range(n)]
     for c in range(n):
         p=next(i for i in range(c,n) if M[i][c])
         M[c],M[p]=M[p],M[c]
