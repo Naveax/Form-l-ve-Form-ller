@@ -7,6 +7,10 @@ on:
       - '.github/workflows/leaf-fullrank-witness.yml'
   workflow_dispatch:
 
+concurrency:
+  group: leaf-fullrank-main
+  cancel-in-progress: true
+
 jobs:
   leaf-witness:
     runs-on: ubuntu-latest
@@ -16,5 +20,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install --quiet opt_einsum python-flint
+      - run: python -m pip install --quiet numpy opt_einsum python-flint
       - run: python scripts/verify_v26_q138_leaf_fullrank_witness.py
