@@ -1,0 +1,32 @@
+name: Semi-open signed A/C/D depth law
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_semi_open_s3_signed_d_interval.py'
+      - 'scripts/verify_v26_q138_depth_semi_open_signed_acd.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_SEMI_OPEN_S3_SIGNED_D_INTERVAL_THEOREM.md'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DEPTH_SEMI_OPEN_SIGNED_ACD_THEOREM.md'
+      - '.github/workflows/depth-semi-open-signed-acd.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-semi-open-acd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy
+      - name: Verify central dependency
+        run: python scripts/verify_v26_q138_depth_joint_sector_law.py
+      - name: Verify fully-open dependency
+        run: python scripts/verify_v26_q138_fully_open_s3_local_signed_rank.py
+      - name: Verify semi-open A/C dependency
+        run: python scripts/verify_v26_q138_semi_open_s3_signed_ac.py
+      - name: Verify semi-open D interval rank
+        run: python scripts/verify_v26_q138_semi_open_s3_signed_d_interval.py
+      - name: Verify improved depth law
+        run: python scripts/verify_v26_q138_depth_semi_open_signed_acd.py
