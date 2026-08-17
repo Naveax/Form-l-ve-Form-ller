@@ -18,217 +18,170 @@ so
 
 `W_1 <= 38.768184324776925... <39`.
 
-Clean dependency revalidation has passed the minimal-core width41 certificate, exact rank528 replacement, width40 tree, left rank48, physical right hull162 and physical rank-envelope/common-interface calculations. Historical JSON/script serialization defects were repaired without changing the mathematical networks.
-
-Core retained facts:
-
-- left fixed-mask interface rank: 48;
-- all 64 physical left maps share one 48-dimensional interface row space;
-- physical doubled right reachable hull: `1024 ->162 =114+48`;
-- physical right rank over 4096 masks: `11..38`;
-- parent rank: `5..27`;
-- `u2_31=0`: parent `16..27`;
-- `u2_31=1`: parent `5..8`.
-
-## Exact support correction
-
-The old `support<=216`, 13 support classes and rank-12 support-selector claims are revoked.
-
-Correct support is defined by the exact Gram diagonal
-
-`g_m(i)=sum_rest L_m(i,rest)^2`.
+The old `support<=216`, 13 support classes and rank-12 support-selector claims are revoked. Correct I9 support is defined by the exact Gram diagonal `g_m(i)=sum_rest L_m(i,rest)^2`.
 
 Across all 64 physical six-left-mask cases:
 
-- support range: `117..218`;
-- distinct exact support sets: 64;
-- union: 392;
-- intersection: 42;
-- exact rank of the `64 x 512` support indicator: 64;
-- residual: `epsilon=0`.
+- support range `117..218`;
+- distinct exact support sets64;
+- union392;
+- intersection42;
+- exact rank of the `64 x512` support indicator64;
+- residual `epsilon=0`.
 
-Hence the safe exact left boundary result is
+Thus `rank_{I9|rest}(L_m)<=218<256`.
 
-`rank_{I9|rest}(L_m)<=218<256`.
+The six-left-mask complete coefficient family itself has full span64 and natural TT profile `[2,4,8,16,32,64]`.
 
-Authority:
+Physical right/parent rank facts retained from clean exact transfer algebra:
 
-- `V26_QR_Q138_SUPPORT218_GRAM_CORRECTION_THEOREM.md`;
-- `scripts/verify_v26_qr_q138_left_i9_gram_support.py`;
-- `V26_QR_Q138_GENERAL_RANK27_SUPPORT218_GLOBAL_SUB39_CERTIFICATE.json`;
-- `scripts/verify_v26_qr_q138_general_rank27_support218_global_sub39.py`.
+- right doubled reachable hull `1024 ->162 =114+48`;
+- right rank over 4096 masks `11..38`;
+- parent rank `5..27`;
+- `u2_31=0`: parent `16..27`;
+- `u2_31=1`: parent `5..8`;
+- all 64 left fixed-mask maps share one exact 48-dimensional interface row space.
 
-## One-QR work accounting
+## Gram-image semantics
 
-Peak-message improvement relative to `2^40`:
+For the single-copy right coefficient map `R_m`, define `G_m=R_mR_m^T`.
 
-`256/109 ~=2.3486238532x`,
-
-or about `1.2318156752` log2 bits.
-
-Current width-optimized `RL218` tree does **not** improve naive dense work. Exact bookkeeping gives a dense-work proxy ratio
-
-`4.0160678967339065x`
-
-worse than the rank27 source topology. No arithmetic-work reduction is admitted.
-
-Authority:
-
-`V26_QR_Q138_SUPPORT218_WORK_ACCOUNTING.md` and `scripts/verify_v26_qr_q138_support218_work_accounting.py`.
-
-## Left mask coefficient family
-
-The six physical left controls
-
-`u1_8,u1_9,u1_10,u2_8,u2_9,u2_10`
-
-have no linear family compression at the complete coefficient-map level:
-
-`dim Span{L_m}=64`.
-
-Natural TT profile:
-
-`[2,4,8,16,32,64]`.
-
-Conditioning on `u2_8` gives family ranks `32,32`.
-
-Authority:
-
-`V26_QR_Q138_LEFT_COEFFICIENT_FAMILY_FULL64_THEOREM.md` and `scripts/verify_v26_qr_q138_left_coeff_family_tt.py`.
-
-## Right Gram / parent Gram-image mask structure
-
-Do not confuse the following with full coefficient amplitudes needed by another QR.
-
-For the exact right map `R_m`, define `G_m=R_m R_m^T`.
-
-Clean exact family results:
+Exact rank-space results:
 
 - `dim Span{G_m}=145`;
-- site3--6 prefix family rank 140;
-- site7 closure family rank 16;
-- with a fixed common left 48-dimensional interface basis `L`, the Gram-image family `H_m=L G_m` has span 124;
-- the row directions of the 124 basis matrices span a 47-dimensional interface rank space.
+- site3--6 prefix family rank140;
+- site7 closure family rank16;
+- with fixed common left interface basis `L`, the Gram-image family `L G_m` has span124;
+- its row directions span47;
+- natural 12-control Gram-image selector TT profile `[2,4,8,16,32,64,128,119,196,136,143,124]`.
 
-Natural 12-control TT profile of the 124-sector Gram-image selector:
-
-`[2,4,8,16,32,64,128,119,196,136,143,124]`.
-
-These are exact rank/Schmidt-space objects only. `G_m` loses the orientation/amplitude information in the 24 right-external mask legs, so the 124-sector family cannot be propagated through a next QR as though it were the single-copy coefficient tensor.
-
-Authority:
-
-`V26_QR_Q138_RIGHT_PARENT_COEFFICIENT_FAMILY_THEOREM.md` (semantically corrected to Gram-image interpretation), `scripts/verify_v26_qr_q138_right_bilinear_family_span.py`, and `scripts/verify_v26_qr_q138_mask_coeff124_tt.py`.
+These are rank/Schmidt-space objects only. They do not retain the 24 right-external coefficient amplitudes. Do not propagate the 124/U47 Gram-image family through a later QR as if it were the single-copy coefficient tensor.
 
 ## Exact q138 inverse-double-round structure
 
-The q138 backward double-round dependency cone contains one active final column QR `(0,4,8,12)` plus four diagonal QRs, one for each intermediate word and local output position A/B/C/D.
+The backward inverse-double-round dependency cone has one active final column QR plus four predecessor diagonal QRs.
 
-Three separate structural ledgers are now frozen:
+Three structural ledgers remain separate:
 
 ### Topology-only
 
-Corrected common-prefix bound:
-
 `W_2_topo <=236`.
-
-The older 252 overcounted the offset-16 perfect matching by a factor two.
 
 ### Constructive exact representation
 
-Contract each fixed-input/single-output diagonal leaf to a 32-bit vector and exactly factor the four vectors hierarchically while leaving the central QR in its graph form.
+Keep the central fixed-output/open-four-input QR in its exact reduced graph form. Contract each fixed-input/single-output diagonal leaf to its exact 32-bit vector and hierarchically factor the four vectors on the frozen bit tree.
 
-Complete structural construction:
+Certified constructive structural peak:
 
 `W_2_construct <=95`.
 
-Leaf factor generation itself stays below exponent44; dense leaf output has exponent32.
+Leaf factor generation itself remains below exponent44 and dense leaf output has exponent32.
 
-### Exact representation existence
+### Exact representation existence: new nonlinear-support result
 
-On the same explicit 32-bit partition tree, also replace the central contribution by its physical matricization rank envelope. This gives
+The old generic physical-Hilbert result `W_2_repr<=88` is superseded.
 
-`W_2_repr <=88`.
+The HT88 tree has two unique critical 11|21 bipartitions.
 
-The 88 bound is an exact Schmidt-representation existence result; a central Schmidt-factor generation procedure with peak88 is not separately certified, hence the constructive ledger remains95.
+For
+
+`S1={0,1,2,3,4,5,12,13,14,15,16}`
+
+q138 modular-addition MSB conservation gives `msb(u4)=msb(v4)=3`, then `msb(u3)=msb(v3)=27`. Hence the central j2 masks obey
+
+- `z2w_15=1`;
+- `z2w_16..19=0`;
+- `z2v_16=D_0`.
+
+The exact nonlinear support recurrence at bits16 and15 implies
+
+`C_15=0 => C_16=D_0`.
+
+Only six of eight `(C15,C16,D0)` triples survive, so
+
+`rank_center(S1) <= 3*2^42`.
+
+For
+
+`S2={6,7,8,9,10,11,27,28,29,30,31}`
+
+j1 output top bits are determined by `u3` and `D`, and MSB conservation permits only342 of1024 top-pattern pairs `(A27..31,D27..31)`. Therefore
+
+`rank_center(S2) <=342*2^34`.
+
+Reinserting both exact support-row bounds into every node of the frozen HT tree gives maximum message dimension
+
+`3*2^86`,
+
+hence
+
+`W_2_repr <= 86+log2(3) = 87.58496250072116... <88`.
+
+The S1 bound is the new maximum; the S2 critical message is smaller, about exponent86.41785. Every noncritical node of the same tree remains at exponent at most80.
+
+Clean GitHub Actions run `32017394330` passes the historical HT88 dependency and the new nonlinear-support verifier.
 
 Authority:
 
-- `V26_Q138_EXACT_DOUBLE_ROUND_PATH236_CORRECTION.md`;
-- `V26_Q138_DOUBLE_ROUND_CONSTRUCTIVE95_THEOREM.md`;
-- `V26_Q138_EXACT_DOUBLE_ROUND_LEAF_HT88_THEOREM.md`;
-- corresponding clean CI verifiers.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_SUPPORT87_THEOREM.md`;
+- `scripts/verify_v26_q138_double_round_support87.py`;
+- `.github/workflows/double-round-support87.yml`.
 
-## Why 88 does not fall by more topology search
+This is exact representation existence, not constructive factor generation. The constructive ledger stays95 until a procedure generating the compressed central factors below the new representation peak is certified.
 
-The generic-envelope method is exhausted.
+## What the new result falsifies and what it does not
 
-Exact central cardinality MILPs for smaller-side sizes 11..16 give minimum graph boundaries
+The old 88 generic-envelope method was optimal only inside its generic rank caps. Exact topology and linear-parity tests had saturated those caps:
 
-`51,52,55,54,55,56`.
+- central cardinality MILP boundaries for smaller side11..16: `51,52,55,54,55,56`;
+- refined central minimal-TT terminal cuts on old critical partitions: `44,44,44`, with exactly44 binary cut indices and no ternary cut bond;
+- pure GF(2) projected boundary codimension: `0,0`;
+- generic leaf terminal cuts: `11,11,11`;
+- fixed-input leaf full-rank witnesses exist for every output position and critical partition for some outer masks.
 
-The balanced-edge lemma forces one such split in every 32-leaf binary tree. Combining central physical caps with four generic leaf Hilbert ranks gives method lower bound88, attained by the explicit tree. Thus 88 is optimal **inside this generic envelope method**.
-
-Further exact falsifiers:
-
-- refined minimal-TT central terminal cuts on all three critical 11|21 partitions are `44,44,44`, saturating the four-input physical cap;
-- reduced leaf terminal cuts on the same partitions are `11,11,11`, saturating the one-output physical cap.
-
-Therefore an improvement below88 requires actual coefficient-specific Schmidt deficiency or a joint central/leaf factorization; further generic topology permutation is not enough.
-
-Authority:
-
-- `V26_Q138_DOUBLE_ROUND_HT88_METHOD_OPTIMALITY.md`;
-- `V26_Q138_CENTRAL_REFINED_TERMINAL_CUT44_FALSIFIER.md`;
-- `V26_Q138_LEAF_TERMINAL_CUT11_FALSIFIER.md`.
+The new improvement comes specifically from the nonlinear conditional Walsh-support rule `sigma=0 => u=v=w`, not from a better graph cut or a linear parity relation.
 
 ## Multi-double-round representation law
 
 For fixed outer input masks:
 
-- `W_repr(1)<=88`;
-- for `d>=2`, one explicit common bit-partition tree gives
+- special one-double-round exact representation bound: `W_repr(1)<=86+log2(3)`;
+- for `d>=2`, the current separate common-tree theorem gives
 
-`W_repr(d)<=536d-364`.
+`W_repr(d)<=520d-340`.
 
-Thus d=2 gives `<=708`, d=3 `<=1244`, d=4 `<=1780`.
+Verified values: d2=700, d3=1220, d4=1740, d5=2260, d6=2780, d7=3300, d8=3820, d9=4340.
 
-This is representation/message width only, not arithmetic work. It explicitly accounts for one central QR, four semi-open QRs, fully-open interior layers and earliest fixed-input output-vector kernels.
+The d>=2 common tree has fully-open QR maximum65 and different maximizing 11-site clusters. The new S1/S2 support rule does not automatically change the `520d-340` law.
 
-Authority:
+This remains representation/message width only, not arithmetic work.
 
-`V26_Q138_DEPTH_REPRESENTATION_LAW.md` and `scripts/verify_v26_q138_depth_representation_law.py`.
+## Storage/work status
 
-## Double-round factor storage
+One-QR RL218 message compression remains exact but its current width-optimized dense-work proxy is about `4.0160678967x` worse than the rank27 source topology. No arithmetic-work improvement is admitted.
 
-Generic hierarchical leaf factorization improves separator geometry but not generic factor storage. One arbitrary 32-bit leaf vector has information dimension `2^32`; the explicit generic HT tree uses 4,308,611,904 scalar slots for one leaf, slightly above dense `2^32` storage. Four leaves therefore require roughly `2^34` scalar storage in the generic worst case.
-
-Coefficient-specific leaf structure is needed for actual storage compression.
+Generic hierarchical leaf factorization also does not compress arbitrary leaf storage: one arbitrary 32-bit leaf vector has information dimension `2^32`, while the frozen generic HT representation uses slightly more than `2^32` scalar slots per leaf. Four generic leaves therefore remain roughly `2^34` storage.
 
 ## Current sharp mathematical blocker
 
-The generic exact topology/rank envelope for one double round is exhausted at88.
+The true double-round tensor now beats the exhausted generic88 envelope, but the new maximum is still the S1 critical partition with central support-row bound `3*2^42` times four generic leaf ranks `2^44`.
 
-To lower it, one must now obtain one of:
+Next exact mechanisms, in priority order:
 
-1. actual diagonal-leaf Schmidt ranks below `2^11` on the three critical partitions for the **specified fixed outer input masks**;
-2. actual central coefficient Schmidt rank below `2^44`;
-3. a joint central×leaf factorization that beats independent rank-envelope multiplication.
+1. signed central coefficient Schmidt deficiency below the support-row bound `3*2^42` on S1;
+2. a second independent nonlinear support restriction on S1;
+3. joint central×leaf factorization across S1 that beats independent rank multiplication;
+4. source-specific leaf rank only if a concrete canonical outer 128-bit mask is explicitly frozen. Do not assume zero masks;
+5. analogous nonlinear-support analysis on the different maximizing cluster of the `520d-340` common tree.
 
-The repository freezes the fixed/open boundary pattern but does not currently freeze one concrete 128-bit outer leaf-input mask value for all four diagonal leaves. Do not assume those masks are zero. Without a specified source mask, only uniform/parametric leaf theorems are legitimate.
-
-For true next-layer coefficient composition, the single-copy right map `R_m` with its 24 external mask legs, or an exactly equivalent factorization, must be retained. Gram-image 124/U47 data alone is insufficient.
-
-## Approximation and attack status
-
-All admitted reductions above are exact, `epsilon=0`. Do not activate epsilon-rank while exact coefficient-specific routes remain open.
+All admitted reductions remain exact, `epsilon=0`. Do not activate epsilon-rank while these exact coefficient/support routes remain open.
 
 Still not admitted:
 
-- practical exact evaluation at the formal peaks;
+- practical evaluator at formal peaks;
 - arithmetic-work reduction;
 - ranking/search reduction;
 - `alpha<1`;
 - full-round cryptanalytic relevance.
 
-Historical measured execution remains blocked by the missing V25 runtime bytes; this is provenance, not a mathematical NO-GO.
+Historical measured execution remains blocked by missing V25 runtime bytes; this is provenance, not a mathematical NO-GO.
