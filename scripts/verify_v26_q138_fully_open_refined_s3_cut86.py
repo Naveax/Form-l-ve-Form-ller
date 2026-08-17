@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-import itertools, math
-from collections import Counter, defaultdict
+import itertools
+from collections import Counter, defaultdict, deque
 from fractions import Fraction
-import numpy as np
-from scipy.optimize import milp, LinearConstraint, Bounds
-from scipy.sparse import lil_matrix, csc_matrix
 
 S3={4,5,11,12,13,19,20,21,27,28,29}
 
@@ -12,7 +9,6 @@ S3={4,5,11,12,13,19,20,21,27,28,29}
 def tv(s,t,u,v,w):
     if t!=(s^u^v^w) or not(s or u==v==w):return Fraction(0)
     return Fraction(-1 if ((u^w)&(v^w)) else 1,2**s)
-
 def rankq(A):
     A=[[Fraction(x) for x in r] for r in A];m=len(A);n=len(A[0]);q=0
     for c in range(n):
@@ -98,30 +94,61 @@ def build():
         for i in range(32):h.terminal(ext(w,i),2,int(i in S3))
     return h
 
+class Dinic:
+    def __init__(self,n):self.g=[[] for _ in range(n)]
+    def add(self,u,v,c):
+        self.g[u].append([v,c,len(self.g[v])]);self.g[v].append([u,0,len(self.g[u])-1])
+    def flow(self,s,t):
+        ans=0;INF=10**18
+        while True:
+            lv=[-1]*len(self.g);lv[s]=0;q=deque([s])
+            while q:
+                u=q.popleft()
+                for v,c,r in self.g[u]:
+                    if c and lv[v]<0:lv[v]=lv[u]+1;q.append(v)
+            if lv[t]<0:break
+            it=[0]*len(self.g)
+            def dfs(u,f):
+                if u==t:return f
+                while it[u]<len(self.g[u]):
+                    e=self.g[u][it[u]];v,c,r=e
+                    if c and lv[v]==lv[u]+1:
+                        z=dfs(v,min(f,c))
+                        if z:
+                            e[1]-=z;self.g[v][r][1]+=z;return z
+                    it[u]+=1
+                return 0
+            while True:
+                z=dfs(s,INF)
+                if not z:break
+                ans+=z
+        seen={s};q=deque([s])
+        while q:
+            u=q.popleft()
+            for v,c,r in self.g[u]:
+                if c and v not in seen:seen.add(v);q.append(v)
+        return ans,seen
+
 def mincut(h):
-    F=len(h.factors);edges=[e for e in h.dim if len(h.inc[e])>=2 or e in h.term];ei={e:k for k,e in enumerate(edges)};n=F+len(edges)
-    rows=[];ub=[]
-    for e in edges:
-        z=F+ei[e];I=h.inc[e]
-        if e in h.term:
-            c=h.term[e]
-            for f in I:
-                rows.append({f:1,z:-1});ub.append(c)
-                rows.append({f:-1,z:-1});ub.append(-c)
-        else:
-            r=I[0]
-            for f in I[1:]:
-                rows.append({f:1,r:-1,z:-1});ub.append(0)
-                rows.append({r:1,f:-1,z:-1});ub.append(0)
-    A=lil_matrix((len(rows),n))
-    for i,row in enumerate(rows):
-        for j,v in row.items():A[i,j]=v
-    obj=np.zeros(n)
-    for e,k in ei.items():obj[F+k]=math.log2(h.dim[e])
-    res=milp(obj,integrality=np.ones(n,int),bounds=Bounds(np.zeros(n),np.ones(n)),constraints=LinearConstraint(csc_matrix(A),-np.inf,np.array(ub)),options={'mip_rel_gap':0,'time_limit':120})
-    assert res.success and abs(res.fun-86)<1e-9,(res.status,res.fun,res.message)
-    z=np.rint(res.x[F:]).astype(int);cut=[e for e,k in ei.items() if z[k]]
+    # Unit-cost hypergraph cut gives a rigorous lower bound on the true log2-dimension cut,
+    # because every nontrivial index has dimension at least2. Standard directed reduction:
+    # for hyperedge e, source-side incidence forces e_in source; sink-side incidence forces
+    # e_out sink; the only finite arc e_in->e_out costs one if the hyperedge is split.
+    edges=list(h.dim);F=len(h.factors);SRC=F+2*len(edges);SNK=SRC+1;D=Dinic(SNK+1);INF=10**6
+    for k,e in enumerate(edges):
+        a=F+2*k;b=a+1;D.add(a,b,1)
+        ent=list(h.inc[e])
+        if e in h.term:ent.append(SRC if h.term[e] else SNK)
+        for v in ent:D.add(v,a,INF);D.add(b,v,INF)
+    val,reach=D.flow(SRC,SNK);assert val==86,val
+    cut=[]
+    for k,e in enumerate(edges):
+        a=F+2*k;b=a+1
+        if a in reach and b not in reach:cut.append(e)
+    assert len(cut)==86
     assert Counter(h.dim[e] for e in cut)==Counter({2:86})
+    # Lower bound: every real log2(dim) cut costs >= its number of split hyperedges >=86.
+    # Upper bound: this exact unit min-cut uses only binary edges, so its real cost is exactly86.
     return cut
 
 def main():
@@ -132,12 +159,11 @@ def main():
     assert len(h.factors)==888
     assert len(h.dim)==1268
     assert Counter(h.dim.values())==Counter({2:1024,3:244})
-    assert len(h.term)==256
-    assert all(h.inc[e] for e in h.term)
-    cut=mincut(h)
+    assert len(h.term)==256 and all(h.inc[e] for e in h.term)
+    mincut(h)
     print('PASS V26_Q138_FULLY_OPEN_REFINED_S3_CUT86')
     print('factors=888 indices=1268 binary=1024 ternary=244 external_terminals=256')
-    print('S3_terminal_mincut=86 cut_dims=86_binary')
+    print('unit_hypergraph_mincut=86; witness_cut=86_binary => exact log2_dimension_mincut=86')
     print('known_fused_common_tree_cap=65; refined minimal-TT opening does not improve the slope cap')
     print('scope=scoped refined-hypergraph topology falsifier, not a lower bound on true Walsh Schmidt rank')
 if __name__=='__main__':main()
