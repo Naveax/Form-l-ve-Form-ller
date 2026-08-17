@@ -1,0 +1,63 @@
+{
+  "milestone": "V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_CERTIFICATE",
+  "scope": {
+    "object": "q138 fixed-output one-quarter-round exact Walsh network",
+    "condition": "all 4096 physical fixed-input-mask cases in the certified family",
+    "claim": "complete exact structural message-dimension upper bound after parent-rank<=27 and left-I9 support<=216 factorizations"
+  },
+  "dependencies": {
+    "parent_rank_theorem": "research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md",
+    "parent_rank_verifier": "scripts/verify_v26_qr_q138_physical_rank_envelope27.py",
+    "left_support_theorem": "research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_LEFT_I9_SUPPORT216_THEOREM.md",
+    "left_support_verifier": "scripts/verify_v26_qr_q138_left_i9_support216.py",
+    "base_width40_certificate": "research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json",
+    "source_tree_geometry": "research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_U2_31_ONE_RANK8_GLOBAL_SUB40_CERTIFICATE.json"
+  },
+  "replacement": {
+    "parent_schmidt_dimension_bound": 27,
+    "parent_schmidt_bond_name": "RP27",
+    "left_support_dimension_bound": 216,
+    "left_support_bond_name": "RL216",
+    "I9_edges": ["v4_8","v4_9","v4_10","sig4_18","sig3_10","v3_21","v3_22","aux_j2_i10_k2","sig1_10"],
+    "O7_edges": ["u4_16","u4_17","u4_18","v3_10","v3_20","v3_8","v3_9"],
+    "vertices": {"XA":365,"Z27":366,"XB":367},
+    "meaning": "X_parent is split exactly as I9--RL216--(O7,RP27); Z27 carries the 24 right external bits and RP27"
+  },
+  "tree_rewrite": {
+    "source_X_vertex": 365,
+    "source_Z_vertex": 366,
+    "rule": "in the source-tree unique 231-leaf parent whose 230-leaf child is [A229,X8] and whose other child is Z8, replace [[A229,X8],Z8] by [[A229,XA],[XB,Z27]]; keep all other source-tree topology unchanged"
+  },
+  "modified_network": {
+    "leaf_count": 368,
+    "internal_nodes": 367,
+    "nontrivial_indices": 468,
+    "binary_indices": 371,
+    "ternary_indices": 94,
+    "rank528_indices": 1,
+    "rank27_indices": 1,
+    "rank216_indices": 1
+  },
+  "certificate": {
+    "max_boundary_dimension": 463856467968,
+    "max_log2_boundary_dimension": 38.75488750216347,
+    "max_node_leaf_count": 2,
+    "max_boundary_structure": "31 binary indices plus one dimension-216 RL216 bond",
+    "second_largest_boundary_dimension": 283467841536,
+    "second_largest_log2": 38.04439411935845
+  },
+  "support_classes": {
+    "per_mask_max_active_I9_states": 216,
+    "distinct_support_sets": 13,
+    "union_states": 384,
+    "intersection_states": 96,
+    "mask_support_selector_exact_rank": 12,
+    "residual_epsilon": 0
+  },
+  "limits": [
+    "message-dimension upper bound only; not an arithmetic-work bound",
+    "mask-conditioned rank/support bases may differ between physical masks",
+    "does not establish optimality below 38.75488750216347",
+    "does not establish double-round/full-round contraction, ranking gain, alpha<1, or full-round relevance"
+  ]
+}
