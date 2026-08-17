@@ -10,75 +10,68 @@ The active work while historical measured-runtime provenance is blocked is mathe
 
 ## Exact q138 one-QR structural chain
 
-For the full physical fixed-mask family of the q138 fixed-output exact one-quarter-round Walsh object, the complete certified structural message-width chain is now
+For the full 4096-case physical fixed-mask family of the q138 fixed-output exact one-quarter-round Walsh object, the complete certified structural message-width chain is now
 
 `44 -> 42 -> 41 -> 40 -> 38.75488750216347...`.
 
-Interpretation:
+The sharp exact bound is
 
-- `44`: natural fused-site path;
-- `42`: optimal fused-site carving tree;
-- `41`: exact minimal-TT-core refinement;
-- `40`: exact rank-528 separator compression plus a complete global tree;
-- `38.754887502...`: full physical-family rank-27 parent compression plus exact left-I9 support-216 factorization and a complete rewritten global tree.
+`D_max = 216 * 2^31 = 463,856,467,968`,
 
-The older conditioned `u2_31=1` certificate at `39.044394119...` remains a valid intermediate result but is superseded as the sharp global bound by the stronger all-mask result below.
+so
 
-## Physical right/parent algebra retained
+`W_1 <= 38.75488750216347... <39`.
 
-The certified width-40 bottleneck contains 171 leaves and splits `64|107` through six binary interface bits. Its parent external partition is `16|24`.
+The older conditioned `u2_31=1` certificate at `39.044394119...` remains valid historically but is superseded by the stronger all-mask result.
 
-The exact 64-leaf left map has rational rank 48 for all 64 physical left fixed-mask choices. Its 48-dimensional row space has only two classes, selected by the shared bit `u2_8`.
+## Physical right/parent algebra
 
-The physical 107-leaf right map is an exact five-site transfer chain. Its doubled Gram state has formal dimension 1024, but the sharp physical reachable hull is
+The certified 171-leaf parent bottleneck splits `64|107` through six binary interface bits and has external partition `16|24`.
+
+The physical 107-leaf right map is an exact five-site transfer chain. Its formal doubled Gram state has dimension 1024, while the sharp physical reachable hull is
 
 `1024 -> 162 = 114 + 48`.
 
-Over all `2^12=4096` physical right-mask cases, exact rational transfer algebra gives
+Over all 4096 physical masks:
 
-`11 <= rank(R_m) <= 38`.
-
-The full 171-leaf parent flattening satisfies
-
-`5 <= rank(M_m) <= 27`.
-
-More sharply:
-
+- right rank: `11..38`;
+- parent rank: `5..27`;
 - `u2_31=0`: parent rank `16..27`;
 - `u2_31=1`: parent rank `5..8`.
 
-Core authority:
+The 64 physical left fixed-mask maps all have exact rank 48 and, after exact union-rank verification, **share one common 48-dimensional interface row space**. The older wording that there were two distinct classes selected by `u2_8` is superseded.
+
+More strongly, the union of all 4096 mask-conditioned parent Schmidt/interface spaces has exact dimension
+
+`47`
+
+inside the canonical 64-dimensional interface coordinate.
+
+Thus:
+
+- each mask activates at most 27 parent directions;
+- all masks together require 47 directions;
+- one universal rank-27 basis is impossible;
+- one universal 47-dimensional parent-interface ambient basis is exact.
+
+Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_right_hull162.py`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md`
 - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
 
-## New exact left-I9 support theorem
+## Exact left-I9 support structure
 
-The previous conditioned `39.044...` maximum was traced to a 230-leaf cluster consisting of a 229-leaf outside child plus the old left parent factor. The interface between those pieces is the nine binary indices
+The previous conditioned maximum exposed a nine-bit interface
 
-- `v4_8`;
-- `v4_9`;
-- `v4_10`;
-- `sig4_18`;
-- `sig3_10`;
-- `v3_21`;
-- `v3_22`;
-- `aux_j2_i10_k2`;
-- `sig1_10`.
+`I9 = {v4_8,v4_9,v4_10,sig4_18,sig3_10,v3_21,v3_22,aux_j2_i10_k2,sig1_10}`.
 
-Call this boundary `I9`.
+For every physical left mask, Boolean-semiring projection of the exact minimal-TT nonzero support onto `I9` gives a feasible-support upper envelope of size at most 216.
 
-For every one of the 64 physical left fixed-mask choices, Boolean-semiring projection of the exact minimal-TT nonzero support onto `I9` gives at most
+Exact support-size distribution over 64 left masks:
 
-`216`
-
-feasible nine-bit assignments. This is an exact **support upper envelope**: signed cancellation may remove more states, but any assignment absent from this projection is rigorously zero in the coefficient tensor.
-
-The exact support-size distribution is
-
-- 117: 2 masks;
+- 117: 2;
 - 120: 2;
 - 144: 12;
 - 174: 4;
@@ -88,137 +81,141 @@ The exact support-size distribution is
 
 Therefore
 
-`rank_{I9 | rest}(L_m) <= 216`
+`rank_{I9|rest}(L_m) <=216`
 
-for every physical left mask.
+for every physical left mask, and the same bound survives multiplication by any mask-conditioned interface basis used in the parent rank-27 factorization.
 
-If the parent Schmidt factor is chosen as `X_m=L_m B_m`, where `B_m` is any mask-conditioned interface basis realizing parent rank `rho_m<=27`, multiplication by `B_m` cannot create an absent `I9` row. Hence the left parent factor also satisfies
+The 64 masks produce 13 distinct support sets, with
 
-`rank_{I9 | (O7,rho_m)}(X_m) <= 216`
+- union size 384;
+- intersection size 96.
 
-uniformly over the entire physical family.
+The exact `64 x 512` mask/support selector matrix has rational rank
+
+`12`.
+
+An explicit 12-row / 12-pivot factorization is machine-verified, with reconstruction coefficients only in `{-1,0,1}`.
+
+Support pruning residual:
+
+`epsilon=0`.
 
 Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_LEFT_I9_SUPPORT216_THEOREM.md`
 - `scripts/verify_v26_qr_q138_left_i9_support216.py`
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_SUPPORT_SELECTOR_RANK12_COMPOSITION_BRIDGE.md`
 
 ## Full-family exact global sub-39 certificate
 
-Use the exact parent factorization with a safe uniform Schmidt bond `RP27`, zero-padding smaller ranks. Split the left parent factor further as
+Use a safe uniform parent Schmidt bond `RP27` and split the left parent factor exactly as
 
 `I9 -- RL216 -- (O7,RP27)`.
 
-Start from the already rank-528-compressed global q138 network, remove the certified 171-leaf parent cluster, and insert three factors:
+After reinsertion into the rank-528-compressed global network, a complete deterministic tree rewrite gives
 
-- `XA(I9,RL216)`;
-- `XB(RL216,O7,RP27)`;
-- `Z27(RP27,right24)`.
+- 368 leaves;
+- 367 internal tree nodes;
+- 468 nontrivial indices.
 
-A complete deterministic tree rewrite of the previously certified outside topology gives a 368-leaf / 367-internal-node exact structural tree. Every non-root cluster boundary is recomputed in the target hypergraph.
+Maximum message:
 
-The maximum message dimension is
+`216*2^31 = 463,856,467,968`,
 
-`D_max = 216 * 2^31 = 463,856,467,968`,
-
-so
-
-`W <= log2(D_max) = 38.75488750216347... < 39`.
-
-The maximizing cluster contains only the two factors `XB` and `Z27`; their `RP27` bond is internal. Its boundary consists of
+with boundary
 
 - 31 binary indices;
 - one dimension-216 `RL216` bond.
 
-The next-largest certified message is
+The parent `RP27` bond is internal to the maximizing `XB-Z27` pair and does not appear in the maximum boundary.
 
-`528 * 2^29 = 283,467,841,536`,
+Second-largest certified message:
 
-with log-width `38.04439411935845...`.
+`528*2^29 = 283,467,841,536`,
 
-This result applies to **all 4096 physical fixed-input-mask cases**, including both values of `u2_31`.
+log-width `38.04439411935845...`.
 
 Authority:
 
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_THEOREM.md`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_CERTIFICATE.json`
 - `scripts/verify_v26_qr_q138_general_rank27_support216_global_sub39.py`
-- algebraic dependencies above.
 
-## Mask-conditioned support structure
+## Joint-mask / next-layer composition bridge
 
-The 64 physical left-mask choices produce only 13 distinct `I9` feasible-support sets.
+Two exact common structures are now available:
 
-Across those classes:
+1. support feasibility: rank-12 mask/support selector;
+2. parent coefficient/interface ambient space: fixed 47-dimensional rational common span.
 
-- maximum per-mask active coordinates: 216;
-- union: 384 of 512 possible `I9` states;
-- intersection: 96;
-- no strict subset of the six left fixed-mask controls determines exact support-set identity.
+This removes the need for 64 unrelated support tables and 64 unrelated ambient Schmidt coordinate systems.
 
-Define the exact binary selector matrix
+The remaining exact composition object is the **mask-to-coefficient transfer tensor inside the fixed 47-dimensional basis**, including its sector/TT structure and compatibility with the rank-12 support selector.
 
-`C(m,i)=1[i is feasible for mask m]`,
-
-of shape `64 x 512`.
-
-Exact rational elimination gives
-
-`rank_Q(C)=12`.
-
-An explicit 12-row / 12-pivot exact factorization is verified, and all reconstruction coefficients lie in `{-1,0,1}`.
-
-Therefore later joint-mask composition has two exact support representations available:
-
-1. a mask-independent coordinate envelope of size 384;
-2. a rank-12 generative mask/support selector.
+Do not multiply 12 and 47 and call the result a universal coefficient rank without proving the coupling tensor.
 
 Authority:
 
+- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_JOINT_MASK_COMPOSITION_BRIDGE47.md`
 - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_SUPPORT_SELECTOR_RANK12_COMPOSITION_BRIDGE.md`
-- `scripts/verify_v26_qr_q138_left_i9_support216.py`
 
 ## Error / approximation status
 
-The new reduction is exact. Support states that are removed are impossible, so the residual introduced by support pruning is
+The admitted reduction is exact:
 
-`epsilon = 0`.
+`epsilon=0`.
 
-Therefore epsilon-rank/tail approximation is **not activated**. Residual-Gram error budgeting is unnecessary for this branch at present.
+Epsilon-rank/tail approximation is therefore not activated. Existing coherent-tail, residual-Gram, epsilon-rank and local-to-global error machinery remains available only if exact joint composition later stalls.
 
-The existing epsilon-rank, coherent-tail and local-to-global error theorems remain available if exact algebraic compression later stalls.
+## Representation / work accounting
+
+Relative to the previous `2^40` dense maximum:
+
+- exact message reduction factor: `64/27 ~=2.37037037`;
+- log-width gain: `log2(64/27) ~=1.2451124978` bits.
+
+This is a genuine representation/message-width gain.
+
+A scoped formal dense-tree work diagnostic, treating rank factors as already available, gives the opposite result for the current width-optimized tree:
+
+- previous rank-27 source topology dense-work proxy: `36,464,139,277,420,602`;
+- support-216 width-optimized tree: `145,280,691,954,501,690`;
+- new tree is about `3.9842073564x` worse on that proxy.
+
+Therefore no arithmetic-work reduction is admitted. Representation width and work must remain separate metrics.
+
+Authority:
+
+`research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_REPRESENTATION_WORK_ACCOUNTING.md`.
+
+## Fifteen-step mathematics pass
+
+The requested fifteen-step pass is recorded in
+
+`research/v26/recovered-bit-puncturing-dac/V26_Q138_15_STEP_EXACT_PASS_REPORT.md`.
+
+Key status:
+
+- exact one-QR full-family sub-39 representation: PASS;
+- rank-12 support selector: PASS;
+- common parent span 47: PASS;
+- epsilon-rank activation: correctly not triggered because exact route succeeded;
+- full second-layer / `W_2`: not yet proved;
+- arithmetic-work gain: not proved and current dense-work proxy is negative.
 
 ## Current sharp mathematical bottleneck
 
-The one-QR fixed-mask representation target has advanced substantially. The next exact problem is composition across a later QR/layer.
+The first unfinished exact problem is now:
 
-The rank-12 selector solves the zero/nonzero support dependence on the six left mask controls, but the exact parent Schmidt basis used in the `rho_m<=27` theorem may still depend on the fixed mask.
+> Factor the physical mask-to-coefficient tensor in the fixed 47-dimensional common parent-interface basis, jointly with the rank-12 support sectors, and compose one more exact QR/layer without returning to separate per-mask bases.
 
-The next sharp object is therefore one of the equivalent forms:
+Only after that should a two-QR width `W_2`, a round-depth law `W(R)`, or an arithmetic-work exponent be claimed.
 
-- the common span of the mask-conditioned parent Schmidt spaces;
-- a finite transfer/sector representation of those spaces;
-- or a directly factorized joint coefficient tensor carrying the mask variable without 64 separate Schmidt bases.
+A secondary one-QR optimization target remains lowering `38.754887502...`; the current two-factor maximum is not necessarily intrinsic, but a naive LCA/Steiner placement was worse and is only a scoped geometry falsifier.
 
-Do **not** replace the mask-conditioned rank-27 family by one universal rank-27 basis until such a theorem is proved.
+`ALPHA_PASS=0` remains unchanged.
 
-A secondary optimization target remains lowering the one-QR bound below `38.754887502...`; the current maximum is the `XB-Z27` pair and is itself rank-limited through the internal `RP27` bond, so the dense maximum is not necessarily intrinsic. A naive LCA/Steiner placement was tested and was worse; this is only a scoped geometry falsifier, not a lower bound.
-
-## FDS metric status
-
-Relative to the prior dense `2^40` maximum, the new exact maximum is smaller by
-
-`2^40 / (216*2^31) = 512/216 = 64/27 ~= 2.37037037`.
-
-The certified log-width gain is
-
-`log2(64/27) ~= 1.2451124978 bits`.
-
-This is an **exact zero-error representation/message-width gain**.
-
-It is not yet an admitted arithmetic-work exponent reduction. `ALPHA_PASS` remains 0.
-
-Still not admitted: practical exact QR evaluation at the formal maximum, exact end-to-end arithmetic-work reduction, full second-layer contraction, four-inverse-round exact energy, ranking reduction, `alpha<1`, or full-round relevance.
+Still not admitted: practical exact QR evaluation at the formal maximum, exact end-to-end arithmetic-work reduction, complete second-layer contraction, four-inverse-round exact energy, ranking reduction, `alpha<1`, or full-round relevance.
 
 ## Measured-execution blocker
 
