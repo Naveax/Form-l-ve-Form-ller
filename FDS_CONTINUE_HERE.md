@@ -1,149 +1,111 @@
 # FDS_CONTINUE_HERE
 
-**Admitted state:** recovered bit-puncturing/D&C separator Stage0 `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.  
-**Frozen measured milestone:** `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`.  
-**Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes are missing.  
-**Active work while blocked:** mathematics-first exact Walsh tensor-network / coefficient-valued joint-mask composition.
+**Admitted one-QR exact bound:** `W_1<=38.768184324776925...<39` for all 4096 physical fixed-mask cases.  
+**Admitted double-round structural ledgers:** `W_2_topo<=236`, `W_2_construct<=95`, `W_2_repr<=88`.  
+**Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes remain missing.  
+**Active work:** mathematics-first coefficient-specific Schmidt structure beyond the exhausted generic W2 envelope.
 
-Code is only a calculator/falsifier. Clean-checkout execution is now required before a new finite claim becomes authority.
+Code is only a calculator/falsifier. New finite claims require clean-checkout execution.
 
-## Corrected current one-QR result
+## One-QR facts to preserve
 
-For all 4096 physical fixed-mask cases:
+- corrected exact I9 support range: `117..218`;
+- support indicator rank across 64 left masks: `64`;
+- old support216/rank12 selector line is revoked;
+- full-family exact global peak: `218*2^31`;
+- left fixed-mask interface rank:48;
+- six-left-mask complete coefficient family rank:64, TT profile `2,4,8,16,32,64`;
+- physical right rank: `11..38`;
+- parent rank: `5..27`;
+- right doubled hull:162;
+- current dense-work proxy for the RL218 width tree is `4.0160678967x` worse than the rank27 source topology;
+- `ALPHA_PASS=0`.
 
-`44 -> 42 -> 41 -> 40 -> 38.768184324776925...`.
+## Gram-image semantics
 
-Corrected maximum:
+For right map `R_m`, `G_m=R_mR_m^T`.
 
-`D_max = 218 * 2^31 = 468,151,435,264`,
+Exact rank-space structure:
 
-so
+- right Gram family span145;
+- prefix family140;
+- closure family16;
+- parent Gram-image family `L G_m` span124;
+- its row directions span47;
+- natural 12-control Gram-image selector TT profile `2,4,8,16,32,64,128,119,196,136,143,124`.
 
-`W_1 <= 38.768184324776925... <39`.
+These are **not** full right-external coefficient amplitudes. Do not feed the 124/U47 Gram-image family into a subsequent QR as if it were the single-copy coefficient tensor. True composition must retain `R_m` with its 24 external mask legs or an exactly equivalent factorization.
 
-Read/verify:
+## Double-round exact structure
 
-- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_SUPPORT218_GRAM_CORRECTION_THEOREM.md`;
-- `scripts/verify_v26_qr_q138_left_i9_gram_support.py`;
-- `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_GENERAL_RANK27_SUPPORT218_GLOBAL_SUB39_CERTIFICATE.json`;
-- `scripts/verify_v26_qr_q138_general_rank27_support218_global_sub39.py`.
+q138 inverse double round has one active final column QR `(0,4,8,12)` and four diagonal QRs.
 
-Both corrected support and corrected global tree pass from a clean GitHub Actions checkout.
+### Topology
 
-## Support facts that replace the old support216/rank12 line
+Corrected open-boundary common-prefix bound:
 
-Exact support is defined by the Gram diagonal
+`W_2_topo<=236`.
 
-`g_m(i)=sum_rest L_m(i,rest)^2`.
+The historical 252 double-counted offset16 perfect-matching edges.
 
-Across the 64 physical left fixed masks:
+### Constructive structural bound
 
-- support range: `117..218`;
-- distinct support sets: `64`;
-- union: `392`;
-- intersection: `42`;
-- exact `64 x 512` support-indicator rank: `64`;
-- residual: `epsilon=0`.
+Generate each fixed-input/single-output diagonal leaf as an exact 32-bit vector, factor the four vectors hierarchically on the frozen bit tree, and leave the central QR in its reduced graph form:
 
-Therefore the old claims `support<=216`, `13 support classes`, and `selector rank 12` are revoked. Do not use the old rank-12 support composition bridge.
+`W_2_construct<=95`.
 
-## Why the old support result failed
+Leaf generation peak is at most44; dense leaf vector size exponent32.
 
-The old verifier replaced nonzero TT-core coefficients by Boolean ones and projected auxiliary path existence. After the width-40 certificate JSON was repaired and the verifier was finally run on a clean checkout, it did not reproduce its own expected distribution.
+### Exact representation existence
 
-The exact Gram-diagonal test avoids this issue and is now authority.
+Also use the central physical Schmidt-dimension cap on the same tree:
 
-## Clean dependency revalidation in progress
+`W_2_repr<=88`.
 
-Before second-layer work, rerun from clean checkout:
+This is exact representation existence. Central Schmidt-factor generation within peak88 is not yet certified, so do not replace the constructive95 ledger by88 in work claims.
 
-1. `scripts/verify_v26_qr_q138_algebraic_width40.py`;
-2. `scripts/verify_v26_qr_q138_width40_left_rank48.py`;
-3. `scripts/verify_v26_qr_q138_physical_right_hull162.py`;
-4. `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`.
+## Generic-envelope optimality / falsifiers
 
-Workflow:
+The 88 method is exhausted:
 
-`.github/workflows/core-exact-dependencies.yml`.
+1. exact central cardinality MILPs for k=11..16 give boundaries `51,52,55,54,55,56`;
+2. balanced-edge lemma forces smaller side11..16;
+3. generic central+four-leaf envelope therefore has method lower bound88;
+4. explicit tree attains88;
+5. refined central minimal-TT terminal cuts on the three critical partitions are `44,44,44`;
+6. reduced leaf terminal cuts are `11,11,11`.
 
-Do not promote common-span47 or a new mask coefficient theorem until this run closes.
+Thus further generic topology permutations cannot lower88. The next gain must be coefficient-specific.
+
+## Multi-double-round representation law
+
+For fixed outer input masks:
+
+- `W_repr(1)<=88`;
+- `W_repr(d)<=536d-364` for `d>=2`.
+
+This is a structural message bound, not arithmetic work.
 
 ## First unfinished mathematical pass
 
-Two exact branches must be solved and then joined.
+Work in this order.
 
-### Branch A — right/control coefficient family
+1. Freeze the exact outer input Walsh mask(s) for the four diagonal leaves if the project has a canonical source mask. Repo authority currently specifies the fixed/open boundary pattern but does not expose one concrete 128-bit outer mask value. Do not assume zeros.
+2. If no canonical source mask exists, formulate leaf rank parametrically or by source-mask class rather than inventing one value.
+3. For each of the three critical 11|21 partitions, compute the **actual coefficient Schmidt rank** of the fixed-input/single-output leaf vector. Any exponent below11 lowers the global88 bound immediately.
+4. If leaf ranks saturate11, attack the actual central fixed-output/open-four-input coefficient Schmidt rank below the generic exponent44.
+5. If both saturate individually, build a joint central×leaf rank calculation across the critical partition; independent rank envelopes may overcount shared sectors.
+6. Every improvement must be reinserted into a complete two-layer tree before changing `W_2_repr` or `W_2_construct`.
+7. Keep representation width, factor storage, factor-generation work, contraction work and error as separate ledgers.
 
-Candidate exact family factorization:
+## Storage/work warning
 
-`P_m = sum_lambda D(m,lambda) K_lambda`.
+Generic exact HT leaf factorization does not compress arbitrary leaf storage: one leaf uses 4,308,611,904 scalar slots in the frozen generic tree, slightly above dense `2^32`. The separator gain is geometric, not generic storage compression.
 
-Current verifier candidate:
-
-`scripts/verify_v26_qr_q138_mask_coeff124_tt.py`.
-
-It must prove from a clean checkout:
-
-1. exact family span dimension (currently hypothesized 124);
-2. exact coverage of all 4096 physical right-control cases;
-3. row span of the fixed family basis;
-4. exact TT prefix profile of `D` in the twelve physical control bits.
-
-Treat `124` as unadmitted until this verifier passes.
-
-### Branch B — six-left-mask coefficient tensor
-
-The support indicator has full rank 64, so support-only compression cannot solve joint-mask composition.
-
-Construct the **actual coefficient-valued** left tensor with the six physical controls
-
-`u1_8,u1_9,u1_10,u2_8,u2_9,u2_10`
-
-kept explicit, together with
-
-- `I9`;
-- the remaining seven left external bits `O7`;
-- the six parent interface bits or a verified fixed coefficient basis.
-
-Determine exact matrix-family/TT/sector ranks of this tensor. Do not replace coefficient dependence by support classes.
-
-### Join
-
-Only after A and B are exact:
-
-1. identify the shared `u2_8` control explicitly;
-2. build a single exact joint factor graph without multiplying independent rank bounds by fiat;
-3. restore the exact inter-QR mask permutation/wiring;
-4. attach one more QR layer;
-5. compute topology-only separators;
-6. compute algebraic ranks of the actual bottlenecks;
-7. require a complete contraction tree before admitting `W_2`.
+A practical or arithmetic-work gain therefore requires coefficient-specific leaf/central structure, not merely generic Hilbert-rank factorization.
 
 ## Approximation rule
 
-Current corrected one-QR reduction is exact with `epsilon=0`.
+All current admitted reductions are exact, `epsilon=0`. Do not activate epsilon-rank until the actual coefficient-specific rank route genuinely stalls after the source-mask issue is resolved.
 
-Do not activate epsilon-rank while the coefficient-valued exact route remains open. Residual-Gram/tail machinery becomes active only after an explicit exact composition bottleneck is identified and exact rank/sector methods genuinely stall.
-
-## Accounting
-
-Corrected peak-message improvement relative to `2^40`:
-
-`256/109 ~= 2.3486238532x`,
-
-log-width gain:
-
-`~1.2318156752 bits`.
-
-The old `RL216` dense-work ratio is stale. Recompute work/storage for `RL218` after the current exact dependencies and coefficient representations are frozen.
-
-`ALPHA_PASS=0` remains unchanged.
-
-No certified `W_2`, round-depth law, arithmetic-work exponent reduction, full second-layer solution, ranking gain or full-round relevance is admitted.
-
-## Historical measured execution
-
-Still blocked by missing V25 runtime bytes:
-
-- snapshot SHA-256 `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`;
-- core SHA-256 `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`.
+Still not admitted: practical evaluator at the formal peaks, arithmetic-work reduction, ranking gain, `alpha<1`, or full-round relevance.
