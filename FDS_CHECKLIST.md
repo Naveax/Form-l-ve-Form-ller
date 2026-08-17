@@ -34,9 +34,10 @@
 - [x] Clean-check block2 D11 one-bit repeated-variable extension: rank remains21888, no gain (`32038491628`).
 - [x] Clean-check block1 `C12,C13,C14` contiguous carry extension: rank128=`16*8`, no gain (`32038564342`).
 - [x] Clean-check block1 occurrence-closed D1/D2 two-site extension: rank1024=`16*2^6`, no gain (`32033943549`).
+- [x] Clean-check block1 D3 occurrence closure using kernel/fiber proof: local operator rank24/32 but actual old-space kernel intersection zero; rank8192=`16*2^9`, no gain (`32039125472`).
 - [x] Keep revoked int32-overflow ranks96/208 and derived84/83 bounds permanently non-authoritative.
-- [ ] Probe the repeated-D block1 chain one site farther: close D3 in j1 bit3 and j2 bit19 and compare exact rank against naive `16*2^9`.
-- [ ] If D3 is full-rank/no-gain, do not blindly continue; switch to the smallest merged block1/block2 multi-site carry/repeated-D factor.
+- [ ] Characterize the D0..3 boundary fibers/projection ranks before attempting D4; do not blind-append another site.
+- [ ] Build the smallest merged block1/block2 multi-site carry/repeated-D factor if the boundary-fiber route still cannot enter a local kernel.
 - [ ] Test whether joint block1 x block2 row-space rank is strictly below the current product `16*21888`.
 - [ ] Convert any new representation gain into a constructive factor-generation ledger before claiming storage/message improvement.
 - [ ] Keep arithmetic-work accounting separate; current materialized factor size already exceeds `5.16e25` scalars.
