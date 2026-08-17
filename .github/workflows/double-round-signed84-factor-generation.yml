@@ -1,0 +1,35 @@
+name: Signed84 multisite and factor generation
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_signed84_multisite.py'
+      - 'scripts/verify_v26_q138_double_round_factor_generation84.py'
+      - 'scripts/verify_v26_q138_signed_block1_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_physical_row_bridge.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_SIGNED84_MULTISITE_THEOREM.md'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_FACTOR_GENERATION84_THEOREM.md'
+      - '.github/workflows/double-round-signed84-factor-generation.yml'
+  workflow_dispatch:
+
+jobs:
+  signed84-factor-generation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy
+      - name: Verify new exact four-site signed rank96 and d1 recount
+        run: python scripts/verify_v26_q138_double_round_signed84_multisite.py
+      - name: Verify existing explicit block1
+        run: python scripts/verify_v26_q138_signed_block1_explicit_factor.py
+      - name: Verify corrected explicit block2
+        run: python scripts/verify_v26_q138_signed_block2_explicit_factor.py
+      - name: Verify block2 physical-row bridge
+        run: python scripts/verify_v26_q138_signed_block2_physical_row_bridge.py
+      - name: Verify factor-generation84 ledger
+        run: python scripts/verify_v26_q138_double_round_factor_generation84.py
