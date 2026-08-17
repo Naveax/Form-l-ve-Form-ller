@@ -1,0 +1,23 @@
+name: block1-d3-extension-kernel-falsifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py'
+      - 'scripts/verify_v26_q138_block1_two_site_extension_falsifier.py'
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_D3_EXTENSION_KERNEL_NO_GAIN.md'
+      - '.github/workflows/block1-d3-extension-kernel-falsifier.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact D3 kernel no-gain theorem
+        run: python scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py
