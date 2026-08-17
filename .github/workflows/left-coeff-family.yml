@@ -1,0 +1,24 @@
+name: Left coefficient family verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_qr_q138_left_coeff_family_tt.py'
+      - '.github/workflows/left-coeff-family.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: left-coeff-family-main
+  cancel-in-progress: true
+
+jobs:
+  left-coeff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact left coefficient family and TT profile
+        run: python scripts/verify_v26_qr_q138_left_coeff_family_tt.py
