@@ -1,0 +1,27 @@
+name: four-leaf first dyadic star layer
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FOUR_LEAF_FIRST_DYADIC_STAR_LAYER.md'
+      - 'scripts/verify_v26_q138_four_leaf_first_dyadic_star_layer.py'
+      - '.github/workflows/four-leaf-first-dyadic-star-layer.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify exact S1 center dependency
+        run: python scripts/verify_v26_q138_full_s1_gap_rank3829.py
+      - name: Reverify A/D first dyadic residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_parity_rank3.py
+      - name: Reverify B/C first dyadic residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py
+      - name: Verify four-leaf first dyadic star layer
+        run: python scripts/verify_v26_q138_four_leaf_first_dyadic_star_layer.py
