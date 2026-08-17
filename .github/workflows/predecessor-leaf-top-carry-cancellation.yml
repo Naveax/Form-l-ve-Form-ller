@@ -1,0 +1,21 @@
+name: predecessor-leaf top-carry cancellation
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_TOP_CARRY_CANCELLATION.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_top_carry_cancellation.py'
+      - '.github/workflows/predecessor-leaf-top-carry-cancellation.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify predecessor-leaf top-carry cancellation
+        run: python scripts/verify_v26_q138_predecessor_leaf_top_carry_cancellation.py
