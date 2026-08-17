@@ -1,0 +1,21 @@
+name: Semi-open S3 pair full-rank falsifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_semi_open_s3_pair_fullrank.py'
+      - '.github/workflows/semi-open-s3-pair-fullrank.yml'
+  workflow_dispatch:
+
+jobs:
+  semi-open-pair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy
+      - name: Verify semi-open occurrence-closed pair ranks
+        run: python scripts/verify_v26_q138_semi_open_s3_pair_fullrank.py
