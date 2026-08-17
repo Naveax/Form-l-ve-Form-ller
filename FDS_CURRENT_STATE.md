@@ -96,7 +96,7 @@ Materializing one complete signed factor still requires `171*2^78 = 51,681,578,7
 
 ### Exact no-gain closures after rank21888
 
-The first two obvious ways of extending the new sector-overlap mechanism are now closed negatively.
+The obvious local ways of extending the new d=1 structure are now sharply constrained.
 
 **Block2 one bit farther through repeated external D11.** `D11` occurs in j1 bit11 and j2 bit27 but is outside S1, so it remains a column variable. For each fixed D11 slice:
 
@@ -104,7 +104,7 @@ The first two obvious ways of extending the new sector-overlap mechanism are now
 - the j2 bit27 transfer has exact rank2;
 - the sixteen `D12..15` high-sector vectors remain exact rank16.
 
-The transfers are therefore injective on the carry interfaces. They preserve the old j1 dimensions448/448 and intersection424, preserve the sixteen-prefix direct sum, and leave the total block2 rank exactly21888. Clean run `32038491628`: success.
+The transfers are injective on the carry interfaces, preserve the old j1 dimensions448/448 and intersection424, preserve the sixteen-prefix direct sum, and leave the total block2 rank exactly21888. Clean run `32038491628`: success.
 
 Authority:
 
@@ -121,9 +121,23 @@ Authority:
 - `V26_Q138_BLOCK1_C12_C14_EXTENSION_NO_GAIN.md`;
 - `scripts/verify_v26_q138_s1_local_extension_falsifiers.py`.
 
-A clean block1 repeated-D two-site extension through D1,D2 already gives exact union rank1024=`16*2^6`; clean run `32033943549`: success.
+**Block1 repeated-D route through D3.** The clean D0..2 occurrence-closed block has exact rank1024=`16*2^6`. Adding A3,B3,D3 and closing D3 in j1 bit3 plus j2 bit19 introduces a local coupled-carry operator with exact rank24/32 and an explicit8D kernel. The kernel relations identify `(A3=0,s2=1)` with `(A3=1,s2=0)` for fixed `(B3,D3,s18)`.
 
-These results do not lower the canonical85.4178525 bound. They narrow the next search to genuine multi-site or cross-block row-space overlap.
+Crucially, the old rank1024 D0..2 row space projects with full rank1024 onto both fixed-s2 column slices. It therefore contains no nonzero vector supported wholly inside either s2 slice. The local8D kernel has zero intersection with the actual domain `F^8 tensor V`, so the D3 extension is injective on the relevant row space and has exact rank
+
+`8192 = 16*2^9`.
+
+No gain. Clean run `32039125472`: success.
+
+Authority:
+
+- `V26_Q138_BLOCK1_D3_EXTENSION_KERNEL_NO_GAIN.md`;
+- `scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py`;
+- `.github/workflows/block1-d3-extension-kernel-falsifier.yml`.
+
+This kernel/fiber explanation matters: future D4/D5 work should first characterize the new boundary fibers instead of blindly materializing another larger local matrix.
+
+These results do not lower the canonical85.4178525 bound. They narrow the next search to genuine multi-site/cross-block row-space overlap or a boundary-fiber mechanism that actually intersects a local kernel.
 
 ### Overflow correction / revoked candidates
 
@@ -175,6 +189,7 @@ Examples: d2 `683.1007639817401...`, d3 `1191.5987033755086...`.
 - block1 + `C13,C14` carry extension rank64=`16*4`, no compression;
 - block1 + `C12,C13,C14` contiguous carry extension rank128=`16*8`, no compression; clean run `32038564342`;
 - block1 + occurrence-closed D1,D2 two-site extension rank1024=`16*2^6`, no compression; clean run `32033943549`;
+- block1 + D3 occurrence-closed extension rank8192=`16*2^9`; local rank24/32 kernel exists but actual old-space intersection is zero; clean run `32039125472`;
 - block2 repeated-D11 one-bit extension preserves rank21888; clean run `32038491628`;
 - isolated C12 local row map rank2;
 - corrected relaxed adjacent four-site S1 blocks are full rank256; the old96/208 numbers were overflow artifacts;
@@ -186,12 +201,13 @@ One-QR RL218 width optimization still has a dense-work proxy about4.016x worse t
 
 ## Current sharp blockers
 
-1. d=1 S1: lower `171*2^34` further. Simple local appends are now closed: block1 D1/D2, block1 C12..C14, and block2 D11 all hit their naive/no-gain ranks. The next candidate must use genuine merged block1/block2 multi-site carry/repeated-D overlap, or a joint row-space overlap across the current rank16 and rank21888 channels.
-2. A tractable first probe is the repeated-D block1 chain one site beyond D0..2: close D3 simultaneously in j1 bit3 and j2 bit19 and compare exact union rank with the naive `16*2^9`. Only extend to D4/D5 if a nontrivial intersection appears.
-3. d=1 work: factor-generation memory is constructive, arithmetic work is not.
-4. Semi-open B remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
-5. Fully-open S3 may still fall below63.562 through genuine multi-site row-space overlap.
-6. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
+1. d=1 S1: lower `171*2^34` further. Simple local appends are closed through block1 C12..C14, repeated-D D0..3, and block2 D11. The next candidate must either make the existing local kernel reachable through nonzero boundary fibers or use genuine merged block1/block2 multi-site overlap.
+2. Before D4, characterize the D0..3 row-space projection/fiber geometry on the new j1 boundary carry. The D3 step proves that local kernel rank deficiency alone is not enough; actual row-space/kernel intersection is the quantity that matters.
+3. Test joint block1 x block2 row-space rank below the product `16*21888`; shared retained columns may make the product bound loose even when isolated append maps are injective.
+4. d=1 work: factor-generation memory is constructive, arithmetic work is not.
+5. Semi-open B remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
+6. Fully-open S3 may still fall below63.562 through genuine multi-site row-space overlap.
+7. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
 
 All admitted reductions remain exact, `epsilon=0`. Approximation stays inactive while exact signed/sector/joint routes remain open.
 
