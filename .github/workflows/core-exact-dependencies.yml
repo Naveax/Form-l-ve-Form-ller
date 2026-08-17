@@ -13,12 +13,16 @@ concurrency:
 jobs:
   core-exact:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Verify minimal-core width41 certificate
+        run: python scripts/verify_v26_qr_minimal_core_width41.py
+      - name: Verify exact rank528 replacement
+        run: python scripts/verify_v26_qr_width41_left_rank528.py
       - name: Verify width40 structural baseline
         run: python scripts/verify_v26_qr_q138_algebraic_width40.py
       - name: Verify left rank48
