@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import itertools, sys
-from collections import Counter
 from fractions import Fraction
 from pathlib import Path
 
@@ -16,20 +15,16 @@ MASK_NAMES=(
 PRIME=1000000007
 
 
-def add_basis_q(B,row,return_coords=False):
-    r={j:Fraction(v) for j,v in row.items() if v}; out={}
+def add_basis_q(B,row):
+    r={j:Fraction(v) for j,v in row.items() if v}
     while r:
         c=min(r)
         if c not in B:
-            q=1/r[c]; B[c]={j:x*q for j,x in r.items()}
-            if return_coords: return False,out,c
-            return True
-        a=r[c]
-        if return_coords: out[c]=out.get(c,Fraction(0))+a
-        for j,x in B[c].items():
+            q=1/r[c]; B[c]={j:x*q for j,x in r.items()}; return True
+        a=r[c]; b=B[c]
+        for j,x in b.items():
             r[j]=r.get(j,Fraction(0))-a*x
             if not r[j]: r.pop(j,None)
-    if return_coords: return True,out,None
     return False
 
 
@@ -53,8 +48,7 @@ def add_basis_mod(B,row,p=PRIME):
     while r:
         c=min(r)
         if c not in B:
-            inv=pow(r[c],p-2,p); B[c]={j:(x*inv)%p for j,x in r.items()}
-            return True
+            inv=pow(r[c],p-2,p); B[c]={j:(x*inv)%p for j,x in r.items()}; return True
         a=r[c]; b=B[c]
         for j,x in b.items():
             z=(r.get(j,0)-a*x)%p
@@ -105,8 +99,7 @@ def tt_profile(Drows,rankdim=124):
         for pref in range(1<<k):
             row={}
             for suff in range(ns):
-                d=Drows[(pref<< (nbits-k))|suff]
-                base=suff*rankdim
+                d=Drows[(pref<<(nbits-k))|suff]; base=suff*rankdim
                 for lam,x in d.items():row[base+lam]=x
             add_basis_q(B,row)
         out.append(len(B)); print('tt_cut',k,'rank',len(B),flush=True)
@@ -118,54 +111,45 @@ def main():
     intA,prefix,closures,close_ref,L=build_objects(cert)
     ctrls=list(itertools.product((0,1),repeat=12))
 
-    # Fast independent lower-bound witness over a prime field.
+    # Prime-field witness finds 124 independent physical masks.
     M={}; witnesses=[]
     for n,ctrl in enumerate(ctrls,1):
         q=parent_flat(ctrl,intA,prefix,closures,close_ref,L)
-        qm={j:modfrac(x) for j,x in q.items()}
-        if add_basis_mod(M,qm): witnesses.append(ctrl)
+        if add_basis_mod(M,{j:modfrac(x) for j,x in q.items()}): witnesses.append(ctrl)
         if n%512==0:print('mod-span',n,len(M),flush=True)
     assert len(M)==124,len(M); assert len(witnesses)==124
 
-    # Exact rational basis from the modular witness masks.
+    # The witness matrices are also independent over Q.
     F={}
     for ctrl in witnesses:
-        q=parent_flat(ctrl,intA,prefix,closures,close_ref,L)
-        assert add_basis_q(F,q)
+        assert add_basis_q(F,parent_flat(ctrl,intA,prefix,closures,close_ref,L))
     assert len(F)==124
     fpiv=sorted(F); findex={p:i for i,p in enumerate(fpiv)}
 
-    # Exact coverage of all 4096 cases and the 4096x124 mask selector D.
-    D=[]; parent_ranks=[]; nnz=0
+    # Every physical mask is exactly in that rational 124-dimensional family span.
+    D=[]; nnz=0
     for n,ctrl in enumerate(ctrls,1):
-        q=parent_flat(ctrl,intA,prefix,closures,close_ref,L)
-        d=reduce_q(q,F,findex); D.append(d); nnz+=len(d)
-        # rank of the 48x64 matrix itself
-        rows=[]
-        for a in range(48):
-            rows.append({j:q[a*64+j] for j in range(64) if a*64+j in q})
-        parent_ranks.append(len(P.row_basis(rows)))
+        d=reduce_q(parent_flat(ctrl,intA,prefix,closures,close_ref,L),F,findex)
+        D.append(d); nnz+=len(d)
         if n%512==0:print('exact-cover',n,'selector_nnz',nnz,flush=True)
-    assert (min(parent_ranks),max(parent_ranks))==(5,27)
 
-    # U47 comes from rows of the 124 exact family basis matrices; no 4096-basis switching.
+    # The row directions of the 124 family basis matrices generate exactly U47.
     U={}
     for mat in F.values():
-        for a in range(48):
-            row={j:x for ij,x in mat.items() if (ij//64)==a for j in [ij%64]}
-            add_basis_q(U,row)
+        byrow=[{} for _ in range(48)]
+        for ij,x in mat.items():byrow[ij//64][ij%64]=x
+        for row in byrow:add_basis_q(U,row)
     assert len(U)==47,len(U)
     upiv=sorted(U); uindex={p:i for i,p in enumerate(upiv)}
 
-    # Kernel K(lambda,a,r) mapping the 124 family sectors to left48 x U47.
+    # Fixed kernel K(lambda,a,r) from family sectors to left48 x U47.
     knnz=0
     for mat in F.values():
-        for a in range(48):
-            row={ij%64:x for ij,x in mat.items() if (ij//64)==a}
-            c=reduce_q(row,U,uindex); knnz+=len(c)
+        byrow=[{} for _ in range(48)]
+        for ij,x in mat.items():byrow[ij//64][ij%64]=x
+        for row in byrow:knnz+=len(reduce_q(row,U,uindex))
 
-    profile=tt_profile(D,124)
-    maxchi=max(profile)
+    profile=tt_profile(D,124); maxchi=max(profile)
 
     print('PASS V26_QR_Q138_MASK_COEFF124_TT')
     print('mask_order='+','.join(MASK_NAMES))
@@ -175,6 +159,6 @@ def main():
     print('kernel_shape=124x48x47 kernel_nnz='+str(knnz))
     print('exact_tt_profile='+','.join(map(str,profile)))
     print('exact_tt_max_bond='+str(maxchi))
-    print('parent_rank_envelope=5..27')
+    print('DEPENDENCY parent_rank_envelope=5..27 is verified separately by verify_v26_qr_q138_physical_rank_envelope27.py')
 
 if __name__=='__main__':main()
