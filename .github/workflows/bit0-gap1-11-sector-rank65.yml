@@ -1,0 +1,24 @@
+name: bit0-gap1-11-sector-rank65
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py'
+      - 'scripts/verify_v26_q138_j2_gap1_11_rank66.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BIT0_GAP1_11_SECTOR_RANK65.md'
+      - '.github/workflows/bit0-gap1-11-sector-rank65.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify j2 gap rank66
+        run: python scripts/verify_v26_q138_j2_gap1_11_rank66.py
+      - name: Verify bit0 plus gap D16 sector rank65
+        run: python scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py
