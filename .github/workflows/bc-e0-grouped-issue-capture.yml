@@ -1,0 +1,26 @@
+name: B-C e0 grouped issue capture
+on:
+  push:
+    paths:
+      - '.github/workflows/bc-e0-grouped-issue-capture.yml'
+permissions:
+  contents: read
+  issues: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run grouped probe
+        run: |
+          set -euo pipefail
+          { git rev-parse HEAD; python scripts/probe_v26_q138_bc_e0_grouped_correction_uniform_span.py; } | tee /tmp/e0group.txt
+      - name: Publish result issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" --title "AUTO BC E0 GROUPED SPAN CERTIFICATE" --body-file /tmp/e0group.txt
