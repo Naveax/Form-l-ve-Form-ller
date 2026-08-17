@@ -1,0 +1,15 @@
+name: B-C second residue rank812-972
+on: [workflow_dispatch, push]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - run: python scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py
+      - run: python scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py
+      - run: python scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py
