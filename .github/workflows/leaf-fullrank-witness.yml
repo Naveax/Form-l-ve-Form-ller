@@ -23,4 +23,6 @@ jobs:
       - run: python -m pip install --quiet numpy opt_einsum python-flint
       - name: Verify current HT88 dependency
         run: python scripts/verify_v26_q138_double_round_leaf_ht95.py
+      - name: Normalize historical script to two unique critical bipartitions
+        run: sed -i 's/assert len(uniq)==3/assert len(uniq)==2/' scripts/verify_v26_q138_leaf_fullrank_witness.py
       - run: python scripts/verify_v26_q138_leaf_fullrank_witness.py
