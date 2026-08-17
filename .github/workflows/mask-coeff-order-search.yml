@@ -1,0 +1,23 @@
+name: Mask coefficient order search
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_qr_q138_mask_coeff124_order_search.py'
+      - '.github/workflows/mask-coeff-order-search.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: mask-coeff-order-main
+  cancel-in-progress: true
+
+jobs:
+  order-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_qr_q138_mask_coeff124_order_search.py
