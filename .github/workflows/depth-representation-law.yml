@@ -1,0 +1,18 @@
+name: Depth representation law verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_depth_representation_law.py'
+      - '.github/workflows/depth-representation-law.yml'
+  workflow_dispatch:
+
+jobs:
+  depth-law:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_depth_representation_law.py
