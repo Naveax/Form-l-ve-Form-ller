@@ -1,0 +1,22 @@
+name: Double-round signed local rank85
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - '.github/workflows/double-round-signed85.yml'
+  workflow_dispatch:
+
+jobs:
+  signed85:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify historical HT dependency
+        run: python scripts/verify_v26_q138_double_round_leaf_ht95.py
+      - name: Verify signed local rank improvement
+        run: python scripts/verify_v26_q138_double_round_signed85.py
