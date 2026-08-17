@@ -55,10 +55,44 @@ def block1_c1314_rank():
         rows.append(r)
     return rank_sparse(rows),sum(not r for r in rows)
 
+def block1_c121314_rank():
+    # One more contiguous carry step through j2 bit12.
+    # Row bits: A0,B0,C12,C13,C14,C15,C16,D0 (8 bits).
+    # sigma2_12 is now internal; sigma2_11 plus the local v/w legs of bit12
+    # remain on the column side. This is the natural C12 append to the existing
+    # block1 carry extension, and it remains exact over Q.
+    rows=[]
+    for A0,B0,C12,C13,C14,C15,C16,D0 in itertools.product((0,1),repeat=8):
+        r={}
+        for s216,v215,s211,s10,u30,v312,v214,w214,v213,w213,v212,w212 in itertools.product((0,1),repeat=12):
+            z=Fraction(0)
+            for s215,s214,s213,s212 in itertools.product((0,1),repeat=4):
+                a=T(s216,s215,C16,D0,0)
+                if not a:continue
+                b=T(s215,s214,C15,v215,1)
+                if not b:continue
+                c=T(s214,s213,C14,v214,w214)
+                if not c:continue
+                d=T(s213,s212,C13,v213,w213)
+                if not d:continue
+                e=T(s212,s211,C12,v212,w212)
+                if e:z+=a*b*c*d*e
+            if not z:continue
+            y=T0(s10,A0,v312^B0,u30^D0)
+            if not y:continue
+            k=0
+            for q in (s216,v215,s211,s10,u30,v312,v214,w214,v213,w213,v212,w212):k=(k<<1)|q
+            r[k]=z*y
+        rows.append(r)
+    return rank_sparse(rows),sum(not r for r in rows)
+
 def main():
     r,z=block1_c1314_rank()
     assert r==64 and z==32,(r,z)
+    r2,z2=block1_c121314_rank()
+    assert r2==128 and z2==64,(r2,z2)
     print('PASS V26_Q138_S1_LOCAL_EXTENSION_FALSIFIERS')
     print('block1_plus_C13_C14_exact_relaxed_rank=64=16*4 zero_rows=32')
-    print('scope=closes this local carry-extension route only; not a lower bound on full S1 central rank')
+    print('block1_plus_C12_C13_C14_exact_relaxed_rank=128=16*8 zero_rows=64')
+    print('scope=closes these contiguous local carry-extension routes only; not a lower bound on full S1 central rank')
 if __name__=='__main__':main()
