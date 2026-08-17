@@ -6,7 +6,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -15,10 +15,13 @@ jobs:
       - run: python scripts/probe_v26_q138_predecessor_leaf_ad_third_weight90_input_activity.py
       - name: Exact condition grouping
         run: python scripts/probe_v26_q138_ad_third_weight90_condition_groups.py | tee /tmp/adgroups.txt
-      - name: Publish grouping status
+      - name: Exact direct e2 support aggregation
+        run: python scripts/probe_v26_q138_ad_third_direct_e2_supports.py | tee /tmp/ade2.txt
+      - name: Publish exact probe statuses
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          DESC=$(grep '^STATUS_DESC=' /tmp/adgroups.txt | sed 's/^STATUS_DESC=//')
-          gh api --method POST "repos/${{ github.repository }}/statuses/${GITHUB_SHA}" \
-            -f state=success -f context='math/ad-third-condition-groups' -f description="$DESC"
+          D1=$(grep '^STATUS_DESC=' /tmp/adgroups.txt | sed 's/^STATUS_DESC=//')
+          D2=$(grep '^STATUS_DESC=' /tmp/ade2.txt | sed 's/^STATUS_DESC=//')
+          gh api --method POST "repos/${{ github.repository }}/statuses/${GITHUB_SHA}" -f state=success -f context='math/ad-third-condition-groups' -f description="$D1"
+          gh api --method POST "repos/${{ github.repository }}/statuses/${GITHUB_SHA}" -f state=success -f context='math/ad-third-direct-e2' -f description="$D2"
