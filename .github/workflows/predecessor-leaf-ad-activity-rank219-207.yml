@@ -1,0 +1,24 @@
+name: predecessor-leaf A-D activity rank219-207
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_AD_ACTIVITY_RANK219_207.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py'
+      - '.github/workflows/predecessor-leaf-ad-activity-rank219-207.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy scipy
+      - name: Reverify A/D second-residue decomposition
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py
+      - name: Verify uniform input-activity sharpening
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py
