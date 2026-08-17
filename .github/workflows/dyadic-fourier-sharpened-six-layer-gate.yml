@@ -1,0 +1,26 @@
+name: dyadic Fourier-sharpened six-layer gate
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DYADIC_FOURIER_SHARPENED_SIX_LAYER_GATE.md'
+      - 'scripts/verify_v26_q138_dyadic_fourier_sharpened_six_layer_gate.py'
+      - '.github/workflows/dyadic-fourier-sharpened-six-layer-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy scipy
+      - name: Reverify A/D activity-sharpened second residues
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py
+      - name: Reverify B/C Fourier-aligned first lifts
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_fourier_lift_rank36_84.py
+      - name: Verify revised six-layer dyadic gate
+        run: python scripts/verify_v26_q138_dyadic_fourier_sharpened_six_layer_gate.py
