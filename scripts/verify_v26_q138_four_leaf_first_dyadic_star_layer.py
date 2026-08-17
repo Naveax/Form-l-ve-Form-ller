@@ -17,7 +17,7 @@ def main():
     leaf_exp=math.log2(leaf0)
     assert abs(leaf_exp-23.38875308074955)<1e-12
     assert leaf0 < 2**24
-    assert leaf0 << 2**44
+    assert leaf0 < 2**44
 
     center=3829*(2**29)
     assert center==2055678722048
