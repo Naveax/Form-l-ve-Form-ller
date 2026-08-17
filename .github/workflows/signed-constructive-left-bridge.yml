@@ -1,0 +1,24 @@
+name: Signed constructive left bridge
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - 'scripts/verify_v26_q138_signed_constructive_left_bridge.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_SIGNED_CONSTRUCTIVE_LEFT_BRIDGE_THEOREM.md'
+      - '.github/workflows/signed-constructive-left-bridge.yml'
+  workflow_dispatch:
+
+jobs:
+  signed-left-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify signed ranks
+        run: python scripts/verify_v26_q138_double_round_signed85.py
+      - name: Verify left constructive envelopes
+        run: python scripts/verify_v26_q138_signed_constructive_left_bridge.py
