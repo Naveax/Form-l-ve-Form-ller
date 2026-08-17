@@ -1,0 +1,18 @@
+name: Double-round leaf TT124 verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_leaf_tt124.py'
+      - '.github/workflows/double-round-leaf-tt124.yml'
+  workflow_dispatch:
+
+jobs:
+  leaf-tt124:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_double_round_leaf_tt124.py
