@@ -1,0 +1,25 @@
+name: block1-block2-shared-v312-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_block2_shared_v312_no_gain.py'
+      - 'scripts/verify_v26_q138_signed_block2_extend12_rank21888.py'
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_BLOCK2_SHARED_V312_NO_GAIN.md'
+      - '.github/workflows/block1-block2-shared-v312-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify extended block2 prerequisite
+        run: python scripts/verify_v26_q138_signed_block2_extend12_rank21888.py
+      - name: Verify exact shared-v3_12 joint no-gain theorem
+        run: python scripts/verify_v26_q138_block1_block2_shared_v312_no_gain.py
