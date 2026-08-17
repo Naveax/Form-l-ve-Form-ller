@@ -1,0 +1,24 @@
+name: d1 monotone complement interleave no-gain
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_D1_MONOTONE_COMPLEMENT_INTERLEAVE_NO_GAIN.md'
+      - 'scripts/verify_v26_q138_d1_monotone_complement_interleave_no_gain.py'
+      - '.github/workflows/d1-monotone-complement-interleave-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy scipy
+      - name: Reverify low-high star product barrier
+        run: python scripts/verify_v26_q138_d1_low_high_star_product_barrier.py
+      - name: Verify monotone complement interleave barrier
+        run: python scripts/verify_v26_q138_d1_monotone_complement_interleave_no_gain.py
