@@ -1,0 +1,36 @@
+name: full-s1-gap-rank3829
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_full_s1_gap_rank3829.py'
+      - 'scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py'
+      - 'scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py'
+      - 'scripts/verify_v26_q138_j2_bridge22_31_injective.py'
+      - 'scripts/verify_v26_q138_signed_block2_extend12_rank21888.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FULL_S1_GAP_RANK3829_THEOREM.md'
+      - '.github/workflows/full-s1-gap-rank3829.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify low D0..5 theorem
+        run: python scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py
+      - name: Reverify universal C12..14 bridge
+        run: python scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py
+      - name: Reverify j2 high bridge injectivity
+        run: python scripts/verify_v26_q138_j2_bridge22_31_injective.py
+      - name: Reverify extended block2 D16 geometry
+        run: python scripts/verify_v26_q138_signed_block2_extend12_rank21888.py
+      - name: Verify new bit0 plus gap sector rank65
+        run: python scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py
+      - name: Verify complete S1 rank3829 and frozen tree
+        run: python scripts/verify_v26_q138_full_s1_gap_rank3829.py
