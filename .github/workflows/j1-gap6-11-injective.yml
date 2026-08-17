@@ -1,0 +1,21 @@
+name: j1-gap6-11-injective
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_j1_gap6_11_injective.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_J1_GAP6_11_INJECTIVE.md'
+      - '.github/workflows/j1-gap6-11-injective.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact j1 retained gap6..11 injectivity
+        run: python scripts/verify_v26_q138_j1_gap6_11_injective.py
