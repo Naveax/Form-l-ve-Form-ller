@@ -6,6 +6,9 @@ on:
       - '.github/workflows/core-exact-dependencies.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: core-exact-dependencies-main
   cancel-in-progress: true
@@ -19,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Diagnose minimal-core certificate JSON
+      - name: Repair one-character minimal-core certificate serialization defect
         run: |
           python - <<'PY'
           import json
@@ -27,26 +30,27 @@ jobs:
           p=Path('research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json')
           s=p.read_text()
           try:
-              json.loads(s); print('minimal certificate valid')
+              obj=json.loads(s)
+              print('minimal certificate already valid')
           except json.JSONDecodeError as e:
-              print('error',e,'pos',e.pos)
-              print('context',repr(s[max(0,e.pos-160):e.pos+160]))
-              # bracket stack ignoring JSON strings, useful for one-character serialization defects
-              stack=[];ins=False;esc=False
-              for i,ch in enumerate(s[:e.pos+1]):
-                  if ins:
-                      if esc:esc=False
-                      elif ch=='\\':esc=True
-                      elif ch=='"':ins=False
-                      continue
-                  if ch=='"':ins=True
-                  elif ch in '[{':stack.append((ch,i))
-                  elif ch in ']}':
-                      if stack and ((stack[-1][0]=='[' and ch==']') or (stack[-1][0]=='{' and ch=='}')):stack.pop()
-                      else:print('mismatch_at',i,ch,'stack_tail',stack[-5:]);break
-              print('stack_tail_at_error',stack[-12:])
-              raise
+              assert e.pos==3929,(e.pos,e)
+              assert s[e.pos]==']',repr(s[e.pos-20:e.pos+20])
+              fixed=s[:e.pos]+s[e.pos+1:]
+              obj=json.loads(fixed)
+              assert obj['milestone']=='V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE'
+              assert obj['certificate']['leaves']==568
+              assert obj['certificate']['internal_nodes']==567
+              assert obj['certificate']['max_boundary_dimension']==2**41
+              p.write_text(fixed)
+              print('minimal certificate repaired by deleting extra ] at char 3929')
           PY
+          if ! git diff --quiet -- research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json
+            git commit -m 'Repair minimal-core width41 certificate JSON serialization'
+            git push
+          fi
       - name: Verify minimal-core width41 certificate
         run: python scripts/verify_v26_qr_minimal_core_width41.py
       - name: Verify exact rank528 replacement
