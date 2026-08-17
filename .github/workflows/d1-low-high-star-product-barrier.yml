@@ -1,0 +1,23 @@
+name: d1 low-high star product barrier
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_D1_LOW_HIGH_STAR_PRODUCT_BARRIER.md'
+      - 'scripts/verify_v26_q138_d1_low_high_star_product_barrier.py'
+      - '.github/workflows/d1-low-high-star-product-barrier.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify full S1 rank3829 dependency
+        run: python scripts/verify_v26_q138_full_s1_gap_rank3829.py
+      - name: Verify low-high star product barrier
+        run: python scripts/verify_v26_q138_d1_low_high_star_product_barrier.py
