@@ -1,0 +1,24 @@
+name: block1-c12-d04-merged-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_C12_D04_MERGED_NO_GAIN.md'
+      - '.github/workflows/block1-c12-d04-merged-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify D0..4 prerequisite
+        run: python scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py
+      - name: Verify merged C12..14 x D0..4 no-gain theorem
+        run: python scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py
