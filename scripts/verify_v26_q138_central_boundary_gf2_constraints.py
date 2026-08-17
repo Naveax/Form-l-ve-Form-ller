@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# This verifier intentionally imports the current HT88 partition authority.
 import sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -49,7 +48,7 @@ def critical_sets():
         if H.message_exponent(S)==88:
             if len(S)>16:S=set(range(N))-S
             if S not in out:out.append(S)
-    assert len(out)==3 and all(len(S)==11 for S in out),[sorted(S) for S in out]
+    assert len(out)==2 and all(len(S)==11 for S in out),[sorted(S) for S in out]
     return out
 def projected_codim(V,eq,S):
     X={V.d[f'{w}_{i}'] for i in S for w in 'ABCD'};assert len(X)==44
@@ -60,9 +59,10 @@ def main():
     for q,S in enumerate(critical_sets(),1):
         c,rf,rb=projected_codim(V,eq,S);vals.append(c)
         print('partition',q,'sites',sorted(S),'boundary_bits=44','full_eq_rank',rf,'other_column_rank',rb,'pure_boundary_parity_codim',c)
-    assert vals==[0,0,0],vals
+    assert vals==[0,0],vals
     print('PASS V26_Q138_CENTRAL_BOUNDARY_GF2_CONSTRAINTS')
-    print('critical_partitions_pure_linear_boundary_constraints=0,0,0')
+    print('unique_critical_bipartitions=2 pure_linear_boundary_constraints=0,0')
+    print('tree_has_three_max_clusters_but_one_pair_are_complements')
     print('scope=sigma recurrence plus exact XOR/rotation linear relations; nonlinear sigma=0 equality support not included')
     print('consequence=no free GF2 parity reduction below central exponent44 on critical HT88 cuts')
 if __name__=='__main__':main()
