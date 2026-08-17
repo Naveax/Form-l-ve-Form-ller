@@ -1,0 +1,21 @@
+name: d1-arithmetic-materialization-gate
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_d1_arithmetic_materialization_gate.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_D1_ARITHMETIC_MATERIALIZATION_GATE.md'
+      - '.github/workflows/d1-arithmetic-materialization-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify d1 arithmetic materialization gate
+        run: python scripts/verify_v26_q138_d1_arithmetic_materialization_gate.py
