@@ -1,0 +1,21 @@
+name: j2-gap1-11-rank66
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_j2_gap1_11_rank66.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_J2_GAP1_11_RANK66.md'
+      - '.github/workflows/j2-gap1-11-rank66.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact j2 gap1..11 rank66 theorem
+        run: python scripts/verify_v26_q138_j2_gap1_11_rank66.py
