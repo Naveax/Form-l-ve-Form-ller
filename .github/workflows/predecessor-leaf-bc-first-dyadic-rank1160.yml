@@ -1,0 +1,23 @@
+name: predecessor-leaf B-C first dyadic rank1160
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_BC_FIRST_DYADIC_RANK1160.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py'
+      - '.github/workflows/predecessor-leaf-bc-first-dyadic-rank1160.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify B/C dyadic denominator dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_dyadic_descent92_121.py
+      - name: Verify B/C first dyadic residue
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py
