@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Canonical exact verifier; this touch intentionally triggers the verifier workflow.
 import itertools, sys
 from collections import defaultdict
 from fractions import Fraction
@@ -93,7 +94,6 @@ def main():
     ctx,intA,prefix,closures,close_ref=build_transfer_objects(cert)
     L=common_left_basis(cert,intA)
 
-    # Freeze a deterministic common rational U47 basis in lexicographic mask order.
     U={}
     ranks=[]
     ctrls=list(itertools.product((0,1),repeat=12))
@@ -105,7 +105,6 @@ def main():
     assert len(U)==47,len(U)
     pivots=sorted(U); pindex={p:i for i,p in enumerate(pivots)}
 
-    # Exact flattening mask | (left48,U47).  Each mask contributes one 48x47 coefficient matrix.
     F={}; nnz_total=0
     for n,ctrl in enumerate(ctrls,1):
         Prows=parent_for(ctrl,intA,close_ref,prefix,closures,L)
@@ -119,8 +118,6 @@ def main():
         if n%256==0: print(f'coefficient-family progress {n}/4096 rank={len(F)}',flush=True)
     family_rank=len(F)
 
-    # Sanity: the tensor output really lives in 48 x U47, and mask-specific matrix rank
-    # reproduces the admitted parent rank envelope.
     assert min(ranks)==5 and max(ranks)==27
     assert family_rank==124,family_rank
 
