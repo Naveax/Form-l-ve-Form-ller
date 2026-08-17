@@ -1,0 +1,23 @@
+name: Fully-open common-tree search
+
+on:
+  push:
+    paths:
+      - 'scripts/search_v26_q138_fully_open_common_tree.py'
+      - '.github/workflows/fully-open-tree-search.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: fully-open-tree-main
+  cancel-in-progress: true
+
+jobs:
+  tree-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/search_v26_q138_fully_open_common_tree.py
