@@ -1,0 +1,21 @@
+name: j2-bridge22-31-injective
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_j2_bridge22_31_injective.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_J2_BRIDGE22_31_INJECTIVE.md'
+      - '.github/workflows/j2-bridge22-31-injective.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact j2 bridge22..31 injectivity
+        run: python scripts/verify_v26_q138_j2_bridge22_31_injective.py
