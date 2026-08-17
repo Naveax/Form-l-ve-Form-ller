@@ -9,6 +9,8 @@ import verify_v26_qr_q138_width40_left_rank48 as Q
 
 I9=['v4_8','v4_9','v4_10','sig4_18','sig3_10','v3_21','v3_22','aux_j2_i10_k2','sig1_10']
 EXPECTED=Counter({216:36,144:12,180:6,174:4,117:2,120:2,177:2})
+BASIS_MASKS=['000000','000001','000010','000011','000100','000101','001000','001010','001100','010100','011100','011101']
+PIVOT_I9=['000000000','000000001','000000010','000000011','000000100','000000101','000000110','000001001','000001100','000100000','000100001','000100100']
 
 def support_cf(core,labels):
     labs,data=Q.cf(core,labels)
@@ -72,17 +74,33 @@ def main():
             assert not ok,(k,idx)
 
     # Exact rational rank of the 64 x 512 mask/support selector.
+    pats=list(itertools.product((0,1),repeat=6))
     rows=[]
-    for p in itertools.product((0,1),repeat=6):
+    for p in pats:
         s=supports[p];rows.append([Fraction(int(i in s)) for i in range(512)])
     rr,_=Q.rref_piv(rows);assert rr==12,rr
     urows=[[Fraction(int(i in s)) for i in range(512)] for s in classes]
     urr,_=Q.rref_piv(urows);assert urr==12,urr
 
+    # Explicit 12-state selector factorization stated in the composition theorem.
+    bidx=[pats.index(tuple(map(int,s))) for s in BASIS_MASKS]
+    piv=[int(s,2) for s in PIVOT_I9]
+    basis=[rows[i] for i in bidx]
+    P=[[basis[r][c] for c in piv] for r in range(12)]
+    Pinv=Q.inv(P)
+    alphabet=set()
+    for row in rows:
+        y=[row[c] for c in piv]
+        alpha=[sum(y[k]*Pinv[k][j] for k in range(12)) for j in range(12)]
+        alphabet.update(alpha)
+        rec=[sum(alpha[j]*basis[j][c] for j in range(12)) for c in range(512)]
+        assert rec==row
+    assert alphabet=={Fraction(-1),Fraction(0),Fraction(1)},alphabet
+
     print('PASS V26_QR_Q138_LEFT_I9_SUPPORT216')
     print('fixed_left_masks=64 support_min=117 support_max=216 distinct_support_classes=13 union=384 intersection=96')
     print('support_size_distribution='+repr(dict(sorted(dist.items()))))
-    print('mask_support_selector_exact_rational_rank=12')
+    print('mask_support_selector_exact_rational_rank=12 explicit_basis=12 coefficient_alphabet=-1,0,1')
     print('epsilon=0: assignments excluded by the support projection are exactly impossible')
 
 if __name__=='__main__':main()
