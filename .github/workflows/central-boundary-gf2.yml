@@ -1,0 +1,18 @@
+name: Central boundary GF2 verifier
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_central_boundary_gf2_constraints.py'
+      - '.github/workflows/central-boundary-gf2.yml'
+  workflow_dispatch:
+
+jobs:
+  gf2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_central_boundary_gf2_constraints.py
