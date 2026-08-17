@@ -1,0 +1,26 @@
+name: dyadic activity-sharpened prefix gate
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DYADIC_ACTIVITY_SHARPENED_PREFIX_GATE.md'
+      - 'scripts/verify_v26_q138_dyadic_activity_sharpened_prefix_gate.py'
+      - '.github/workflows/dyadic-activity-sharpened-prefix-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy scipy
+      - name: Reverify A/D activity-sharpened residue bounds
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py
+      - name: Reverify B/C first residue bounds
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py
+      - name: Verify revised dyadic prefix gate
+        run: python scripts/verify_v26_q138_dyadic_activity_sharpened_prefix_gate.py
