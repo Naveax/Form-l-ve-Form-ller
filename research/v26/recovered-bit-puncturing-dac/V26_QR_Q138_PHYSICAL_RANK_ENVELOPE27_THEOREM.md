@@ -2,61 +2,60 @@
 
 ## Purpose
 
-The certified width-40 q138 one-QR representation contains a unique 171-leaf bottleneck with a `64|107` child split through six binary interface bits. Previous work proved the left 64-leaf child has uniform exact rank 48 and that the 107-leaf right rank is input-mask conditioned.
+The certified q138 fixed-output one-QR representation contains a 171-leaf parent bottleneck with a `64|107` child split through six binary interface bits and a `16|24` external partition.
 
-This note closes the physical fixed-mask rank envelope exactly.
+This theorem gives the exact physical fixed-mask rank envelope and two stronger common-space facts needed for composition.
 
-For every physical fixed input mask compatible with the q138 fixed-output right-map geometry:
+For every physical fixed input mask:
 
-- the 107-leaf right map has exact rank between 11 and 38;
-- the full 171-leaf parent flattening has exact rank between 5 and 27.
+- `11 <= rank(R_m) <= 38` for the 107-leaf right map;
+- `5 <= rank(M_m) <= 27` for the full 171-leaf parent flattening.
 
-Thus the formal `2^40` bottleneck admits, for every physical fixed-mask coefficient instance, an exact Schmidt factorization with at most 27 channels across the certified `16|24` external partition.
+Across the entire family:
+
+- all 64 left fixed-mask maps share one exact 48-dimensional interface row space;
+- all 4096 parent Schmidt/interface row spaces lie in one exact 47-dimensional common span.
+
+All arithmetic is exact dyadic/rational algebra.
 
 ## 1. Physical control bits
 
-The actual parity factor is
+The physical parity relation is
 
 `u4_i xor v3_{i+12} xor w2_i = 0`.
 
-Therefore the generalized affine parity controls `p_i` are not physical source-mask parameters. Fix `p_i=0`.
+The generalized affine parity controls are therefore fixed to `p_i=0`.
 
 The 107-leaf right map depends on twelve physical fixed input-mask bits:
 
-- `u1_3,...,u1_7` (5 bits);
-- `u2_3,...,u2_8,u2_31` (7 bits).
+- `u1_3,...,u1_7`;
+- `u2_3,...,u2_8,u2_31`.
 
-Hence the complete physical fixed-mask family has exactly
+Hence there are exactly `2^12=4096` physical right-control cases.
 
-`2^12 = 4096`
+## 2. Exact five-site calculation
 
-cases.
-
-The bit `u2_8` is shared with the left child but is rank-inert on the right map: flipping it never changes the exact right rank.
-
-## 2. Transfer calculation
-
-Use the exact five-site transfer chain and the physical reachable hull from
+Use the physical five-site transfer chain and the 162-dimensional reachable quotient from
 
 `V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`.
 
-The calculation is finite-state exact algebra, not 4096 independent 107-leaf contractions:
+For each control sequence:
 
-1. build the four site-3 doubled boundary vectors for each physical `(u1_3,u2_3)` choice;
-2. propagate them through the exact site-4,5,6 transfer operators selected by `(u1_i,u2_i,p=0)`;
-3. close with the site-7 tensor, keeping `u2_8` and the T2 bit-31 control `u2_31` as their actual boundary controls;
+1. form the exact site-3 doubled boundary vectors;
+2. propagate through the exact site-4,5,6 physical transfer operators;
+3. close with the site-7 tensor including `u2_8` and `u2_31` as boundary controls;
 4. assemble the exact `64 x 64` right Gram matrix in the canonical six-interface-bit order;
-5. compute exact rational rank.
+5. compute exact rational rank and parent interface space.
 
-All arithmetic is dyadic/rational. No floating rank tolerance, sigma cap or approximation is used.
+No floating tolerance, trail cap or approximation is used.
 
 ## 3. Exact right-map envelope
 
-Over all 4096 physical fixed-mask cases,
+Over all 4096 physical cases:
 
 `11 <= rank(R_m) <= 38`.
 
-The exact rank distribution is:
+Exact distribution:
 
 | rank | cases |
 |---:|---:|
@@ -82,26 +81,26 @@ The exact rank distribution is:
 | 37 | 428 |
 | 38 | 252 |
 
-The T2 bit-31 boundary control creates a particularly strong split:
+Boundary split:
 
-- if `u2_31=0`, right rank lies in `22..38`;
-- if `u2_31=1`, right rank lies in `11..19`.
+- `u2_31=0`: right rank `22..38`;
+- `u2_31=1`: right rank `11..19`.
 
-Thus the raw six-bit interface dimension 64 is never attained by a physical right map.
+The raw six-bit interface dimension 64 is never attained by a physical right map.
 
-## 4. Left row-space collapse
+## 4. One common left row space
 
-The left 64-leaf map has rank 48 for all 64 combinations of its six fixed T1/T2 input bits, as already proved.
+The 64-leaf left map has exact rank 48 for all 64 combinations of its six fixed T1/T2 input bits.
 
-A stronger fact holds: its exact 48-dimensional row space has only two classes, selected solely by the shared bit `u2_8`.
+Exact union-rank checks show something stronger than previously recorded: **all 64 cases share the same 48-dimensional interface row space**.
 
-Within either value of `u2_8`, changing the other five left fixed bits does not change the exact row space. This is verified by exact union-rank tests: the representative row space and every same-`u2_8` row space have combined rank 48.
+In particular the earlier two representatives selected by `u2_8=0/1` have combined exact rank 48, so they are not distinct row-space classes. The previous wording “two classes selected by `u2_8`” is superseded by this stronger equality theorem.
 
-Therefore the full parent-rank classification does not require multiplying 64 unrelated left maps by every right map. Only the two exact left row-space representatives are needed.
+Thus one fixed 48-dimensional left interface space suffices for all physical left masks.
 
 ## 5. Canonical interface order
 
-The six interface bits are ordered canonically as
+The six interface bits are ordered as
 
 1. `aux_j2_i8_k0`;
 2. `aux_j4_i11_k0`;
@@ -110,23 +109,21 @@ The six interface bits are ordered canonically as
 5. `sig3_7`;
 6. `sig4_7`.
 
-The second entry is the site-3/start interface bit. The verifier assembles the Gram matrix in this canonical order before multiplying by the left map.
-
-This ordering matters for the parent product even though it does not affect the right-map rank itself.
+This order is used consistently for right Gram matrices and parent-space products.
 
 ## 6. Exact parent envelope
 
 Let
 
-`M_m = L_m R_m`
+`M_m=L_m R_m`
 
-be the certified 171-leaf parent flattening across its `16|24` external partition.
+be the parent flattening across the certified `16|24` partition.
 
-Using the exact left row-space representative selected by the shared `u2_8` bit and the exact right Gram matrix for each of the 4096 physical right controls gives
+Exact ranks over all 4096 cases satisfy
 
 `5 <= rank(M_m) <= 27`.
 
-The exact parent-rank distribution is:
+Exact distribution:
 
 | rank | cases |
 |---:|---:|
@@ -143,57 +140,80 @@ The exact parent-rank distribution is:
 | 26 | 428 |
 | 27 | 252 |
 
-Again the bit-31 boundary control is decisive:
+Boundary split:
 
-- if `u2_31=0`, parent rank lies in `16..27`;
-- if `u2_31=1`, parent rank lies in `5..8`.
+- `u2_31=0`: parent rank `16..27`;
+- `u2_31=1`: parent rank `5..8`.
 
-The shared `u2_8` bit does not change the parent rank after the corresponding left row-space class is used.
+The shared `u2_8` bit is rank-inert.
 
-## 7. Cross-checks
+## 7. Exact common parent-interface span
 
-The exact transfer calculation reproduces the previously admitted fixed-mask examples:
+For each mask `m`, form the row space in the canonical six-bit interface coordinate that is generated by the exact parent product. Its dimension is `rank(M_m)<=27`.
 
-- zero representative: right rank 34, parent rank 23;
-- all-one representative: right rank 19, parent rank 8;
-- previous high representative: right rank 37, parent rank 26.
+Take the union span over all 4096 physical masks and reduce it exactly over the rationals.
 
-These matches are useful because they compare the finite-state transfer route against the earlier full doubled-network Gram contractions.
+The result is
 
-## 8. Algebraic consequence
+`dim Span_m(S_m) = 47`.
 
-For every physical fixed-input/fixed-output q138 coefficient instance, the 171-leaf bottleneck tensor satisfies
+Thus there exists one fixed 47-dimensional interface space containing **every** mask-conditioned parent Schmidt space.
 
-`rank(M_m) <= 27`
+This is stronger than the per-mask rank-27 envelope in a different direction:
 
-across the certified `16|24` split.
+- per mask, only up to 27 directions are active;
+- across all masks, the union of all possible active directions requires 47 directions;
+- therefore one universal rank-27 basis is impossible, but one universal 47-dimensional ambient basis is exact.
 
-Therefore it admits an exact factorization
+The 47-dimensional result is computed in the canonical 64-dimensional interface coordinate, so it is a direct composition bridge rather than a basis-artifact of separate per-mask SVDs.
 
-`M_m(x_A,x_B) = sum_{r=1}^{rho_m} X_m(x_A,r) Z_m(r,x_B)`
+## 8. Cross-checks
 
-with
+The transfer calculation reproduces the previously admitted full-network fixed-mask examples:
 
-`rho_m <= 27`.
+- zero representative: `(right,parent)=(34,23)`;
+- all-one representative: `(19,8)`;
+- previous high representative: `(37,26)`.
 
-This is a much stronger statement than the topology-only six-bit interface bound `<=64` and the uniform left-child bound 48.
+The complete exact rank distributions above are also reproduced.
 
-The rank basis may depend on the fixed mask `m`; the theorem is a uniform dimension envelope, not a claim that one mask-independent 27-dimensional basis works for all masks simultaneously.
+## 9. Algebraic consequences
 
-## 9. Global-width caveat
+For each physical fixed mask,
 
-A low Schmidt rank at the bottleneck must still be reinserted into the whole network and followed by a complete contraction-tree/work certificate before changing the admitted global `W<=40` bound.
+`rank(M_m)<=27`,
 
-Exploratory rank-27 reinsertion gives very small top-level separators, but one natural recursive geometry still encounters a subproblem that does not split below 40. That is a scoped geometry result, not a lower bound or NO-GO for `W<40`.
+so a mask-conditioned Schmidt factorization with at most 27 channels exists.
 
-## 10. Machine verifier
+For joint-mask composition, do **not** assume one universal 27-dimensional basis. Instead use the exact fixed 47-dimensional common interface ambient space and treat the per-mask active subspace inside it as conditioned structure.
+
+Combined with the separate rank-12 support-selector theorem, this removes the need for 64 unrelated support tables and 64 unrelated ambient interface coordinate systems. The remaining unsolved object is the exact coefficient/sector transfer inside the fixed 47-dimensional ambient space.
+
+## 10. Relation to the global one-QR certificate
+
+The later support-216 theorem and global tree certificate use the per-mask rank bound `rho_m<=27` and establish the stronger complete all-mask message-width result
+
+`W <= 38.75488750216347... <39`.
+
+See
+
+- `V26_QR_Q138_LEFT_I9_SUPPORT216_THEOREM.md`;
+- `V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_THEOREM.md`.
+
+## 11. Machine verifier
 
 Authority verifier:
 
 `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
 
-It uses exact rational transfer algebra, enumerates the finite physical 4096-control family on the transfer chain, verifies both distributions, verifies the two left row-space classes, and checks the previous three full-network reference ranks.
+It verifies:
 
-## 11. Claims not admitted
+- the complete 4096-case right-rank distribution;
+- the complete parent-rank distribution;
+- one common exact 48-dimensional left row space across all 64 left masks;
+- exact common parent-interface span dimension 47;
+- the three historical full-network reference cases.
 
-This theorem does not prove global `W<=39`, practical exact QR evaluation, an arithmetic-work exponent reduction, full second-layer contraction, ranking gain, `alpha<1`, or full-round relevance.
+## 12. Claims not admitted
+
+This theorem does not by itself prove a universal rank-27 basis, arithmetic-work reduction, complete next-layer contraction, ranking gain, `alpha<1`, or full-round relevance.
