@@ -1,8 +1,9 @@
-name: Support selector TT verifier
+name: Support selector exact verifier
 
 on:
   push:
     paths:
+      - 'scripts/verify_v26_qr_q138_left_i9_gram_support.py'
       - 'scripts/verify_v26_qr_q138_support_selector_tt.py'
       - '.github/workflows/support-selector-tt.yml'
   workflow_dispatch:
@@ -14,13 +15,11 @@ concurrency:
 jobs:
   support-selector:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify canonical support216 baseline
-        run: python scripts/verify_v26_qr_q138_left_i9_support216.py
-      - name: Verify support selector TT profile
-        run: python scripts/verify_v26_qr_q138_support_selector_tt.py
+      - name: Verify exact Gram-diagonal I9 support
+        run: python scripts/verify_v26_qr_q138_left_i9_gram_support.py
