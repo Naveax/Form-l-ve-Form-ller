@@ -10,216 +10,154 @@ For all4096 physical fixed-mask cases:
 
 `44 -> 42 -> 41 -> 40 -> 38.768184324776925... <39`.
 
-Current sharp peak:
+Current sharp peak `218*2^31`. Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; `epsilon=0`. Physical right rank11..38, parent rank5..27, right doubled hull162, all64 left maps share an exact48-dimensional interface row space.
 
-`D_max=218*2^31=468,151,435,264`.
+Gram-image objects (`G_m=R_mR_m^T`, span124/U47 diagnostics) are rank-space objects, not single-copy coefficient amplitudes.
 
-Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support over64 left masks is117..218, with64 distinct supports, union392, intersection42, support-indicator rank64 and `epsilon=0`. Six-left-mask coefficient-family span64 with TT profile `[2,4,8,16,32,64]`. Physical right rank11..38, parent rank5..27, right doubled hull162=114+48, and all64 left maps share one exact48-dimensional interface row space.
+## d=1 ledgers
 
-Gram-image objects such as `G_m=R_mR_m^T`, the span124 family and U47 row-direction diagnostics are rank-space objects, not single-copy coefficient amplitudes. Never propagate them through a later QR as amplitude data.
+Keep distinct:
 
-## Double-round ledgers: keep semantics separate
+- topology-only `W_2_topo<=236`;
+- coefficient-blind static reduced-central-graph + four-generic-leaf method `W_2_static,blind=95`, method-optimal inside that representation;
+- coefficient-aware materialized-factor generation `W_2_factor-gen<=78+log2(171)=85.4178525148859...`;
+- exact representation existence `W_repr(1)<=78+log2(171)=85.4178525148859...`.
 
-Current d=1 numbers refer to different models and must not be collapsed into one word "constructive":
+The last two are message/storage constructivity bounds, not arithmetic-work bounds. Unrestricted scalar streaming/recomputation is not assigned a canonical width without a work budget.
 
-- topology-only: `W_2_topo<=236`;
-- coefficient-blind static reduced-central-graph + four-generic-leaf method: `W_2_static,blind=95`, method-optimal inside that representation;
-- coefficient-aware materialized-factor generation: `W_2_factor-gen<=79+log2(87)=85.44294349584872...`;
-- exact representation existence: `W_repr(1)<=79+log2(87)=85.44294349584872...`.
+### Static coefficient-blind95 is method-optimal
 
-The equality of the last two upper bounds is a constructivity result for the signed factor representation, **not** an arithmetic-work result. Unrestricted scalar-by-scalar recomputation is not assigned a canonical width without a work budget because it would make a pure-memory metric degenerate.
+Clean MILP cardinality minima for central graph smaller-side sizes11..16 are `51,52,55,54,55,56`. Adding four generic leaf costs gives `95,100,107,110,115,120`. Balanced-edge lemma forces some11..16 edge in every32-leaf binary tree; existing tree attains95. Clean run `32028136767`: success.
 
-### d=1 signed representation
+### Clean signed blocks before the new extension
 
-Critical sets:
+Block1 rank16 is explicit on a32x64 matrix.
 
-`S1={0,1,2,3,4,5,12,13,14,15,16}`,
+Historical block2 rank2784 is explicit:3584 natural product channels span2784 exact rational directions. The coordinate transform has max41 nonzeros/column, mean2.5398995535714284, denominator set `{1,2,3,4,6,8,9,12,16,24,32,48,64,96,128,256,512}`. All8192 physical block2 rows span all2784 directions; a normalized basis direction uses at most64 physical rows.
 
-`S2={6,7,8,9,10,11,27,28,29,30,31}`.
+Clean factor-generation85 run `32030620625`: success.
 
-Exact central bounds:
+### New exact block2 site12 extension
 
-- `rank_center(S1)<=87*2^35`;
-- `rank_center(S2)<=31*2^35`.
+Extend block2 by the three previously raw physical S1 bits `A12,B12,D12`. This closes both occurrences of `D12`: j1 bit12 and j2 bit28. The exact physical block is
 
-Four generic predecessor-leaf Hilbert factors contribute exponent44, hence
+`A12..16, B12..16, D12..16, C0`.
 
-`W_repr(1)<=87*2^79`, exponent `85.44294349584872...`.
+Exact Fraction subspace structure:
 
-Clean signed85 run `32019335785`: success.
+- for every fixed `D12..16`, j1(12..16) rank448;
+- for every fixed `D12..15`, the `D16=0/1` j1 union rank472, hence intersection424;
+- the sixteen j2(28..31) high vectors indexed by `D12..15` are exact linearly independent;
+- the two `D16` bit0 spaces each have rank2, union rank3, intersection1.
 
-### Static coefficient-blind method is stuck at95
+Thus for each high prefix the two `D16` tensor-product spaces have union dimension
 
-Clean cardinality MILP gives exact reduced-central-graph minima for smaller-side cardinalities11..16:
+`448*2 + 448*2 - 424*1 =1368`,
 
-`51,52,55,54,55,56`.
+and across the16 independent prefixes
 
-Adding four generic leaf Hilbert exponents gives costs
+`rank(extended block2)=16*1368=21888`.
 
-`95,100,107,110,115,120`.
+Naively keeping old block2 rank2784 plus the three raw bits costs22272. Exact gain:
 
-The balanced-edge lemma forces every32-leaf binary contraction tree to contain an edge with smaller side11..16. The old constructive95 tree attains95. Therefore tree reordering alone cannot beat95 inside this coefficient-blind graph+leaf method.
+`22272/21888 =58/57`.
 
-Authority:
-
-- `V26_Q138_CONSTRUCTIVE_GRAPH_LEAF95_METHOD_OPTIMAL_THEOREM.md`;
-- `scripts/verify_v26_q138_constructive_graph_leaf95_optimal.py`;
-- clean run `32028136767`: success.
-
-This is not a lower bound on the true Walsh tensor rank or on coefficient-aware constructions.
-
-### Explicit signed factors
-
-S1 block1:
-
-- matrix32x64, exact rank16;
-- 8 zero physical rows,24 nonzero rows,16 normalized independent row classes;
-- explicit U coordinate has0/1 active channel per physical row;
-- explicit V has16 normalized rows.
-
-S1 block2:
-
-- 3584 natural product channels in a `2^18` retained-column space;
-- exact rank2784;
-- all3584 channels reconstruct exactly from an explicit rational2784 basis;
-- coordinate nonzeros max41, mean2.5398995535714284;
-- denominator set `{1,2,3,4,6,8,9,12,16,24,32,48,64,96,128,256,512}`;
-- max absolute numerator37, max denominator512.
-
-An earlier draft called the coefficients dyadic. Clean verification correctly rejected that adjective; the exact factor itself was unchanged.
-
-Physical-row bridge:
-
-- all8192 actual block2 physical rows span the full2784-dimensional compressed space;
-- 2784 basis directions can therefore be generated from physical rows;
-- a normalized basis direction uses at most64 physical rows, mean3.654094827586207;
-- every physical row has at most184 nonzero coordinates in that basis, mean11.8597412109375.
-
-The signed-left bridge has dense S1 factor size `87*2^79`, and S2 factor size `31*2^79`, both below the former95 peak. Clean left-bridge run `32028501148`: success.
-
-The full coefficient-aware constructive94 dependency run `32030121710` is success and revalidated block1, corrected block2, the physical-row bridge and its94 complement contraction certificate.
-
-### Sharper factor-generation tree
-
-For the21-site complement of S1, use the explicit tree
-
-`[[[10,11],[17,[18,19]]],[[[[30,31],[28,29]],[[8,9],[6,7]]],[[[26,27],[24,25]],[[22,23],[20,21]]]]]`.
-
-For complement cluster T, one fixed physical S1 slice plus four restricted21-bit predecessor leaves has safe exponent
-
-`gb(T)+4*min(|T|,21-|T|)`.
-
-The complete tree has peak80. Its two peak clusters are
-
-- `{20,21,22,23,24,25,26,27}`: central boundary48 + leaf contribution32;
-- `{6,7,8,9,20,21,22,23,24,25,26,27,28,29,30,31}`: central boundary60 + leaf contribution20.
-
-The signed factor table itself has
-
-`R*2^44 =87*2^79`
-
-entries and therefore dominates the80-bit entry-generation contraction. Materializing a left or right signed factor gives
-
-`W_2_factor-gen<=79+log2(87)=85.44294349584872...`.
-
-Clean run `32030620625`: success. It revalidated both explicit local factors, the physical-row bridge and the complete factor-generation85 ledger from clean checkout.
+Clean run `32033308335`: success.
 
 Authority:
 
-- `V26_Q138_DOUBLE_ROUND_FACTOR_GENERATION85_THEOREM.md`;
-- `scripts/verify_v26_q138_double_round_factor_generation85.py`;
-- `.github/workflows/double-round-factor-generation85.yml`.
+- `V26_Q138_SIGNED_BLOCK2_EXTEND12_RANK21888_THEOREM.md`;
+- `scripts/verify_v26_q138_signed_block2_extend12_rank21888.py`;
+- `.github/workflows/signed-block2-extend12-rank21888.yml`.
 
-This construction can require astronomical repeated computation. Merely materializing one complete signed factor requires `87*2^79 = 52,588,273,153,236,369,099,718,656` scalar entries, so arithmetic work is emphatically not solved.
+### New d=1 representation and factor-generation bound
 
-## d>=2 common-tree central signed rank
+Keep disjoint rank16 block1. Extended block2 consumes16 S1 physical row bits, leaving23 raw. Therefore
 
-Frozen maximizer, up to complement:
+`rank_center(S1) <=16*21888*2^23 =171*2^34`.
 
-`S3={4,5,11,12,13,19,20,21,27,28,29}`.
+Four predecessor leaves contribute44 S1 mask bits, so
 
-Exact joint-sector result:
+`dim_factor <=171*2^78`,
 
-- `rank_AB<=102660`;
-- `rank_CDE<=240240`;
-- `rank_center(S3)<=24,663,038,400`;
-- central exponent `34.52163149454245...`.
+and
 
-Clean run `32020902579`: success.
+`W_repr(1)<=W_2_factor-gen<=78+log2(171)=85.4178525148859...`.
 
-## Fully-open signed slope theorem
+For factor generation, the extended local matrix has only `2^16` physical rows and `2^22` retained columns. Even brute-force exact local materialization is `2^38` scalars; dense local U/V factors are below `2^37`. A physical row basis can therefore be selected exactly without controlling the global ledger. The clean21-site complement entry-generation tree remains peak80, below85.418. Clean factor-generation extension run `32033507588`: success.
 
-Old fused fully-open S3 cap65 is reduced by exact local ranks
+Authority:
 
-- site11 `256->168`;
-- site19 `128->96`;
-- site27 `256->192`.
+- `V26_Q138_DOUBLE_ROUND_FACTOR_GENERATION_EXTEND12_THEOREM.md`;
+- `scripts/verify_v26_q138_double_round_factor_generation_extend12.py`;
+- `.github/workflows/double-round-factor-generation-extend12.yml`.
 
-Remaining42 channels stay binary, hence
+Materializing one complete signed factor still requires `171*2^78 = 51,681,578,788,525,397,218,689,024` scalar entries. Arithmetic work remains unsolved.
 
-`rank_fully_open(S3)<=189*2^56`,
+### Overflow correction / revoked candidates
 
-`F_S3<=56+log2(189)=63.562242424221076...`.
+The temporary four-site candidate ranks96 and208, and the derived `W=84.0279` / `W=83.7283` claims, are **revoked**.
 
-Clean run `32023025384`: success. Current asymptotic common-tree slope is
+Cause: optimized NumPy `einsum` with int32 inputs returned int32 despite a requested int64 dtype on the draft path; the subsequent Gram multiplication overflowed. Correct code casts inputs to int64 before einsum and asserts the contraction dtype. Corrected odd-prime ranks are
 
-`8*F_S3=508.4979393937686...`,
+- special `{2,3,18,19}`:256/256;
+- generic `{4,5,20,21}`:256/256.
 
-an exact improvement of11.5020606062314 bits per added inverse double round from the old520 slope.
+Clean correction workflow `32032617791`: success. The corresponding theorem files remain in the repo only as explicit `REVOKED` correction records. Canonical authority never moved to84/83.
 
-## Semi-open exact A/C/D bounds
+## d>=2 authority
 
-Orientations are genuinely A/B/C/D and may not be silently identified.
+Frozen S3:
 
-- A: `rank_A(S3)<=405*2^46`, exponent54.661778097771986;
-- B: generic `2^55` remains;
-- C: `rank_C(S3)<=243*2^47`, exponent54.92481250360578;
-- D: `rank_D(S3)<=3429*2^42`, exponent53.74357218893564.
+`{4,5,11,12,13,19,20,21,27,28,29}`.
 
-D uses the complete `[4,5]` interval: exact rational rank1016 on twelve fused crossing channels; Gram zero rows1520, signed representatives1760, odd-prime rank1016, and744 further modular dependencies all lift to exact integer relations. Sites11/19/27 each have exact rank96. Clean A/C run `32024935318`; clean A/C/D depth run `32026645042`: success.
+Central joint-sector rank:
 
-Four-semi product:
+`rank_center(S3)<=24,663,038,400`, exponent34.52163149454245. Clean run `32020902579`.
 
-`<=337,465,035*2^190`, exponent218.3301627903134.
+Fully-open:
 
-## Current d>=2 exact representation law
+`rank<=189*2^56`, exponent63.562242424221076, from exact local ranks168,96,192 and42 raw binary channels. Clean run `32023025384`. Current slope `508.4979393937686...`.
 
-For fixed outer input masks and every `d>=2`,
+Semi-open:
 
-`W_repr(d) <= log2(24,663,038,400)+log2(337,465,035*2^190)+(8d-12)log2(189*2^56)+176`.
+- A `405*2^46`, exp54.661778097771986;
+- B generic `2^55`;
+- C `243*2^47`, exp54.92481250360578;
+- D `3429*2^42`, exp53.74357218893564.
 
-Numerically:
+D uses exact `[4,5]` interval rank1016. Clean A/C run `32024935318`; A/C/D depth run `32026645042`.
 
-`W_repr(d)<=508.4979393937686... d -333.8951148057971...`.
+Current depth law for every `d>=2`:
 
-Examples:
+`W_repr(d)<=508.4979393937686...d-333.8951148057971...`.
 
-- d2 `683.1007639817401...`;
-- d3 `1191.5987033755086...`;
-- d4 `1700.0966427692774...`.
+Examples: d2 `683.1007639817401...`, d3 `1191.5987033755086...`.
 
 ## Clean/scoped falsifiers
 
-- semi-open physical `i<->i+16` pair factors are full row rank55 for A/B/C/D; clean run `32023730565`;
-- direct fully-open minimal-TT S3 terminal cut is exact86, worse than fused65; clean run `32023648911`;
-- B `[4,5]` interval alone cannot close sub55 in the current decomposition: an1800x1800 odd-prime minor already has rank1763, above the required `<1490` threshold;
-- B site11->13 carry-only segment gives no gain beyond the isolated site11 factor;
-- naive direct-sum conditioning on internal B or fully-open sectors can be worse than the blind product;
-- d=1 block1 extended by physical `C13,C14` through the shared j2 carry has exact rank64=`16*4`; this local carry extension gives no further S1 compression;
+- semi-open physical `i<->i+16` pair factors full row rank55 for A/B/C/D;
+- direct fully-open minimal-TT S3 cut86, worse than fused65;
+- B `[4,5]` interval minor rank1763, insufficient for current sub55 route;
+- B site11->13 carry-only segment gives no gain beyond isolated site11;
+- naive internal-sector direct sums for B/fully-open can be worse than blind products;
+- block1 + `C13,C14` carry extension rank64=`16*4`, no compression;
+- block1 + occurrence-closed `A1,B1,D1` extension rank128=`16*8`, no compression (current exact local result; clean regression should be added before using it as a hard project checkpoint);
+- corrected relaxed adjacent four-site S1 blocks are full rank256; the old96/208 numbers were overflow artifacts;
 - historical coefficient-specific leaf witness run `32011941759` ended exit143 and is not authority.
 
 ## Storage/work status
 
-One-QR RL218 width optimization still has a dense-work proxy about4.016x worse than the rank27 source topology. The new d=1 factor-generation85 result improves a materialized-factor message/storage ledger, **not arithmetic work**. Output-size alone gives at least `87*2^79` scalar generations for one complete signed factor. No ranking/search reduction or alpha gain is admitted.
+One-QR RL218 width optimization still has a dense-work proxy about4.016x worse than rank27 source topology. d=1 factor-generation message/storage is now85.41785, but output-size alone already requires more than5.16e25 scalar entries for one materialized factor. No arithmetic-work gain, ranking gain or alpha gain is admitted.
 
 ## Current sharp blockers
 
-1. d=1 representation/factor-generation: lower S1 central rank below `87*2^35`. Easy disjoint local blocks and the `C13,C14` carry extension are exhausted; next gain must use longer/global cross-cut structure or central×leaf coupling.
-2. d=1 work: turn the signed factor-generation representation into a genuinely lower-work algorithm. Memory/message constructivity is no longer the main blocker; arithmetic work is.
-3. Semi-open B remains generic55. Any gain must respect rotation7 B-output wiring together with offset16 D reuse; pair, carry-only and naive sector routes are already falsified.
+1. d=1 S1: lower `171*2^34` further. The new gain came from **cross-sector overlap across D16** inside an occurrence-closed extension. Search analogous overlap mechanisms, not overflow-prone dense Grams.
+2. d=1 work: factor-generation memory is constructive, arithmetic work is not.
+3. Semi-open B remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
 4. Fully-open S3 may still fall below63.562 through genuine multi-site row-space overlap.
-5. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or an explicitly frozen outer128 mask.
+5. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
 
-All admitted reductions are exact, `epsilon=0`. Approximation remains inactive while exact signed/sector/joint routes remain open.
+All admitted reductions remain exact, `epsilon=0`. Approximation stays inactive while exact signed/sector/joint routes remain open.
 
-Still not admitted: practical evaluator at formal peaks, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance.
+Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance.
