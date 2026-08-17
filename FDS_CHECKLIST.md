@@ -9,38 +9,42 @@
 - [x] `ALPHA_PASS=0` preserved; no practical evaluator/work/ranking/full-round claim silently promoted.
 
 ## Historical measured-runtime provenance blocker
-- [x] Exact missing-artifact authority written: `research/v26/recovered-bit-puncturing-dac/V26_MISSING_CANONICAL_BYTES.md`.
-- [x] GitHub Issue #22 opened for canonical runtime restoration.
-- [x] Current conversation `/mnt/data`, including nested ZIP contents, SHA-scanned for canonical snapshot/core: `0 matches`.
-- [x] Extended `/mnt` + `/home/oai` + `/tmp` SHA scan: 812 files / 130,949,394 bytes; canonical snapshot/core/test/cert: `0 hits`.
-- [x] Historical recovery commit `2a94d1e...` tree audited: canonical core is not a Git blob there; direct historical core paths return 404.
-- [x] Bootstrap raw archive provenance corrected: locally verified ZIP was not committed as a Git object.
-- [x] Recovery helper supports nested exact snapshot recovery and exact SHA-locked `core_only` fallback without claiming complete snapshot/runtime provenance.
-- [x] Recovery helper regression: nested snapshot + nested core-only synthetic cases `2 passed`.
-- [ ] Recover `FDS_V25_TRAIL_ENUMERATION_DAC_SNAPSHOT.zip` with SHA `fd4d1fbf2378b7950430f18f9efb49f2dab875ee1f72bea5a0336c9d1c5180b6`, OR exact core bytes from the same lineage.
-- [ ] Recover `fds_v25_bit_puncturing.py` with SHA `ec81640f87aaaa97ec5805a973a282241e9e2c2b86011530b4db519dec2be130`.
-- [ ] Store recovered exact bytes in a durable GitHub-accessible location and update source registry.
+- [x] Missing-artifact authority and Issue #22 preserved.
+- [x] Current conversation and extended runtime mounts SHA-scanned; canonical snapshot/core absent.
+- [x] Recovery helper supports SHA-locked nested snapshot and core-only recovery without false provenance claims.
+- [ ] Recover canonical snapshot or exact core bytes.
 - [ ] Re-run historical `19/19` baseline only after exact recovery.
-- [ ] Resume frozen measured single-column QR cap2/cap3 gate only after exact recovery.
+- [ ] Resume frozen measured cap2/cap3 QR gate only after exact recovery.
 
 ## Mathematics-first exact Walsh/tensor track
-- [x] One-QR exact authority lowered to `W_1<=38.768184324776925...<39` for all4096 fixed-mask cases.
-- [x] d=1 coefficient-blind static method certified `W_static,blind=95` and method-optimal inside that representation.
-- [x] d=1 signed block1 exact rank16.
-- [x] d=1 historical signed block2 exact rank2784.
-- [x] Extend block2 with occurrence-closed `A12,B12,D12`; exact rank21888.
-- [x] Certify exact cross-sector geometry: j1 `448/448`, union472, intersection424; bit0 `2/2`, union3, intersection1; 16 independent high prefixes.
-- [x] Lower d=1 representation and materialized-factor generation to `78+log2(171)=85.4178525148859...`.
-- [x] Clean-check block2 D11 one-bit repeated-variable extension: rank remains21888, no gain (`32038491628`).
-- [x] Clean-check block1 `C12,C13,C14` contiguous carry extension: rank128=`16*8`, no gain (`32038564342`).
-- [x] Clean-check block1 occurrence-closed D1/D2 two-site extension: rank1024=`16*2^6`, no gain (`32033943549`).
-- [x] Clean-check block1 D3 occurrence closure using kernel/fiber proof: local operator rank24/32 but actual old-space kernel intersection zero; rank8192=`16*2^9`, no gain (`32039125472`).
-- [x] Keep revoked int32-overflow ranks96/208 and derived84/83 bounds permanently non-authoritative.
-- [ ] Characterize the D0..3 boundary fibers/projection ranks before attempting D4; do not blind-append another site.
-- [ ] Build the smallest merged block1/block2 multi-site carry/repeated-D factor if the boundary-fiber route still cannot enter a local kernel.
-- [ ] Test whether joint block1 x block2 row-space rank is strictly below the current product `16*21888`.
-- [ ] Convert any new representation gain into a constructive factor-generation ledger before claiming storage/message improvement.
-- [ ] Keep arithmetic-work accounting separate; current materialized factor size already exceeds `5.16e25` scalars.
+- [x] One-QR exact authority `W_1<=38.768184324776925...<39` for all4096 fixed-mask cases.
+- [x] d=1 coefficient-blind static method `W_static,blind=95` retained.
+- [x] Extended block2 exact rank21888 and D16 j1 geometry `448/448`, intersection424 retained.
+- [x] Close block2 D11 one-bit route: no gain (`32038491628`).
+- [x] Close block1 C12..C14 alone: no gain (`32038564342`).
+- [x] Close repeated-D D0..3 kernel route: no gain (`32039125472`).
+- [x] Characterize D3 boundary fibers and close D4: rank65536, no gain (`32040273839`).
+- [x] Close direct shared `v3_12` block1×block2 product-overlap probe (`32040428488`).
+- [x] Prove C12..14 three-site carry operator universally injective; merged D0..4 bridge no gain (`32040887484`).
+- [x] Prove low repeated-D graph involution `G^2=I` and close D5; rank `2^19`, no gain (`32041446052`).
+- [x] Prove j2 bits22..31 bridge exact rank32/32; preserve16 D12..15 high prefixes (`32041617140`).
+- [x] Prove universal pre-gap bit0 geometry `2n,2n,intersection n` (`32041743643`).
+- [x] Close the 39-bit natural bridge without C1..5; reproduces old `171*2^34` center (`32041805632`).
+- [x] Find exact j2 bits1..11 gap rank66/128, kernel62 (`32042410012`).
+- [x] Show fixed-D16 minimal loop misses the gap kernel (`32042794811`).
+- [x] Keep both D16 sectors and prove new local geometry `64,64,intersection63`, uniform over shared `(v3_12,sigma2_11)` (`32043345651`).
+- [x] Combine with j1 D16 geometry and16 high prefixes: new center `3829*2^29` (`32043410513`).
+- [x] Recount complete frozen HT tree: `W_repr(1)<=73+log2(3829)=84.90275194485017...` (`32043410513`).
+- [x] Consume all44 S1 physical row bits; raw S1 bits=0.
+- [x] Make new rank constructive in coefficient-aware materialized-factor memory/message ledger: `W_factor-gen<=84.90275194485017...` (`32043554316`).
+- [x] Close direct retained-only j1 carry gap sites6..11: endpoint rank4/4 injective (`32043801142`).
+- [x] Scoped arithmetic NO-GO for explicit full-factor materialization: output alone is `3829*2^73` scalars (`32044123499`).
+- [x] Record exact per-prefix D16 common/private decomposition `26712n +1960n+1960n` for scalar-evaluator work.
+- [ ] Build scalar-on-the-fly evaluator preserving the common/private D16 decomposition; do not materialize the complete factor.
+- [ ] Compute exact predecessor-leaf 11|21 Schmidt ranks uniformly, or freeze an explicit outer128 mask before coefficient-specific claims.
+- [ ] Count multiply/add, factor generation, recomputation, memory traffic and output in one TOTAL arithmetic-work ledger.
+- [ ] Test remaining nonlocal retained-coordinate regroupings only against the new center `3829*2^29`.
+- [x] Keep revoked int32-overflow ranks96/208 and derived W84/W83 bounds permanently non-authoritative.
 
 ## d>=2 exact track
 - [x] Freeze S3 `{4,5,11,12,13,19,20,21,27,28,29}`.
@@ -55,4 +59,6 @@
 - [x] Exact reductions use `epsilon=0` authority.
 - [x] Code is treated as calculator/falsifier, not the mathematical object.
 - [x] Finite admitted claims require clean-checkout/CI verification.
-- [ ] No `alpha<1` claim until TOTAL work accounting, ranking, verification, preprocessing and storage all support it.
+- [x] Representation, factor-generation message/storage and arithmetic work are kept as separate ledgers.
+- [ ] No arithmetic-work reduction claim until scalar evaluator TOTAL accounting passes.
+- [ ] No `alpha<1` claim until TOTAL work, ranking, verification, preprocessing and storage all support it.
