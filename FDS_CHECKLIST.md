@@ -40,17 +40,30 @@
 - [x] Record D16 common/private decomposition `26712n+1960n+1960n`.
 - [x] Prove low/high full-star mode envelopes `2^45` and `3829*2^28`; Cartesian product exactly `3829*2^73` (`32055881609`).
 - [x] Close monotone raw complement-interleaving + generic-leaf certificate class: unavoidable layer44 coefficient certificate85.90275; topology+leaf MILP optimum86 (`32056604049`).
+
+## Predecessor-leaf dyadic track
 - [x] Leaf reduced topology cut11 on frozen HT critical partitions (`32010227963`).
 - [x] Mark old leaf full-rank witness `32011941759` non-authoritative: exit143 before result.
-- [x] Mark exploratory leaf S1 minor `32054802994` non-authoritative: greedy path `2^64` intermediate /32-GiB allocation failure before rank result.
-- [x] Prove predecessor-leaf formal carry124 cancellation: A/D impossible; B/C internal rank124/nullity4, sign polar rank2, Gauss sums `{0,+/-8}` (`32057838229`).
-- [x] Prove position-dependent dyadic lattice: A/D coefficients in `2^-92 Z`; B/C coefficients in `2^-121 Z` (`32058413111`).
-- [x] Prove B/C weight123 and weight122 complete rank-sector distributions, including the four weight122 rank128 bit0-pair sectors (`32058413111`).
-- [x] Prove first A/D 2-adic S1 residue rank bound: `rank_F2((2^92 L_A) mod2)<=3` and same for D (`32058931522`).
-- [ ] Compute the next A/D 2-adic residue `M1 mod2` after removing the rank<=3 first layer; determine whether residue ranks remain uniformly small.
-- [ ] Construct the B/C first parity-Schmidt object at natural scale `2^121` from the finite carry-sector/Gauss decomposition.
-- [ ] Fuse any compact dyadic leaf layers into the central D16 common/private decomposition before full low/high Cartesian basis formation.
+- [x] Mark exploratory dense leaf minor `32054802994` non-authoritative: bad path /32-GiB allocation failure before rank result.
+- [x] Prove formal carry124 cancellation: A/D impossible; B/C internal rank124/nullity4, sign polar rank2, Gauss sums `{0,+/-8}` (`32057838229`).
+- [x] Prove position-dependent coefficient lattices: A/D `2^-92 Z`, B/C `2^-121 Z` (`32058413111`).
+- [x] Prove A/D first residue bounds `rank_F2<=3` (`32058931522`).
+- [x] Prove A/D second residue bounds `rank_F2<=309` and `<=310` (`32062712987`).
+- [x] Construct B/C first parity-Schmidt bounds `rank_F2<=1052` and `<=1160`, both below2048 (`32063042288`).
+- [x] Construct exact four-leaf first dyadic layer: rank `<=10,982,880`, exponent23.38875308; complete-S1 layer exponent64.29150503 (`32063409809`).
+- [x] Construct exact four-leaf second layer using A/D309/310 + generic B/C2048: rank `<=2,306,905,824`; first two cumulative `2,317,888,704` (`32063572894`).
+- [x] Push recursive generic2048 fallback through k5 and certify first-five-layer prefix k0..k4 `15,656,734,767,360 <2^44` (`32063775688`).
+- [x] Freeze remaining dyadic leaf-tail budget `1,935,451,277,056` channels =0.1681513984 bits of headroom.
+- [x] Record generic k5 `49,193,897,820,160`, which misses the complete remaining tail budget by25.417x.
+- [x] Record depth warning: even perfect zeroing of first unresolved A2/D2/B1/C1 leaves k5 above budget; zeroing the next unresolved quartet too still leaves k5 above budget.
+- [ ] Canonically XOR/cancel the symbolic pieces behind A/D second-residue309/310 and sharpen those early bounds if possible.
+- [ ] Compute coefficient-specific higher residues until the total tail `sum_{k>=5} rank(layer_k)` is below `1,935,451,277,056`, or close the dyadic route if a rigorous obstruction emerges.
+- [ ] Do not treat B/C second residue alone as sufficient; the depth gate proves deeper/earlier improvements are required.
 - [ ] Freeze a real outer128 predecessor mask before any source-specific leaf-rank claim.
+
+## d=1 evaluator / admission
+- [ ] Only after a complete total dyadic layer-rank sum exists, test whether it lowers the full representation/factor-generation ledger.
+- [ ] Fuse a successful total leaf decomposition into central `26712n common +1960n private0 +1960n private1` before full low/high Cartesian materialization.
 - [ ] Count multiply/add, factor generation, recomputation, memory traffic and output in one TOTAL arithmetic-work ledger.
 - [ ] Test remaining nonlocal retained-coordinate regroupings only against center `3829*2^29`.
 - [x] Keep revoked int32-overflow ranks96/208 and derived W84/W83 bounds permanently non-authoritative.
@@ -69,6 +82,7 @@
 - [x] Code is treated as calculator/falsifier, not the mathematical object.
 - [x] Finite admitted claims require clean-checkout/CI verification.
 - [x] Representation, factor-generation message/storage and arithmetic work are kept separate.
-- [ ] No rational Schmidt-rank inference from a low-rank modulo2 residue without a complete lifting theorem.
+- [x] Low-rank GF(2) residues are only promoted to exact dyadic layers through the integer-lift lemma; they are not silently called full rational leaf ranks.
+- [ ] No full `W_repr(1)` or `W_factor-gen` reduction from the five-layer prefix while the k>=5 tail remains unresolved.
 - [ ] No arithmetic-work reduction claim until scalar evaluator TOTAL accounting passes.
 - [ ] No `alpha<1` claim until TOTAL work, ranking, verification, preprocessing and storage all support it.
