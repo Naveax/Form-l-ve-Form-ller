@@ -1,0 +1,23 @@
+name: dyadic five-layer prefix gate
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DYADIC_FIVE_LAYER_PREFIX_GATE.md'
+      - 'scripts/verify_v26_q138_dyadic_five_layer_prefix_gate.py'
+      - '.github/workflows/dyadic-five-layer-prefix-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify first two dyadic layers dependency
+        run: python scripts/verify_v26_q138_four_leaf_two_dyadic_layers.py
+      - name: Verify five-layer dyadic prefix gate
+        run: python scripts/verify_v26_q138_dyadic_five_layer_prefix_gate.py
