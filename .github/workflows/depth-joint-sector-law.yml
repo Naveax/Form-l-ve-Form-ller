@@ -1,0 +1,22 @@
+name: Joint-sector multi-depth representation law
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_depth_joint_sector_law.py'
+      - '.github/workflows/depth-joint-sector-law.yml'
+  workflow_dispatch:
+
+jobs:
+  joint-sector-law:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify signed434 dependency
+        run: python scripts/verify_v26_q138_depth_signed434_law.py
+      - name: Verify joint-sector depth law
+        run: python scripts/verify_v26_q138_depth_joint_sector_law.py
