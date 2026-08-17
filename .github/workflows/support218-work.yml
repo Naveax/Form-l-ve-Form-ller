@@ -1,0 +1,19 @@
+name: Support218 work accounting
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_qr_q138_support218_work_accounting.py'
+      - '.github/workflows/support218-work.yml'
+  workflow_dispatch:
+
+jobs:
+  work:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_qr_q138_support218_work_accounting.py
