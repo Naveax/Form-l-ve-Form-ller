@@ -101,7 +101,7 @@ def row_basis(rows):
     return list(B.values())
 
 
-def parent_rank(L,G):
+def parent_rows(L,G):
     out=[]
     for lr in L:
         y={}
@@ -110,7 +110,11 @@ def parent_rank(L,G):
                 y[j]=y.get(j,Fraction(0))+a*g
                 if not y[j]: y.pop(j,None)
         out.append(y)
-    return Q.rank_rows(out)
+    return out
+
+
+def parent_rank(L,G):
+    return len(row_basis(parent_rows(L,G)))
 
 
 def main():
@@ -139,7 +143,7 @@ def main():
         assert close==close_ref
         closures[c]=C7
 
-    # Exact left row-space classes.
+    # All 64 left fixed-mask cases have one common exact 48-dimensional row space.
     rctx=R.setup(cert)
     assert rctx[9]==intA
     left={}
@@ -148,17 +152,20 @@ def main():
             B=row_basis(R.left_rows(rctx,u1,u2))
             assert len(B)==48
             left[(u1,u2)]=B
-    reps={b:left[((0,0,0),(b,0,0))] for b in (0,1)}
-    for (u1,u2),B in left.items():
-        assert Q.rank_rows(reps[u2[0]]+B)==48,(u1,u2)
+    common_left=left[((0,0,0),(0,0,0))]
+    for key,B in left.items():
+        assert len(row_basis(common_left+B))==48,key
 
-    right={}; parent={}; rd=Counter(); pd=Counter()
+    right={}; parent={}; rd=Counter(); pd=Counter(); common_parent=[]
     for pb,vecs in prefix.items():
         for cb,C7 in closures.items():
             ctrl=pb+cb
             G=gram_rows(intA,close_ref,vecs,C7)
             rr=Q.rank_rows(G)
-            pr=parent_rank(reps[ctrl[10]],G)
+            P=parent_rows(common_left,G)
+            PB=row_basis(P)
+            pr=len(PB)
+            common_parent=row_basis(common_parent+PB)
             right[ctrl]=rr; parent[ctrl]=pr; rd[rr]+=1; pd[pr]+=1
 
     expected_r=Counter({11:172,12:34,13:130,15:4,16:4,17:1024,18:396,19:284,22:86,23:28,24:188,25:92,26:64,27:184,28:228,29:168,30:322,33:4,34:4,37:428,38:252})
@@ -167,6 +174,7 @@ def main():
     assert pd==expected_p,(pd,expected_p)
     assert (min(rd),max(rd))==(11,38)
     assert (min(pd),max(pd))==(5,27)
+    assert len(common_parent)==47,len(common_parent)
 
     # u2_8 is rank-inert for both maps.
     for c in list(right):
@@ -193,6 +201,7 @@ def main():
     print('PASS V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27')
     print('physical_cases=4096 right_rank_min=11 right_rank_max=38 parent_rank_min=5 parent_rank_max=27')
     print('u2_31=0 right=22..38 parent=16..27; u2_31=1 right=11..19 parent=5..8')
-    print('u2_8 is rank-inert; left row space has exactly two classes selected by u2_8')
+    print('all 64 left fixed-mask cases share one exact 48-dimensional row space')
+    print('common span of all 4096 parent Schmidt/interface row spaces has exact dimension 47')
 
 if __name__=='__main__': main()
