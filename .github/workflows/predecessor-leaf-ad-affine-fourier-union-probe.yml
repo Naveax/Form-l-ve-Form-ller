@@ -1,0 +1,22 @@
+name: predecessor-leaf A-D affine Fourier union probe
+
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_predecessor_leaf_ad_affine_fourier_union.py'
+      - '.github/workflows/predecessor-leaf-ad-affine-fourier-union-probe.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify A/D second residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py
+      - name: Probe affine Fourier unions
+        run: python scripts/probe_v26_q138_predecessor_leaf_ad_affine_fourier_union.py
