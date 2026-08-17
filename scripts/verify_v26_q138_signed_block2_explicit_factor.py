@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import itertools,sys,math
 from fractions import Fraction
-from collections import Counter
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import verify_v26_q138_double_round_signed85 as S
@@ -54,19 +53,18 @@ def reconstruct(B,co):
             elif j in r:r.pop(j)
     return r
 
-def pow2(n):return n>0 and (n&(n-1))==0
-
 def main():
     V,meta=product_channels();B=echelon(V);assert len(B)==2784
     nnz=[];nums=[];dens=[]
     for v in V:
         c=coords(B,v);assert reconstruct(B,c)=={j:Fraction(x) for j,x in v.items() if x}
         nnz.append(len(c))
-        for x in c.values():nums.append(abs(x.numerator));dens.append(x.denominator);assert pow2(x.denominator)
+        for x in c.values():nums.append(abs(x.numerator));dens.append(x.denominator)
     assert max(nnz)==41
     assert abs(sum(nnz)/len(nnz)-2.5398995535714284)<1e-15
+    expected_den={1,2,3,4,6,8,9,12,16,24,32,48,64,96,128,256,512}
+    assert set(dens)==expected_den,set(dens)
     assert max(nums)==37 and max(dens)==512
-    # Dense storage envelopes of the explicit compressed channel transform and V basis.
     coord_dense=3584*2784
     basis_dense=2784*(2**18)
     assert coord_dense<2**24 and basis_dense<2**30
@@ -74,7 +72,8 @@ def main():
     print('natural_product_channels=3584 exact_basis_rank=2784 column_dimension=2^18')
     print('all_3584_channels_reconstruct_exactly')
     print('coordinate_nnz_max=41 mean=%.15f' % (sum(nnz)/len(nnz)))
-    print('coordinate_coefficients=dyadic max_abs_numerator=37 max_denominator=512')
+    print('coordinate_denominators='+','.join(map(str,sorted(expected_den))))
+    print('coordinate_max_abs_numerator=37 max_denominator=512')
     print('dense_coordinate_table_log2=%.15f dense_V_basis_log2=%.15f' % (math.log2(coord_dense),math.log2(basis_dense)))
-    print('scope=explicit exact local rank factor; full constructive right/complement contraction remains separate')
+    print('scope=explicit exact local rational rank factor; full constructive right/complement contraction remains separate')
 if __name__=='__main__':main()
