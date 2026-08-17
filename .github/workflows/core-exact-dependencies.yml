@@ -1,0 +1,29 @@
+name: Core exact algebra dependencies
+
+on:
+  push:
+    paths:
+      - '.github/workflows/core-exact-dependencies.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: core-exact-dependencies-main
+  cancel-in-progress: true
+
+jobs:
+  core-exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify width40 structural baseline
+        run: python scripts/verify_v26_qr_q138_algebraic_width40.py
+      - name: Verify left rank48
+        run: python scripts/verify_v26_qr_q138_width40_left_rank48.py
+      - name: Verify physical right hull162
+        run: python scripts/verify_v26_qr_q138_physical_right_hull162.py
+      - name: Verify physical rank envelope27 and common span47
+        run: python scripts/verify_v26_qr_q138_physical_rank_envelope27.py
