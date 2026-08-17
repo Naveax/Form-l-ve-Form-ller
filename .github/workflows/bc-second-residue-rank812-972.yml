@@ -1,5 +1,8 @@
 name: B-C second residue rank812-972
 on: [workflow_dispatch, push]
+permissions:
+  contents: read
+  statuses: write
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -13,3 +16,11 @@ jobs:
       - run: python scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py
       - run: python scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py
       - run: python scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py
+      - name: Publish exact-math success status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/${{ github.repository }}/statuses/${GITHUB_SHA}" \
+            -f state=success \
+            -f context='math/bc-second-residue-812-972' \
+            -f description='PASS sign348/432; second lift B812 C972; seven-layer gate'
