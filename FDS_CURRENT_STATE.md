@@ -2,45 +2,21 @@
 
 ## Canonical status — 2026-08-17
 
-`ALPHA_PASS=0`. Historical measured QR-cap execution remains frozen behind missing V25 runtime bytes. Active work is mathematics-first exact Walsh/tensor analysis; code is only a calculator/falsifier and new finite claims require clean-checkout execution.
+`ALPHA_PASS=0`. Historical measured execution remains frozen behind missing exact recovered V25 runtime bytes. Active work is mathematics-first exact Walsh/tensor analysis; code is only a calculator/falsifier and new finite claims require clean-checkout execution.
 
-## One-QR exact authority
+## One-QR authority
 
-For all 4096 physical fixed-mask cases,
+For all 4096 physical fixed-mask cases:
 
-`44 -> 42 -> 41 -> 40 -> 38.768184324776925...`.
+`44 -> 42 -> 41 -> 40 -> 38.768184324776925... <39`.
 
-Corrected sharp bound:
+Current sharp one-QR peak:
 
-`D_max=218*2^31=468,151,435,264`,
+`D_max=218*2^31=468,151,435,264`.
 
-so
+Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support over64 left masks is117..218, with64 distinct support sets, union392, intersection42, support-indicator rank64 and `epsilon=0`. Six-left-mask complete coefficient family span64, TT profile `[2,4,8,16,32,64]`. Physical right rank11..38, parent rank5..27, right doubled hull162=114+48, and all64 left fixed-mask maps share one exact 48-dimensional interface row space.
 
-`W_1<=38.768184324776925...<39`.
-
-The old support216 / 13-support-class / rank12-selector line is revoked. Exact I9 support over the64 left masks is `117..218`, with64 distinct support sets, union392, intersection42, support-indicator rank64 and `epsilon=0`. The six-left-mask complete coefficient family has full span64 and natural TT profile `[2,4,8,16,32,64]`.
-
-Physical right/parent facts retained:
-
-- right doubled hull162=114+48;
-- right rank11..38;
-- parent rank5..27;
-- `u2_31=0`: parent16..27;
-- `u2_31=1`: parent5..8;
-- all64 left fixed-mask maps share one exact 48-dimensional interface row space.
-
-## Gram-image semantic warning
-
-For single-copy right coefficient map `R_m`, `G_m=R_mR_m^T` has exact rank-space data:
-
-- Gram family145;
-- prefix140;
-- closure16;
-- `L G_m` span124;
-- row directions47;
-- natural12-control Gram-image TT profile `[2,4,8,16,32,64,128,119,196,136,143,124]`.
-
-These are not the full single-copy coefficient tensor and do not retain the24 right-external coefficient amplitudes. Never propagate the 124/U47 Gram-image family through a later QR as coefficient amplitudes.
+Gram-image warning remains: `G_m=R_mR_m^T` rank-space data (Gram family145, `L G_m` span124, row directions47, etc.) are not single-copy coefficient amplitudes and must not be propagated through another QR as such.
 
 ## Inverse-double-round ledgers
 
@@ -50,7 +26,7 @@ Keep separate:
 - explicit constructive `W_2_construct<=95`;
 - exact d=1 representation existence `W_repr(1)<=79+log2(87)=85.44294349584872...`.
 
-The constructive95 method is not superseded by the smaller representation-existence theorem.
+The constructive95 method is not superseded by the smaller representation theorem.
 
 ### d=1 signed theorem
 
@@ -62,86 +38,58 @@ Critical sets:
 
 Exact central bounds:
 
-- `rank_center(S1)<=87*2^35`, from signed ranks16 and2784 plus26 raw row bits;
+- `rank_center(S1)<=87*2^35`;
 - `rank_center(S2)<=31*2^35`.
 
 With four generic predecessor-leaf Hilbert exponents44:
 
 `W_repr(1)<=79+log2(87)=85.44294349584872...`.
 
-Clean Actions run `32019335785`: success.
+Clean run `32019335785`: success.
 
-Authority:
-
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_SIGNED85_THEOREM.md`;
-- `scripts/verify_v26_q138_double_round_signed85.py`.
-
-## d>=2 common-tree central signed rank
+## d>=2 central S3 rank
 
 Frozen common-tree maximizer, up to complement:
 
 `S3={4,5,11,12,13,19,20,21,27,28,29}`.
 
-Exact signed occurrence-closed blocks plus shared-sector projection give
+Exact joint-sector result:
 
 - `rank_AB<=102660`;
 - `rank_CDE<=240240`;
 - `rank_center(S3)<=24,663,038,400`;
-- exponent `34.52163149454245...`.
+- central exponent `34.52163149454245...`.
 
-Clean Actions run `32020902579`: success.
-
-Authority:
-
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DEPTH_JOINT_SECTOR_LAW.md`;
-- `scripts/verify_v26_q138_depth_joint_sector_law.py`.
+Clean run `32020902579`: success.
 
 ## Fully-open signed slope theorem
 
-The old fused fully-open S3 envelope was65 binary channels. Exact signed local ranks on three disjoint S3 crossing groups are
+Old fused fully-open S3 cap65 is reduced by exact rational local ranks
 
-- site11: `256 ->168`;
-- site19: `128 ->96`;
-- site27: `256 ->192`.
+- site11 `256->168`;
+- site19 `128->96`;
+- site27 `256->192`.
 
-The other42 fused crossing channels remain binary, hence
+The remaining42 channels stay binary, hence
 
-`rank_fully_open(S3)<=168*96*192*2^42=189*2^56`,
-
-with
+`rank_fully_open(S3)<=189*2^56`,
 
 `F_S3<=56+log2(189)=63.562242424221076...`.
 
-Only S3/complement had old cap65; the next generic common-tree fully-open cap is62. The local rational ranks are certified by exact integer relations plus matching odd-prime ranks.
+Clean run `32023025384`: success. This changes the asymptotic common-tree slope from520 to
 
-Clean Actions run `32023025384`: success.
+`8*log2(189*2^56)=508.4979393937686...`.
 
-Authority:
+## Semi-open exact A/C/D theorems
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_FULLY_OPEN_S3_LOCAL_RANK_CERTIFICATE.json`;
-- `scripts/verify_v26_q138_fully_open_s3_local_signed_rank.py`;
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DEPTH_FULLY_OPEN_SIGNED_SLOPE_THEOREM.md`;
-- `scripts/verify_v26_q138_depth_fully_open_signed_slope.py`.
+The four predecessor orientations are A/B/C/D; they are not interchangeable by assumption.
 
-## Semi-open A/C exact signed theorem
+### A and C
 
-The four diagonal predecessor QRs feeding the central column expose local output orientations A, B, C, D respectively. Generic physical cap is55 per orientation.
+Four disjoint fused-channel blocks on sites4,11,19,27 give exact rational ranks
 
-For the exact fused one-output/open-four-input site tensor on S3, four disjoint boundary blocks contain27 of the57 EC crossing channels:
-
-- site4: `t4,t3,t2,t1,K0,K1`;
-- site11: `t4,t3,t2,t1,K0,K1,z0`;
-- site19: `t4,t3,t2,t1,K0,K1,d1`;
-- site27: `t4,t3,t2,t1,K0,K1,z1`.
-
-The remaining30 crossing channels remain binary.
-
-Exact rational ranks are:
-
-- orientation A: `48,60,96,96`;
-- orientation C: `48,72,96,96`.
-
-For every block, the exact number of nonzero row classes modulo equality/sign equals the claimed rank, giving a rational upper bound; the same rank modulo the odd prime1000003 gives a nonzero integer minor and hence the matching rational lower bound.
+- A: `48,60,96,96`;
+- C: `48,72,96,96`.
 
 Therefore
 
@@ -149,79 +97,86 @@ Therefore
 
 `rank_C(S3)<=243*2^47`, exponent `54.92481250360578...`.
 
-Orientations B and D retain generic caps `2^55`.
+Clean run `32024935318`: success.
 
-Thus all four semi-open contributions satisfy
+### D interval theorem
 
-`rank_A rank_B rank_C rank_D <=98415*2^203`,
+For D, contract the complete S3 interval `[4,5]`: twelve fused crossing channels, with four internal carry channels contracted exactly. The resulting 4096-row map has exact rational rank
 
-with total exponent
+`rank_D[4,5]=1016`.
 
-`219.58659060137776...`,
+Certificate facts:
 
-improving the previous220 by `0.413409398622235...` bits.
+- exact Gram zero rows1520;
+- signed-row representatives1760;
+- odd-prime rank1016;
+- 744 additional independent modular dependencies all lift to exact centered integer relations.
 
-Clean Actions run `32024935318`: success. It revalidated the central joint-sector theorem, fully-open signed ranks, semi-open A/C exact ranks, and the complete depth recount from clean checkout.
+The remaining D entry blocks on sites11,19,27 each have exact rank96. Thus
+
+`rank_D(S3)<=1016*96^3*2^24 =3429*2^42`,
+
+`F_D<=53.74357218893564...`.
+
+Clean Actions run `32026645042`: success. It revalidated central, fully-open, A/C, D interval, and the complete depth recount from clean checkout.
 
 Authority:
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_SEMI_OPEN_S3_SIGNED_AC_THEOREM.md`;
-- `scripts/verify_v26_q138_semi_open_s3_signed_ac.py`;
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DEPTH_SEMI_OPEN_SIGNED_INTERCEPT_THEOREM.md`;
-- `scripts/verify_v26_q138_depth_semi_open_signed_intercept.py`;
-- `.github/workflows/depth-semi-open-signed-intercept.yml`.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_SEMI_OPEN_S3_SIGNED_D_INTERVAL_THEOREM.md`;
+- `scripts/verify_v26_q138_semi_open_s3_signed_d_interval.py`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_DEPTH_SEMI_OPEN_SIGNED_ACD_THEOREM.md`;
+- `scripts/verify_v26_q138_depth_semi_open_signed_acd.py`;
+- `.github/workflows/depth-semi-open-signed-acd.yml`.
+
+B remains at the generic `2^55` cap.
+
+The four semi-open contribution product is now
+
+`rank_A rank_B rank_C rank_D <=337,465,035 * 2^190`,
+
+with total exponent
+
+`218.3301627903134...`.
 
 ## Current d>=2 exact representation law
 
 For fixed outer input masks and every `d>=2`,
 
-`W_repr(d) <= log2(24,663,038,400) + 379 + log2(98415) + (8d-12)log2(189*2^56)`.
+`W_repr(d) <= log2(24,663,038,400) + log2(337,465,035*2^190) + (8d-12)log2(189*2^56) +176`.
 
 Numeric affine form:
 
-`W_repr(d) <= 508.4979393937686...*d - 332.6386869947327...`.
+`W_repr(d) <= 508.4979393937686... d -333.8951148057971...`.
 
-Verified:
+Verified examples:
 
-- d2 `684.3571917928045...`;
-- d3 `1192.855131186573...`;
-- d4 `1701.3530705803416...`;
-- d5 `2209.85100997411...`;
-- d6 `2718.348949367879...`;
-- d7 `3226.8468887616473...`;
-- d8 `3735.344828155416...`;
-- d9 `4243.842767549185...`.
+- d2 `683.1007639817401...`;
+- d3 `1191.5987033755086...`;
+- d4 `1700.0966427692774...`.
 
-The slope remains
-
-`508.4979393937686...`,
-
-which is `11.5020606062314...` bits per inverse double round below the old slope520. The new semi-open theorem improves only the intercept.
+This remains exact representation/message width. No constructive or arithmetic-work reduction follows automatically.
 
 ## Clean scoped falsifiers
 
-- occurrence-closed semi-open `i<->i+16` physical-pair factors are full row rank for all A/B/C/D orientations, total pair log-rank55 each; clean run `32023730565` success. This closes only that local pair route, not the global semi-open rank.
-- direct fully-open minimal-TT refinement on S3 has exact terminal hypergraph cut86 after lexicographic witness correction; clean run `32023648911` success. This is worse than the fused65 envelope and is not a lower bound on true Walsh Schmidt rank.
+- Semi-open physical `i<->i+16` occurrence-closed pair factors are full row rank for A/B/C/D, total55 each; clean run `32023730565` success. This closes only that pair route.
+- Direct fully-open minimal-TT refinement on S3 has exact terminal hypergraph cut86 after lexicographic witness correction; clean run `32023648911` success. It is worse than fused65 and is not a lower bound on true Walsh Schmidt rank.
+- B interval `[4,5]` cannot by itself deliver the needed sub55 theorem: an 1800x1800 odd-prime minor has rank1763, already above the `<1490` threshold required when combined with the current site11 rank88 route. This is a scoped falsifier, not a global B lower bound.
 - d=1 pure GF(2) critical-boundary codimension remains0,0.
-- historical coefficient-specific leaf witness run `32011941759` terminated exit143 and is not clean authority.
+- historical coefficient-specific leaf witness run `32011941759` ended exit143 and is not authority.
 
 ## Storage/work status
 
-One-QR RL218 compression is exact but its width-optimized dense-work proxy is about `4.0160678967x` worse than the rank27 source topology. No arithmetic-work gain is admitted.
-
-The d=1 and d>=2 signed results are representation/message bounds, not constructive-work bounds.
+One-QR RL218 compression is exact but its width-optimized dense-work proxy is about `4.0160678967x` worse than the rank27 source topology. No arithmetic-work gain is admitted. Current d=1 and d>=2 signed results are representation/message bounds, not constructive-work bounds.
 
 ## Current sharp blockers
 
-1. Semi-open B/D remain at generic55. The simple occurrence-closed physical-pair route is full rank, so further gain requires fused-channel multi-site/global coupling or a different exact factorization.
-2. Semi-open A/C may also admit additional coupling across their currently independent local rank factors; simple direct sector splitting can increase rather than reduce the blind product, so any gain must respect contraction rather than merely direct-sum sectors.
-3. Fully-open S3 may still fall below63.562 through genuine multi-site channel coupling; the obvious z-sector split did not reduce the blind product.
-4. d=1 S1: easy disjoint local blocks are largely exhausted; next exact target is longer cross-cut coupling or central×leaf joint rank.
-5. Constructive gap: turn signed d=1 factorizations into explicit generation/contraction and reduce `W_2_construct<95`.
-6. Coefficient-specific leaf work requires a clean uniform/parametric theorem or an explicitly frozen outer128 mask.
+1. Semi-open B remains at generic55. Because B is the rotated output, local site `i` contains `Bout[i+7]`; physical B-output row sites are `S3-7={4,5,6,12,13,14,20,21,22,29,30}`. The next B theorem must respect this rotation-7 wiring together with offset16 D-copy structure. Simple carry-only segment coupling and simple internal-sector direct sums do not improve the existing site11 gain.
+2. D may admit further interval/global coupling, but the current exact cap53.7436 already removes it as the largest semi-open blocker.
+3. Fully-open S3 may still fall below63.562 through genuine multi-site channel coupling.
+4. d=1 S1: seek longer cross-cut coupling or central×leaf joint rank.
+5. Constructive gap: realize signed d=1 factorizations explicitly and reduce `W_2_construct<95`.
+6. Coefficient-specific leaf work requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
 
-All admitted reductions remain exact, `epsilon=0`. Do not activate epsilon-rank while these exact signed/sector/joint routes remain open.
+All admitted reductions remain exact, `epsilon=0`. Do not activate epsilon-rank while exact signed/sector/joint routes remain open.
 
 Still not admitted: practical evaluator at formal peaks, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance.
-
-Historical measured execution remains blocked by missing V25 runtime bytes; this is provenance, not a mathematical NO-GO.
