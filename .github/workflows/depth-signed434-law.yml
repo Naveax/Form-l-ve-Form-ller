@@ -1,0 +1,22 @@
+name: Signed434 multi-depth representation law
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_depth_signed434_law.py'
+      - '.github/workflows/depth-signed434-law.yml'
+  workflow_dispatch:
+
+jobs:
+  signed434-law:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify previous common-tree law dependency
+        run: python scripts/verify_v26_q138_depth_representation_law520.py
+      - name: Verify signed434 local rank and improved depth law
+        run: python scripts/verify_v26_q138_depth_signed434_law.py
