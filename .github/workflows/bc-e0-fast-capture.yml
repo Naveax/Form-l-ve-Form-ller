@@ -1,0 +1,25 @@
+name: B-C e0 fast capture
+on:
+  push:
+    paths:
+      - '.github/workflows/bc-e0-fast-capture.yml'
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          set -euo pipefail
+          { git rev-parse HEAD; python scripts/probe_v26_q138_bc_e0_correction_uniform_left_span.py; } | tee research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_E0_FAST_CAPTURE.txt
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_E0_FAST_CAPTURE.txt
+          git commit -m 'Capture fast B-C e0 span output'
+          git push
