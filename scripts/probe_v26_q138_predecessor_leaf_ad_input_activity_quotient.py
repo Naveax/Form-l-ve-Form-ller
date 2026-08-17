@@ -5,11 +5,10 @@ from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import verify_v26_q138_predecessor_leaf_top_carry_cancellation as T
-import verify_v26_q138_predecessor_leaf_ad_input_activity as P
+import probe_v26_q138_predecessor_leaf_ad_input_activity as P
 
 
 def canonical_input_rows(can):
-    # eliminate beta32
     rows=list(can);r=0
     for col in range(128,160):
         p=next((k for k in range(r,len(rows)) if (rows[k]>>col)&1),None)
@@ -22,7 +21,6 @@ def canonical_input_rows(can):
     for row in rows[r:]:
         m=row&((1<<128)-1);rhs=(row>>160)&1
         if m or rhs:eq.append((m,rhs))
-    # canonical full RREF on input masks
     rr=[m|(rhs<<128) for m,rhs in eq];q=0
     for col in range(128):
         p=next((k for k in range(q,len(rr)) if (rr[k]>>col)&1),None)
@@ -37,8 +35,7 @@ def canonical_input_rows(can):
 
 
 def build_global_basis(conds):
-    B={} # pivot -> (vector,index)
-    q=0
+    B={};q=0
     for cond in conds:
         for row in cond:
             x=row&((1<<128)-1)
@@ -69,7 +66,6 @@ def quotient_condition(cond,B,q):
 
 
 def enumerate_affine(x0,basis,counts):
-    # Gray-code traversal to touch each point once with O(1) xor update.
     d=len(basis);p=x0;prev=0
     counts[p]+=1
     for k in range(1,1<<d):
