@@ -1,0 +1,30 @@
+name: Coefficient-aware factor generation85
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_factor_generation85.py'
+      - 'scripts/verify_v26_q138_signed_block1_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_explicit_factor.py'
+      - 'scripts/verify_v26_q138_signed_block2_physical_row_bridge.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_DOUBLE_ROUND_FACTOR_GENERATION85_THEOREM.md'
+      - '.github/workflows/double-round-factor-generation85.yml'
+  workflow_dispatch:
+
+jobs:
+  factor-generation85:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify block1 explicit factor
+        run: python scripts/verify_v26_q138_signed_block1_explicit_factor.py
+      - name: Verify block2 explicit factor
+        run: python scripts/verify_v26_q138_signed_block2_explicit_factor.py
+      - name: Verify block2 physical-row bridge
+        run: python scripts/verify_v26_q138_signed_block2_physical_row_bridge.py
+      - name: Verify factor-generation85 ledger
+        run: python scripts/verify_v26_q138_double_round_factor_generation85.py
