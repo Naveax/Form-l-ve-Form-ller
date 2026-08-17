@@ -7,6 +7,9 @@ on:
       - '.github/workflows/exact-math-verifiers.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   mask-to-u47:
     runs-on: ubuntu-latest
@@ -16,21 +19,37 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Diagnose certificate JSON
+      - name: Repair one-character certificate serialization defect
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           p=Path('research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json')
           s=p.read_text()
-          print('certificate_chars',len(s))
-          dec=json.JSONDecoder()
           try:
-              obj,idx=dec.raw_decode(s)
-              print('first_json_end',idx,'remainder_prefix',repr(s[idx:idx+300]))
-              print('first_keys',sorted(obj) if isinstance(obj,dict) else type(obj))
-          except Exception as e:
-              print('raw_decode_failed',repr(e))
+              obj=json.loads(s)
+              print('certificate already valid')
+          except json.JSONDecodeError:
+              dec=json.JSONDecoder(); obj,idx=dec.raw_decode(s)
+              rem=s[idx:]
+              assert rem.startswith(',"scope":'), repr(rem[:80])
+              assert s[idx-1]=='}'
+              fixed=s[:idx-1]+s[idx:]
+              obj2=json.loads(fixed)
+              assert obj2['milestone']=='V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE'
+              assert obj2['certificate']['max_boundary_dimension']==2**40
+              assert obj2['rank_compression']['exact_rank']==528
+              p.write_text(fixed)
+              print('certificate repaired chars',len(s),'->',len(fixed))
           PY
+          if ! git diff --quiet -- research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json
+            git commit -m 'Repair width40 certificate JSON serialization'
+            git push
+          fi
+      - name: Verify repaired width40 certificate
+        run: python scripts/verify_v26_qr_q138_algebraic_width40.py
       - name: Verify exact mask-to-U47 coefficient tensor
         run: python scripts/verify_v26_qr_q138_mask_to_u47_coeff_tensor.py
