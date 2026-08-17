@@ -94,6 +94,37 @@ Authority:
 
 Materializing one complete signed factor still requires `171*2^78 = 51,681,578,788,525,397,218,689,024` scalar entries. Arithmetic work remains unsolved.
 
+### Exact no-gain closures after rank21888
+
+The first two obvious ways of extending the new sector-overlap mechanism are now closed negatively.
+
+**Block2 one bit farther through repeated external D11.** `D11` occurs in j1 bit11 and j2 bit27 but is outside S1, so it remains a column variable. For each fixed D11 slice:
+
+- the j1 bit11 transfer has exact rank2;
+- the j2 bit27 transfer has exact rank2;
+- the sixteen `D12..15` high-sector vectors remain exact rank16.
+
+The transfers are therefore injective on the carry interfaces. They preserve the old j1 dimensions448/448 and intersection424, preserve the sixteen-prefix direct sum, and leave the total block2 rank exactly21888. Clean run `32038491628`: success.
+
+Authority:
+
+- `V26_Q138_SIGNED_BLOCK2_D11_TRANSFER_NO_GAIN.md`;
+- `scripts/verify_v26_q138_signed_block2_d11_transfer_no_gain.py`;
+- `.github/workflows/signed-block2-d11-transfer-no-gain.yml`.
+
+The same verifier confirms isolated C12 row rank2: C12 cannot help as a single local append with both neighbouring carries open.
+
+**Block1 contiguous C12..C14 carry extension.** The clean rank16 block1 extended through j2 bits14,13 had rank64=`16*4`. Extending one site farther through C12 gives exact rank128=`16*8` on physical row bits `A0,B0,C12..16,D0`. Thus the full contiguous C12..C14 local carry extension also gives no compression. Clean run `32038564342`: success.
+
+Authority:
+
+- `V26_Q138_BLOCK1_C12_C14_EXTENSION_NO_GAIN.md`;
+- `scripts/verify_v26_q138_s1_local_extension_falsifiers.py`.
+
+A clean block1 repeated-D two-site extension through D1,D2 already gives exact union rank1024=`16*2^6`; clean run `32033943549`: success.
+
+These results do not lower the canonical85.4178525 bound. They narrow the next search to genuine multi-site or cross-block row-space overlap.
+
 ### Overflow correction / revoked candidates
 
 The temporary four-site candidate ranks96 and208, and the derived `W=84.0279` / `W=83.7283` claims, are **revoked**.
@@ -142,7 +173,10 @@ Examples: d2 `683.1007639817401...`, d3 `1191.5987033755086...`.
 - B site11->13 carry-only segment gives no gain beyond isolated site11;
 - naive internal-sector direct sums for B/fully-open can be worse than blind products;
 - block1 + `C13,C14` carry extension rank64=`16*4`, no compression;
-- block1 + occurrence-closed `A1,B1,D1` extension rank128=`16*8`, no compression (current exact local result; clean regression should be added before using it as a hard project checkpoint);
+- block1 + `C12,C13,C14` contiguous carry extension rank128=`16*8`, no compression; clean run `32038564342`;
+- block1 + occurrence-closed D1,D2 two-site extension rank1024=`16*2^6`, no compression; clean run `32033943549`;
+- block2 repeated-D11 one-bit extension preserves rank21888; clean run `32038491628`;
+- isolated C12 local row map rank2;
 - corrected relaxed adjacent four-site S1 blocks are full rank256; the old96/208 numbers were overflow artifacts;
 - historical coefficient-specific leaf witness run `32011941759` ended exit143 and is not authority.
 
@@ -152,11 +186,12 @@ One-QR RL218 width optimization still has a dense-work proxy about4.016x worse t
 
 ## Current sharp blockers
 
-1. d=1 S1: lower `171*2^34` further. The new gain came from **cross-sector overlap across D16** inside an occurrence-closed extension. Search analogous overlap mechanisms, not overflow-prone dense Grams.
-2. d=1 work: factor-generation memory is constructive, arithmetic work is not.
-3. Semi-open B remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
-4. Fully-open S3 may still fall below63.562 through genuine multi-site row-space overlap.
-5. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
+1. d=1 S1: lower `171*2^34` further. Simple local appends are now closed: block1 D1/D2, block1 C12..C14, and block2 D11 all hit their naive/no-gain ranks. The next candidate must use genuine merged block1/block2 multi-site carry/repeated-D overlap, or a joint row-space overlap across the current rank16 and rank21888 channels.
+2. A tractable first probe is the repeated-D block1 chain one site beyond D0..2: close D3 simultaneously in j1 bit3 and j2 bit19 and compare exact union rank with the naive `16*2^9`. Only extend to D4/D5 if a nontrivial intersection appears.
+3. d=1 work: factor-generation memory is constructive, arithmetic work is not.
+4. Semi-open B remains generic55; any gain must respect rotation7 output wiring plus offset16 D reuse.
+5. Fully-open S3 may still fall below63.562 through genuine multi-site row-space overlap.
+6. Coefficient-specific predecessor-leaf compression requires a clean uniform/parametric theorem or explicitly frozen outer128 mask.
 
 All admitted reductions remain exact, `epsilon=0`. Approximation stays inactive while exact signed/sector/joint routes remain open.
 
