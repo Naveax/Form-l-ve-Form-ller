@@ -27,20 +27,22 @@ def canonical(cond):
 
 
 def main():
+    result={}
     for pos in 'AD':
         raw=P.conds(pos)
         C=Counter(canonical(c) for _,c in raw)
-        weighted_ranks=Counter()
-        group_ranks=Counter()
-        mult=Counter(C.values())
+        weighted_ranks=Counter();group_ranks=Counter();mult=Counter(C.values())
         for cond,n in C.items():
             rr=len(cond);group_ranks[rr]+=1;weighted_ranks[rr]+=n
+        result[pos]=(len(raw),len(C),max(C.values()))
         print('position',pos,'raw_sectors',len(raw),'distinct_input_cosets',len(C),
               'multiplicity_distribution',dict(sorted(mult.items())),
               'max_multiplicity',max(C.values()),
               'group_rank_distribution',dict(sorted(group_ranks.items())),
               'weighted_rank_distribution',dict(sorted(weighted_ranks.items())),flush=True)
+    a=result['A'];d=result['D']
     print('PASS PROBE V26_Q138_AD_THIRD_WEIGHT90_CONDITION_GROUPS')
+    print(f"STATUS_DESC=A {a[0]}raw/{a[1]}grp/m{a[2]}; D {d[0]}raw/{d[1]}grp/m{d[2]}")
     print('scope=exact canonical grouping of predecessor-input affine support conditions; no maximum-activity theorem yet')
 
 if __name__=='__main__':main()
