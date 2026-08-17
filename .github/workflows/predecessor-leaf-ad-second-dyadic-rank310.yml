@@ -1,0 +1,23 @@
+name: predecessor-leaf A-D second dyadic rank310
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_AD_SECOND_DYADIC_RANK310.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py'
+      - '.github/workflows/predecessor-leaf-ad-second-dyadic-rank310.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify first A/D dyadic residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_parity_rank3.py
+      - name: Verify A/D second dyadic residue
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py
