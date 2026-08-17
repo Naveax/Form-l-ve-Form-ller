@@ -1,0 +1,27 @@
+name: four-leaf first two dyadic layers
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FOUR_LEAF_TWO_DYADIC_LAYERS.md'
+      - 'scripts/verify_v26_q138_four_leaf_two_dyadic_layers.py'
+      - '.github/workflows/four-leaf-two-dyadic-layers.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify first four-leaf layer dependency
+        run: python scripts/verify_v26_q138_four_leaf_first_dyadic_star_layer.py
+      - name: Reverify A/D second residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310.py
+      - name: Reverify B/C first residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py
+      - name: Verify first two four-leaf dyadic layers
+        run: python scripts/verify_v26_q138_four_leaf_two_dyadic_layers.py
