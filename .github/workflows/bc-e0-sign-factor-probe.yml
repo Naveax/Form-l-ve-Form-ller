@@ -10,3 +10,12 @@ jobs:
         with:
           python-version: '3.11'
       - run: python scripts/probe_v26_q138_predecessor_leaf_bc_e0_sign_left_factors.py
+  uniform-correction-span:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_bc_e0_correction_uniform_left_span.py
