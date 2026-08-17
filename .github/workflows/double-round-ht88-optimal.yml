@@ -1,0 +1,20 @@
+name: Double-round HT88 method optimality
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_double_round_ht88_method_optimal.py'
+      - '.github/workflows/double-round-ht88-optimal.yml'
+  workflow_dispatch:
+
+jobs:
+  ht88-optimal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet scipy
+      - run: python scripts/verify_v26_q138_double_round_ht88_method_optimal.py
