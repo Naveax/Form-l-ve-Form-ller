@@ -1,0 +1,24 @@
+name: block1-d4-boundary-fiber-no-gain
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py'
+      - 'scripts/verify_v26_q138_block1_d3_extension_kernel_falsifier.py'
+      - 'scripts/verify_v26_q138_block1_two_site_extension_falsifier.py'
+      - 'scripts/verify_v26_q138_double_round_signed85.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BLOCK1_D4_BOUNDARY_FIBER_NO_GAIN.md'
+      - '.github/workflows/block1-d4-boundary-fiber-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact D4 boundary-fiber no-gain theorem
+        run: python scripts/verify_v26_q138_block1_d4_boundary_fiber_no_gain.py
