@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Repair one-character minimal-core certificate serialization defect
+      - name: Repair unmatched closing brackets in minimal-core certificate serialization
         run: |
           python - <<'PY'
           import json
@@ -30,19 +30,34 @@ jobs:
           p=Path('research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json')
           s=p.read_text()
           try:
-              obj=json.loads(s)
+              obj=json.loads(s); bad=[]
               print('minimal certificate already valid')
-          except json.JSONDecodeError as e:
-              assert e.pos==3929,(e.pos,e)
-              assert s[e.pos]==']',repr(s[e.pos-20:e.pos+20])
-              fixed=s[:e.pos]+s[e.pos+1:]
+          except json.JSONDecodeError:
+              stack=[];bad=[];ins=False;esc=False
+              for i,ch in enumerate(s):
+                  if ins:
+                      if esc:esc=False
+                      elif ch=='\\':esc=True
+                      elif ch=='"':ins=False
+                      continue
+                  if ch=='"':ins=True
+                  elif ch in '[{':stack.append((ch,i))
+                  elif ch in ']}':
+                      ok=stack and ((stack[-1][0]=='[' and ch==']') or (stack[-1][0]=='{' and ch=='}'))
+                      if ok:stack.pop()
+                      else:
+                          assert ch==']',(i,ch,stack[-5:])
+                          bad.append(i)
+              assert not stack,('unclosed after ignoring unmatched closers',stack[-10:])
+              assert bad and all(3900<=i<=3960 for i in bad),bad
+              drop=set(bad);fixed=''.join(ch for i,ch in enumerate(s) if i not in drop)
               obj=json.loads(fixed)
               assert obj['milestone']=='V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE'
               assert obj['certificate']['leaves']==568
               assert obj['certificate']['internal_nodes']==567
               assert obj['certificate']['max_boundary_dimension']==2**41
               p.write_text(fixed)
-              print('minimal certificate repaired by deleting extra ] at char 3929')
+              print('removed unmatched closing bracket positions',bad)
           PY
           if ! git diff --quiet -- research/v26/recovered-bit-puncturing-dac/V26_QR_MINIMAL_CORE_WIDTH41_CERTIFICATE.json; then
             git config user.name 'github-actions[bot]'
