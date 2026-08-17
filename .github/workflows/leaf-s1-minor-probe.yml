@@ -1,0 +1,23 @@
+name: Leaf S1 minor probe
+
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_leaf_s1_minor.py'
+      - '.github/workflows/leaf-s1-minor-probe.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy opt_einsum python-flint
+      - name: Reverify leaf cut topology
+        run: python scripts/verify_v26_q138_leaf_terminal_cut11_falsifier.py
+      - name: Probe 2048x2048 S1 leaf minors
+        run: python scripts/probe_v26_q138_leaf_s1_minor.py
