@@ -16,5 +16,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Diagnose certificate JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_ALGEBRAIC_WIDTH40_CERTIFICATE.json')
+          s=p.read_text()
+          print('certificate_chars',len(s))
+          dec=json.JSONDecoder()
+          try:
+              obj,idx=dec.raw_decode(s)
+              print('first_json_end',idx,'remainder_prefix',repr(s[idx:idx+300]))
+              print('first_keys',sorted(obj) if isinstance(obj,dict) else type(obj))
+          except Exception as e:
+              print('raw_decode_failed',repr(e))
+          PY
       - name: Verify exact mask-to-U47 coefficient tensor
         run: python scripts/verify_v26_qr_q138_mask_to_u47_coeff_tensor.py
