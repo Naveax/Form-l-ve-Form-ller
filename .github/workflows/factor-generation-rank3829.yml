@@ -1,0 +1,24 @@
+name: factor-generation-rank3829
+
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_factor_generation_rank3829.py'
+      - 'scripts/verify_v26_q138_full_s1_gap_rank3829.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_FACTOR_GENERATION_RANK3829_THEOREM.md'
+      - '.github/workflows/factor-generation-rank3829.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reverify full S1 rank3829 representation theorem
+        run: python scripts/verify_v26_q138_full_s1_gap_rank3829.py
+      - name: Verify coefficient-aware factor generation at rank3829
+        run: python scripts/verify_v26_q138_factor_generation_rank3829.py
