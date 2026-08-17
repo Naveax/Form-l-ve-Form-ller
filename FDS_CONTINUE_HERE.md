@@ -3,123 +3,124 @@
 **Admitted state:** recovered bit-puncturing/D&C separator Stage0 `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0`.  
 **Frozen measured milestone:** `V26_SINGLE_COLUMN_QR_TRANSFORM_FALSIFIER`.  
 **Measured-execution blocker:** exact recovered V25 trail-DAC runtime bytes are missing.  
-**Active work while blocked:** mathematics-first exact Walsh tensor-network / joint-mask composition.
+**Active work while blocked:** mathematics-first exact Walsh tensor-network / joint-mask coefficient composition.
 
 Code is only a calculator/falsifier. The mathematical object is the signed Walsh tensor and its exact low-state / low-rank generative structure.
 
 ## Current exact q138 chain
 
-For the **entire 4096-case physical fixed-mask family** of the q138 fixed-output exact one-quarter-round Walsh object, the complete certified structural message-width chain is now
+For the **entire 4096-case physical fixed-mask family** of the q138 fixed-output exact one-quarter-round Walsh object, the complete certified structural message-width chain is
 
 `44 -> 42 -> 41 -> 40 -> 38.75488750216347...`.
 
-The sharp bound is
+Sharp bound:
 
 `D_max = 216 * 2^31 = 463,856,467,968`,
 
 so
 
-`W <= 38.75488750216347... < 39`.
+`W_1 <= 38.75488750216347... <39`.
 
-This supersedes the earlier conditioned `u2_31=1` bound `39.044394119...` as the sharp complete global result, although that older certificate remains valid historically.
+## Sharp proof chain
 
-## Proof chain
+Rerun/read in this order:
 
-Read/verify in this order:
-
-1. physical right-map quotient:
-   - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RIGHT_HULL162_THEOREM.md`
-   - `scripts/verify_v26_qr_q138_physical_right_hull162.py`
-2. physical parent rank envelope:
+1. physical right/parent rank and common-span theorem:
    - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_PHYSICAL_RANK_ENVELOPE27_THEOREM.md`
    - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`
-3. left-I9 support bound:
+2. left support theorem / rank-12 selector:
    - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_LEFT_I9_SUPPORT216_THEOREM.md`
    - `scripts/verify_v26_qr_q138_left_i9_support216.py`
-4. complete global sub-39 theorem/certificate:
+3. full-family global sub-39 theorem/certificate:
    - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_THEOREM.md`
    - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_GENERAL_RANK27_SUPPORT216_GLOBAL_SUB39_CERTIFICATE.json`
    - `scripts/verify_v26_qr_q138_general_rank27_support216_global_sub39.py`
-5. next-layer support composition bridge:
+4. joint-mask composition bridges:
    - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_SUPPORT_SELECTOR_RANK12_COMPOSITION_BRIDGE.md`
+   - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_JOINT_MASK_COMPOSITION_BRIDGE47.md`
+5. metric accounting:
+   - `research/v26/recovered-bit-puncturing-dac/V26_QR_Q138_REPRESENTATION_WORK_ACCOUNTING.md`
+6. fifteen-step closure report:
+   - `research/v26/recovered-bit-puncturing-dac/V26_Q138_15_STEP_EXACT_PASS_REPORT.md`
 
 ## Exact facts to preserve
 
-Physical right/parent algebra:
+Physical interface algebra:
 
-- doubled right reachable hull: `1024 -> 162 = 114 + 48`;
+- right doubled reachable hull: `1024 ->162 =114+48`;
 - right rank over 4096 masks: `11..38`;
 - parent rank: `5..27`;
-- `u2_31=0`: parent `16..27`;
-- `u2_31=1`: parent `5..8`.
+- all 64 physical left maps share one exact 48-dimensional row space;
+- all 4096 mask-conditioned parent Schmidt/interface spaces have exact common span dimension `47` in the canonical 64-dimensional interface coordinate;
+- therefore a universal rank-27 basis is impossible, but a fixed universal 47-dimensional ambient basis is exact.
 
 Left support algebra:
 
-- relevant `I9` boundary has nine binary indices;
-- physical per-mask feasible-support upper envelope size: `117..216`;
-- exact support-size distribution: `117:2, 120:2, 144:12, 174:4, 177:2, 180:6, 216:36`;
+- relevant boundary `I9` has nine binary indices;
+- per-mask feasible-support upper envelope: `117..216`;
+- exact distribution: `117:2, 120:2, 144:12, 174:4, 177:2, 180:6, 216:36`;
 - 13 distinct support sets;
-- union size 384;
-- intersection size 96;
-- mask/support selector matrix size `64 x 512`, exact rational rank 12;
-- explicit rank-12 basis verified with coefficient alphabet `{-1,0,1}`;
-- support pruning residual: `epsilon=0`.
+- union 384, intersection 96;
+- exact `64 x 512` support-selector rank: 12;
+- explicit selector basis coefficient alphabet: `{-1,0,1}`;
+- support residual: `epsilon=0`.
 
 Global sub-39 construction:
 
 - safe parent Schmidt bond: `RP27`;
-- safe left support bond: `RL216`;
-- exact left parent factorization: `I9 -- RL216 -- (O7,RP27)`;
-- complete target network: 368 leaves, 367 internal tree nodes, 468 nontrivial indices;
+- safe support bond: `RL216`;
+- exact left parent split: `I9 -- RL216 -- (O7,RP27)`;
+- target tree: 368 leaves, 367 internal nodes;
 - maximum boundary: `31 binary + RL216`;
 - maximum dimension: `216*2^31`;
-- second-largest dimension: `528*2^29`, log-width `38.044394119...`.
+- second-largest: `528*2^29`.
 
 ## First unfinished mathematical pass
 
-The one-QR fixed-mask representation target is no longer the blocker. The next pass is **joint-mask / next-layer composition**.
+The common-span question is solved. The next pass is **mask-to-coefficient transfer inside the fixed 47-dimensional parent-interface basis**.
 
 Work in this order:
 
-1. rerun the three sharp exact verifiers:
-   - `scripts/verify_v26_qr_q138_physical_rank_envelope27.py`;
-   - `scripts/verify_v26_qr_q138_left_i9_support216.py`;
-   - `scripts/verify_v26_qr_q138_general_rank27_support216_global_sub39.py`;
-2. use the exact rank-12 support selector, not 64 unrelated support tables, when the six left mask controls become explicit variables;
-3. construct the joint tensor whose legs are
-   - the six mask controls,
-   - the rank-12 support-sector variable,
-   - the active `I9` coordinate,
-   - and the mask-conditioned parent Schmidt/interface variable;
-4. determine the common span of the mask-conditioned parent Schmidt spaces, or derive an equivalent finite transfer/sector representation;
-5. falsify the hypothesis that one universal rank-27 basis suffices unless exact algebra proves it;
-6. if the common coefficient-space span is small, freeze its exact basis and compose one more QR/layer through that basis;
-7. if the common span is large, search for a block/sector decomposition conditioned by the rank-12 support selector rather than falling back to 64 separate factorizations;
-8. only after an exact joint representation is obtained, build the next-layer tensor network and measure its separator/bond growth;
-9. derive a round-depth cost law `W(R)` or a rigorous finite-depth bound from the composed network;
-10. keep representation size and arithmetic work separate in all accounting.
+1. choose/freeze one exact rational basis of the verified common space `U47`;
+2. express every physical parent interface space and its exact coefficient action in that fixed basis;
+3. retain the six physical mask controls as explicit binary variables initially;
+4. compute exact TT/rank/sector structure of the mask-to-`U47` coefficient tensor;
+5. combine that structure with the already exact rank-12 `I9` support selector;
+6. test whether the five-site transfer algebra block-diagonalizes the joint coefficient/support tensor;
+7. only after a finite exact joint representation is frozen, attach one more QR/layer and measure the new separator/bond growth;
+8. certify a finite-depth `W_2` before discussing any round-depth recurrence `W(R)`;
+9. keep representation width, factor storage, arithmetic work and error as separate ledgers;
+10. do not promote a low message-width result into an attack/work-exponent claim without full accounting.
 
 ## Approximation rule
 
-Do **not** activate epsilon-rank merely because it exists.
+Do **not** activate epsilon-rank now.
 
-The current reduction is exact and has `epsilon=0`. The previously derived coherent-tail, residual-Gram, epsilon-rank and local-to-global telescoping machinery becomes active only if the exact common-span/sector route genuinely stalls.
+The current branch is exact and has `epsilon=0`. Epsilon-rank, coherent-tail and residual-Gram machinery becomes active only if the exact coefficient-transfer/sector route genuinely stalls.
 
-If approximation becomes necessary, freeze an explicit residual budget before measurement and propagate it with the existing exact error machinery.
+If that happens, freeze a residual budget before measurement and propagate it with the existing exact error calculus.
 
 ## Current FDS accounting
 
-Relative to the previous `2^40` dense maximum, the new exact representation/message maximum is smaller by
+Representation/message gain relative to `2^40`:
 
-`2^40 / (216*2^31) = 64/27 ~= 2.37037037`.
+`64/27 ~=2.37037037x`,
 
-Log-width gain:
+or
 
-`log2(64/27) ~= 1.2451124978 bits`.
+`~1.2451124978` log2 bits.
 
-This is a zero-error exact representation/message-width result only.
+Error:
 
-`ALPHA_PASS=0` remains unchanged. No arithmetic-work exponent reduction, full second-layer solution, ranking gain, or full-round relevance is admitted.
+`epsilon=0`.
+
+Arithmetic work:
+
+not improved. In the current scoped dense-tree proxy, the width-optimized support-216 tree is about `3.9842073564x` more expensive than the compared rank-27 source topology after rank factors are treated as given.
+
+Therefore `ALPHA_PASS=0` remains unchanged.
+
+No `W_2`, round-depth law, arithmetic-work exponent reduction, full second-layer solution, ranking gain or full-round relevance is admitted.
 
 ## Measured execution remains frozen behind provenance
 
@@ -144,4 +145,4 @@ When bytes become available:
 4. run the frozen cap2 all-four-column QR regression;
 5. only PASS opens packed cap3 under the existing resource gates.
 
-Still not admitted: practical exact QR evaluation at the formal maximum, exact end-to-end arithmetic-work reduction, full second-layer contraction, four-inverse-round exact energy, ranking reduction, `alpha<1`, or full-round relevance.
+Still not admitted: practical exact QR evaluation at the formal maximum, exact end-to-end arithmetic-work reduction, complete second-layer contraction, four-inverse-round exact energy, ranking reduction, `alpha<1`, or full-round relevance.
