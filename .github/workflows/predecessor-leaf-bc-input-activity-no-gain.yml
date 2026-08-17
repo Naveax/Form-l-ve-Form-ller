@@ -1,0 +1,23 @@
+name: predecessor-leaf B-C input activity no-gain
+
+on:
+  push:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_BC_INPUT_ACTIVITY_NO_GAIN.md'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_input_activity_no_gain.py'
+      - '.github/workflows/predecessor-leaf-bc-input-activity-no-gain.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify B/C first residue dependency
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_first_dyadic_rank1160.py
+      - name: Verify B/C input-activity no-gain
+        run: python scripts/verify_v26_q138_predecessor_leaf_bc_input_activity_no_gain.py
