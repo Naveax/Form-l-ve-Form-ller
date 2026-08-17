@@ -38,13 +38,18 @@
 - [x] Close retained-only j1 gap6..11: rank4/4 (`32043801142`).
 - [x] Explicit materialization arithmetic NO-GO: output `3829*2^73` scalars (`32044123499`).
 - [x] Record D16 common/private decomposition `26712n+1960n+1960n`.
-- [x] Prove low/high full-star mode envelopes `2^45` and `3829*2^28`; their Cartesian product is exactly `3829*2^73` (`32055881609`).
+- [x] Prove low/high full-star mode envelopes `2^45` and `3829*2^28`; Cartesian product exactly `3829*2^73` (`32055881609`).
 - [x] Close monotone raw complement-interleaving + generic-leaf certificate class: unavoidable layer44 coefficient certificate85.90275; topology+leaf MILP optimum86 (`32056604049`).
 - [x] Leaf reduced topology cut11 on frozen HT critical partitions (`32010227963`).
 - [x] Mark old leaf full-rank witness `32011941759` non-authoritative: exit143 before result.
 - [x] Mark exploratory leaf S1 minor `32054802994` non-authoritative: greedy path `2^64` intermediate /32-GiB allocation failure before rank result.
-- [ ] Build scalar-on-the-fly evaluator using coefficient-specific or uniform leaf-central joint algebra; generic leaf Hilbert interleaving is now closed as a route below84.90275.
-- [ ] Resolve uniform predecessor-leaf 11|21 coefficient saturation with a small streaming/sparse/direct algebraic certificate.
+- [x] Prove predecessor-leaf formal carry124 cancellation: A/D impossible; B/C internal rank124/nullity4, sign polar rank2, Gauss sums `{0,+/-8}` (`32057838229`).
+- [x] Prove position-dependent dyadic lattice: A/D coefficients in `2^-92 Z`; B/C coefficients in `2^-121 Z` (`32058413111`).
+- [x] Prove B/C weight123 and weight122 complete rank-sector distributions, including the four weight122 rank128 bit0-pair sectors (`32058413111`).
+- [x] Prove first A/D 2-adic S1 residue rank bound: `rank_F2((2^92 L_A) mod2)<=3` and same for D (`32058931522`).
+- [ ] Compute the next A/D 2-adic residue `M1 mod2` after removing the rank<=3 first layer; determine whether residue ranks remain uniformly small.
+- [ ] Construct the B/C first parity-Schmidt object at natural scale `2^121` from the finite carry-sector/Gauss decomposition.
+- [ ] Fuse any compact dyadic leaf layers into the central D16 common/private decomposition before full low/high Cartesian basis formation.
 - [ ] Freeze a real outer128 predecessor mask before any source-specific leaf-rank claim.
 - [ ] Count multiply/add, factor generation, recomputation, memory traffic and output in one TOTAL arithmetic-work ledger.
 - [ ] Test remaining nonlocal retained-coordinate regroupings only against center `3829*2^29`.
@@ -64,5 +69,6 @@
 - [x] Code is treated as calculator/falsifier, not the mathematical object.
 - [x] Finite admitted claims require clean-checkout/CI verification.
 - [x] Representation, factor-generation message/storage and arithmetic work are kept separate.
+- [ ] No rational Schmidt-rank inference from a low-rank modulo2 residue without a complete lifting theorem.
 - [ ] No arithmetic-work reduction claim until scalar evaluator TOTAL accounting passes.
 - [ ] No `alpha<1` claim until TOTAL work, ranking, verification, preprocessing and storage all support it.
