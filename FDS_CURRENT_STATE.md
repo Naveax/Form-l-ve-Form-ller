@@ -12,280 +12,250 @@ For all4096 physical fixed-mask cases:
 
 `44 -> 42 -> 41 -> 40 -> 38.768184324776925... <39`.
 
-Current sharp peak is `218*2^31`. All admitted one-QR reductions are exact, `epsilon=0`.
+Current sharp peak `218*2^31`. Old support216 / 13 support classes / rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; all64 left maps share an exact48-dimensional interface row space. `epsilon=0`.
 
-## d=1 ledgers — NEW canonical bound
+## d=1 canonical ledgers
 
-Keep distinct:
+Keep separate:
 
 - topology-only `W_2_topo<=236`;
-- coefficient-blind static reduced-central-graph + four-generic-leaf method `W_2_static,blind=95`, method-optimal inside that representation;
+- coefficient-blind static graph+leaf method `W_2_static,blind=95`;
 - exact representation existence
   `W_repr(1)<=73+log2(3829)=84.90275194485017...`;
 - coefficient-aware materialized-factor generation
-  `W_factor-gen<=73+log2(3829)=84.90275194485017...`;
-- arithmetic work: **not reduced/admitted**.
+  `W_factor-gen<=84.90275194485017...`;
+- arithmetic-work reduction: **not admitted**.
 
-The previous exact representation/factor-generation bound
+The old exact representation/factor-generation value
 
 `78+log2(171)=85.4178525148859...`
 
-is superseded for the first two exact/message ledgers above. Exact exponent improvement:
+is superseded. Exact exponent improvement:
 
-`log2(5472/3829)=0.5151005700357...`.
+`log2(5472/3829)=0.5151005700357...` bits.
 
-### Full S1 physical set
+## Full S1 exact decomposition
 
 `S1={0,1,2,3,4,5,12,13,14,15,16}`.
 
-There are44 physical S1 row bits. The new merged decomposition consumes all44; no raw S1 physical bit remains.
+All44 physical S1 row bits are occurrence-closed. No raw S1 bit remains.
 
-Low 23-bit set:
+Low23 physical rows:
 
 `A0..5,B0..5,D0..5,C12..16`.
 
-High/gap 21-bit set:
+High/gap21 physical rows:
 
 `A12..16,B12..16,D12..16,C0..5`.
 
-These are disjoint and cover the complete S1 physical row set.
+### Low block
 
-## Exact low block and bridge structure
+The complete repeated-D chain D0..5 has exact rank
 
-### Repeated-D low chain through D5
+`2^19`.
 
-The complete occurrence-closed low repeated-D chain has
-
-`rank(D0..5)=524288=16*2^15=2^19`.
-
-The key structural identity is that the relevant old carry graph is invariant under pure carry-slice swap, so its graph operator satisfies `G^2=I`. The local repeated-D rank24/32 kernels remain unreachable through D5.
-
-Clean D5 run `32041446052`: success.
-
-Authority:
-
-- `V26_Q138_BLOCK1_D5_INVOLUTION_FIBER_NO_GAIN.md`;
-- `scripts/verify_v26_q138_block1_d5_involution_fiber_no_gain.py`.
-
-### C12..C14 bridge
-
-The three physical C carry sites form a universal rank16/16 operator on their complete domain. Therefore they multiply any incoming rank by exactly `2^3`.
-
-Applying them to D0..5 gives the exact low merged rank
+The C12..14 carry operator is universally injective, rank16/16, so the low merged rank is
 
 `n=2^22`.
 
-Clean merged-C run `32040887484`: success.
+Clean runs:
 
-Authority:
+- D5 `32041446052`;
+- C bridge `32040887484`.
 
-- `V26_Q138_BLOCK1_C12_D04_MERGED_NO_GAIN.md`;
-- `scripts/verify_v26_q138_block1_c12_d04_merged_no_gain.py`.
+### High bridge
 
-### j2 bits22..31 high bridge
+The j2 bits22..31 bridge has exact rank32/32 on `(sigma2_21,D12..15)`. Therefore all16 D12..15 high prefixes remain direct after low-block attachment.
 
-The physical/domain coordinates are `(sigma2_21,D12..15)`, dimension32. An explicit 32x32 dyadic minor has full rank modulo65521, proving exact Q rank32/32.
+Clean run `32041617140`.
 
-Thus the bridge is injective and the sixteen D12..15 high prefixes remain direct after attaching the low block.
+## Useful j2 gap overlap
 
-Clean run `32041617140`: success.
+The j2 bits1..11 gap has row domain
 
-Authority:
+`(C1..5,sigma2_0,sigma2_11)`,
 
-- `V26_Q138_J2_BRIDGE22_31_INJECTIVE.md`;
-- `scripts/verify_v26_q138_j2_bridge22_31_injective.py`.
+dimension128, exact rank66 and kernel dimension62. An exact four-state paired-carry Gram DP sums all `2^28` retained columns implicitly.
 
-## Exact gap mechanism: the first useful merged overlap
+Clean run `32042410012`.
 
-### Local j2 bits1..11 gap rank66
+At fixed D16 the smallest physical loop misses this kernel; clean run `32042794811`.
 
-Rows `(C1..C5,sigma2_0,sigma2_11)` have naive dimension128. The implicit retained-column space has `2^28` assignments.
+Keeping D16=0/1 together after closing C1..5 gives local physical geometry
 
-A four-state paired-carry exact Gram DP sums the entire column space without materializing it and gives
+`64,64,intersection63`.
 
-`rank(M M^T)=rank(M)=66`.
-
-So the local gap has a real62-dimensional kernel.
-
-Clean run `32042410012`: success.
-
-Authority:
-
-- `V26_Q138_J2_GAP1_11_RANK66.md`;
-- `scripts/verify_v26_q138_j2_gap1_11_rank66.py`.
-
-The fixed-D16 minimal block1+C12..14+bit0 loop nevertheless misses this kernel: its boundary graph is an exact rank124 projector on a248-dimensional fixed-sigma2_11 projection, and both relevant gap pencils are rank32. Minimal-loop rank remains full8192.
-
-Clean run `32042794811`: success.
-
-Authority:
-
-- `V26_Q138_MINIMAL_GAP_LOOP_NO_GAIN.md`;
-- `scripts/verify_v26_q138_minimal_gap_loop_no_gain.py`.
-
-### D16 sectors after closing C1..5
-
-The useful mechanism appears only when the two D16 sectors are kept together.
-
-For physical rows `(D16,C0..C5)`:
-
-- fixed D16=0 rank64;
-- fixed D16=1 rank64;
-- union rank65;
-- intersection dimension63.
-
-Crucially, the exact same63-dimensional coefficient relation occurs in every fixed shared retained slice
+The same63-dimensional sector relation holds in every fixed shared retained slice
 
 `q=(v3_12,sigma2_11)`.
 
-Therefore for any incoming row space W on q, `dim W=n`, the lifted local sector geometry is universally
+Therefore for any incoming W on q, `dim W=n`, the exact lifted local geometry is
 
 `64n,64n,intersection63n`.
 
-Clean local run `32043345651`: success.
+Clean run `32043345651`.
 
 Authority:
 
-- `V26_Q138_BIT0_GAP1_11_SECTOR_RANK65.md`;
-- `scripts/verify_v26_q138_bit0_gap1_11_sector_rank65.py`.
-
-This supersedes the old pre-gap universal bit0 geometry `2n,2n,intersection n` for the new merged factor.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_J2_GAP1_11_RANK66.md`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_MINIMAL_GAP_LOOP_NO_GAIN.md`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_BIT0_GAP1_11_SECTOR_RANK65.md`.
 
 ## New full S1 central rank
 
-For every fixed D12..15 high prefix, the certified extended-block2 j1 D16 spaces remain
+For each fixed D12..15 high prefix, the extended-block2 j1 D16 spaces have
 
 `448,448,intersection424`.
 
-Combine them with the new local D16 geometry for low rank `n=2^22`:
+Combine with the new local D16 geometry:
 
-`448*(64n)+448*(64n)-424*(63n)`
+`448*(64n)+448*(64n)-424*(63n)=30632*n`.
 
-`=30632*n`.
+Sixteen high prefixes are direct, so
 
-The sixteen D12..15 prefixes are direct, so
-
-`rank_center(S1) <= 16*30632*2^22`
+`rank_center(S1)<=16*30632*2^22`
 
 `=3829*2^29`
 
 `=2,055,678,722,048`.
 
-The old center was `171*2^34`. Exact center gain:
+The previous center was `171*2^34`. Exact center gain:
 
-`(171*2^34)/(3829*2^29)=5472/3829`.
+`5472/3829`.
 
-Clean full theorem/tree run `32043410513`: success.
+Clean complete rank/tree run `32043410513`.
 
 Authority:
 
-- `V26_Q138_FULL_S1_GAP_RANK3829_THEOREM.md`;
-- `scripts/verify_v26_q138_full_s1_gap_rank3829.py`;
-- `.github/workflows/full-s1-gap-rank3829.yml`.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_FULL_S1_GAP_RANK3829_THEOREM.md`;
+- `scripts/verify_v26_q138_full_s1_gap_rank3829.py`.
 
-## Complete frozen HT-tree recount
+## Frozen HT-tree recount
 
-The S1 critical message dimension is
+At S1, predecessor-leaf exponent44 gives
 
-`(3829*2^29)*2^44 =3829*2^73`.
+`dim_factor<=3829*2^73`.
 
-Hence
+Thus
 
 `W_repr(1)<=73+log2(3829)=84.90275194485017...`.
 
-S2 remains `31*2^79`, exponent below the new S1 value. Every noncritical frozen-tree node remains at most `2^80`. Therefore S1 still controls the complete tree.
+S2 remains `31*2^79`; every noncritical frozen-tree node remains at most `2^80`. S1 still controls the complete tree.
 
 ## Coefficient-aware factor-generation constructivity
 
-The new representation rank is also constructive in the materialized-factor memory/message ledger.
+Let `R<=3829*2^29` be the true central rank. There are `2^44` physical S1 rows and a51-bit central boundary.
 
-Let `R<=3829*2^29` be the true central row rank. There are `2^44` physical S1 rows and a51-bit central boundary.
-
-An exact streaming Gaussian can select actual physical row basis elements while storing only a pivot minor/inverse of at most `R^2` entries:
+Streaming exact Gaussian can select actual physical row-basis elements while storing a pivot minor/inverse of at most `R^2` entries:
 
 `log2(R^2)<=81.8055038897003...`.
 
-This is below the final factor table.
+The physical-row -> rank-coordinate transform has at most
 
-The physical-row -> rank-coordinate transform costs at most
+`2^44*R=3829*2^73`
 
-`2^44*R <=3829*2^73`,
-
-which equals the factor-table envelope. A single complete physical central row has only `2^51` entries.
-
-Because selected rank rows are actual physical S1 assignments, the clean21-site complement-entry tree is reused unchanged at peak80. Leaf generation remains44.
+entries. A complete physical central row has only `2^51` entries. Using physical basis rows allows reuse of the clean21-site complement-entry tree at peak80.
 
 Therefore
 
-`W_factor-gen<=73+log2(3829)=84.90275194485017...`.
+`W_factor-gen<=84.90275194485017...`.
 
-Clean run `32043554316`: success.
+Clean run `32043554316`.
 
 Authority:
 
-- `V26_Q138_FACTOR_GENERATION_RANK3829_THEOREM.md`;
-- `scripts/verify_v26_q138_factor_generation_rank3829.py`;
-- `.github/workflows/factor-generation-rank3829.yml`.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_FACTOR_GENERATION_RANK3829_THEOREM.md`;
+- `scripts/verify_v26_q138_factor_generation_rank3829.py`.
 
-This is a memory/message constructivity theorem only. Streaming Gaussian/recomputation may have enormous arithmetic work.
+This is message/storage constructivity only.
 
-A complete materialized factor still contains
+## Secondary exact representation closure: j1 sites6..11
 
-`3829*2^73 = 36,163,882,525,815,743,046,483,968`
+The S1-retained j1 carry gap at sites6..11 has only endpoint row variables
 
-scalar entries.
+`(sigma1_5,sigma1_11)`,
 
-## Important no-gain / revoked routes
+dimension4.
 
-- block2 one-bit D11 extension preserves rank21888;
-- block1 contiguous C12..C14 alone is full naive rank;
-- repeated-D route D0..5 is full naive rank despite local kernels;
-- direct block1×block2 shared `v3_12` alone equals the product bound;
-- the 39-bit natural bridge without C1..5 reproduces the old `171*2^34` center exactly;
-- fixed-D16 minimal gap loop misses the rank66 kernel;
-- old adjacent four-site ranks96/208 and derived W84/W83 claims are **revoked** due int32 overflow. Corrected ranks are256/256.
+All local `A,B,D,k,q` variables are retained on the S1 split. Exact six-site paired-carry Gram rank is
 
-Do not revive revoked results without a mathematically independent derivation.
+`4/4`.
+
+Thus the direct retained-only j1 carry gap is injective and gives no reduction below center `3829*2^29`.
+
+Clean run `32043801142`: success.
+
+Authority:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_J1_GAP6_11_INJECTIVE.md`;
+- `scripts/verify_v26_q138_j1_gap6_11_injective.py`.
+
+## Arithmetic-work materialization gate
+
+The exact per-high-prefix D16 channel space decomposes dimensionally as
+
+`26712n + 1960n + 1960n =30632n`.
+
+The `26712n` block is common to both D16 sectors, about87.2% of the union channels. This is the structure a scalar evaluator should preserve.
+
+However any algorithm that explicitly materializes the complete coefficient-aware factor must emit
+
+`3829*2^73`
+
+`=36,163,882,525,815,743,046,483,968`
+
+scalars.
+
+Hence explicit factor materialization has an unavoidable scalar-output work exponent at least84.90275. It is scoped NO-GO as the route to an arithmetic-work reduction.
+
+Clean run `32044123499`: success.
+
+Authority:
+
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_D1_ARITHMETIC_MATERIALIZATION_GATE.md`;
+- `scripts/verify_v26_q138_d1_arithmetic_materialization_gate.py`.
+
+This does not lower-bound scalar-on-the-fly contraction; that remains open.
+
+## Closed / revoked d=1 routes
+
+- block2 D11 one-bit extension: no gain;
+- contiguous C12..C14 alone: full naive rank;
+- repeated-D D0..5 alone: full naive rank despite local kernels;
+- direct shared `v3_12` alone: product bound exact;
+- 39-bit natural bridge before C1..5: reproduces old center exactly;
+- fixed-D16 minimal gap loop: misses rank66 kernel;
+- j1 retained-only gap6..11: rank4/4 injective;
+- explicit full-factor materialization: scoped arithmetic NO-GO;
+- old four-site ranks96/208 and W84/W83 claims are **revoked** due int32 overflow; corrected ranks256/256.
+
+Do not revive revoked results without an independent derivation.
 
 ## d>=2 authority — unchanged
 
 Frozen `S3={4,5,11,12,13,19,20,21,27,28,29}`.
 
-Central exponent34.52163149454245.
-
-Fully-open:
-
-`rank<=189*2^56`, exponent63.562242424221076.
+Fully-open exponent63.562242424221076.
 
 Semi-open:
 
-- A `405*2^46`, exp54.661778097771986;
-- B generic `2^55`;
-- C `243*2^47`, exp54.92481250360578;
-- D `3429*2^42`, exp53.74357218893564.
+- A54.661778097771986;
+- B generic55;
+- C54.92481250360578;
+- D53.74357218893564.
 
-Current depth law for every `d>=2` remains
+Current law for every d>=2:
 
 `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.
 
-Examples:
-
-- d2 `683.1007639817401...`;
-- d3 `1191.5987033755086...`.
-
-## Storage/work status
-
-One-QR dense-work proxy remains worse than the source topology. For d=1, representation and coefficient-aware factor generation are now84.90275, but the materialized output itself has more than `3.616e25` scalar entries.
-
-No arithmetic-work reduction, practical evaluator, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance is admitted.
-
 ## Current sharp blockers / next mathematics
 
-1. **d=1 arithmetic work is now the main blocker.** Find a contraction/evaluation method that exploits the 63-channel D16 overlap without materializing `3829*2^73` entries. Any claimed work gain must include generation, contraction, recomputation and storage traffic.
-2. **d=1 secondary representation pass.** Test nonlocal regroupings not covered by the complete natural j2 bridge, especially the retained-only j1 carry gap between the low sites0..5 and high sites12..16, and any additional shared retained-coordinate overlap. The new canonical center to beat is `3829*2^29`.
-3. **Coefficient-specific predecessor leaves.** Any further leaf compression needs a clean uniform/parametric theorem or an explicitly frozen outer128 mask.
-4. **Semi-open B<55.** Must respect rotation7 output wiring plus offset16 D reuse.
-5. **Fully-open S3<63.562.** Needs genuine multi-site row-space overlap.
-6. Recount every complete relevant tree and clean-checkout every finite claim before changing authority.
+1. **d=1 scalar arithmetic evaluator.** Preserve the exact per-prefix decomposition `common26712n + private0 1960n + private1 1960n`; do not materialize `3829*2^73`. Push predecessor-leaf contraction inside these blocks and count multiply/add, factor generation, recomputation, memory traffic and output.
+2. **Predecessor-leaf Schmidt structure.** Current generic S1 accounting pays rank `2^11` per leaf, hence `2^44` across four leaves. Compute exact 11|21 Schmidt ranks for the relevant predecessor-leaf family. A uniform reduction is the clearest current path to scalar-work improvement. Coefficient-specific claims require a frozen outer128 mask or a uniform theorem.
+3. **Other nonlocal retained-coordinate regroupings.** The direct j1 gap is closed; additional simultaneous retained-coordinate couplings may still beat `3829*2^29`.
+4. **Semi-open B<55** and **fully-open S3<63.562** remain separate d>=2 rank problems.
+5. Recount every complete relevant tree and clean-checkout every finite claim before authority changes.
 
 All admitted reductions remain exact, `epsilon=0`. Approximation remains inactive while exact routes remain open.
+
+Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round cryptanalytic relevance.
