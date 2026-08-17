@@ -1,0 +1,22 @@
+name: predecessor-leaf A-D weight90 Fourier union probe
+
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_predecessor_leaf_ad_weight90_fourier_union.py'
+      - '.github/workflows/predecessor-leaf-ad-weight90-fourier-union-probe.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reverify A/D activity-sharpened second residue
+        run: python scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py
+      - name: Probe weight90 Fourier union
+        run: python scripts/probe_v26_q138_predecessor_leaf_ad_weight90_fourier_union.py
