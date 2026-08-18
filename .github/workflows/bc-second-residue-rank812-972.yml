@@ -1,5 +1,12 @@
 name: B-C second residue rank812-972
-on: [workflow_dispatch, push, pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_BC812_CLEAN_TRIGGER.txt'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py'
+      - 'scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py'
 permissions:
   contents: read
 jobs:
