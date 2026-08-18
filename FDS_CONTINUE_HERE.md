@@ -5,7 +5,7 @@
 **d=1 coefficient-aware materialized-factor generation:** `W_factor-gen<=84.90275194485017...`.  
 **d=1 coefficient-blind static method:** `W_static,blind=95`.  
 **d>=2 law:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
-**ALPHA_PASS=0`.
+**ALPHA_PASS=0**.
 
 All admitted reductions are exact, `epsilon=0`. Code is only calculator/falsifier; finite claims require clean-checkout execution.
 
@@ -64,10 +64,42 @@ Authority:
 - `V26_Q138_PREDECESSOR_LEAF_AD_ACTIVITY_RANK219_207.md`;
 - `scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py`.
 
-Cheap A/D refinements closed:
+For the third residue, choose the e0 negative-sign second-layer lift with coefficient `-1` at the same rank cost. Those e0 terms then contribute zero inherited correction to the third residue. The remaining e1 correction has exact uniform integer-lift bounds
+
+`A_third_e1_correction_rank_Q<=362`,
+
+`D_third_e1_correction_rank_Q<=171`.
+
+Clean PR-checkout run `32114938204`.
+
+Authority:
+
+- `V26_Q138_PREDECESSOR_LEAF_AD_THIRD_E1_CORRECTION_RANK362_171.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_ad_third_e1_correction_rank362_171.py`.
+
+The direct e=2 component is now regrouped exactly by predecessor-input condition. Every reachable odd direct support has S1 cut intersection zero. Clean run `32131312419` proves:
+
+- A: `12098` odd direct supports collapse to `4531` distinct predecessor conditions with multiplicities `617 x1, 261 x2, 3653 x3`; all supports in one condition group share the same right21 singleton, so the group XOR has rank<=1;
+- D: `12363` odd direct supports collapse to `8629` distinct conditions with multiplicities `4895 x1, 3734 x2`; all supports in one group share the same left11 singleton, so the group XOR has rank<=1.
+
+Thus for fixed predecessor input x,
+
+`rank_Q(E_A,2(x)) <= number of active A condition groups`,
+
+`rank_Q(E_D,2(x)) <= number of active D condition groups`.
+
+Authority:
+
+- `V26_Q138_PREDECESSOR_LEAF_AD_THIRD_DIRECT_E2_CONDITION_GROUP_RANK1.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_ad_third_direct_e2_condition_group_rank1.py`.
+
+The older raw-support weighted-activity objective is superseded. The remaining problem is assembled rank across simultaneously active rank-one groups.
+
+Cheap A/D refinements / closures:
 
 - no duplicate canonical-support XOR gain (`32064086782` probe);
-- homogeneous affine Fourier frequency unions saturate all2048 S1 frequencies (`32065783472` probe).
+- homogeneous affine Fourier frequency unions saturate all2048 S1 frequencies (`32065783472` probe);
+- direct-e2 predecessor-input global functional span is full rank128 for both A and D, clean diagnostic `32114982877`; global linear quotient reduction therefore gives NO-GAIN.
 
 ### B/C
 
@@ -79,7 +111,7 @@ The first explicit Fourier-aligned lifts are
 
 `M_C=K_C,0+2R_C`, `rank_Q(K_C,0)<=84`, clean `32066435545`.
 
-The second residue is now closed. Support-only left Walsh spaces have dimensions668/788. Exact Gauss-completed sign-dependent GF(2) spans are348/432. After exact integer Walsh transform and projection modulo the support spaces, the ZZ/Q quotient ranks are144/184.
+The second residue is closed. Support-only left Walsh spaces have dimensions668/788. Exact Gauss-completed sign-dependent GF(2) spans are348/432. After exact integer Walsh transform and projection modulo the support spaces, the ZZ/Q quotient ranks are144/184.
 
 Therefore exact second integer lifts exist with
 
@@ -116,6 +148,8 @@ B `[36,812,2048,2048,...]`,
 C `[84,972,2048,2048,...]`,
 
 D `[3,207,2048,2048,...]`.
+
+The newly admitted A/D third-component bounds do not yet replace the generic2048 index-2 entries because the complete third residues still require direct-e2 plus inherited-correction assembly.
 
 Four-leaf product layer bounds:
 
@@ -171,9 +205,9 @@ The immediate gate is the exact k7 polynomial under these four ranks. The zero-i
 
 ## Active exact probes
 
-1. **A/D third direct-e2 support component:** exact XOR-aggregated weighted predecessor-input activity. The first128-variable MILP clean run was cancelled after35 minutes without a certificate; current work reduces the objective to its global input-functional quotient before solving.
-2. **A/D third correction component:** choose the e0 negative-sign second lift with coefficient `-1` at the same rank cost so those terms vanish exactly from the third residue. Current probe computes one uniform left span for the remaining e1 negative-sign corrections.
-3. **B/C third residue:** now the next B/C unknown. Start from the explicit812/972 second lifts; do not reopen the closed B/C second residue.
+1. **A/D direct-e2 assembled rank:** work only with the clean rank-one predecessor-condition groups, not raw support multiplicities. Current D probe measures left-singleton affine-image geometry, zero-site map covers and assembled row events; A has the dual right-singleton problem.
+2. **B/C third residue:** start from the canonical812/972 second lifts. Current cheapest exact probe tests weight119 full-rank direct-e2 left-Walsh frequency saturation using only the29 quotient-active zero sites plus95 quotient-inert fillers.
+3. **Product k7 gate:** B/C index-2 reduction is being tested in parallel with A/D because a complete product improvement requires the four-leaf convolution, not isolated leaf wins.
 
 Promote only theorem + clean verifier results. Fixed-mask/source-specific measurements remain non-authoritative without a frozen outer128 predecessor mask.
 
@@ -195,7 +229,7 @@ Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic5
 
 ## First unfinished mathematical pass
 
-1. Finish A/D third residue as direct-e2 support plus e1 negative-sign correction under an explicit second lift.
+1. Bound the assembled A/D direct-e2 matrices across the clean rank-one predecessor-condition groups and combine with inherited corrections362/171.
 2. Open B/C third residues from the canonical812/972 second lifts and recount k7 whenever any index-2 bound improves.
 3. Continue until the entire `k>=7` dyadic tail is rigorously below `5,520,647,809,024`; only then reconsider `W_repr(1)` / `W_factor-gen`.
 4. Only after total dyadic control, fuse the leaf decomposition into the D16 common/private center and count total arithmetic work.
