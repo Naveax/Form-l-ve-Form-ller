@@ -2,144 +2,32 @@
 
 **One-QR exact:** `W_1<=38.768184324776925...<39`.  
 **d=1 exact representation:** `W_repr(1)<=73+log2(3829)=84.90275194485017...`.  
-**d=1 coefficient-aware materialized-factor generation:** `W_factor-gen<=84.90275194485017...`.  
-**d=1 coefficient-blind static method:** `W_static,blind=95`.  
-**d>=2 law:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
+**d=1 coefficient-aware factor generation:** `W_factor-gen<=84.90275194485017...`.  
+**d=1 coefficient-blind static:** `95`.  
+**d>=2:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
 **ALPHA_PASS=0**.
 
-All admitted reductions are exact, `epsilon=0`. Code is only calculator/falsifier; finite claims require clean-checkout execution.
+All admitted reductions are exact (`epsilon=0`). Code is only calculator/falsifier/certificate machinery; mathematics is the authority.
 
-## d=1 center authority
+## d=1 center — unchanged
 
-`S1={0,1,2,3,4,5,12,13,14,15,16}`. All44 physical S1 row bits are occurrence-closed.
+`S1={0,1,2,3,4,5,12,13,14,15,16}` and all44 physical S1 bits are occurrence-closed.
 
-`rank_center(S1)<=3829*2^29=2,055,678,722,048`, clean `32043410513`.
+`rank_center(S1)<=3829*2^29`, hence
 
-Generic predecessor-leaf exponent44 gives
+`W_repr(1),W_factor-gen <=73+log2(3829)=84.90275194485017...`.
 
-`dim_factor<=3829*2^73`,
-
-`W_repr(1)<=84.90275194485017...`.
-
-Factor-generation message/storage constructivity matches this bound; clean `32043554316`. Arithmetic work is still not reduced.
-
-Central work structure per high prefix remains
+The D16 channel decomposition per high prefix remains
 
 `26712n common +1960n private0 +1960n private1`, `n=2^22`.
 
-Materialization, separate full low/high bases and generic monotone complement interleaving are scoped work NO-GAIN routes; clean `32044123499`, `32055881609`, `32056604049`.
+Explicit materialize-then-contract is a scoped work NO-GO. No arithmetic-work win is admitted.
 
-## Current predecessor-leaf dyadic authority
-
-Leaf topology cut11 is exact; topology alone cannot beat `2^11=2048`.
-
-Natural coefficient scales:
-
-`L_A,L_D in 2^-92 Z`,
-
-`L_B,L_C in 2^-121 Z`, clean `32058413111`.
-
-### A/D
-
-`M_A=2^92L_A`, `M_D=2^92L_D`.
-
-First layer:
-
-`rank_F2(M_A mod2)<=3`,
-
-`rank_F2(M_D mod2)<=3`, clean `32058931522`.
-
-Write `M=M0+2M1` with integer rank<=3 first lift.
-
-The old sector-sum309/310 bounds are superseded. Uniform predecessor-input activity gives
-
-`rank_F2(M1_A mod2)<=219`,
-
-`rank_F2(M1_D mod2)<=207`.
-
-Exact affine activity maxima are181 and171; signed budgets are38 and36. Clean theorem `32065522597`.
-
-Authority:
-
-- `V26_Q138_PREDECESSOR_LEAF_AD_ACTIVITY_RANK219_207.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py`.
-
-For the third residue, choose the e0 negative-sign second-layer lift with coefficient `-1` at the same rank cost. Those e0 terms then contribute zero inherited correction to the third residue. The remaining e1 correction has exact uniform integer-lift bounds
-
-`A_third_e1_correction_rank_Q<=362`,
-
-`D_third_e1_correction_rank_Q<=171`.
-
-Clean PR-checkout run `32114938204`.
-
-Authority:
-
-- `V26_Q138_PREDECESSOR_LEAF_AD_THIRD_E1_CORRECTION_RANK362_171.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_ad_third_e1_correction_rank362_171.py`.
-
-The direct e=2 component is now regrouped exactly by predecessor-input condition. Every reachable odd direct support has S1 cut intersection zero. Clean run `32131312419` proves:
-
-- A: `12098` odd direct supports collapse to `4531` distinct predecessor conditions with multiplicities `617 x1, 261 x2, 3653 x3`; all supports in one condition group share the same right21 singleton, so the group XOR has rank<=1;
-- D: `12363` odd direct supports collapse to `8629` distinct conditions with multiplicities `4895 x1, 3734 x2`; all supports in one group share the same left11 singleton, so the group XOR has rank<=1.
-
-Thus for fixed predecessor input x,
-
-`rank_Q(E_A,2(x)) <= number of active A condition groups`,
-
-`rank_Q(E_D,2(x)) <= number of active D condition groups`.
-
-Authority:
-
-- `V26_Q138_PREDECESSOR_LEAF_AD_THIRD_DIRECT_E2_CONDITION_GROUP_RANK1.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_ad_third_direct_e2_condition_group_rank1.py`.
-
-The older raw-support weighted-activity objective is superseded. The remaining problem is assembled rank across simultaneously active rank-one groups.
-
-Cheap A/D refinements / closures:
-
-- no duplicate canonical-support XOR gain (`32064086782` probe);
-- homogeneous affine Fourier frequency unions saturate all2048 S1 frequencies (`32065783472` probe);
-- direct-e2 predecessor-input global functional span is full rank128 for both A and D, clean diagnostic `32114982877`; global linear quotient reduction therefore gives NO-GAIN.
-
-### B/C
-
-`M_B=2^121L_B`, `M_C=2^121L_C`.
-
-The first explicit Fourier-aligned lifts are
-
-`M_B=K_B,0+2R_B`, `rank_Q(K_B,0)<=36`,
-
-`M_C=K_C,0+2R_C`, `rank_Q(K_C,0)<=84`, clean `32066435545`.
-
-The second residue is closed. Support-only left Walsh spaces have dimensions668/788. Exact Gauss-completed sign-dependent GF(2) spans are348/432. After exact integer Walsh transform and projection modulo the support spaces, the ZZ/Q quotient ranks are144/184.
-
-Therefore exact second integer lifts exist with
-
-`R_B=K_B,1+2R_B,2`, `rank_Q(K_B,1)<=812`,
-
-`R_C=K_C,1+2R_C,2`, `rank_Q(K_C,1)<=972`.
-
-Equivalently,
-
-`2^121L_B=K_B,0+2K_B,1+4R_B,2`,
-
-`2^121L_C=K_C,0+2K_C,1+4R_C,2`.
-
-Clean PR-checkout chain `32112658496` verifies sign spans348/432, quotient ranks144/184, final812/972 lifts and the seven-layer gate.
-
-Authority:
-
-- `V26_Q138_PREDECESSOR_LEAF_BC_SECOND_RESIDUE_RANK812_972.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py`.
-
-Use812/972, not1016/1220 or2048, as the current B/C second-layer envelopes.
-
-## Current exact dyadic prefix
+## Current predecessor-leaf dyadic envelopes
 
 Natural four-leaf scale is `2^426`.
 
-Use per-leaf envelopes
+Current exact single-leaf envelopes are
 
 A `[3,219,2048,2048,...]`,
 
@@ -147,77 +35,191 @@ B `[36,812,2048,2048,...]`,
 
 C `[84,972,2048,2048,...]`,
 
-D `[3,207,2048,2048,...]`.
+D `[3,207,1022,2048,...]`.
 
-The newly admitted A/D third-component bounds do not yet replace the generic2048 index-2 entries because the complete third residues still require direct-e2 plus inherited-correction assembly.
+The D index-2 value is the first admitted subgeneric third-residue envelope in the current A/D assembled-rank program.
 
-Four-leaf product layer bounds:
+### A/D inherited third correction
 
-- k0 `27,216`;
-- k1 `4,793,472`;
-- k2 `315,450,720`;
-- k3 `9,979,784,064`;
-- k4 `171,359,156,304`;
-- k5 `1,703,063,715,840`;
-- k6 `10,186,815,307,776`;
-- generic k7 `38,736,654,106,624`.
+Under the admitted same-rank second-lift sign choice, inherited e0 third correction vanishes. The remaining e1 correction satisfies
 
-Prefix k0..k6:
+`A_correction<=362`,
 
-`12,071,538,235,392 <2^44`.
+`D_correction<=171`.
 
-Generic four-leaf budget:
+### A/D direct e=2 condition groups
 
-`2^44=17,592,186,044,416`.
+Clean rank-one regrouping:
 
-Current unresolved tail budget:
+- A:12098 odd direct supports ->4531 predecessor affine conditions, multiplicities `617x1,261x2,3653x3`; one common right21 singleton map per condition group.
+- D:12363 ->8629 conditions, multiplicities `4895x1,3734x2`; one common left11 singleton map per group.
 
-`5,520,647,809,024`.
+Thus fixed-input direct rank is bounded by active groups, but active-group counting is too coarse for sharp rank bounds.
 
-Attach center: k0..k6 complete-S1 prefix channels
+### Forced affine common cores
 
-`24,815,204,292,884,195,564,322,816`,
+Exact averaging/counting theorem `V26_Q138_AD_THIRD_DIRECT_E2_FORCED_COMMON_CORE.md` proves:
 
-exponent `84.3594267039546...`.
+A:
+- every global direct active-count maximizer satisfies the six most frequent affine equations;
+- A6 has4067 compatible groups;
+- residual condition ranks `{2:3,3:364,4:3700}`;
+- exact mean active count `555/2`, hence global max>=278;
+- outside A6 direct active-group/rank upper `<=189`.
 
-This leaves `0.54332524089557...` bits below the current full-factor exponent84.90275194485017, but **no complete-factor bound is lowered** until the exact k>=7 tail is controlled.
+D:
+- every global maximizer satisfies the first five equations;
+- D5 has8084 compatible groups;
+- residual ranks `{3:12,4:649,5:4129,6:3294}`;
+- D6 mean `12327/32`, hence global max>=386;
+- outside D5 direct upper `<=364`.
 
-Generic k7 is7.0166863467x the entire tail budget. If all four index-2 residues were zero and every deeper residue remained generic, k7 would be `1,703,063,715,840`, already below the tail budget. Clean gate `32112658496`.
+The old `2^128` point-enumeration and large weighted-MILP routes are superseded. The sharp object is singleton-map collision/cover geometry inside A6/D5.
+
+### D direct singleton-map theorem
+
+Clean run `32158688395` constructs a fixed family of global affine left11 maps covering every D5-compatible direct-e2 condition-group map:
+
+-90 zero sites occur in D5;
+-90 site representatives collapse to54 maps modulo D5;
+-these cover4413/8084 groups;
+-deterministic completion adds797 maps;
+-final cover size851.
+
+Hence
+
+`rank_Q(E_D,2(x))<=851`
+
+uniformly over every128-bit predecessor input (outside D5 the stronger364 count bound applies).
+
+Combining by subadditivity with the admitted inherited correction171 gives
+
+`d2<=851+171=1022<2048`.
 
 Authority:
 
-- `V26_Q138_DYADIC_WALSH_QUOTIENT_SEVEN_LAYER_GATE.md`;
-- `scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py`.
+- `V26_Q138_PREDECESSOR_LEAF_D_THIRD_RANK1022.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_d_third_rank1022.py`.
 
-Older six/five-layer gates and old depth warnings are superseded search envelopes, not current blockers.
+Dedicated clean verifier PR58 is the provenance follow-up; the851 construction itself already has clean PR-checkout receipt `32158688395`.
 
-## Sharp next target
+### A existing-map cover — scoped NO-GAIN
 
-A full dyadic improvement requires
+Clean run `32156922775` on A6:
 
-`sum_{k>=7} rank(layer_k) <5,520,647,809,024`.
+-88 zero sites;
+-62 initial maps modulo A6;
+-initial maps cover763/4067 groups;
+-deterministic existing-group-map completion needs1915 additional templates;
+-cover1977;
+-`1977+362` saturates the row cap2048.
 
-The next unknown single-leaf ranks are the index-2 residues
+So the **existing-map-only** A cover is NO-GAIN for the complete A third residue. This does not rule out interpolated affine-coset templates.
 
-`a2=A third`, `b2=B third`, `c2=C third`, `d2=D third`.
+### Active-group Walsh envelopes — scoped NO-GAIN
 
-The immediate gate is the exact k7 polynomial under these four ranks. The zero-index2 diagnostic proves that improving the next residue family is sufficient in principle to make k7 fit. This is only a k7 statement; later layers still need a complete sum bound.
+A6 full residual-dual span rank119; D5 rank121. Whole-quotient FWHT is infeasible.
 
-## Active exact probes
+Coverage-greedy exact20-dimensional FWHT gives only
 
-1. **A/D direct-e2 assembled rank:** work only with the clean rank-one predecessor-condition groups, not raw support multiplicities. Current D probe measures left-singleton affine-image geometry, zero-site map covers and assembled row events; A has the dual right-singleton problem.
-2. **B/C third residue:** start from the canonical812/972 second lifts. Current cheapest exact probe tests weight119 full-rank direct-e2 left-Walsh frequency saturation using only the29 quotient-active zero sites plus95 quotient-inert fillers.
-3. **Product k7 gate:** B/C index-2 reduction is being tested in parallel with A/D because a complete product improvement requires the four-leaf convolution, not isolated leaf wins.
+A active-group upper2568,
 
-Promote only theorem + clean verifier results. Fixed-mask/source-specific measurements remain non-authoritative without a frozen outer128 predecessor mask.
+D upper4636.
 
-## Non-authoritative / provenance warnings
+Therefore active-condition counting is too coarse. Do not keep extending this route; exploit singleton-map collisions instead.
 
-- old leaf coefficient full-rank run `32011941759`: exit143 before result;
-- exploratory dense 2048x2048 minor `32054802994`: bad path /32-GiB failure before rank result;
-- fixed-mask low-activity probes are not uniform theorems;
-- no canonical frozen `outer128` predecessor mask is available, so source-specific leaf claims remain provenance-gated;
-- old four-site ranks96/208 and W84/W83 claims remain revoked.
+## B/C status
+
+Second lifts remain exact authority:
+
+B `[36,812,...]`, C `[84,972,...]`.
+
+Clean B/C third leading-support result:
+
+- B direct-e2 left-Walsh envelope `<=1796`;
+- C saturates2048 by weight119, so this homogeneous support-envelope route is NO-GAIN for C.
+
+B1796 is **not** a complete `b2` bound.
+
+Natural second-lift support carry also closes coarsely:
+
+`U120_B xor U120_B = F2^11`,
+
+`U120_C xor U120_C = F2^11`.
+
+Thus the ordinary XOR-vs-integer-sum third-bit support carry has full2048 Walsh frequency envelope for both B and C. Finer sign/sector-aware lifts remain open.
+
+## Correct dynamic product gate
+
+The old frozen-tail k7 comparison is only a conservative sufficient test. It is **not** a necessity statement, because improving `a2,b2,c2,d2` lowers k2..k6 at the same time.
+
+The immediate exact test is
+
+`S_0..7(a2,b2,c2,d2)<=2^44`.
+
+The exact polynomial is
+
+`210 a2 b2 c2 +1056 a2 b2 d2 +399936 a2 b2`
+
+`+848 a2 c2 d2 +257952 a2 c2 +1141248 a2 d2 +3127931904 a2`
+
+`+222 b2 c2 d2 +58908 b2 c2 +412608 b2 d2 +1168937856 b2`
+
+`+268128 c2 d2 +930192576 c2 +3188419584 d2`
+
+`+2858783053824`.
+
+Clean dynamic-recount run `32137271413`.
+
+With B/C generic2048 this reduces to
+
+`S07(a,d)=7,404,880,238,592 +5,356,090,368 a +5,513,702,400 d +5,040,640 ad`.
+
+At current D1022 with A/B/C generic,
+
+`S0..7=34,559,498,960,896 >2^44`.
+
+The current D gain does lower `S0..6` to
+
+`8,270,906,966,016`,
+
+but k7 remains too large.
+
+Useful B/C-generic tradeoffs for **complete** A/D index-2 ranks:
+
+- if `d2=1022`, need `a2<=433`;
+- `d2=851` -> `a2<=569`;
+- `d2=700` -> `a2<=712`;
+- `d2=535` -> `a2<=898`.
+
+Since A inherited correction costs362 by the current subadditive accounting, the corresponding direct-A targets are71,207,350,536.
+
+Even passing `S0..7` is not full-tail control. Generic k8 remains enormous; after any index-2 success, k>=8 or a stronger whole-leaf/product cancellation theorem remains mandatory.
+
+## Closed / revoked search interpretations
+
+- Old frozen-tail statement “B/C reduction is mathematically necessary for k7” is revoked. It was true only for the old frozen sufficient budget.
+- Direct j1 gap and simple carry bridges remain closed NO-GAIN.
+- B/C support-carry sumset coarse route is full2048 NO-GAIN.
+- D global affine label-hyperplane route is falsified by a clean fixed-input witness with47 distinct rows and full affine hull rank11/11.
+- A/D active-group FWHT envelope is too coarse; K20 bounds2568/4636.
+- Pointwise affine-coset enumeration is invalid as a practical exact method because condition free dimensions are117..120.
+- Old support216/rank12 one-QR state remains revoked; current one-QR support peak is218.
+
+## Active exact passes
+
+1. **D complete-third row overlap (PR57):** test all274 inherited e1 correction singleton rows against the direct851 D5 row-template family. Inside-D5 combined row support may be much smaller than `851+171`; outside-D5 coarse combined upper is535.
+2. **D interpolated affine-coset cover (PR56, fixed head):** a shared template need not equal an existing group map. Intersect the exact cosets `m_g + span(D5+condition_g)` coordinatewise to construct smaller global left11 templates. The first implementation had a quotient-reduction bug; only the fixed-head clean run is valid.
+3. **A interpolated affine-coset cover (PR59, fixed head):** same construction on A6/right21. If D complete rank reaches roughly535, A direct<=536 is enough for the dynamic k0..k7 gate.
+4. **D rank1022 clean theorem receipt (PR58):** provenance closure of the dedicated theorem/verifier.
+5. If interpolation remains weak, do not return to active-group counting. Next stronger object is joint template-coset clustering / higher-residue persistence, or a direct complete-leaf Schmidt-rank witness/theorem.
+
+## Longer-term exact direction
+
+Residue-by-residue control may not be enough: even a successful index-2 gate leaves generic k8 far above budget. Two serious continuations are:
+
+- prove the same affine singleton-map families persist across higher dyadic residues, compressing several residue layers with one structural theorem; or
+- attack the **complete predecessor-leaf Schmidt rank** directly. A single fixed predecessor input with exact rank2048 would falsify any uniform subgeneric full-leaf theorem for that position; conversely a uniform low-rank tensor-network/Gram theorem would bypass the residue tail.
 
 ## d>=2 — unchanged
 
@@ -226,13 +228,5 @@ Promote only theorem + clean verifier results. Fixed-mask/source-specific measur
 Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic55, C54.92481250360578, D53.74357218893564.
 
 `W_repr(d)<=508.4979393937686...d-333.8951148057971...`, d>=2.
-
-## First unfinished mathematical pass
-
-1. Bound the assembled A/D direct-e2 matrices across the clean rank-one predecessor-condition groups and combine with inherited corrections362/171.
-2. Open B/C third residues from the canonical812/972 second lifts and recount k7 whenever any index-2 bound improves.
-3. Continue until the entire `k>=7` dyadic tail is rigorously below `5,520,647,809,024`; only then reconsider `W_repr(1)` / `W_factor-gen`.
-4. Only after total dyadic control, fuse the leaf decomposition into the D16 common/private center and count total arithmetic work.
-5. Other nonlocal center regroupings, semi-open B<55 and fully-open S3<63.562 remain separate exact routes.
 
 Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search gain, `alpha<1`, or full-round relevance.
