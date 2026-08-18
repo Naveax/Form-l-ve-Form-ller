@@ -1,0 +1,19 @@
+name: D exact distinct-label max probe
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d_exact_distinct_label_max.py'
+      - '.github/workflows/d-exact-distinct-label-max-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_d_exact_distinct_label_max.py
