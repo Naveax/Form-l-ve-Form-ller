@@ -23,11 +23,28 @@ Each zero-carry site contributes two homogeneous restrictions on that nullspace.
 
 A five-zero pattern is internally rank128 exactly when the restrictions from its subset of the29 active sites span all four null directions. The remaining zero sites, if any, may be chosen from the95 inert sites.
 
+The exact numbers of rank4 active cores are
+
+- size2: `4`;
+- size3: `104`;
+- size4: `1301`;
+- size5: `10425`.
+
+These counts independently reproduce earlier clean full-rank pattern counts:
+
+`weight121 (three zeros): 4*95 +104 =484`,
+
+`weight120 (four zeros): 4*C(95,2)+104*95+1301 =29041`.
+
+For five zeros they give
+
+`4*C(95,3)+104*C(95,2)+1301*95+10425`
+
+`=553660+464360+123595+10425`
+
+`=1,152,040`.
+
 Enumerating by active core therefore covers every internally full-rank five-zero pattern exactly once without scanning all `C(124,5)` patterns.
-
-The exact number of such full-rank five-zero candidates is
-
-`1,152,040`.
 
 ## B envelope
 
