@@ -28,15 +28,20 @@
 | Historical B/C first residue | GF(2) sector-sum bounds1052/1160 | ADMITTED EXACT (`32063042288`), SUPERSEDED AS DYADIC LAYER ENVELOPE |
 | B/C input activity | all103 affine + signed support can be active simultaneously | EXACT MUTUAL-EXCLUSION NO-GAIN (`32065964357`) |
 | B/C affine Fourier unions | B left-frequency union16; C union64 | ADMITTED STRUCTURAL INPUT TO EXPLICIT LIFT (`32066030190`) |
-| B/C explicit first dyadic lifts | `2^121L_B=K_B+2R_B`, `rank_Q K_B<=36`; C<=84 | ADMITTED EXACT INTEGER-LIFT BOUNDS (`32066435545`); CURRENT ENVELOPES |
-| Current four-leaf layer0 | `3*36*84*3=27,216` | ADMITTED EXACT DYADIC LAYER (`32066572887` dependency chain) |
-| Fourier-sharpened layers k0..k6 | `27216,6076512,528287760,22588489728,499782844416,5718621093888,33271289282560` | ADMITTED EXACT ENVELOPES (`32066572887`) |
-| Current prefix k0..k5 | `6,241,526,819,520 <2^44`; center-attached exponent83.4077880718 | ADMITTED EXACT PREFIX (`32066572887`); NOT COMPLETE FACTOR |
-| Current dyadic tail budget | `11,350,659,224,896` leaf channels =1.494963873 bits | ADMITTED EXACT SEARCH GATE (`32066572887`) |
-| Generic k6 | `33,271,289,282,560`, 2.9312208765x complete tail budget | GENERIC FALLBACK INSUFFICIENT; NEXT RESIDUES REQUIRED |
-| Old five-layer / depth gates | valid for superseded309/310 and1052/1160 envelopes | HISTORICAL / SUPERSEDED SEARCH CRITERIA |
-| B/C second residue weight120 Fourier probe | active | EXPLORATORY, NOT AUTHORITY |
-| A/D third residue weight90 Fourier probe | active | EXPLORATORY, NOT AUTHORITY |
+| B/C explicit first dyadic lifts | `2^121L_B=K_B,0+2R_B`, `rank_Q K_B,0<=36`; C<=84 | ADMITTED EXACT INTEGER-LIFT BOUNDS (`32066435545`) |
+| B/C second sign-dependent span | grouped e0 + four-half exact GF(2) left spans348/432; Gauss completion direct-fiber checked | ADMITTED EXACT (`32112658496`) |
+| B/C second Walsh quotient | support Walsh dimensions668/788; sign quotient ZZ/Q ranks144/184 | ADMITTED EXACT (`32112658496`) |
+| B/C explicit second dyadic lifts | `R_B=K_B,1+2R_B,2`, `rank_Q K_B,1<=812`; C<=972 | ADMITTED EXACT INTEGER-LIFT BOUNDS (`32112658496`); CURRENT ENVELOPES |
+| Current four-leaf layer0 | `3*36*84*3=27,216` | ADMITTED EXACT DYADIC LAYER (`32112658496` dependency chain) |
+| Walsh-quotient layers k0..k7 | `27216,4793472,315450720,9979784064,171359156304,1703063715840,10186815307776,38736654106624` | ADMITTED EXACT ENVELOPES (`32112658496`) |
+| Current prefix k0..k6 | `12,071,538,235,392 <2^44`; center-attached exponent84.3594267039546 | ADMITTED EXACT PREFIX (`32112658496`); NOT COMPLETE FACTOR |
+| Current dyadic tail budget | `5,520,647,809,024` leaf channels =0.5433252409 bits to current complete factor | ADMITTED EXACT SEARCH GATE (`32112658496`) |
+| Generic k7 | `38,736,654,106,624`, 7.0166863467x complete tail budget | GENERIC FALLBACK INSUFFICIENT; INDEX-2 RESIDUES REQUIRED |
+| Zero-index2 k7 diagnostic | all four index-2 residues zero, deeper generic => k7 `1,703,063,715,840 < tail` | EXACT SEARCH-GATE DIAGNOSTIC (`32112658496`) |
+| Old six/five-layer / depth gates | valid for superseded earlier envelopes | HISTORICAL / SUPERSEDED SEARCH CRITERIA |
+| A/D third direct-e2 support activity | first128-variable clean MILP cancelled after35 min without certificate; quotient reduction active | EXPLORATORY, NOT AUTHORITY |
+| A/D third e1 negative-sign correction | e0 may use same-rank `-1` second lift and vanish from third residue; uniform e1 sign-span probe active | EXPLORATORY, NOT AUTHORITY |
+| B/C third residue | starts from explicit812/972 second lifts | ACTIVE EXACT SEARCH |
 | Source-specific predecessor-leaf rank | no canonical frozen outer128 mask | PROVENANCE-GATED |
 | Scalar-on-the-fly d=1 evaluator | needs complete controlled dyadic tail fused into central common/private blocks | ACTIVE / WORK NOT DEMONSTRATED |
 | Revoked four-site 96/208 candidates | int32 overflow; corrected ranks256/256 | REVOKED / DO NOT USE |
