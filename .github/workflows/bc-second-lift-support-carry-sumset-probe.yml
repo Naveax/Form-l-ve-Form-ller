@@ -4,6 +4,10 @@ on:
     paths:
       - 'scripts/probe_v26_q138_bc_second_lift_support_carry_sumset.py'
       - '.github/workflows/bc-second-lift-support-carry-sumset-probe.yml'
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_second_lift_support_carry_sumset.py'
+      - '.github/workflows/bc-second-lift-support-carry-sumset-probe.yml'
   workflow_dispatch:
 permissions:
   contents: read
