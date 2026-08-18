@@ -27,9 +27,6 @@ def parity(x):return x.bit_count()&1
 
 
 def dual_constraints(cond):
-    # cond is an affine-function row space in 128 input coefficients + constant.
-    # Build an explicit basis of its orthogonal complement. Membership of an
-    # affine functional v in span(cond) is equivalent to h.v=0 for all h here.
     B=G.affine_basis(cond)
     piv=set(B)
     out=[]
@@ -103,3 +100,4 @@ def main():
     print('scope=D direct-e2 assembled left-singleton rank only; inherited e1 correction remains separate')
 
 if __name__=='__main__':main()
+# clean PR trigger
