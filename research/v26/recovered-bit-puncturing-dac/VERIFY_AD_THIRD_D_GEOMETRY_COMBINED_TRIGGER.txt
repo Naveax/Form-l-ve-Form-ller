@@ -1,1 +1,2 @@
 Scoped clean trigger for the combined D direct-e2 geometry diagnostic.
+Retriggered after replacing redundant internal RREF enumeration with the proved special/nonspecial candidate classes.
