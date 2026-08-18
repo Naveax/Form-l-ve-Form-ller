@@ -109,3 +109,4 @@ def main():
     print('scope=third dyadic integer-lift rank only; no complete leaf rank or arithmetic-work claim')
 
 if __name__=='__main__':main()
+# clean PR-checkout trigger
