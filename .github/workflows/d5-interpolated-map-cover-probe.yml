@@ -1,0 +1,19 @@
+name: D5 interpolated affine-map cover probe
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d5_interpolated_map_cover.py'
+      - '.github/workflows/d5-interpolated-map-cover-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_d5_interpolated_map_cover.py
