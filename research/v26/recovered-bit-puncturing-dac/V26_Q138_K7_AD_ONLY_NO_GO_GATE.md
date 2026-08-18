@@ -1,23 +1,45 @@
-# V26 Q1.38 k7 A/D-only reduction no-go gate
+# V26 Q1.38 frozen-tail k7 search gate
 
-## Scope
+## Status correction
 
-This is an exact dyadic-product search gate using the current predecessor-leaf envelopes
+The arithmetic values in this file are exact, but the old **necessity interpretation is revoked**.
+
+This gate freezes the previously computed generic k0..k6 prefix and therefore freezes the old residual budget
+
+`T=5,520,647,809,024`.
+
+It then asks whether a changed k7 alone fits inside that frozen budget. This is a conservative **sufficient search gate**. It is not a necessary condition once `a2,b2,c2,d2` change, because those same index-2 improvements also reduce layers k2..k6 and enlarge the true remaining budget.
+
+The corrected dynamic authority is
+
+`V26_Q138_DYNAMIC_PREFIX_K7_RECOUNT.md`
+
+with verifier
+
+`scripts/verify_v26_q138_dynamic_prefix_k7_recount.py`.
+
+In particular, the former statements
+
+- “B/C reduction is mathematically necessary for k7”,
+- “a2<=1439 is necessary”,
+- “d2<=1414 is necessary”
+
+are **not admitted as dynamic necessities**. They are only thresholds for this frozen-old-tail sufficient test.
+
+## Frozen-tail setup
+
+Use
 
 A `[3,219,a2,2048,...]`,
 B `[36,812,b2,2048,...]`,
 C `[84,972,c2,2048,...]`,
 D `[3,207,d2,2048,...]`,
 
-and the current unresolved tail budget
+but keep the old generic k0..k6 prefix fixed, so the reserved k>=7 budget is
 
 `T=5,520,647,809,024`.
 
-It is not a complete-factor or arithmetic-work improvement.
-
-## Exact k7 polynomial
-
-Exact four-leaf convolution at total residue index7 is
+The exact k7 polynomial is
 
 `k7 = 207 a2 b2 c2 +972 a2 b2 d2 +178176 a2 b2`
 
@@ -29,74 +51,32 @@ Exact four-leaf convolution at total residue index7 is
 
 `    +1703063715840`.
 
-Every coefficient is nonnegative. Hence setting any unknown index-2 ranks to zero gives rigorous optimistic lower gates for the remaining ranks.
+Under this frozen-budget test only:
 
-## A/D-only reduction cannot make k7 fit
+- `a2=d2=0`, `b2=c2=2048` gives `k7=5,595,612,708,864 >T`;
+- the frozen-budget A threshold with the other index-2 ranks zero is1439/1440;
+- the frozen-budget D threshold with the other index-2 ranks zero is1414/1415;
+- with ideal A/D zero, the equal B/C threshold is2009/2010;
+- with the hypothetical A/D correction-only values362/171, the equal B/C threshold is1055/1056.
 
-Set the unknown A/D index-2 ranks to the impossible ideal
+These remain useful conservative pruning numbers, but no longer determine mathematical priority by themselves.
 
-`a2=d2=0`
+## Correct dynamic comparison
 
-while leaving B/C at the generic row cap
+When index-2 ranks are changed, recompute k0..k6 as well. For example
 
-`b2=c2=2048`.
+`a2=d2=0`, `b2=c2=2048`
 
-Then
+gives dynamically
 
-`k7=5,595,612,708,864`.
+`sum(k0..k6)=1,809,267,529,728`,
 
-Thus
+`k7=5,595,612,708,864`,
 
-`k7-T=74,964,899,840 >0`.
+so
 
-Therefore reducing only A/D third residues can never make the current k7 gate fit while B/C remain generic2048. Some B/C index-2 reduction is mathematically necessary.
+`sum(k0..k7)=7,404,880,238,592 <2^44`.
 
-## A and D must themselves become subgeneric
+Thus the frozen-tail failure above does not imply dynamic k7 failure.
 
-Because every k7 coefficient is nonnegative, set the other three index-2 ranks to zero.
-
-For A:
-
-- `k7(1439,0,0,0)=5,520,488,595,456 <T`;
-- `k7(1440,0,0,0)=5,523,141,427,200 >T`.
-
-Therefore any k7-feasible theorem must satisfy
-
-`a2 <=1439`.
-
-For D:
-
-- `k7(0,0,0,1414)=5,520,332,685,312 <T`;
-- `k7(0,0,0,1415)=5,523,032,309,760 >T`.
-
-Therefore any k7-feasible theorem must satisfy
-
-`d2 <=1414`.
-
-So A and D cannot remain at the generic2048 cap even if B and C were reduced all the way to zero. The assembled A/D direct-e2 problem is therefore genuinely mandatory, not merely helpful.
-
-## Equal B/C threshold under ideal A/D zero
-
-With `a2=d2=0` and `b2=c2=x`, exact convolution gives
-
-- `x=2009`: `k7=5,520,524,242,944 <T` by `123,566,080`;
-- `x=2010`: `k7=5,522,449,121,280 >T` by `1,801,312,256`.
-
-Hence the largest equal B/C index-2 rank compatible with k7 under ideal zero A/D third residues is exactly
-
-`x=2009`.
-
-## Threshold using only the admitted inherited A/D e1-correction envelopes
-
-The clean inherited-correction theorem gives component bounds362 for A and171 for D. If, hypothetically, the direct e=2 components vanished completely, then set
-
-`a2=362`, `d2=171`, `b2=c2=x`.
-
-Exact convolution gives
-
-- `x=1055`: `k7=5,519,255,787,951 <T` by `1,392,021,073`;
-- `x=1056`: `k7=5,521,642,434,048 >T` by `994,625,024`.
-
-So under that hypothetical direct-zero A/D scenario the exact equal B/C threshold is1055.
-
-These threshold calculations are search criteria only. Actual A/D third residues still include unresolved direct e=2 terms, and the complete k>=7 tail remains open.
+No complete k>=8 tail, complete-factor, arithmetic-work, ranking/search, alpha or full-round claim is made here.
