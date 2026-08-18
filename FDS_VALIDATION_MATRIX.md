@@ -2,52 +2,48 @@
 
 | Family | Result | Verdict |
 |---|---|---|
-| Previously closed V25/V26 families | preserved | CLOSED / scoped |
-| V25 trail-enumeration first layer | explicit cap3 exact; cap5 factorized ~12,526x compact memory | ADMITTED WITH LIMITS |
-| Four-inverse-round global beam | bounded beam collapses | INSUFFICIENT REPRESENTATION, NOT ZERO-CORRELATION PROOF |
-| Recovered second-layer column separator | cap2/cap3 exact; cap4 packed memory gates PASS | `PASS_EXACT_SINGLE_COLUMN_SEPARATOR_STAGE0` |
-| Measured single-column inverse-QR falsifier | frozen; exact recovered core source absent | BLOCKED ON SOURCE REMATERIALIZATION |
-| One-QR exact Walsh/tensor representation | all4096 fixed-mask cases; `W_1<=38.768184324776925...<39`, peak `218*2^31` | ADMITTED EXACT, `epsilon=0` |
-| d=1 coefficient-blind static graph+leaf | `W_static,blind=95` | ADMITTED EXACT / METHOD-SCOPED |
-| d=1 central rank | `3829*2^29=2,055,678,722,048`; all44 S1 rows consumed | ADMITTED EXACT (`32043410513`) |
-| d=1 representation | `W_repr(1)<=84.90275194485017...` | ADMITTED EXACT, `epsilon=0`; UNCHANGED BY PARTIAL DYADIC PREFIX |
-| d=1 factor generation | `W_factor-gen<=84.90275194485017...` | ADMITTED MESSAGE/STORAGE CONSTRUCTIVITY; UNCHANGED |
-| D16 work decomposition | `26712n common +1960n private0 +1960n private1` | ADMITTED EXACT WORK STRUCTURE |
-| Explicit full-factor materialization | output `3829*2^73` scalars | SCOPED ARITHMETIC NO-GO (`32044123499`) |
-| Low/high star mode product | Cartesian product exactly `3829*2^73` | SCOPED ARITHMETIC NO-GO (`32055881609`) |
-| Generic monotone complement interleaving | cannot certify below84.90275 | EXACT METHOD-SCOPE NO-GAIN (`32056604049`) |
-| Predecessor-leaf topology | terminal cut11 on all frozen HT critical partitions | TOPOLOGY CANNOT BEAT GENERIC `2^11` (`32010227963`) |
-| Historical leaf fullrank witness | exit143 before result | NON-AUTHORITATIVE |
-| Exploratory dense leaf minor | bad path /32-GiB failure before rank | NON-AUTHORITATIVE (`32054802994`) |
-| Predecessor coefficient lattices | A/D `2^-92 Z`; B/C `2^-121 Z` | ADMITTED EXACT (`32058413111`) |
-| A/D first dyadic residue | `rank_F2<=3` each | ADMITTED EXACT (`32058931522`); NOT FULL LEAF RANK3 |
-| Historical A/D second residue | sector sums309/310 | ADMITTED EXACT HISTORICAL (`32062712987`), SUPERSEDED |
-| A/D second residue current | predecessor-input activity maxima181/171 + signed38/36 => `<=219`,`<=207` | ADMITTED EXACT UNIFORM (`32065522597`) |
-| A/D canonical duplicate-support cancellation | all271/274 affine supports distinct | EXACT CHEAP ROUTE NO-GAIN (`32064086782` probe) |
-| A/D affine Fourier-union sharpening | left unions saturate2048; right unions saturate2^21 | EXACT CHEAP ROUTE NO-GAIN (`32065783472` probe) |
-| Historical B/C first residue | GF(2) sector-sum bounds1052/1160 | ADMITTED EXACT (`32063042288`), SUPERSEDED AS DYADIC LAYER ENVELOPE |
-| B/C input activity | all103 affine + signed support can be active simultaneously | EXACT MUTUAL-EXCLUSION NO-GAIN (`32065964357`) |
-| B/C affine Fourier unions | B left-frequency union16; C union64 | ADMITTED STRUCTURAL INPUT TO EXPLICIT LIFT (`32066030190`) |
-| B/C explicit first dyadic lifts | `2^121L_B=K_B,0+2R_B`, `rank_Q K_B,0<=36`; C<=84 | ADMITTED EXACT INTEGER-LIFT BOUNDS (`32066435545`) |
-| B/C second sign-dependent span | grouped e0 + four-half exact GF(2) left spans348/432; Gauss completion direct-fiber checked | ADMITTED EXACT (`32112658496`) |
-| B/C second Walsh quotient | support Walsh dimensions668/788; sign quotient ZZ/Q ranks144/184 | ADMITTED EXACT (`32112658496`) |
-| B/C explicit second dyadic lifts | `R_B=K_B,1+2R_B,2`, `rank_Q K_B,1<=812`; C<=972 | ADMITTED EXACT INTEGER-LIFT BOUNDS (`32112658496`); CURRENT ENVELOPES |
-| Current four-leaf layer0 | `3*36*84*3=27,216` | ADMITTED EXACT DYADIC LAYER (`32112658496` dependency chain) |
-| Walsh-quotient layers k0..k7 | `27216,4793472,315450720,9979784064,171359156304,1703063715840,10186815307776,38736654106624` | ADMITTED EXACT ENVELOPES (`32112658496`) |
-| Current prefix k0..k6 | `12,071,538,235,392 <2^44`; center-attached exponent84.3594267039546 | ADMITTED EXACT PREFIX (`32112658496`); NOT COMPLETE FACTOR |
-| Current dyadic tail budget | `5,520,647,809,024` leaf channels =0.5433252409 bits to current complete factor | ADMITTED EXACT SEARCH GATE (`32112658496`) |
-| Generic k7 | `38,736,654,106,624`, 7.0166863467x complete tail budget | GENERIC FALLBACK INSUFFICIENT; INDEX-2 RESIDUES REQUIRED |
-| Zero-index2 k7 diagnostic | all four index-2 residues zero, deeper generic => k7 `1,703,063,715,840 < tail` | EXACT SEARCH-GATE DIAGNOSTIC (`32112658496`) |
-| Old six/five-layer / depth gates | valid for superseded earlier envelopes | HISTORICAL / SUPERSEDED SEARCH CRITERIA |
-| A/D third direct-e2 support activity | first128-variable clean MILP cancelled after35 min without certificate; quotient reduction active | EXPLORATORY, NOT AUTHORITY |
-| A/D third e1 negative-sign correction | e0 may use same-rank `-1` second lift and vanish from third residue; uniform e1 sign-span probe active | EXPLORATORY, NOT AUTHORITY |
-| B/C third residue | starts from explicit812/972 second lifts | ACTIVE EXACT SEARCH |
-| Source-specific predecessor-leaf rank | no canonical frozen outer128 mask | PROVENANCE-GATED |
-| Scalar-on-the-fly d=1 evaluator | needs complete controlled dyadic tail fused into central common/private blocks | ACTIVE / WORK NOT DEMONSTRATED |
-| Revoked four-site 96/208 candidates | int32 overflow; corrected ranks256/256 | REVOKED / DO NOT USE |
+| One-QR exact | `W_1<=38.768184324776925...<39`, peak `218*2^31` | ADMITTED EXACT |
+| d=1 center | `rank_center(S1)<=3829*2^29` | ADMITTED EXACT (`32043410513`) |
+| d=1 representation | `W_repr(1)<=84.90275194485017...` | ADMITTED EXACT / UNCHANGED |
+| d=1 factor generation | `W_factor-gen<=84.90275194485017...` | ADMITTED MESSAGE/STORAGE / UNCHANGED |
+| d=1 coefficient-blind static | `95` | ADMITTED METHOD-SCOPED |
+| Materialize-then-contract | output `3829*2^73` scalars | SCOPED ARITHMETIC NO-GO |
+| A/D natural lattices | `2^-92 Z` | ADMITTED EXACT |
+| B/C natural lattices | `2^-121 Z` | ADMITTED EXACT |
+| A/D index0 | `<=3/3` | ADMITTED EXACT |
+| A/D index1 | `<=219/207` | ADMITTED EXACT UNIFORM (`32065522597`) |
+| B/C index0/index1 | B `36/812`, C `84/972` | ADMITTED EXACT INTEGER-LIFT BOUNDS |
+| A/D direct-e2 condition groups | A4531 right21-singleton groups; D8629 left11-singleton groups | ADMITTED EXACT |
+| A/D forced cores | A6 outside direct<=189; D5 outside direct<=364 | ADMITTED EXACT |
+| A6 interpolated direct cover |565 templates | ADMITTED EXACT (`32160207690`) |
+| D5 interpolated direct cover |179 templates | ADMITTED EXACT (`32160149637`) |
+| A e1 singleton geometry | all271 supports unique right21 | ADMITTED EXACT (`32189193782`) |
+| D e1 singleton geometry | all274 supports unique left11 | ADMITTED EXACT dependency (`32159421297`) |
+| Exact signed e1 second lift | same index1 ranks219/207; inherited e0/e1 index2 correction exactly0 | ADMITTED EXACT (`32189863746`) |
+| A complete index2 | `a2<=565` | ADMITTED EXACT (`32189863746`) |
+| D complete index2 | `d2<=364` | ADMITTED EXACT (`32189863746`) |
+| Old D1022 / D851 / D535 | superseded by364 | SUPERSEDED |
+| Intermediate A746/D535 | superseded by565/364 | SUPERSEDED |
+| Dynamic layers k0..k7 | `27216,4793472,286719696,6955731216,79723547424,535328405616,2657484843456,10194932924416` | ADMITTED EXACT (`32189863746`) |
+| Dynamic prefix k0..k7 | `13,474,716,992,512 <2^44` | ADMITTED EXACT; margin `4,117,469,051,904` |
+| Complete k>=8 tail | unresolved | ACTIVE EXACT SEARCH |
+| B direct third leading support | `<=1796` | ADMITTED SCOPED / NOT COMPLETE b2 |
+| C third homogeneous candidate envelope |2048 | SCOPED NO-GAIN |
+| B/C coarse support-carry sumset |2048 for both | SCOPED NO-GAIN |
+| Raw e2 exact-signed global cover | all reachable raw sectors, including mod2-canceling sectors | ACTIVE VALIDATION |
+| A/D arbitrary zero-set internal rank law | no-special rank127; any-special rank128 | ACTIVE VALIDATION |
+| Next A/D family counts from rank law | `121,485 +247,065 =368,550` before external pruning | PENDING CLEAN THEOREM RECEIPT |
+| Complete predecessor-leaf Schmidt rank | unresolved | ACTIVE ALTERNATIVE |
 | d>=2 exact representation | `W_repr(d)<=508.4979393937686...d-333.8951148057971...` | ADMITTED EXACT |
-| Semi-open B | generic55 | ACTIVE EXACT SEARCH |
-| Fully-open multi-site | `189*2^56`, exponent63.562242424221076 | ACTIVE EXACT SEARCH |
-| Arithmetic work reduction | materialization/separate-mode/generic-monotone closed; total dyadic tail unresolved | NOT DEMONSTRATED |
-| alpha<1 | — | NOT DEMONSTRATED |
+| Arithmetic-work reduction | — | NOT DEMONSTRATED |
+| `alpha<1` | — | NOT DEMONSTRATED |
 | full-round relevance | — | NO CLAIM |
+
+## Revoked / closed interpretation notes
+
+- Old one-QR support216/rank12 selector remains revoked.
+- Frozen-tail k7 necessity statements remain revoked; all tail comparisons are dynamic.
+- Pointwise `2^128` affine-coset enumeration is not an accepted practical exact route.
+- A/D active-group FWHT envelopes are too coarse for sharp assembled rank.
+- D global affine-label hyperplane route is falsified.
+- Existing-map-only A6 cover1977 is superseded by interpolated565.
