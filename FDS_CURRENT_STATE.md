@@ -1,12 +1,12 @@
 # FDS_CURRENT_STATE
 
-## Canonical status — 2026-08-18
+## Canonical status — 2026-08-19
 
 `ALPHA_PASS=0`.
 
-Historical measured V25/V26 execution remains frozen behind missing exact recovered-runtime bytes. Active work is mathematics-first exact Walsh/tensor algebra. Code is only a calculator/falsifier; admitted finite claims require clean-checkout execution.
+Historical measured V25/V26 execution remains frozen behind missing exact recovered-runtime bytes. Active work is mathematics-first exact Walsh/tensor algebra. Code is calculator/falsifier/certificate machinery; finite computational claims require clean-checkout execution.
 
-All admitted reductions are exact, `epsilon=0`. Approximation remains inactive while exact routes remain open.
+All admitted reductions are exact (`epsilon=0`). Approximation remains inactive while exact routes remain open.
 
 ## One-QR exact authority
 
@@ -16,7 +16,7 @@ For all4096 physical fixed-mask cases:
 
 Old support216 /13 support classes /rank12 selector is revoked. Exact I9 support is117..218 over64 left masks; support-indicator rank64; all64 left maps share an exact48-dimensional interface row space.
 
-## d=1 canonical ledgers
+## d=1 ledgers — unchanged
 
 Keep separate:
 
@@ -24,248 +24,152 @@ Keep separate:
 - coefficient-blind static `W_static,blind=95`;
 - exact representation existence
   `W_repr(1)<=73+log2(3829)=84.90275194485017...`;
-- coefficient-aware materialized-factor generation
+- coefficient-aware factor generation
   `W_factor-gen<=84.90275194485017...`;
 - arithmetic-work reduction: **not admitted**.
 
-The dyadic results below create large low-rank exact prefixes but do **not** lower the complete-factor bounds while their residual tail is unresolved.
+The new dyadic prefix results below do not lower the complete-factor bound while the complete higher tail is unresolved.
 
-## Exact S1 center
+## Exact S1 center — unchanged
 
-`S1={0,1,2,3,4,5,12,13,14,15,16}`. All44 S1 physical row bits are occurrence-closed.
-
-Low23: `A0..5,B0..5,D0..5,C12..16`.  
-High/gap21: `A12..16,B12..16,D12..16,C0..5`.
-
-Key exact structure:
-
-- D0..5 low repeated-D rank `2^19`, clean `32041446052`;
-- C12..14 universal carry rank16/16, low rank `n=2^22`, clean `32040887484`;
-- j2 bits22..31 bridge rank32/32, clean `32041617140`;
-- j2 bits1..11 rank66/128, kernel62, clean `32042410012`;
-- fixed-D16 minimal loop misses that kernel, clean `32042794811`;
-- D16 after closing C1..5: `64,64,intersection63`, uniform over shared `q=(v3_12,sigma2_11)`, clean `32043345651`;
-- j1 D16 geometry `448,448,intersection424`.
-
-Per high prefix rank is `30632*n`;16 prefixes are direct:
+`S1={0,1,2,3,4,5,12,13,14,15,16}`. All44 physical S1 bits are occurrence-closed.
 
 `rank_center(S1)<=3829*2^29=2,055,678,722,048`.
 
-Clean full run `32043410513`.
+The D16 channel decomposition per high prefix remains
 
-Generic predecessor-leaf exponent44 gives
+`26712n common +1960n private0 +1960n private1`, `n=2^22`.
 
-`dim_factor<=3829*2^73`,
+Materialize-then-contract remains a scoped arithmetic-work NO-GO.
 
-`W_repr(1)<=84.90275194485017...`.
+## Predecessor-leaf dyadic authority
 
-Factor-generation message/storage constructivity matches this bound; clean `32043554316`.
+Natural four-leaf scale is `2^426`.
 
-## d=1 arithmetic-route gates
+Current exact single-leaf envelopes through index2 are
 
-Per high prefix the D16 union decomposes dimensionally as
+A `[3,219,565,2048,...]`,
 
-`26712n common +1960n private0 +1960n private1 =30632n`.
+B `[36,812,2048,2048,...]`,
 
-Explicit complete factor materialization emits `3829*2^73` scalars; clean gate `32044123499`.
+C `[84,972,2048,2048,...]`,
 
-Complete low/high star mode envelopes `2^45` and `3829*2^28` have Cartesian product exactly `3829*2^73`; clean `32055881609`.
+D `[3,207,364,2048,...]`.
 
-Monotone complement interleaving using only raw/topological center certificates plus generic leaf Hilbert ranks cannot certify below84.90275; clean `32056604049`.
+B/C index2 and all index>=3 entries shown as2048 are unresolved universal row caps, not measured ranks.
 
-Retained-only j1 gap6..11 is rank4/4; clean `32043801142`.
+### A/D index0 and index1
 
-A work improvement therefore must use actual predecessor-leaf coefficients before complete low/high Cartesian materialization.
+For `M_A=2^92 L_A`, `M_D=2^92 L_D`:
 
-## Predecessor-leaf dyadic coefficient authority
+`rank(K_A,0)<=3`, `rank(K_D,0)<=3`.
 
-Leaf topology cut11 is exact on every critical frozen HT partition, so topology alone cannot beat generic `2^11=2048`.
+Exact predecessor-input activity plus e0 signed budgets gives the canonical second-lift bounds
 
-Old dense coefficient full-rank run `32011941759` is non-authoritative: exit143 before a result. Exploratory 2048x2048 minor `32054802994` is also non-authoritative: bad contraction path /32-GiB failure before rank output.
+`rank(K_A,1)<=219`,
 
-### Natural coefficient lattices
+`rank(K_D,1)<=207`.
 
-Exact carry/sign descent gives
+### Exact signed e1 lift — new authority
 
-`L_A,L_D in 2^-92 Z`,
+The old valid unsigned e1 lift left inherited third-residue correction362/171. That lift is superseded.
 
-`L_B,L_C in 2^-121 Z`.
+Clean PR-checkout run `32189863746` proves that every reachable A/D e1 signed sector has a singleton matrix side:
 
-Clean top-carry `32057838229`; lattice descent `32058413111`.
+- A: all271 sectors have a unique right21 assignment; at most181 are simultaneously active;
+- D: all274 sectors have a unique left11 assignment; at most171 are simultaneously active.
 
-### A/D first and second dyadic layers
+Therefore each exact **signed** e1 sector has rank<=1. Use the exact signed matrix itself in `K1`; it is congruent mod2 to the support indicator and costs the same rank. Together with the already-admitted exact e0 `-q` lift:
 
-Set `M_A=2^92L_A`, `M_D=2^92L_D`.
-
-First residue:
-
-`rank_F2(M_A mod2)<=3`,
-
-`rank_F2(M_D mod2)<=3`.
-
-Clean `32058931522`.
-
-Choose an integer rank<=3 first lift and write `M=M0+2M1`.
-
-The original sector-sum theorem gave309/310, clean `32062712987`. Exact predecessor-input activity sharpening supersedes those bounds:
-
-- A has271 affine rank-one pieces but at most181 can be simultaneously active for any fixed128-bit predecessor input;
-- D has274 pieces but at most171 can be active;
-- adding the full signed-quadratic budgets38/36 gives
-
-`rank_F2(M1_A mod2)<=219`,
-
-`rank_F2(M1_D mod2)<=207`.
-
-The activity optima have matching MILP primal/dual values and zero gap. Clean theorem run `32065522597`.
+- index1 bounds remain219/207;
+- inherited e0 and e1 contribution to index2 is exactly zero.
 
 Authority:
 
-- `V26_Q138_PREDECESSOR_LEAF_AD_ACTIVITY_RANK219_207.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_ad_activity_rank219_207.py`.
+- `V26_Q138_PREDECESSOR_LEAF_AD_EXACT_SIGNED_E1_LIFT_RANK565_364.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_ad_exact_signed_e1_lift_rank565_364.py`;
+- clean run `32189863746`.
 
-Cheap follow-ups closed:
+### A/D direct e2 — complete index2 authority
 
-- canonical duplicate-support XOR gives no further A/D gain (`32064086782` probe);
-- homogeneous affine Fourier unions saturate all `2^11` left and `2^21` right frequencies (`32065783472` probe).
+The third binary residue is now **direct e2 only**.
 
-### B/C first and second dyadic lifts
+Forced-core theorem:
 
-Set `M_B=2^121L_B`, `M_C=2^121L_C`.
+- A global direct maximizers lie in A6; outside A6 direct rank<=189;
+- D global direct maximizers lie in D5; outside D5 direct rank<=364.
 
-The historical first-residue GF(2) sector sums1052/1160 are superseded as current layer envelopes. Exact Fourier alignment gives explicit integer first lifts
+Corrected clean interpolated affine-coset covers:
 
-`M_B=K_B,0+2R_B`, `rank_Q(K_B,0)<=36`,
+- A6:565 right21 templates, clean `32160207690`;
+- D5:179 left11 templates, clean `32160149637`.
 
-`M_C=K_C,0+2R_C`, `rank_Q(K_C,0)<=84`,
+Hence uniformly
 
-clean `32066435545`.
+`a2<=max(565,189)=565`,
 
-For the second residue, the support-only left Walsh spaces have dimensions
+`d2<=max(179,364)=364`.
 
-`668` for B and `788` for C.
+This supersedes A-generic, D1022, the intermediate D851/D535 routes, and the intermediate A746/D535 corollary.
 
-The sign-dependent part, after exact Gauss completion, grouped e0 cancellation and the four half-sector corrections, has GF(2) left-span dimensions
+### B/C first and second lifts — unchanged
 
-`348` for B and `432` for C.
+`M_B=2^121L_B`, `M_C=2^121L_C`.
 
-The exact integer Walsh transforms of those sign bases, restricted to the complements of the support-only frequency spaces, have exact ZZ/Q ranks
+Exact Fourier-aligned lifts give
 
-`144` for B and `184` for C.
+`rank(K_B,0)<=36`, `rank(K_B,1)<=812`,
 
-Therefore the support and sign lifts share common left-factor spaces of dimensions
+`rank(K_C,0)<=84`, `rank(K_C,1)<=972`.
 
-`668+144=812`,
+B/C third residues remain open.
 
-`788+184=972`.
+## Dynamic four-leaf convolution through k7 — first strong pass
 
-Exact second integer lifts exist:
+Using
 
-`R_B=K_B,1+2R_B,2`, `rank_Q(K_B,1)<=812`,
+A `[3,219,565,2048,...]`,
+B `[36,812,2048,2048,...]`,
+C `[84,972,2048,2048,...]`,
+D `[3,207,364,2048,...]`,
 
-`R_C=K_C,1+2R_C,2`, `rank_Q(K_C,1)<=972`.
-
-Equivalently,
-
-`2^121L_B=K_B,0+2K_B,1+4R_B,2`,
-
-`2^121L_C=K_C,0+2K_C,1+4R_C,2`.
-
-Clean PR-checkout chain `32112658496` verifies the sign spans348/432, exact Walsh quotient ranks144/184, final812/972 lifts and the seven-layer recount.
-
-Authority:
-
-- `V26_Q138_PREDECESSOR_LEAF_BC_SECOND_RESIDUE_RANK812_972.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py`.
-
-These are dyadic integer-lift bounds only; they are not complete rational leaf Schmidt-rank claims.
-
-## Walsh-quotient exact dyadic product prefix
-
-Natural four-leaf scaling is `2^426`.
-
-Use current envelopes
-
-A: `[3,219,2048,2048,...]`,
-
-B: `[36,812,2048,2048,...]`,
-
-C: `[84,972,2048,2048,...]`,
-
-D: `[3,207,2048,2048,...]`.
-
-Unresolved residues use only the universal2048 S1 row cap.
-
-Four-leaf layer bounds are
+the exact subadditive four-leaf layer bounds are
 
 - k0 `27,216`;
 - k1 `4,793,472`;
-- k2 `315,450,720`;
-- k3 `9,979,784,064`;
-- k4 `171,359,156,304`;
-- k5 `1,703,063,715,840`;
-- k6 `10,186,815,307,776`;
-- generic k7 `38,736,654,106,624`.
+- k2 `286,719,696`;
+- k3 `6,955,731,216`;
+- k4 `79,723,547,424`;
+- k5 `535,328,405,616`;
+- k6 `2,657,484,843,456`;
+- k7 `10,194,932,924,416`.
 
-The exact prefix k0..k6 sums to
+Thus
 
-`12,071,538,235,392 < 2^44`.
+`sum(k0..k7)=13,474,716,992,512`.
 
-Generic four-leaf S1 Hilbert budget:
+The generic four-leaf S1 Hilbert budget is
 
-`2^44=17,592,186,044,416`.
+`2^44=17,592,186,044,416`,
 
-Current unresolved leaf-tail budget:
+so the exact margin after k7 is
 
-`5,520,647,809,024`.
+`4,117,469,051,904`.
 
-Attach exact center `3829*2^29`: complete-S1 k0..k6 prefix has
+This is an admitted dynamic k0..k7 pass. It is **not** a frozen budget theorem for k>=8. Deeper residue improvements also change earlier convolution layers, so the full tail must be recounted dynamically.
 
-`24,815,204,292,884,195,564,322,816`
+## Higher-residue structural direction
 
-channels, exponent
+The exact signed e1 lift exhausts all valuation e0/e1 sectors: they produce no inherited correction at index2 or later.
 
-`84.3594267039546...`.
+The next structural question is whether the exact signed **raw e2 aggregate** can also be represented by a subgeneric global singleton-template family. Existing565/179 covers concern odd mod2 direct-e2 groups and do not by themselves cover raw even-canceling sectors.
 
-This is `0.54332524089557...` bits below the current complete-factor exponent84.90275194485017, but the unresolved k>=7 tail prevents any full bound reduction.
+Active diagnostic:
 
-Generic k7 is `7.0166863467...x` the entire remaining tail budget. If all four index-2 residues were zero while every deeper residue stayed generic, then k7 would be only
+- global raw-e2 A/D singleton-template cover over every reachable raw sector, not merely A6/D5 odd groups;
+- if subgeneric, it can support an exact signed `K2` that removes inherited e2 correction from index3.
 
-`1,703,063,715,840 < 5,520,647,809,024`.
-
-Clean gate `32112658496`.
-
-Authority:
-
-- `V26_Q138_DYADIC_WALSH_QUOTIENT_SEVEN_LAYER_GATE.md`;
-- `scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py`.
-
-Older six/five-layer gates and old depth warnings remain historically valid for their superseded envelopes, but are no longer the current search criterion.
-
-## Current dyadic tail target
-
-A complete dyadic improvement now requires
-
-`sum_{k>=7} rank(layer_k) <5,520,647,809,024`.
-
-The next unknown single-leaf ranks are the index-2 residues:
-
-`a2=A third`, `b2=B third`, `c2=C third`, `d2=D third`.
-
-The exact k7 polynomial is now the immediate search gate. Generic k7 misses the tail by7.0167x. The zero-index2 diagnostic shows that reducing the next residue family is sufficient in principle to make k7 fit, unlike the superseded1016/1220 search envelope.
-
-This remains only a k7 criterion; the complete later tail must still be controlled.
-
-## Current exploratory next probes
-
-- A/D third-residue direct-e2 support component: the exact XOR-aggregated weighted predecessor-input activity model is being reduced through its global input-functional quotient after the first128-variable MILP clean run was cancelled after35 minutes without a certificate.
-- A/D third-residue correction component: use the same-rank `-1` lift for the e0 negative-sign second-layer terms so they vanish from the third residue; a uniform left-span probe is active for the remaining e1 negative-sign corrections.
-- B/C third residues are now the next B/C unknowns; the second residues812/972 are closed.
-
-Neither A/D third probe is authority until converted to theorem + clean verifier where applicable.
-
-No canonical frozen `outer128` predecessor mask is available; source-specific leaf claims remain provenance-gated.
+A separate exact internal-rank law is also being certified: for arbitrary A/D carry-zero sets among the93 j1..j3 sites, rank is127 iff neither special `(1,0),(3,0)` is zero and128 otherwise. This gives the next-family combinatorics without enumerating `2^93` patterns.
 
 ## d>=2 authority — unchanged
 
@@ -275,12 +179,12 @@ Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic5
 
 `W_repr(d)<=508.4979393937686...d-333.8951148057971...`, d>=2.
 
-## Current sharp blockers / next mathematics
+## Current sharp blockers
 
-1. **Index-2 single-leaf residues:** finish A/D third residue as direct-e2 support plus e1 sign correction under an explicit second lift; begin B/C third residues from the now-canonical812/972 second lifts.
-2. **Total dyadic tail:** control the complete `k>=7` sum below `5,520,647,809,024`; only then may the complete representation/factor-generation ledger be reconsidered.
-3. **Product-level cancellation:** subadditive convolution may itself be loose; cross-leaf dyadic cancellation is an allowed alternative to reducing every single-leaf residue separately.
-4. **Leaf-central evaluator:** only after a controlled total layer-rank sum exists, fuse it into the D16 `common+private+private` central decomposition and count total arithmetic work.
-5. Other nonlocal center regroupings, semi-open B<55 and fully-open S3<63.562 remain separate exact problems.
+1. **Raw e2 exact-signed persistence:** bound the global exact signed e2 aggregate by singleton-template geometry; do not reuse A6/D5 outside-core mod2 bounds for raw sectors.
+2. **Higher direct residues:** after lower corrections are eliminated, control direct e3/e4 families without naive hundreds-of-thousands sector enumeration.
+3. **Complete dyadic tail:** only a controlled full tail can lower the current84.90275 representation/factor-generation ledger.
+4. **Product-level cancellation/direct Schmidt theorem:** allowed alternative to residue-by-residue subadditivity.
+5. **Arithmetic work:** only after a controlled complete leaf result, fuse with the central `common+private+private` decomposition and count actual scalar work.
 
 Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round relevance.
