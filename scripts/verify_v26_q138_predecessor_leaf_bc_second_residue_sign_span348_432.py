@@ -100,7 +100,7 @@ def q2(t,P,n):
     for i in range(n):
         if (t>>i)&1:
             for j in range(i+1,n):
-                if ((t>>j)&1) and ((P[i]>>j)&1:z^=1
+                if ((t>>j)&1) and ((P[i]>>j)&1):z^=1
     return z
 
 
