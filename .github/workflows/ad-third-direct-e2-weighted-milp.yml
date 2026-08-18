@@ -1,5 +1,10 @@
 name: A-D third direct e2 weighted MILP
-on: [workflow_dispatch, push, pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_direct_e2_weighted_milp.py'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_E2_MILP_TRIGGER.txt'
 permissions:
   contents: read
 jobs:
