@@ -1,2 +1,2 @@
-Clean-checkout verification trigger for the exact B/C weight119 homogeneous frequency envelope theorem.
-Final expected authority: active-core rank4 counts 4/104/1301/10425; full-rank five-zero candidates1,152,040; B candidate envelope1796; C candidate envelope2048 with deterministic saturation at934,476.
+Clean-checkout verification trigger for the B/C third direct-e2 support envelope chain.
+Expected: active-core rank4 counts4/104/1301/10425; B k2=k3=k4 frequency union1712; B weight119/full direct-e2 envelope1796 with84 added frequencies; C weight119 candidate envelope2048 saturation at934,476.
