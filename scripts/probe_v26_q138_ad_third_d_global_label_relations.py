@@ -8,6 +8,7 @@ import probe_v26_q138_ad_third_direct_e2_supports as P
 import probe_v26_q138_predecessor_leaf_ad_input_activity as I
 import verify_v26_q138_predecessor_leaf_ad_second_dyadic_rank310 as A
 import verify_v26_q138_predecessor_leaf_ad_third_direct_e2_condition_group_rank1 as G
+import verify_v26_q138_predecessor_leaf_top_carry_cancellation as T
 
 MASK=(1<<128)-1
 S=sorted(A.S1);R=A.R1
@@ -27,26 +28,16 @@ def parity(x):return x.bit_count()&1
 
 
 def dual_constraints(cond):
-    # cond is an affine-function row space in 128 input coefficients + constant.
-    # Build an explicit basis of its orthogonal complement. Membership of an
-    # affine functional v in span(cond) is equivalent to h.v=0 for all h here.
-    B=G.affine_basis(cond)
-    piv=set(B)
-    out=[]
-    for t in range(128):
-        if t in piv:continue
-        h=1<<t
-        for p,row in B.items():
-            if (row>>t)&1:h|=1<<p
-        out.append(h)
-    h=1<<128
-    for p,row in B.items():
-        if (row>>128)&1:h|=1<<p
-    out.append(h)
-    assert len(out)==129-len(B)
-    for h in out:
+    # cond is a row basis of affine input functionals in F2^129. Its exact
+    # orthogonal complement is the homogeneous nullspace of those rows.
+    sol=T.rref([(row,0) for row in cond],n=129)
+    assert sol is not None
+    rank,part,basis=sol
+    assert rank==len(cond) and part==0
+    assert len(basis)==129-rank
+    for h in basis:
         assert all(parity(h&row)==0 for row in cond)
-    return out
+    return basis
 
 
 def map_vectors(M):
