@@ -143,11 +143,13 @@ def main():
                 seen.add(m);mask_counts[m][rhs]+=1
 
         U=len(residuals)
+        residual_dual_rank=T.gf2_rank(list(mask_counts),128)
         cand,selected=select_masks(mask_counts,node_basis,12)
         print('position',pos,'global_groups',N,'V5_compatible_groups',U,
               'V5_incompatible_groups',incompatible,
               'V5_residual_rank_distribution',dict(sorted(rd.items())),
-              'distinct_implied_linear_masks',len(mask_counts),flush=True)
+              'distinct_implied_linear_masks',len(mask_counts),
+              'V5_global_residual_dual_span_rank',residual_dual_rank,flush=True)
         print('position',pos,'top_balanced_implied_masks',
               [(a,b,c,d,e) for a,b,c,_m,d,e in cand[:20]],flush=True)
         print('position',pos,'selected_independent_masks',
