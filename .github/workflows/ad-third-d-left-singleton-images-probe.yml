@@ -1,0 +1,19 @@
+name: A-D third D left singleton image probe
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d_left_singleton_images.py'
+      - '.github/workflows/ad-third-d-left-singleton-images-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_d_left_singleton_images.py
