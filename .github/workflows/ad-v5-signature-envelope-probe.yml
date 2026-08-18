@@ -1,0 +1,19 @@
+name: A-D V5 signature-envelope probe
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_v5_signature_envelope.py'
+      - '.github/workflows/ad-v5-signature-envelope-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_v5_signature_envelope.py
