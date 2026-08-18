@@ -1,2 +1,3 @@
 Clean-checkout verification trigger for the A/D third-residue direct e2 weighted MILP.
 Retriggered for the exact input-functional quotient diagnostic.
+Retriggered for the e1 negative-sign uniform left-span diagnostic.
