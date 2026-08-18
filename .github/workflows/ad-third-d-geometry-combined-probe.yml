@@ -1,0 +1,19 @@
+name: A-D third D geometry combined probe
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d_geometry_combined.py'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_D_GEOMETRY_COMBINED_TRIGGER.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_d_geometry_combined.py
