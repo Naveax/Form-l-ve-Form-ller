@@ -23,19 +23,38 @@ def canonical_condition(cond):
 
 
 def direct_supports(pos):
+    # The clean A/D second-residue theorem already proves the exact homogeneous
+    # classes: the only single-zero full-rank sites are (j1,0),(j3,0).
+    # Hence every pair of nonspecial sites preserves the same 1D top nullspace,
+    # while every triple containing a special site is full rank. Reusing that
+    # theorem avoids recomputing ~129k internal RREFs per position.
     sites=[(j,i) for j in range(1,4) for i in range(31)]
+    special=((1,0),(3,0));special_set=set(special)
+    nonspecial=[z for z in sites if z not in special_set]
+    assert len(nonspecial)==91
     FF=D.full_forms(pos);raw=[];stats=Counter()
-    for zs in itertools.combinations(sites,2):
-        C=D.carries(zs,ad=True);sol=A.internal_null(pos,C)
-        if sol[0]!=127:continue
-        assert len(sol[2])==1
-        der=A.derivative_form(FF,A.map_internal_to_full(sol[2][0]))
+
+    top=A.internal_null(pos,D.carries([],ad=True))
+    assert top[0]==127 and len(top[2])==1
+    der=A.derivative_form(FF,A.map_internal_to_full(top[2][0]))
+
+    # e=2 weight91 nullity-one sectors: exactly C(91,2)=4095 nonspecial pairs.
+    for zs in itertools.combinations(nonspecial,2):
+        C=D.carries(zs,ad=True)
         can=A.canonical_support(pos,C,der,127)
         if can is None:stats['w91_external_impossible']+=1;continue
         raw.append(('w91n1',zs,can));stats['w91_reachable']+=1
-    for zs in itertools.combinations(sites,3):
-        C=D.carries(zs,ad=True);sol=A.internal_null(pos,C)
-        if sol[0]!=128:continue
+
+    # e=2 weight90 full-rank sectors: exactly the8281 triples containing at
+    # least one special site. Generate them directly: one special + two
+    # nonspecial, or both specials + one nonspecial.
+    triples=[]
+    for s in special:
+        triples.extend(tuple(sorted((s,)+zs)) for zs in itertools.combinations(nonspecial,2))
+    triples.extend(tuple(sorted(special+(z,))) for z in nonspecial)
+    assert len(triples)==8281 and len(set(triples))==8281
+    for zs in triples:
+        C=D.carries(zs,ad=True)
         can=A.canonical_support(pos,C,expect_internal=128)
         if can is None:stats['w90_external_impossible']+=1;continue
         raw.append(('w90full',zs,can));stats['w90_reachable']+=1
