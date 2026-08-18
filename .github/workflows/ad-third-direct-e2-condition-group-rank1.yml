@@ -1,0 +1,20 @@
+name: A-D third direct e2 condition-group rank1
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/verify_v26_q138_predecessor_leaf_ad_third_direct_e2_condition_group_rank1.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_AD_THIRD_DIRECT_E2_CONDITION_GROUP_RANK1.md'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_DIRECT_E2_GROUP_RANK1_TRIGGER.txt'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_predecessor_leaf_ad_third_direct_e2_condition_group_rank1.py
