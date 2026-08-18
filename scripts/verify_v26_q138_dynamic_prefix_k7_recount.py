@@ -73,3 +73,4 @@ def main():
     print('scope=dynamic partial sum k0..k7 only; complete k>=8 tail remains unresolved')
 
 if __name__=='__main__':main()
+# clean PR trigger
