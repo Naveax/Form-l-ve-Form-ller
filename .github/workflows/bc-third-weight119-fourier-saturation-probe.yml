@@ -1,0 +1,23 @@
+name: B-C third weight119 Fourier saturation probe
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_bc_third_weight119_fourier_saturation.py'
+      - '.github/workflows/bc-third-weight119-fourier-saturation-probe.yml'
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_third_weight119_fourier_saturation.py'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_BC_THIRD_WEIGHT119_FOURIER_TRIGGER.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_bc_third_weight119_fourier_saturation.py
