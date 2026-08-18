@@ -43,20 +43,24 @@
 - [x] Historical B/C first-residue GF(2) sector sums1052/1160 (`32063042288`).
 - [x] B/C predecessor-input mutual exclusion gives NO-GAIN: all104 objects can be active simultaneously (`32065964357`).
 - [x] B/C affine Fourier unions are tiny:16 left frequencies for B,64 for C (`32066030190` probe).
-- [x] Convert B/C Fourier structure into explicit integer first lifts `rank_Q(K_B)<=36`, `rank_Q(K_C)<=84` (`32066435545`); these supersede1052/1160 as current dyadic first-layer envelopes.
-- [x] Recount Fourier-sharpened product through k6 (`32066572887`).
-- [x] Current exact prefix k0..k5 `6,241,526,819,520 <2^44`.
-- [x] Current unresolved dyadic tail budget `11,350,659,224,896` leaf channels =1.494963873 bits headroom.
-- [x] Current generic k6 `33,271,289,282,560`, only2.9312208765x the entire tail budget.
-- [x] Mark older five-layer prefix/tail gates and old depth warning as superseded search envelopes.
-- [ ] Resolve B/C second residue. Active first probe: weight120 rank128 unique-solution S1 Fourier saturation.
-- [ ] Resolve A/D third residue. Active first probe: weight90 rank128 unique-solution S1 Fourier union over8281 special-zero triples.
-- [ ] Construct coefficient-specific next-residue ranks low enough to make k6 fit. Search thresholds: all four next ranks roughly<=1387; or B/C<=968 if A/D generic; or A/D<=785 if B/C generic.
-- [ ] Continue beyond k6 until total `sum_{k>=6} rank(layer_k) <11,350,659,224,896`.
+- [x] Convert B/C Fourier structure into explicit integer first lifts `rank_Q(K_B)<=36`, `rank_Q(K_C)<=84` (`32066435545`).
+- [x] B/C second support-only Walsh spaces have dimensions668/788.
+- [x] B/C second sign-dependent exact GF(2) left spans are348/432, including Gauss-completed grouped e0 and four-half corrections (`32112658496`).
+- [x] Exact Walsh quotient ranks modulo support spaces are144/184, yielding complete second integer lifts `<=812` and `<=972` (`32112658496`).
+- [x] Recount Walsh-quotient product through k7 (`32112658496`).
+- [x] Current exact prefix k0..k6 `12,071,538,235,392 <2^44`.
+- [x] Current unresolved dyadic tail budget `5,520,647,809,024` leaf channels =0.5433252409 bits headroom after center attachment.
+- [x] Current generic k7 `38,736,654,106,624`, 7.0166863467x the entire remaining tail budget.
+- [x] Zero-index2 diagnostic: with all four index-2 residues zero and deeper layers generic, k7=`1,703,063,715,840` fits the current tail budget.
+- [x] Mark older six/five-layer prefix/tail gates and old depth warnings as superseded search envelopes.
+- [ ] Resolve A/D third residue. Current split: direct-e2 support component plus e1 negative-sign correction under an explicit second lift.
+- [ ] Resolve B/C third residue starting from canonical second lifts812/972.
+- [ ] Recount exact k7 whenever any index-2 residue improves.
+- [ ] Continue beyond k7 until total `sum_{k>=7} rank(layer_k) <5,520,647,809,024`.
 - [ ] Freeze a real outer128 predecessor mask before any source-specific leaf-rank claim.
 
 ## d=1 evaluator / admission
-- [ ] Do not lower full `W_repr(1)` or `W_factor-gen` from the six-layer prefix while k>=6 tail remains unresolved.
+- [ ] Do not lower full `W_repr(1)` or `W_factor-gen` from the seven-layer prefix while k>=7 tail remains unresolved.
 - [ ] Only after a complete total dyadic layer-rank sum exists, fuse it into central `26712n common +1960n private0 +1960n private1` before full low/high Cartesian materialization.
 - [ ] Count multiply/add, factor generation, recomputation, memory traffic and output in one TOTAL arithmetic-work ledger.
 - [ ] Test remaining nonlocal retained-coordinate regroupings only against center `3829*2^29`.
@@ -77,7 +81,7 @@
 - [x] Finite admitted claims require clean-checkout/CI verification.
 - [x] Representation, factor-generation message/storage and arithmetic work remain separate.
 - [x] GF(2) residue bounds are promoted to exact dyadic layers only through explicit/integer lift arguments.
-- [x] B/C36/84 are explicit Q-rank integer-lift bounds, not claims that full B/C leaf ranks are36/84.
+- [x] B/C36/84 and812/972 are explicit Q-rank integer-lift bounds, not claims that full B/C leaf ranks equal those values.
 - [ ] No complete d=1 bound reduction until the full dyadic tail is controlled.
 - [ ] No arithmetic-work reduction until TOTAL scalar evaluator accounting passes.
 - [ ] No `alpha<1` claim until TOTAL work, ranking, verification, preprocessing and storage all support it.
