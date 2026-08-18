@@ -1,0 +1,1 @@
+Clean-checkout verification trigger for the exact k7 A/D-only reduction no-go search gate.
