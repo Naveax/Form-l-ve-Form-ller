@@ -1,0 +1,19 @@
+name: A direct-e2 condition dimension probe
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_a_condition_dimensions.py'
+      - '.github/workflows/a-condition-dimensions-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_a_condition_dimensions.py
