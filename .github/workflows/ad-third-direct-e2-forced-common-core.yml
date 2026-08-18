@@ -1,0 +1,20 @@
+name: A-D third direct-e2 forced common core
+on:
+  push:
+    paths:
+      - 'scripts/verify_v26_q138_ad_third_direct_e2_forced_common_core.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_AD_THIRD_DIRECT_E2_FORCED_COMMON_CORE.md'
+      - '.github/workflows/ad-third-direct-e2-forced-common-core.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_ad_third_direct_e2_forced_common_core.py
