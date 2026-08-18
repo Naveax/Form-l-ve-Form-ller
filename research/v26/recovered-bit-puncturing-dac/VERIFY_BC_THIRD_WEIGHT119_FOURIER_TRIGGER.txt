@@ -1,1 +1,2 @@
 Scoped clean probe trigger for B/C third-residue weight119 full-rank left-Walsh frequency saturation.
+Retriggered after restricting enumeration to exact rank4 cores among the29 quotient-active sites plus95 inert fillers.
