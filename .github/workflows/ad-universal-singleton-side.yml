@@ -1,6 +1,5 @@
 name: A-D universal singleton side
 on:
-  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
