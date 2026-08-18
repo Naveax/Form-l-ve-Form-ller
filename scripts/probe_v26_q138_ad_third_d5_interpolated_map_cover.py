@@ -30,10 +30,8 @@ def span_basis(rows):
 def reduce_vec(x,basis):
     B={v.bit_length()-1:v for v in basis}
     y=x
-    while y:
-        p=y.bit_length()-1
-        if p not in B:break
-        y^=B[p]
+    for p in sorted(B,reverse=True):
+        if (y>>p)&1:y^=B[p]
     return y
 
 
@@ -85,7 +83,6 @@ def affine_intersect(repW,W,repU,U):
         if (tag>>i)&1:w^=z
     rep=repW^w
     I=intersection_basis(W,U)
-    # Defensive exact membership checks.
     assert reduce_vec(rep^repW,W)==0
     assert reduce_vec(rep^repU,U)==0
     return rep,I
@@ -157,8 +154,6 @@ def main():
         _B,U,F,_M=data[seed]
         state=tuple((f,U) for f in F)
         cluster=[seed]
-        # One deterministic pass. Every accepted group shrinks the admissible
-        # template coset; rejected groups remain for later clusters.
         for k in sorted(uncovered-{seed}):
             _Bk,Uk,Fk,_Mk=data[k]
             ns=try_add(state,Uk,Fk)
@@ -166,9 +161,6 @@ def main():
                 state=ns;cluster.append(k)
         Tfull=tuple(rep for rep,_W in state)
         Tmap=map_pairs(Tfull)
-        # The chosen representative covers every accepted group, and may cover
-        # additional groups not accepted earlier after the state subsequently
-        # shrank to a different representative.
         covered=[]
         for k in sorted(uncovered):
             Bk,_Uk,_Fk,Mk=data[k]
