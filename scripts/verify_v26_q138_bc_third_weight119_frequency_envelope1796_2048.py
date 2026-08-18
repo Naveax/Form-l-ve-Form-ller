@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import itertools,sys
+import itertools,math,sys
 from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -17,9 +17,6 @@ def qrank(sig,zs):
 
 
 def candidates(active,inert,sig):
-    # Every full-rank five-zero set has a unique active subset. The inert sites
-    # have zero quotient signature, so the active subset alone decides whether
-    # the old four-dimensional nullspace is killed.
     for r in range(2,6):
         for core in itertools.combinations(active,r):
             if qrank(sig,core)!=4:continue
@@ -43,6 +40,13 @@ def main():
     inert=[z for z in sites if sig[z]==(0,0)]
     active=[z for z in sites if sig[z]!=(0,0)]
     assert len(inert)==95 and len(active)==29
+
+    core={r:sum(qrank(sig,z)==4 for z in itertools.combinations(active,r)) for r in range(2,6)}
+    assert core=={2:4,3:104,4:1301,5:10425},core
+    assert core[2]*95+core[3]==484
+    assert core[2]*math.comb(95,2)+core[3]*95+core[4]==29041
+    total5=(core[2]*math.comb(95,3)+core[3]*math.comb(95,2)+core[4]*95+core[5])
+    assert total5==1_152_040
 
     expected={'B':(1_152_040,1796,8,None),'C':(934_476,2048,8,934_476)}
     for pos in 'BC':
@@ -71,6 +75,8 @@ def main():
               'saturation_at',saturation,flush=True)
 
     print('PASS V26_Q138_BC_THIRD_WEIGHT119_FREQUENCY_ENVELOPE1796_2048')
+    print('active_core_rank4_counts=2:4,3:104,4:1301,5:10425')
+    print('fullrank_weight119_candidate_count=1152040')
     print('B_weight119_fullrank_support_left_factor_envelope<=1796')
     print('C_weight119_fullrank_candidate_homogeneous_envelope=2048_NO_GAIN')
     print('scope=weight119 internally-full-rank homogeneous support-frequency envelope only; no complete b2/c2 claim')
