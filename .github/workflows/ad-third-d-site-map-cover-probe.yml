@@ -1,0 +1,23 @@
+name: A-D third D site map cover probe
+on:
+  push:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d_site_map_cover.py'
+      - '.github/workflows/ad-third-d-site-map-cover-probe.yml'
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_ad_third_d_site_map_cover.py'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_D_SITE_MAP_COVER_TRIGGER.txt'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_ad_third_d_site_map_cover.py
