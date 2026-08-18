@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import itertools
 
+# Historical frozen old-tail budget. This verifier checks the arithmetic of
+# that conservative sufficient gate only. Dynamic necessity is handled by
+# verify_v26_q138_dynamic_prefix_k7_recount.py.
 TAIL=5_520_647_809_024
 
 
@@ -28,7 +31,6 @@ def poly(a,b,c,d):
 
 
 def main():
-    # Polynomial identity on a deterministic finite interpolation grid.
     for a in (0,1,17,2048):
         for b in (0,2,31,2048):
             for c in (0,3,29,2048):
@@ -38,7 +40,6 @@ def main():
     z=k7(0,2048,2048,0)
     assert z==5_595_612_708_864 and z-TAIL==74_964_899_840
 
-    # Necessary A and D thresholds even with all other index-2 ranks zero.
     a0=k7(1439,0,0,0);a1=k7(1440,0,0,0)
     assert a0==5_520_488_595_456 and TAIL-a0==159_213_568
     assert a1==5_523_141_427_200 and a1-TAIL==2_493_618_176
@@ -54,12 +55,13 @@ def main():
     assert c0==5_519_255_787_951 and TAIL-c0==1_392_021_073
     assert c1==5_521_642_434_048 and c1-TAIL==994_625_024
 
-    print('PASS V26_Q138_K7_AD_ONLY_NO_GO_GATE')
-    print('ideal_A_D_zero_B_C_generic_k7=',z,'excess=',z-TAIL)
-    print('necessary_A_index2_max=1439')
-    print('necessary_D_index2_max=1414')
-    print('ideal_A_D_zero_equal_B_C_threshold=2009')
-    print('A_D_correction_only_equal_B_C_threshold=1055')
-    print('scope=exact k7 search gate only; complete k>=7 tail remains unresolved')
+    print('PASS V26_Q138_FROZEN_TAIL_K7_SEARCH_GATE')
+    print('frozen_tail_budget=',TAIL)
+    print('AD_zero_BC_generic_k7=',z,'frozen_excess=',z-TAIL)
+    print('frozen_A_threshold=1439')
+    print('frozen_D_threshold=1414')
+    print('frozen_ideal_AD_zero_equal_BC_threshold=2009')
+    print('frozen_AD_correction_only_equal_BC_threshold=1055')
+    print('scope=frozen-old-tail sufficient search gate only; NOT a dynamic necessity theorem')
 
 if __name__=='__main__':main()
