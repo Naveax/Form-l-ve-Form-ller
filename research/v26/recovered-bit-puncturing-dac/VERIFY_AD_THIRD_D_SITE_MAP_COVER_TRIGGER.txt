@@ -1,0 +1,1 @@
+Scoped clean probe trigger for D direct-e2 zero-site affine map cover diagnostics.
