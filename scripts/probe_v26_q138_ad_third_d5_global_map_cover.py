@@ -25,18 +25,30 @@ def consistent(rows):
 
 def main():
     raw,_=P.direct_supports('D')
+    C=Counter(can for _typ,_zs,can in raw)
+    odd={can for can,n in C.items() if n&1}
+    assert len(odd)==12363
+
+    # Preserve zero-site provenance only as a source of deterministic initial
+    # templates. The direct residue itself is the XOR-parity (odd) support set.
+    zmeta=defaultdict(list)
+    for _typ,zs,can in raw:
+        if can in odd:zmeta[can].append(tuple(zs))
+
     groups=defaultdict(list)
-    for typ,zs,can in raw:
+    for can in odd:
         cond=P.canonical_condition(I.input_condition(can))
-        groups[cond].append((tuple(zs),can))
+        U=set().union(*(set(zs) for zs in zmeta[can]))
+        groups[cond].append((can,frozenset(U)))
     assert len(groups)==8629
+    assert Counter(map(len,groups.values()))==Counter({1:4895,2:3734})
 
     data=[]
     for cond,items in groups.items():
-        B=G.affine_basis(cond);M=G.singleton_side_map(items[0][1],S,R)
-        for _zs,can in items[1:]:
+        B=G.affine_basis(cond);M=G.singleton_side_map(items[0][0],S,R)
+        for can,_U in items[1:]:
             assert eq_on_condition(B,G.singleton_side_map(can,S,R),M)
-        U=set().union(*(set(zs) for zs,_can in items))
+        U=set().union(*(set(u) for _can,u in items))
         data.append((cond,M,frozenset(U)))
 
     freq=Counter(r for cond,_M,_U in data for r in cond)
@@ -52,19 +64,20 @@ def main():
         compatible.append((cond,B,M,U))
     assert len(compatible)==8084
 
-    # Historical one-template-per-zero-site family.
+    # One deterministic initial affine map per zero site that actually occurs
+    # inside the forced D5 core. This set need not contain all93 global sites.
     sites=sorted({z for _cond,_B,_M,U in compatible for z in U})
-    assert len(sites)==93
     bysite=defaultdict(list)
     for k,x in enumerate(compatible):
         for z in x[3]:bysite[z].append(k)
     site_templates=[compatible[bysite[z][0]][2] for z in sites]
 
-    # Collapse site templates that are already the same affine map on the D5 core.
+    # Collapse initial templates already equal as affine maps on all of D5.
     reps=[]
     for M in site_templates:
         if not any(eq_on_condition(coreB,M,Tm) for Tm in reps):reps.append(M)
     print('D5_compatible_groups',len(compatible),
+          'D5_zero_sites_present',len(sites),
           'raw_zero_site_templates',len(site_templates),
           'distinct_zero_site_templates_mod_D5',len(reps),flush=True)
 
@@ -75,23 +88,25 @@ def main():
     print('D5_zero_site_template_covered',covered,'uncovered',len(uncovered),flush=True)
 
     # Deterministic constructive cover: whenever a group is still uncovered,
-    # add its own affine map as one global template. The final family is a
-    # rigorous uniform row-count upper on D5, regardless of minimality.
+    # add its own affine map. This need not be minimal; its final size is a
+    # rigorous uniform row/rank upper inside D5.
     added=0
-    for k in uncovered:
-        cond,B,M,U=compatible[k]
+    for q,k in enumerate(uncovered,1):
+        _cond,B,M,_U=compatible[k]
         if any(eq_on_condition(B,M,Tm) for Tm in reps):continue
         reps.append(M);added+=1
-    # Verify all groups are covered by the final global map family.
-    miss=[]
-    cover_mult=Counter()
-    for k,(cond,B,M,U) in enumerate(compatible):
+        if added%100==0:
+            print('D5_added_templates_so_far',added,'current_cover_size',len(reps),flush=True)
+
+    miss=[];cover_mult=Counter()
+    for k,(_cond,B,M,_U) in enumerate(compatible):
         n=sum(eq_on_condition(B,M,Tm) for Tm in reps)
         cover_mult[n]+=1
         if not n:miss.append(k)
     assert not miss
 
     outside_upper=max(len(data)-freq[r] for r in core)
+    assert outside_upper==364
     inside_upper=len(reps)
     global_upper=max(outside_upper,inside_upper)
     print('D5_added_uncovered_group_templates',added,
