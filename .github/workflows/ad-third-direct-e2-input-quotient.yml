@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_ad_third_direct_e2_input_quotient.py'
-      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_E2_MILP_TRIGGER.txt'
+      - 'research/v26/recovered-bit-puncturing-dac/VERIFY_AD_THIRD_E2_QUOTIENT_TRIGGER.txt'
 permissions:
   contents: read
 jobs:
