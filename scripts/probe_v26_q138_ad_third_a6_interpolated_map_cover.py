@@ -28,10 +28,8 @@ def span_basis(rows):
 
 def reduce_vec(x,basis):
     B={v.bit_length()-1:v for v in basis};y=x
-    while y:
-        p=y.bit_length()-1
-        if p not in B:break
-        y^=B[p]
+    for p in sorted(B,reverse=True):
+        if (y>>p)&1:y^=B[p]
     return y
 
 
