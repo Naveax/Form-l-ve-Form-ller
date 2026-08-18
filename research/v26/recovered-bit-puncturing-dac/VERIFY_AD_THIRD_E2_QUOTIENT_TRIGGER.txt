@@ -1,0 +1,1 @@
+Clean-checkout trigger for the A/D direct-e2 predecessor-input functional quotient diagnostic.
