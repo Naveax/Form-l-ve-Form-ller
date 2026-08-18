@@ -15,6 +15,22 @@ and the current unresolved tail budget
 
 It is not a complete-factor or arithmetic-work improvement.
 
+## Exact k7 polynomial
+
+Exact four-leaf convolution at total residue index7 is
+
+`k7 = 207 a2 b2 c2 +972 a2 b2 d2 +178176 a2 b2`
+
+`    +812 a2 c2 d2 +79872 a2 c2 +245760 a2 d2 +2652831744 a2`
+
+`    +219 b2 c2 d2 +12288 b2 c2 +178176 b2 d2 +1029758976 b2`
+
+`    +79872 c2 d2 +845733888 c2 +2699624448 d2`
+
+`    +1703063715840`.
+
+Every coefficient is nonnegative. Hence setting any unknown index-2 ranks to zero gives rigorous optimistic lower gates for the remaining ranks.
+
 ## A/D-only reduction cannot make k7 fit
 
 Set the unknown A/D index-2 ranks to the impossible ideal
@@ -25,7 +41,7 @@ while leaving B/C at the generic row cap
 
 `b2=c2=2048`.
 
-Exact four-leaf convolution at total index7 gives
+Then
 
 `k7=5,595,612,708,864`.
 
@@ -34,6 +50,30 @@ Thus
 `k7-T=74,964,899,840 >0`.
 
 Therefore reducing only A/D third residues can never make the current k7 gate fit while B/C remain generic2048. Some B/C index-2 reduction is mathematically necessary.
+
+## A and D must themselves become subgeneric
+
+Because every k7 coefficient is nonnegative, set the other three index-2 ranks to zero.
+
+For A:
+
+- `k7(1439,0,0,0)=5,520,488,595,456 <T`;
+- `k7(1440,0,0,0)=5,523,141,427,200 >T`.
+
+Therefore any k7-feasible theorem must satisfy
+
+`a2 <=1439`.
+
+For D:
+
+- `k7(0,0,0,1414)=5,520,332,685,312 <T`;
+- `k7(0,0,0,1415)=5,523,032,309,760 >T`.
+
+Therefore any k7-feasible theorem must satisfy
+
+`d2 <=1414`.
+
+So A and D cannot remain at the generic2048 cap even if B and C were reduced all the way to zero. The assembled A/D direct-e2 problem is therefore genuinely mandatory, not merely helpful.
 
 ## Equal B/C threshold under ideal A/D zero
 
