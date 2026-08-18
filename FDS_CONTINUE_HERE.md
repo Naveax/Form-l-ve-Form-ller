@@ -73,29 +73,35 @@ Cheap A/D refinements closed:
 
 `M_B=2^121L_B`, `M_C=2^121L_C`.
 
-The original first-residue decomposition has103 odd affine supports plus one signed four-sector support; clean GF(2) sum bounds1052/1160 (`32063042288`). Input-mask mutual exclusion cannot sharpen those sums; all objects can be active simultaneously, clean `32065964357`.
+The first explicit Fourier-aligned lifts are
 
-The decisive improvement is Fourier alignment. Across all103 affine supports the union of homogeneous S1 Walsh frequencies has size
+`M_B=K_B,0+2R_B`, `rank_Q(K_B,0)<=36`,
 
-- B:16;
-- C:64.
+`M_C=K_C,0+2R_C`, `rank_Q(K_C,0)<=84`, clean `32066435545`.
 
-Thus the ordinary integer affine sums have Q-rank<=16 and<=64. The signed common-support Boolean term has Q-rank<=20 because support intersection dimension2 gives at most4 rectangles and cross-bilinear rank2 gives Boolean rank<=5 per rectangle.
+The second residue is now closed. Support-only left Walsh spaces have dimensions668/788. Exact Gauss-completed sign-dependent GF(2) spans are348/432. After exact integer Walsh transform and projection modulo the support spaces, the ZZ/Q quotient ranks are144/184.
 
-Therefore explicit coefficient-aligned first lifts exist:
+Therefore exact second integer lifts exist with
 
-`M_B=K_B+2R_B`, `rank_Q(K_B)<=36`,
+`R_B=K_B,1+2R_B,2`, `rank_Q(K_B,1)<=812`,
 
-`M_C=K_C+2R_C`, `rank_Q(K_C)<=84`.
+`R_C=K_C,1+2R_C,2`, `rank_Q(K_C,1)<=972`.
 
-Clean `32066435545`.
+Equivalently,
+
+`2^121L_B=K_B,0+2K_B,1+4R_B,2`,
+
+`2^121L_C=K_C,0+2K_C,1+4R_C,2`.
+
+Clean PR-checkout chain `32112658496` verifies sign spans348/432, quotient ranks144/184, final812/972 lifts and the seven-layer gate.
 
 Authority:
 
-- `V26_Q138_PREDECESSOR_LEAF_BC_FOURIER_LIFT_RANK36_84.md`;
-- `scripts/verify_v26_q138_predecessor_leaf_bc_fourier_lift_rank36_84.py`.
+- `V26_Q138_PREDECESSOR_LEAF_BC_SECOND_RESIDUE_RANK812_972.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py`;
+- `scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_rank812_972.py`.
 
-Use36/84, not1052/1160, as the current B/C first-layer dyadic envelopes.
+Use812/972, not1016/1220 or2048, as the current B/C second-layer envelopes.
 
 ## Current exact dyadic prefix
 
@@ -105,25 +111,26 @@ Use per-leaf envelopes
 
 A `[3,219,2048,2048,...]`,
 
-B `[36,2048,2048,...]`,
+B `[36,812,2048,2048,...]`,
 
-C `[84,2048,2048,...]`,
+C `[84,972,2048,2048,...]`,
 
 D `[3,207,2048,2048,...]`.
 
 Four-leaf product layer bounds:
 
 - k0 `27,216`;
-- k1 `6,076,512`;
-- k2 `528,287,760`;
-- k3 `22,588,489,728`;
-- k4 `499,782,844,416`;
-- k5 `5,718,621,093,888`;
-- k6 `33,271,289,282,560`.
+- k1 `4,793,472`;
+- k2 `315,450,720`;
+- k3 `9,979,784,064`;
+- k4 `171,359,156,304`;
+- k5 `1,703,063,715,840`;
+- k6 `10,186,815,307,776`;
+- generic k7 `38,736,654,106,624`.
 
-Prefix k0..k5:
+Prefix k0..k6:
 
-`6,241,526,819,520`.
+`12,071,538,235,392 <2^44`.
 
 Generic four-leaf budget:
 
@@ -131,49 +138,44 @@ Generic four-leaf budget:
 
 Current unresolved tail budget:
 
-`11,350,659,224,896`.
+`5,520,647,809,024`.
 
-Attach center: k0..k5 complete-S1 prefix channels
+Attach center: k0..k6 complete-S1 prefix channels
 
-`12,830,573,875,979,191,540,776,960`,
+`24,815,204,292,884,195,564,322,816`,
 
-exponent `83.4077880718021...`.
+exponent `84.3594267039546...`.
 
-This leaves1.494963873 bits below the current full-factor exponent84.90275194485017, but **no complete-factor bound is lowered** until the exact k>=6 tail is controlled.
+This leaves `0.54332524089557...` bits below the current full-factor exponent84.90275194485017, but **no complete-factor bound is lowered** until the exact k>=7 tail is controlled.
 
-Generic k6 is `33,271,289,282,560`, only2.9312208765x the entire tail budget. Clean six-layer gate `32066572887`.
+Generic k7 is7.0166863467x the entire tail budget. If all four index-2 residues were zero and every deeper residue remained generic, k7 would be `1,703,063,715,840`, already below the tail budget. Clean gate `32112658496`.
 
 Authority:
 
-- `V26_Q138_DYADIC_FOURIER_SHARPENED_SIX_LAYER_GATE.md`;
-- `scripts/verify_v26_q138_dyadic_fourier_sharpened_six_layer_gate.py`.
+- `V26_Q138_DYADIC_WALSH_QUOTIENT_SEVEN_LAYER_GATE.md`;
+- `scripts/verify_v26_q138_dyadic_walsh_quotient_seven_layer_gate.py`.
 
-Older five-layer gates and old depth warnings are superseded search envelopes, not current blockers.
+Older six/five-layer gates and old depth warnings are superseded search envelopes, not current blockers.
 
 ## Sharp next target
 
 A full dyadic improvement requires
 
-`sum_{k>=6} rank(layer_k) <11,350,659,224,896`.
+`sum_{k>=7} rank(layer_k) <5,520,647,809,024`.
 
-The next unknown single-leaf ranks are
+The next unknown single-leaf ranks are the index-2 residues
 
-`a2=A third`, `d2=D third`, `b1=B second`, `c1=C second`.
+`a2=A third`, `b2=B third`, `c2=C third`, `d2=D third`.
 
-Useful k6 thresholds:
-
-- all four next ranks equal: k6 fits at about1386.8 or below;
-- A/D next remain2048: B/C next about<=968 each makes k6 fit;
-- B/C next remain2048: A/D next about<=785 each makes k6 fit.
-
-These only make k6 fit; the later tail still needs a total bound.
+The immediate gate is the exact k7 polynomial under these four ranks. The zero-index2 diagnostic proves that improving the next residue family is sufficient in principle to make k7 fit. This is only a k7 statement; later layers still need a complete sum bound.
 
 ## Active exact probes
 
-1. **B/C second residue:** weight120 rank128 unique-solution sectors, determined cheaply in the4D top-nullspace quotient, are being tested for S1 Fourier saturation. Early-stop if union reaches2048.
-2. **A/D third residue:** weight90 rank128 unique-solution sectors are exactly the8281 three-zero patterns containing `(j1,0)` or `(j3,0)`; their S1 Fourier union is being probed.
+1. **A/D third direct-e2 support component:** exact XOR-aggregated weighted predecessor-input activity. The first128-variable MILP clean run was cancelled after35 minutes without a certificate; current work reduces the objective to its global input-functional quotient before solving.
+2. **A/D third correction component:** choose the e0 negative-sign second lift with coefficient `-1` at the same rank cost so those terms vanish exactly from the third residue. Current probe computes one uniform left span for the remaining e1 negative-sign corrections.
+3. **B/C third residue:** now the next B/C unknown. Start from the explicit812/972 second lifts; do not reopen the closed B/C second residue.
 
-If either union stays substantially below2048, promote it into the next residue theorem. If it saturates quickly, change structure rather than enumerating millions of sectors for sport.
+Promote only theorem + clean verifier results. Fixed-mask/source-specific measurements remain non-authoritative without a frozen outer128 predecessor mask.
 
 ## Non-authoritative / provenance warnings
 
@@ -193,9 +195,9 @@ Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic5
 
 ## First unfinished mathematical pass
 
-1. Resolve the active A/D third-residue and B/C second-residue Fourier probes; promote only exact non-saturation results.
-2. Build explicit next-residue lifts with target ranks roughly in the785–1387 range and recount k6 immediately.
-3. Continue until the entire `k>=6` dyadic tail is rigorously below `11,350,659,224,896`; only then reconsider `W_repr(1)` / `W_factor-gen`.
+1. Finish A/D third residue as direct-e2 support plus e1 negative-sign correction under an explicit second lift.
+2. Open B/C third residues from the canonical812/972 second lifts and recount k7 whenever any index-2 bound improves.
+3. Continue until the entire `k>=7` dyadic tail is rigorously below `5,520,647,809,024`; only then reconsider `W_repr(1)` / `W_factor-gen`.
 4. Only after total dyadic control, fuse the leaf decomposition into the D16 common/private center and count total arithmetic work.
 5. Other nonlocal center regroupings, semi-open B<55 and fully-open S3<63.562 remain separate exact routes.
 
