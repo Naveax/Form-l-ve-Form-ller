@@ -9,7 +9,6 @@ import probe_v26_q138_predecessor_leaf_ad_input_activity as I
 import verify_v26_q138_predecessor_leaf_top_carry_cancellation as T
 
 MASK=(1<<128)-1
-RHSBIT=1<<128
 
 
 def reduce_full(row,basis):
@@ -32,7 +31,7 @@ def insert_row(basis,row):
 def build_basis(rows):
     B={}
     for r in rows:
-        new,ok,_=insert_row(B,r)
+        _new,ok,_=insert_row(B,r)
         if not ok:return None
     return B
 
@@ -69,7 +68,7 @@ def groups_for(pos):
     return list(G)
 
 
-def select_masks(mask_counts,node_basis,kmax=12):
+def select_masks(mask_counts,kmax=12):
     cand=[]
     for m,c in mask_counts.items():
         n0=c[0];n1=c[1]
@@ -124,9 +123,10 @@ def bucket_upper(group_implied,selected,K):
 def main():
     for pos in 'AD':
         groups=groups_for(pos);N=len(groups)
+        core_k=6 if pos=='A' else 5
         freq=Counter(r for cond in groups for r in cond)
-        top=[r for r,_ in freq.most_common(5)]
-        node_basis=build_basis(top);assert node_basis is not None and len(node_basis)==5
+        core=[r for r,_ in freq.most_common(core_k)]
+        node_basis=build_basis(core);assert node_basis is not None and len(node_basis)==core_k
 
         residuals=[];implied=[];mask_counts=defaultdict(lambda:[0,0])
         incompatible=0;rd=Counter()
@@ -144,12 +144,13 @@ def main():
 
         U=len(residuals)
         residual_dual_rank=T.gf2_rank(list(mask_counts),128)
-        cand,selected=select_masks(mask_counts,node_basis,12)
-        print('position',pos,'global_groups',N,'V5_compatible_groups',U,
-              'V5_incompatible_groups',incompatible,
-              'V5_residual_rank_distribution',dict(sorted(rd.items())),
+        cand,selected=select_masks(mask_counts,12)
+        print('position',pos,'certified_common_core_rank',core_k,
+              'global_groups',N,'core_compatible_groups',U,
+              'core_incompatible_groups',incompatible,
+              'core_residual_rank_distribution',dict(sorted(rd.items())),
               'distinct_implied_linear_masks',len(mask_counts),
-              'V5_global_residual_dual_span_rank',residual_dual_rank,flush=True)
+              'global_residual_dual_span_rank',residual_dual_rank,flush=True)
         print('position',pos,'top_balanced_implied_masks',
               [(a,b,c,d,e) for a,b,c,_m,d,e in cand[:20]],flush=True)
         print('position',pos,'selected_independent_masks',
@@ -163,8 +164,8 @@ def main():
                   'group_projection_constraint_rank_distribution',dict(sorted(rankdist.items())),
                   'group_allowed_signature_count_distribution',dict(sorted(asizedist.items())),
                   'bucket_count_minmax',(min(bdist),max(bdist)),flush=True)
-        print('position',pos,'scope_note=global maximizer lies in V5 by clean common-core forcing theorem; signature bucket maximum is therefore a uniform active-group upper')
-    print('PASS PROBE V26_Q138_AD_THIRD_V5_SIGNATURE_ENVELOPE')
+        print('position',pos,'scope_note=every global maximizer lies in the certified common core; signature bucket maximum is therefore a uniform active-group upper')
+    print('PASS PROBE V26_Q138_AD_THIRD_COMMON_CORE_SIGNATURE_ENVELOPE')
     print('scope=active rank-one condition-group upper envelopes for direct-e2; inherited e1 correction remains separate')
 
 if __name__=='__main__':main()
