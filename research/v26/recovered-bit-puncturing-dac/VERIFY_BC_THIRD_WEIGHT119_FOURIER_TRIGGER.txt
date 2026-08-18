@@ -1,2 +1,2 @@
-Scoped clean probe trigger for B/C third-residue weight119 full-rank left-Walsh frequency saturation.
-Retriggered after adding the exact single-support left-rank11 witness search before the union fallback.
+Clean-checkout verification trigger for the exact B/C weight119 homogeneous frequency envelope theorem.
+Expected exact candidate envelope: B1796 after all1,152,040 full-rank five-zero candidates; C2048 saturation at deterministic candidate934,476.
