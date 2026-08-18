@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import itertools,sys
-from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -48,13 +47,15 @@ def main():
     expected={'B':(1_152_040,1796,8,None),'C':(934_476,2048,8,934_476)}
     for pos in 'BC':
         _,res,free,extra=Q.setup(pos,False)
-        U=0;tested=0;maxrank=0;saturation=None
+        U=0;tested=0;maxrank=0;saturation=None;cache={}
         for zs in candidates(active,inert,sig):
             tested+=1
             B=Q.left_space(res,free,extra,zs)
             assert B is not None,(pos,zs)
             maxrank=max(maxrank,len(B))
-            U |= space_mask(B)
+            key=tuple(sorted(B))
+            if key not in cache:cache[key]=space_mask(B)
+            U |= cache[key]
             if U.bit_count()==2048:
                 saturation=tested
                 break
@@ -63,13 +64,8 @@ def main():
         assert U.bit_count()==eunion,(pos,U.bit_count(),eunion)
         assert maxrank==emax,(pos,maxrank,emax)
         assert saturation==esat,(pos,saturation,esat)
-        if pos=='B':
-            # B must have exhausted the generator rather than merely stopping.
-            try:
-                next(candidates(active,inert,sig))
-            except StopIteration:
-                pass
         print('position',pos,'fullrank_candidates_tested',tested,
+              'distinct_left_spaces',len(cache),
               'max_individual_left_rank',maxrank,
               'candidate_left_frequency_union',U.bit_count(),
               'saturation_at',saturation,flush=True)
