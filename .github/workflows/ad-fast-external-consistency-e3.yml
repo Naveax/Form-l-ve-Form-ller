@@ -13,4 +13,4 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python scripts/probe_v26_q138_ad_fast_external_consistency_e3.py
+      - run: python scripts/probe_v26_q138_ad_fast_external_consistency_e3_fixed.py
