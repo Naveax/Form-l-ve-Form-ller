@@ -1,0 +1,19 @@
+name: Dyadic saturated complement lift
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: dyadic-saturated-complement-lift-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_dyadic_saturated_complement_lift.py
