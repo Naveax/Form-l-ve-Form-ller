@@ -1,0 +1,19 @@
+name: A-D universal carry-offset exact-signed lifts
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: ad-universal-carry-offset-exact-signed-lifts-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/verify_v26_q138_ad_universal_carry_offset_exact_signed_lifts.py
