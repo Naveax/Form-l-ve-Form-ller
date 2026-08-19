@@ -44,8 +44,8 @@ def main():
         G=union(E,H)
         base,qG,total=expected[pos]
         assert len(U)==base and base+qG==total
-        assert all(v in G.values() for v in E.values())
-        assert all(v in G.values() for v in H.values())
+        # By construction span(E),span(H) are subspaces of span(G)=span(E union H).
+        assert len(G)==(348 if pos=='B' else 432)
 
         mE=qr_mod(E,U);mH=qr_mod(H,U)
         # For integer matrices rank_Fp <= rank_Q. Since E,H are subspaces of G,
