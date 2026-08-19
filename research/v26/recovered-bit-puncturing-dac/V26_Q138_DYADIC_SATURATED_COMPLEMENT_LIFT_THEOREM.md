@@ -1,42 +1,47 @@
-# V26 Q1.38 saturated-complement dyadic lift theorem
+# V26 Q1.38 saturated-complement exact closure theorem
 
 ## Scope
 
-This theorem is a general exact integer-lift lemma for predecessor-leaf matrices across the frozen 11|21 split. The row dimension is
+This theorem is a general exact integer-lift theorem for predecessor-leaf matrices across the frozen 11|21 split, with row dimension
 
 `N = 2^11 = 2048`.
 
-It does not use approximation and does not assume special carry-sector geometry. It applies after **any** admitted integer dyadic lift of rational rank at most `d`.
+It proves two things:
 
-The main consequence is methodological: finite dyadic prefix gates are not invariant under the allowed choice of integer lift representatives. A subgeneric layer can always be paired with a complementary layer, and the remaining binary obstruction can then be pushed to arbitrarily high dyadic depth without changing those two rank envelopes. Therefore complete-tail control, not a fixed k7/k8/k9 prefix pass, is the invariant target.
+1. any admitted rank-`d` binary parity lift can be completed **exactly in one additional term** of rank at most `N-d`;
+2. consequently, dimension-only dyadic residue bookkeeping can always close a leaf at total rank budget exactly `N`, but cannot by itself certify a strict `<N` complete-leaf improvement.
 
-## Saturated lattice lemma
+All statements are exact over integers/rationals; `epsilon=0`.
+
+## Saturated primitive lattice lemma
 
 Let
 
 `L <= Q^N`
 
-be a rational subspace of dimension `d`, and let
+be a rational subspace of dimension `d`, and define
 
 `Lambda = L intersect Z^N`.
 
-Then `Lambda` is a saturated rank-`d` lattice. Reduction modulo2 gives a binary code
+Then `Lambda` is a rank-`d` **primitive** (saturated) sublattice of `Z^N`.
 
-`C = Lambda mod 2 <= F2^N`
+Primitivity is immediate: if `m v in Lambda` for a nonzero integer `m` and `v in Z^N`, then `m v in L`; since `L` is a rational vector space, `v in L`, hence `v in Lambda`.
 
-of exact dimension `d`.
+Therefore `Z^N/Lambda` is torsion-free. A finite-rank torsion-free abelian group is free, so the exact sequence splits. Hence there exists a complementary lattice `Lambda'` of rank `N-d` such that
 
-Indeed, the reduction kernel is exactly `2 Lambda`: if `v in Lambda` is coordinatewise even, then `v/2` is integral and still lies in the rational subspace `L`, hence `v/2 in Lambda`. Therefore
+`Z^N = Lambda direct_sum Lambda'`.
 
-`Lambda / 2 Lambda ~= C`
+Reduction modulo2 also gives
 
-and `dim_F2 C = rank_Z Lambda = d`.
+`dim_F2(Lambda mod2)=d`,
 
-This is why reducing a chosen rational basis modulo2 is the wrong operation: a Walsh basis may collapse mod2 even though the **saturated integer lattice** has the full dimension `d`.
+because the reduction kernel is exactly `2 Lambda`: if an element of `Lambda` is coordinatewise even, division by2 stays integral and inside `L`.
 
-## One-step complementary lift
+This distinction matters for Walsh spaces: a chosen rational Walsh basis can collapse modulo2, while its **saturated integer lattice** still has the full dimension.
 
-Let `R` be an integer `N x M` residue matrix. Suppose there exists an integer lift `K` such that
+## Exact two-term closure theorem
+
+Let `R` be an integer `N x M` matrix. Suppose there exists an integer parity lift `K` satisfying
 
 `K = R (mod 2)`
 
@@ -44,219 +49,171 @@ and
 
 `rank_Q K <= d`.
 
-Choose a rational `d`-dimensional subspace `L` containing the columns of `K`; if the actual rank is smaller, extend its rational column space arbitrarily to dimension `d`.
+Choose a rational `d`-dimensional space `L` containing all columns of `K`; if the actual rank is smaller, extend its rational column space arbitrarily to dimension `d`.
 
-Let `Lambda=L intersect Z^N`, let `C=Lambda mod2`, and choose any binary complement
+Let
 
-`F2^N = C direct_sum U`,
+`Lambda=L intersect Z^N`
 
-`dim U = N-d`.
+and choose a primitive lattice complement
 
-Write
+`Z^N = Lambda direct_sum Lambda'`,
 
-`R1 = (R-K)/2`.
+with `rank Lambda'=N-d`.
 
-For every column `r` of `R1 mod2`, decompose uniquely
+Since `R-K` is even, define
 
-`r = c + u`, `c in C`, `u in U`.
+`S=(R-K)/2 in Z^(N x M)`.
 
-By definition of `C`, choose an integral `z in Lambda` reducing to `c`. Put the corresponding columns into `Z` and replace
+Split every column of `S` uniquely as
 
-`K' = K + 2 Z`.
+`s=s0+s1`, `s0 in Lambda`, `s1 in Lambda'`.
 
-Then
+Collect these columns into integer matrices `S0,S1` and define
 
-- `K' = R (mod2)`;
-- every column of `K'` remains in `L`, so `rank_Q K' <= d`;
-- the new residual
-  `R1'=(R-K')/2=R1-Z`
-  has every binary column in `U`.
+`K0 = K + 2 S0`,
 
-Choose integral lifts of a binary basis of `U`. They are rationally independent because an odd minor survives from the binary basis. Hence `R1' mod2` has an integer lift `K1` of rational rank at most
+`K1 = S1`.
 
-`N-d`.
+Then exactly
 
-Therefore:
+`R = K0 + 2 K1`.
 
-> If one dyadic layer admits rank at most `d`, the same layer can be chosen so that the **next** dyadic layer admits rank at most `N-d`.
+Moreover:
 
-No property of the following residue is required.
-
-## Alternating continuation
-
-Apply the same argument to the `N-d` dimensional lift space. The subsequent layer can be bounded by `d`, then `N-d`, and so on.
-
-Thus after any admitted rank-`d` lift one may continue with the exact alternating envelope
-
-`d, N-d, d, N-d, ...`
-
-unless a stronger direct theorem resets the envelope earlier.
-
-This alternating envelope is a safe finite-layer accounting tool. It is **not** by itself a complete-tail compression theorem.
-
-## Stronger finite-prefix deferral theorem
-
-The complementary construction gives more than alternation.
-
-After the first two layers, choose rational spaces `L0,L1` with saturated codes
-
-`C0 = (L0 intersect Z^N) mod2`,
-
-`C1 = (L1 intersect Z^N) mod2`
-
-such that
-
-`F2^N = C0 direct_sum C1`,
-
-with dimensions `d` and `N-d`.
-
-Suppose at some later dyadic depth `j>=2` the current integer residual is `Rj`. Because `C0+C1=F2^N`, each column of `Rj mod2` can be written
-
-`c0+c1`, `c0 in C0`, `c1 in C1`.
-
-Choose integral lifts `z0 in L0 intersect Z^N`, `z1 in L1 intersect Z^N`. Modify the two old lifts by
-
-`K0 <- K0 + 2^j z0`,
-
-`K1 <- K1 + 2^(j-1) z1`.
-
-These changes:
-
-- preserve the binary parity of `K0` and `K1` because `j>=2`;
-- keep their columns in the same rational spaces, so their rank envelopes remain `d` and `N-d`;
-- change the total represented matrix by exactly
-  `2^j(z0+z1)`,
-  so the depth-j residual becomes even.
-
-Therefore one may set `Kj=0` and divide the remaining residual by2.
-
-Repeating this argument proves:
-
-> For every finite `T>=2`, one can choose integer representatives with
->
-> `R = K0^(T) + 2 K1^(T) + 2^T RT`,
->
-> `rank_Q K0^(T)<=d`, `rank_Q K1^(T)<=N-d`,
->
-> and **all intermediate lifts `K2,...,K_(T-1)` equal to zero**.
-
-This is an exact finite statement over integers. It does **not** assert that the process converges to a finite two-term integer decomposition as `T->infinity`; an odd-index lattice obstruction can persist indefinitely in 2-adic depth.
-
-## Consequence: finite prefix gates are gauge-dependent
-
-The deferral theorem means a statement such as
-
-`sum(k0..k9) < 2^44`
-
-is not an invariant achievement once lift representatives may be changed by higher even multiples. Complexity can be pushed beyond any chosen finite depth while the early rank envelopes remain fixed.
+- every column of `K0` lies in `L`, so `rank_Q K0<=d`;
+- every column of `K1` lies in `span_Q Lambda'`, so `rank_Q K1<=N-d`;
+- `K0=R (mod2)` as required.
 
 Therefore:
 
-- a k7/k8/k9 prefix pass is a diagnostic only;
-- thresholds such as “B/C index2 must be <=31” or the complementary diagnostic `<=745` are **not complete-tail necessities**;
-- the invariant target is a complete finite exact decomposition/tail bound, a direct complete-leaf Schmidt theorem, or product-level cancellation that controls the whole factor rather than a chosen dyadic prefix.
+> **Exact closure theorem.** Any integer residue matrix with an integer parity lift of rational rank at most `d` has an exact two-term decomposition
+>
+> `R = K0 + 2 K1`
+>
+> with ranks at most `d` and `N-d`.
 
-There is also a simple rank-budget warning. The complementary pair itself costs
+There is no unresolved higher dyadic tail in this construction.
 
-`d + (N-d) = N = 2048`.
+## Immediate complete-rank consequence
 
-Thus using only the generic complementary pair consumes the entire single-leaf Hilbert-rank budget. By separate-leaf rank subadditivity alone it cannot yield a strict `<2048` complete-leaf bound. Any actual compression must exploit stronger structure than the dimension-only complement construction.
+The rank-sum budget of the generic exact closure is
+
+`d+(N-d)=N`.
+
+For the predecessor-leaf cut this is exactly
+
+`2048`.
+
+Thus the theorem gives a complete exact decomposition at the **generic Hilbert budget**, not below it.
+
+This yields a scoped NO-GO:
+
+> Purely dimension-based completion of an already-known low-rank parity lift cannot by itself certify a strict complete-leaf rank-sum `<2048`; the generic complementary term consumes exactly the remaining dimension.
+
+To obtain a strict complete-leaf improvement one needs additional structure that makes the complementary exact term smaller than `N-d`, overlap/cancellation between terms beyond rank subadditivity, or a direct complete-leaf Schmidt-rank theorem.
+
+## Multi-layer dimension-only NO-GO
+
+The same point persists if several early lift spaces are known.
+
+Suppose exact components lie in rational spaces `L_i` of dimensions `d_i`, and let
+
+`S = span_Q(L_0+...+L_t)`
+
+have dimension `s`. A generic exact lattice complement of their joint saturated span has dimension `N-s`.
+
+Charging ranks separately gives total dimension budget at least
+
+`sum_i d_i + (N-s)`
+
+`= N + (sum_i d_i - s)`
+
+`>= N`.
+
+The excess is precisely the redundancy/overlap in the separately charged early spaces. Therefore dimension-only tail closure after any finite list of dyadic lifts can never force a strict total rank-sum below `N`.
+
+This is not a lower bound on the true matrix rank. It is a NO-GO for this **proof method** when it uses only component dimensions plus a generic complementary tail.
+
+## Finite-prefix gauge corollary
+
+The earlier one-step saturated-code argument remains useful as a diagnostic. If a rank-`d` lift space is followed by a chosen `(N-d)`-dimensional binary complement, the two saturated mod2 codes span `F2^N`.
+
+At any later finite dyadic depth `j>=2`, the parity of the current residual can be absorbed into higher-even modifications of those two old lifts without changing their rational rank envelopes. Repeating this pushes the unresolved residual beyond any prescribed finite depth `T` while setting all intermediate binary lifts to zero.
+
+Hence finite statements such as
+
+`sum(k0..k9)<2^44`
+
+are **gauge-dependent diagnostics**, not invariant compression milestones. One can improve a finite prefix merely by moving the obstruction to a deeper residual. The exact two-term closure theorem makes the invariant lesson clearer: only the complete decomposition/tail matters.
 
 ## Application to current A/B/C/D authority
 
-Use the current exact-signed/direct theorem chain on main:
+Current exact-signed/direct main authority includes
 
-- A: `[1,41,564,1761,...]`, where the index3 direct signed aggregate has rank at most1761;
-- B: `[36,812,...]`;
-- C: `[84,972,...]`;
-- D: `[1,20,173,838,1958,...]`.
+A `[1,41,564,1761,...]`,
 
-Applying the one-step complementary theorem at the latest admitted subgeneric layer gives safe alternating envelopes
+B `[36,812,...]`,
 
-A:
+C `[84,972,...]`,
 
-`[1,41,564,1761,287,1761,287,1761,...]`;
+D `[1,20,173,838,1958,...]`.
 
-B:
+Applying the one-step complementary construction at the latest displayed subgeneric layer gives safe **prefix diagnostics**
 
-`[36,812,1236,812,1236,812,...]`;
+A `[1,41,564,1761,287,1761,287,...]`,
 
-C:
+B `[36,812,1236,812,1236,...]`,
 
-`[84,972,1076,972,1076,972,...]`;
+C `[84,972,1076,972,1076,...]`,
 
-D:
+D `[1,20,173,838,1958,90,1958,...]`.
 
-`[1,20,173,838,1958,90,1958,90,...]`.
+In particular, alternative representatives can realize
 
-For B/C this immediately proves, without any direct third-residue theorem,
+`b2<=1236`,
 
-`b2 <= 2048-812 = 1236`,
+`c2<=1076`,
 
-`c2 <= 2048-972 = 1076`,
+without any new direct B/C third-residue theorem.
 
-for a suitable alternative mod4 representative of the already-admitted K1 lift.
+The corresponding arithmetic diagnostic gives
 
-These are exact coefficient-aware integer-lift bounds. They do **not** claim that the natural/direct B/C third residues have those raw ranks.
+`sum(k0..k8)=7,312,357,496,576<2^44`,
 
-## Prefix arithmetic diagnostic
+while the simple alternating k9 diagnostic is
 
-Using the alternating envelopes above, exact four-leaf convolution gives
+`sum(k0..k9)=20,832,211,913,648>2^44`.
 
-- k0 `3,024`;
-- k1 `287,664`;
-- k2 `11,935,392`;
-- k3 `283,121,296`;
-- k4 `4,263,338,416`;
-- k5 `43,221,987,824`;
-- k6 `305,905,291,312`;
-- k7 `1,534,220,327,760`;
-- k8 `5,424,451,203,888`;
-- k9 `13,519,854,417,072`.
+These values are exact but are **not** complete-tail search thresholds.
 
-Hence
-
-`sum(k0..k8) = 7,312,357,496,576 < 2^44`,
-
-while
-
-`sum(k0..k9) = 20,832,211,913,648 > 2^44`.
-
-These numbers are useful consistency diagnostics but, by the finite-prefix deferral theorem, they are **not invariant search gates**.
-
-## Parametric B/C diagnostic
-
-If future direct/aggregate theorems give
-
-`rank(K_B,2)<=b2`, `rank(K_C,2)<=c2`,
-
-and one restarts the simple alternating accounting at index2, then the k0..k9 diagnostic is
+If hypothetical direct B/C index2 bounds `b2,c2` are inserted and simple alternation is restarted there, the k0..k9 diagnostic is
 
 `12,425,800,334,816`
 
-`+ 3,537,036,576 b2`
+`+3,537,036,576 b2`
 
-`+ 2,841,485,712 c2`
+`+2,841,485,712 c2`
 
-`+ 734,769 b2 c2`.
+`+734,769 b2 c2`.
 
-For `b2=c2=t`, `t=745` lies below `2^44` and `t=746` lies above it. This replaces the old31 threshold **only as a gauge-dependent prefix diagnostic**. It is not a mathematical necessity for complete compression.
+The equal diagnostic crosses `2^44` between745 and746. This replaces the old31 figure only as a bookkeeping diagnostic; neither31 nor745 is a complete-compression necessity.
 
-## New research implication
+## New invariant research target
 
-The correct next questions are no longer “how do we make k9 pass?” but:
+The correct next work is therefore:
 
-1. can B/C complete predecessor-leaf matrices be shown to have exact Schmidt rank `<2048` for every predecessor input;
-2. can the complete dyadic tail be represented with total rank-sum `<2048` for at least one leaf, rather than merely postponed;
-3. can cross-leaf/product-level cancellation beat the product of separate leaf rank sums;
-4. what odd-index lattice obstruction remains after complementary saturated lift spaces are combined, and can additional structural lift spaces remove it without restoring the full2048 rank budget.
+1. **complete-leaf Schmidt geometry:** prove or falsify `rank_Q L_X<2048` uniformly for one or more predecessor leaves;
+2. **structured complementary tail:** beat the generic `N-d` exact complement using actual coefficient/carry structure, so the total finite rank-sum becomes `<2048` rather than merely moving residue depth;
+3. **product-level cancellation:** exploit cancellation/overlap before separate-leaf rank subadditivity turns the complete budget into a product of per-leaf sums;
+4. **aggregate signed rank:** determine whether the complete B/C signed aggregates are already full row rank, which would close broad classes of separate-leaf compression routes.
 
 ## Status discipline
 
 Still not claimed:
 
 - complete predecessor-leaf Schmidt rank below2048;
-- complete four-leaf dyadic tail below2^44;
+- complete four-leaf factor rank below2^44;
 - lower `W_repr(1)` or `W_factor-gen`;
 - arithmetic-work reduction;
 - ranking/search gain, `alpha<1`, or full-round relevance.
