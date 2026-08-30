@@ -1,6 +1,9 @@
 name: A-D exact signed e1 lift rank565-364
 on:
   workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:

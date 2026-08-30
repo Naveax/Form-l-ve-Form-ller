@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - '.github/workflows/math-status-smoke.yml'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 permissions:
   contents: read
   statuses: write

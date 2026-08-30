@@ -7,6 +7,10 @@ on:
       - '.github/workflows/support218-work.yml'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   work:
     runs-on: ubuntu-latest
