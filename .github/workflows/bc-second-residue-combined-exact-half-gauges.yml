@@ -1,0 +1,24 @@
+name: B-C second residue combined exact half gauges
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_second_residue_combined_exact_half_gauges.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_SECOND_RESIDUE_COMBINED_EXACT_HALF_GAUGES_PROBE.md'
+      - '.github/workflows/bc-second-residue-combined-exact-half-gauges.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bc-second-residue-combined-exact-half-gauges-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - run: python scripts/probe_v26_q138_bc_second_residue_combined_exact_half_gauges.py
