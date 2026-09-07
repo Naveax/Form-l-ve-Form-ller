@@ -79,7 +79,7 @@ Since ranks are nonnegative, even setting the other index-2 contribution to zero
 Indeed
 
 - `(B2,C2)=(0,2048)` fails by `6,394,793,767,808`;
-- `(2048,0)` fails by `9,074,033,735,528`.
+- `(2048,0)` fails by `9,074,033,734,528`.
 
 ## Consequence for the historical B direct-e2 support envelope1796
 
