@@ -1,0 +1,23 @@
+name: Leaf S1 internal-sliced binary path probe
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: leaf-s1-internal-sliced-binary-path-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet numpy opt_einsum
+      - name: Reverify leaf cut topology
+        run: python scripts/verify_v26_q138_leaf_terminal_cut11_falsifier.py
+      - name: Plan exact internal-sliced binary paths
+        run: python scripts/probe_v26_q138_leaf_s1_internal_sliced_binary_path.py
