@@ -18,9 +18,10 @@ def z3_parity(xs, mask):
     bits = [xs[i] for i in range(len(xs)) if (mask >> i) & 1]
     if not bits:
         return BoolVal(False)
-    if len(bits) == 1:
-        return bits[0]
-    return Xor(*bits)
+    acc = bits[0]
+    for bit in bits[1:]:
+        acc = Xor(acc, bit)
+    return acc
 
 
 def z3_condition(xs, cond):
