@@ -1,0 +1,23 @@
+name: B-C second residue fixed predecessor specialization
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_second_residue_fixed_predecessor_specialization.py'
+      - '.github/workflows/bc-second-residue-fixed-predecessor-specialization.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bc-second-residue-fixed-predecessor-specialization-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - run: python scripts/probe_v26_q138_bc_second_residue_fixed_predecessor_specialization.py
