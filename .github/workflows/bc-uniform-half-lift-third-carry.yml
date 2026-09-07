@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_bc_uniform_half_lift_third_carry.py'
+      - 'scripts/probe_v26_q138_bc_canonical_e0_half_third_carry_degree4.py'
       - 'scripts/probe_v26_q138_bc_half_uniform_linear_state_relaxed_scalar.py'
       - 'scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py'
       - 'scripts/verify_v26_q138_predecessor_leaf_top_carry_cancellation.py'
@@ -36,5 +37,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe uniform half-lift induced third carry
+      - name: Probe compact 144-basis half-lift carry
         run: python scripts/probe_v26_q138_bc_uniform_half_lift_third_carry.py
+      - name: Probe canonical PR104 e0-gauge half carry by degree-four interpolation
+        run: python scripts/probe_v26_q138_bc_canonical_e0_half_third_carry_degree4.py
