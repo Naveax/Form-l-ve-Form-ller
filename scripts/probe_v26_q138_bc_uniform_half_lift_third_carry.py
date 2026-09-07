@@ -135,7 +135,8 @@ def analyze(pos):
 
     carry_basis = {}
     support_cache = {}
-    coord_cache = {}
+    coord_cache = {0: 0}
+    carry_cache = {0: 0}
     unique_coeff = set()
     feasible_states = 0
     generated_pairs = 0
@@ -176,15 +177,28 @@ def analyze(pos):
             generated_pairs += 1
 
             coeff = coord_cache.get(vec)
-            if coeff is None and vec != 0:
+            if coeff is None:
                 coeff = coordinates(vec, piv)
                 assert coeff is not None, (pos, 'half vector escaped grouped-e0 span')
                 coord_cache[vec] = coeff
-            elif vec == 0:
-                coeff = 0
 
             unique_coeff.add(coeff)
-            carry = xor_lift_carry(coeff, items, vec)
+            carry = carry_cache.get(coeff)
+            if carry is None:
+                carry = xor_lift_carry(coeff, items, vec)
+                carry_cache[coeff] = carry
+            else:
+                # A GF(2) basis has unique coordinates, so equal coordinate
+                # masks reconstruct the same truth vector. This assertion
+                # protects the cache from silently hiding a solver bug.
+                recon = 0
+                c = coeff
+                while c:
+                    bit = c & -c
+                    recon ^= items[bit.bit_length() - 1]
+                    c ^= bit
+                assert recon == vec
+
             S.insert(carry_basis, carry)
 
             if len(carry_basis) == 2048:
@@ -204,6 +218,7 @@ def analyze(pos):
         'explicit_e0_basis_dim', len(items),
         'unique_half_vectors_cached', len(coord_cache),
         'unique_e0_coordinate_masks', len(unique_coeff),
+        'unique_carry_vectors_cached', len(carry_cache),
         'half_lift_induced_third_carry_GF2_span_dim<=', len(carry_basis),
         'saturation_at', saturation_at,
         flush=True,
@@ -217,9 +232,10 @@ def analyze(pos):
         assert generated_pairs == 2_097_152
         return ('upper', len(carry_basis))
 
-    # Early saturation is already an exact NO-GAIN certificate for this global
-    # left-span method: the relaxed half-only lift carry spans all 2048 rows.
-    return ('saturated', 2048)
+    # Early saturation is already a NO-GAIN certificate only for this relaxed
+    # global-left-span route. The true scalar-feasible family is smaller, so
+    # relaxed saturation is not a lower bound on the true carry rank.
+    return ('relaxed_saturated', 2048)
 
 
 def main():
