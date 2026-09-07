@@ -1,6 +1,6 @@
 # FDS_CURRENT_STATE
 
-## Canonical status — 2026-08-19
+## Canonical status — 2026-09-07
 
 `ALPHA_PASS=0`.
 
@@ -56,7 +56,7 @@ C `[84,972,2048,2048,...]`,
 
 D `[3,207,364,2048,...]`.
 
-B/C index2 and all index>=3 entries shown as2048 are unresolved universal row caps, not measured ranks.
+B/C index2 and all index>=3 entries shown as2048 remain unresolved universal row caps, not admitted improved bounds. The complete direct-e1 aggregate probes below show that a uniform subgeneric rational-rank bound for those complete B/C aggregates is impossible; they do not by themselves produce improved `b2/c2` envelopes.
 
 ### A/D index0 and index1
 
@@ -70,7 +70,7 @@ Exact predecessor-input activity plus e0 signed budgets gives the canonical seco
 
 `rank(K_D,1)<=207`.
 
-### Exact signed e1 lift — new authority
+### Exact signed e1 lift — authority
 
 The old valid unsigned e1 lift left inherited third-residue correction362/171. That lift is superseded.
 
@@ -122,7 +122,40 @@ Exact Fourier-aligned lifts give
 
 `rank(K_C,0)<=84`, `rank(K_C,1)<=972`.
 
-B/C third residues remain open.
+The third-residue envelopes remain open. The following complete-direct-e1 diagnostics are now exact obstructions to one proposed low-rank route.
+
+### B/C complete direct-e1 aggregate — full-rank obstruction
+
+For B, clean authority run `34107536167` reaches
+
+`rank_F3=2048`
+
+at the8195th examined column of the deterministic complete direct-e1 aggregate. Therefore
+
+`rank_Q=2048`
+
+for that B aggregate witness. No uniform subgeneric rational-rank upper bound can hold for the complete B direct-e1 aggregate.
+
+For C, clean multiprime authority run `34107785435` first proves that a12-dimensional right-beta coordinate subcube `U` (4096 columns) is **exactly zero over Z**: every entry vanishes modulo `3,5,7,11,13`, whose product `15015` exceeds the certified coefficient absolute bound `3043`.
+
+That exact-zero subcube does not imply low complete rank. Clean escape-coset authority run `34109587430` finds:
+
+- `U` and the first eight adjacent tested cosets `U+e29`, `U+e26`, `U+e22`, `U+e10`, `U+e6`, `U+e18`, `U+e30`, `U+e7` have mod3 rank0;
+- the ninth adjacent coset `U+e31` drives the accumulated matrix to `rank_F3=2048` after2056 columns examined in that coset.
+
+Hence the complete direct-e1 C aggregate at the deterministic reachable predecessor has
+
+`rank_Q=2048`.
+
+No uniform subgeneric rational-rank upper bound can hold for the complete C direct-e1 aggregate either.
+
+Authority:
+
+- B clean run `34107536167`;
+- C exact-zero clean run `34107785435`;
+- C escape-coset clean run `34109587430`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_C_DIRECT_E1_ZERO_SUBCUBE_ESCAPE_COSETS.md`;
+- `scripts/probe_v26_q138_c_direct_e1_zero_subcube_escape_cosets.py`.
 
 ## Dynamic four-leaf convolution through k7 — first strong pass
 
@@ -158,6 +191,22 @@ so the exact margin after k7 is
 
 This is an admitted dynamic k0..k7 pass. It is **not** a frozen budget theorem for k>=8. Deeper residue improvements also change earlier convolution layers, so the full tail must be recounted dynamically.
 
+## Complete-leaf contraction diagnostics
+
+A full `2048 x 2048` S1 leaf minor remains a valid numerical falsifier route, but naive materialization/path execution is not admitted.
+
+Clean authority run `34109391867` is a **path-only** memory-capped row/column-block slicing probe for positions A-D. It proves that explicit element ceilings can be met by opt_einsum, but the returned memory-capped plans use high multi-operand arity and have astronomical estimated total work. Representative C plans under `2^28` or `2^30` elements use `b_open=2`,512 column blocks, max step arity11, and estimated total work about `7.85e45` operations.
+
+Therefore memory feasibility alone is not an execution theorem. No numerical contraction and no leaf-rank claim follows from run `34109391867`.
+
+Next execution-design target: exact **internal-index slicing plus binary/pairwise contraction**, with modulo reduction after each pairwise step and explicit total slice/work accounting. High-arity memory-limit contractions are not to be executed merely because they fit RAM.
+
+Authority:
+
+- clean run `34109391867`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_LEAF_S1_SLICED_COLUMN_BLOCK_PATH_PROBE.md`;
+- `scripts/probe_v26_q138_leaf_s1_sliced_column_blocks.py`.
+
 ## Higher-residue structural direction
 
 The exact signed e1 lift exhausts all valuation e0/e1 sectors: they produce no inherited correction at index2 or later.
@@ -184,7 +233,8 @@ Fully-open exponent63.562242424221076. Semi-open A54.661778097771986, B generic5
 1. **Raw e2 exact-signed persistence:** bound the global exact signed e2 aggregate by singleton-template geometry; do not reuse A6/D5 outside-core mod2 bounds for raw sectors.
 2. **Higher direct residues:** after lower corrections are eliminated, control direct e3/e4 families without naive hundreds-of-thousands sector enumeration.
 3. **Complete dyadic tail:** only a controlled full tail can lower the current84.90275 representation/factor-generation ledger.
-4. **Product-level cancellation/direct Schmidt theorem:** allowed alternative to residue-by-residue subadditivity.
-5. **Arithmetic work:** only after a controlled complete leaf result, fuse with the central `common+private+private` decomposition and count actual scalar work.
+4. **Complete-leaf/product cancellation:** B/C complete direct-e1 aggregates are now exact full-rank obstructions, so any useful product-level theorem must exploit additional structure/cancellation rather than a uniform subgeneric rank bound on those aggregates.
+5. **Practical exact contraction:** find a binary internal-slicing plan with controlled peak memory and total work before attempting the full numerical S1 minor.
+6. **Arithmetic work:** only after a controlled complete leaf result, fuse with the central `common+private+private` decomposition and count actual scalar work.
 
 Still not admitted: practical evaluator, arithmetic-work reduction, ranking/search reduction, `alpha<1`, or full-round relevance.
