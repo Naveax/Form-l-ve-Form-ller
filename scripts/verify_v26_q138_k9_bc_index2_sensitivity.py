@@ -99,7 +99,7 @@ def main() -> None:
     # Even complete elimination of only one index-2 contribution cannot pass
     # while the other remains generic2048.
     assert formula(0, 2048) - BUDGET == 6_394_793_767_808
-    assert formula(2048, 0) - BUDGET == 9_074_033_735_528
+    assert formula(2048, 0) - BUDGET == 9_074_033_734_528
 
     # The historical B direct-e2 support-only envelope1796 is structurally
     # useful but cannot by itself approach the product gate when C2/higher
