@@ -263,7 +263,7 @@ def analyze(pos):
     assert len(items) == 144
     print(
         'position', pos,
-        **hstats,
+        'half_basis_stats', hstats,
         'relaxed_half_basis_dim', len(items),
         'ambient_grouped_e0_dim', len(e0),
         'relaxed_half_basis_subset_grouped_e0', True,
