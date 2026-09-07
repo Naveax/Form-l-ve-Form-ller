@@ -60,19 +60,33 @@ def main():
                     nxt[k + j][R2] += ways * math.comb(mult, j)
         dp = nxt
 
+    # Clean second-residue classifier regression oracle.
     expected_e0 = {0: 1, 1: 22, 2: 74, 3: 484}
     expected_e1 = {0: 0, 1: 102, 2: 2397, 3: 8196}
     expected_em1 = {0: 0, 1: 0, 2: 4, 3: 0}
 
+    # Clean PR39 / run32135226810 direct-e2 class authority.  These checks
+    # force the tiny rowspace DP to reproduce the prior large exact
+    # enumeration, including the 1,152,040 weight119 class.
+    expected_e2_classes = {
+        2: Counter({(124, 4, 2): 4465, (125, 3, 0): 686}),
+        3: Counter({(125, 3, 2): 66570, (126, 2, 0): 63174}),
+        4: Counter({(127, 1, 0): 450840}),
+        5: Counter({(128, 0, 0): 1_152_040}),
+    }
+
     for k in range(MAX_K + 1):
         classes = Counter()
         exponents = Counter()
+        e2_classes = Counter()
         for R, ways in dp[k].items():
             cls = class_from_mask(R, P)
             classes[cls] += ways
             _ir, n, pr = cls
             e = k - 3 + n - pr // 2
             exponents[e] += ways
+            if e == 2:
+                e2_classes[cls] += ways
 
         total = sum(exponents.values())
         assert total == math.comb(124, k), (k, total, math.comb(124, k))
@@ -80,6 +94,8 @@ def main():
             assert exponents[0] == expected_e0[k], (k, exponents[0])
             assert exponents[1] == expected_e1[k], (k, exponents[1])
             assert exponents[-1] == expected_em1[k], (k, exponents[-1])
+        if k in expected_e2_classes:
+            assert e2_classes == expected_e2_classes[k], (k, e2_classes)
 
         relevant = {e: n for e, n in sorted(exponents.items()) if e <= 2}
         print('zero_count', k,
@@ -87,13 +103,15 @@ def main():
               'reachable_rowspace_states', len(dp[k]),
               'class_distribution', dict(sorted(classes.items())),
               'exponent_distribution', dict(sorted(exponents.items())),
+              'e2_class_distribution', dict(sorted(e2_classes.items())),
               'third_residue_relevant_e_le_2', relevant,
               flush=True)
 
     print('cutoff_proof', 'k>=6 => e>=k-3>=3', flush=True)
     print('PASS V26_Q138_BC_THIRD_RESIDUE_VALUATION_DP')
+    print('crosscheck=clean PR39 run32135226810 direct-e2 class counts reproduced by rowspace multiplicity DP')
     print('scope=exact quotient-signature valuation-class counts through third residue; no support/rank/lift bound')
-    print('next=build B/C support and signed-correction geometry only for the printed e<=2 classes')
+    print('next=use existing clean B direct-e2 support envelope1796 and focus new work on structured inherited second-lift correction')
 
 
 if __name__ == '__main__':
