@@ -2,7 +2,7 @@
 
 ## Scope
 
-The admitted B/C second-residue classifier assigns every zero-set sector the scaled 2-adic amplitude exponent
+The B/C quotient classifier assigns every zero-set sector the scaled 2-adic amplitude exponent
 
 `e = k - 3 + n - pr/2`,
 
@@ -18,14 +18,25 @@ The probe therefore:
 2. performs exact multiplicity DP over subset size `k<=5` and the joined signature rowspace;
 3. reconstructs `(irank,n,pr)` and `e` from each DP state;
 4. checks exact total multiplicity `C(124,k)` at every `k`;
-5. regresses `k<=3` against the already-admitted second-residue counts:
+5. regresses `k<=3` against the clean second-residue counts:
    - `e=0`: `[1,22,74,484]`,
    - `e=1`: `[0,102,2397,8196]`,
    - `e=-1`: four weight-122 sectors at `k=2`;
-6. reports the exact `e<=2` valuation-class populations for `k=4,5`.
+6. independently reproduces the clean PR39 / run32135226810 direct-e2 class counts:
+   - k2: `(124,4,2):4465`, `(125,3,0):686`;
+   - k3: `(125,3,2):66570`, `(126,2,0):63174`;
+   - k4: `(127,1,0):450840`;
+   - k5: `(128,0,0):1,152,040`;
+7. reports all exact `e<=2` valuation populations while proving `k>=6` irrelevant to this layer.
+
+## Relation to the existing B direct-e2 support authority
+
+This probe does **not** replace or improve the clean PR39 support theorem. PR39 already certified that all B direct-e2 leading support parity lies in a fixed 1796-dimensional left-Walsh envelope, with the k2/k3/k4 union equal to1712 and the k5 family adding84 frequencies. The corresponding C candidate route saturates2048.
+
+The useful role of this DP is to provide a tiny exact valuation/classification oracle for future structured third-bit constructions, instead of repeating the historical million-pattern enumeration whenever the lift gauge changes.
+
+The remaining B/C third-residue obstruction is not the direct-e2 class count. It is the correction induced by the chosen complete second lift. The natural support-only carry route is known from clean PR43/run32136810295 to have `U120 xor U120 = 2048` for both B and C, so any new third-residue gain must use finer sector/sign/predecessor structure or a different lift gauge.
 
 ## Claim discipline
 
-This is only a valuation/classification result. It does not yet construct B/C third-residue support geometry, signed carry corrections, a binary lift, a rational-rank bound, a complete-leaf bound, or a representation/arithmetic-work/full-round claim.
-
-The intended next step is to construct support and correction geometry only for the exact `e<=2` classes printed by this DP, rather than enumerating all high-zero-count sectors.
+This is only a valuation/classification diagnostic. It does not by itself change `b2/c2`, the invariant complete-leaf rank, representation cost, arithmetic work, `ALPHA_PASS`, ranking/search, or full-round claims.
