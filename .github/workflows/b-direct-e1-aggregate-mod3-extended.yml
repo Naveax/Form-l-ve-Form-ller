@@ -1,0 +1,19 @@
+name: B direct e1 aggregate mod3 extended probe
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: b-direct-e1-aggregate-mod3-extended-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_b_direct_e1_aggregate_mod3_extended.py
