@@ -1,6 +1,11 @@
 name: B direct e1 aggregate mod3 extended probe
 on:
   pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_b_direct_e1_aggregate_mod3_extended.py'
+      - 'scripts/probe_v26_q138_bc_direct_e1_*.py'
+      - 'scripts/verify_v26_q138_predecessor_leaf_*.py'
+      - '.github/workflows/b-direct-e1-aggregate-mod3-extended.yml'
   workflow_dispatch:
 concurrency:
   group: b-direct-e1-aggregate-mod3-extended-${{ github.ref }}
