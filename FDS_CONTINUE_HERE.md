@@ -33,9 +33,9 @@ C `[84,972,2048,2048,...]`
 
 D `[3,207,364,2048,...]`
 
-The A/D index2 values are complete uniform dyadic-lift envelopes for the current lift choice. B/C index2 and all later2048 entries remain unresolved universal caps.
+The A/D index2 values are complete uniform dyadic-lift envelopes for the current lift choice. B/C index2 and all later2048 entries remain unresolved universal caps. The complete direct-e1 aggregate full-rank witnesses below are route obstructions, not improved `b2/c2` bounds.
 
-## New key theorem: exact signed e1 lift
+## Exact signed e1 lift
 
 Clean run `32189863746` is authority.
 
@@ -82,7 +82,7 @@ Therefore
 
 This supersedes D1022, D851/D535, A746/D535, and the old362/171 inherited-correction accounting.
 
-## Dynamic product gate — now passes through k7
+## Dynamic product gate — passes through k7
 
 Using the current envelopes, exact four-leaf convolution gives
 
@@ -105,19 +105,54 @@ Exact margin:
 
 This is a genuine dynamic k0..k7 pass. It is **not** a frozen remaining-budget theorem. The complete k>=8 tail is still open, and deeper residue improvements must be dynamically recounted because they also lower earlier convolution layers.
 
-## B/C status
+## B/C status — complete direct-e1 low-rank route closed
 
 B/C second lifts remain authority:
 
 B `[36,812,...]`, C `[84,972,...]`.
 
-Third residues remain open. Existing scoped facts:
+No improved complete `b2/c2` envelope is admitted yet.
 
-- B direct leading-support envelope<=1796;
-- C corresponding homogeneous candidate envelope saturates2048;
-- ordinary second-lift support-carry Walsh sumsets saturate2048 for both B/C.
+The complete direct-e1 aggregate itself is now known to be full rational rank at deterministic reachable witnesses:
 
-So no complete `b2/c2` claim yet.
+- **B:** clean run `34107536167` reaches `rank_F3=2048` at the8195th examined column, hence `rank_Q=2048`.
+- **C exact-zero core:** clean run `34107785435` proves a12-dimensional right-beta subcube `U` (4096 columns) is exactly zero over Z using primes `3,5,7,11,13` and coefficient bound `|c|<=3043`, since `15015>3043`.
+- **C escape:** clean run `34109587430` finds `U` plus the first eight adjacent tested cosets mod3-zero, then `U+e31` drives the accumulated rank to `rank_F3=2048` after2056 columns in that coset. Hence the complete C aggregate has `rank_Q=2048`.
+
+Consequences:
+
+- no uniform subgeneric rational-rank upper bound exists for the complete direct-e1 B aggregate;
+- no uniform subgeneric rational-rank upper bound exists for the complete direct-e1 C aggregate;
+- the exact-zero C subcube is real cancellation geometry, but it does **not** lower the complete aggregate rank by itself.
+
+Authority:
+
+- B clean `34107536167`;
+- C exact-zero clean `34107785435`;
+- C escape clean `34109587430`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_C_DIRECT_E1_ZERO_SUBCUBE_ESCAPE_COSETS.md`.
+
+## Complete-leaf exact contraction program
+
+The complete S1 `2048 x 2048` leaf-minor route remains a numerical falsifier target, but execution design is not solved by RAM caps alone.
+
+Clean path-only run `34109391867` shows that output/column slicing plus an opt_einsum memory ceiling can fit explicit intermediate-size caps for all A-D, but the selected paths use high multi-operand arity and astronomical estimated total work. For C, a representative `2^28`/`2^30`-element plan uses `b_open=2`,512 blocks, max step arity11, with estimated total work about `7.85e45`.
+
+Therefore run `34109391867` is **not** a numerical contraction and proves no leaf rank.
+
+Immediate execution-design step:
+
+1. preserve the existing exact factor network and output block slicing;
+2. slice selected **internal** binary indices exactly, multiplying work by all `2^k` slice assignments;
+3. require every contraction path step to be binary/pairwise (`max_step_arity=2`);
+4. report peak intermediate and total work including output blocks and internal slices;
+5. only after a practical binary plan exists, execute modulo251 with reduction after every pairwise step and explicit int64 accumulation safety.
+
+Authority for the current path-only NO-GO:
+
+- clean `34109391867`;
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_LEAF_S1_SLICED_COLUMN_BLOCK_PATH_PROBE.md`;
+- `scripts/probe_v26_q138_leaf_s1_sliced_column_blocks.py`.
 
 ## Immediate higher-residue program
 
@@ -167,13 +202,16 @@ Do not naively RREF all368,550 if the structural law is clean; external consiste
 - A/D active-group whole-quotient/FWHT bounds are too coarse;
 - D global affine label-hyperplane route is falsified;
 - existing-map-only A6 cover1977 is superseded by interpolated565;
-- old one-QR support216/rank12 state remains revoked.
+- old one-QR support216/rank12 state remains revoked;
+- uniform subgeneric complete direct-e1 aggregate rank bounds are falsified for both B and C;
+- high-arity memory-capped opt_einsum paths are not an admitted practical contraction route.
 
 ## Sharp blockers
 
 1. Global exact-signed raw-e2 template persistence.
 2. Higher direct e3/e4 external consistency and singleton-map compression using the internal-rank law, not naive internal solves.
-3. Complete dyadic k>=8 tail or a direct complete-leaf Schmidt/Gram theorem.
-4. Only after complete leaf control, fuse with central `common+private+private` geometry and count arithmetic work.
+3. Complete dyadic k>=8 tail or a structurally stronger complete-leaf/product cancellation theorem that survives the B/C full-rank aggregate obstructions.
+4. A practical exact binary internal-slicing contraction plan for the full S1 minor.
+5. Only after complete leaf control, fuse with central `common+private+private` geometry and count arithmetic work.
 
 Still not admitted: lower complete `W_repr(1)`, arithmetic-work improvement, ranking/search gain, `alpha<1`, or full-round relevance.
