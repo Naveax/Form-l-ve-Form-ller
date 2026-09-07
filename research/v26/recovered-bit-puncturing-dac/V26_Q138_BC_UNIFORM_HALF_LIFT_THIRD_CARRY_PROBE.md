@@ -2,18 +2,21 @@
 
 ## Scope
 
-PR104 clean authority proves a uniform relaxed half-correction span of dimension144 for both B and C, and the combined sign span has the same GF(2) dimension as grouped-e0 alone:
+PR104 clean authority proves a uniform relaxed half-correction span of dimension144 for both B and C, and that this span is contained in grouped-e0:
 
 - B relaxed half144 inside grouped-e0 dimension272;
 - C relaxed half144 inside grouped-e0 dimension388.
 
-This probe reconstructs that 144-dimensional relaxed half span self-containedly and uses the **half basis itself** as an explicit integer parity-lift gauge for the half-only family.
+This work studies the inherited third-bit carry of that half family in two complementary gauges:
 
-GF(2) containment is not enough to say that a new 0/1 basis preserves the exact PR104 quotient: exact ZZ quotient rank is basis-gauge sensitive. Therefore the verifier also measures a deterministic **half-first extended gauge** obtained by inserting the144 half basis first and then extending it to the full grouped-e0 span. It separately rechecks the canonical grouped-e0 quotient and reports whether the half-first extension preserves or improves the admitted748/936 second-lift total.
+1. the reconstructed144-vector half basis itself, useful as a compact alternate-gauge diagnostic;
+2. the **canonical PR104 grouped-e0 basis**, which is the primary authority-compatible route.
 
-It covers the **half correction only**. It does not include grouped-e0's own lift carry, the support-only lift carry, or cross-carries among those components. Therefore it cannot by itself prove a complete B2/C2 bound.
+The distinction matters because exact ZZ quotient rank is basis-gauge sensitive. GF(2) containment alone does not prove that a new 0/1 basis preserves the admitted748/936 integer-lift bound.
 
-## Self-contained reconstruction of the 144-dimensional half basis
+Only the **half correction** is covered. Grouped-e0's own family carry, the support-only lift carry, and cross-carries among the components remain outside scope. Therefore no result here alone is a complete B2/C2 theorem.
+
+## Self-contained reconstruction of the 144-dimensional half span
 
 The PR104 combined predecessor/right state image has rank18. On a fixed support-syndrome fiber and fixed four-bit scalar pattern, the2048-bit half correction is a degree-at-most-two Boolean polynomial in the fiber coordinates.
 
@@ -23,70 +26,86 @@ Therefore every value on that fiber is spanned by:
 - every first difference along one fiber basis direction;
 - every mixed second difference along a pair of directions.
 
-The probe rebuilds the relaxed half span with this degree-two interpolation rather than scanning all2,097,152 state/scalar pairs. It asserts exact dimension144 and then solves every reconstructed half-basis vector in the grouped-e0 basis, certifying GF(2) containment.
+The probe rebuilds the relaxed half span by this degree-two interpolation rather than by scanning all2,097,152 state/scalar pairs. It asserts exact dimension144 and solves every reconstructed basis vector in grouped-e0, revalidating `half subset grouped-e0` on the current checkout.
 
-## Integer-gauge compatibility check
+## Canonical PR104 integer gauge
 
-For each position the verifier first rechecks the admitted canonical grouped-e0 exact quotient against the unchanged support-only Walsh space:
+PR104 forms its sign basis by inserting grouped-e0 **before** the relaxed half span. Since the new half span is contained in grouped-e0, the later half insertions add no pivots. Thus the canonical PR104 sign lift uses the existing grouped-e0 pivot basis itself.
 
-- B support-only668 plus canonical quotient80 gives748;
-- C support-only788 plus canonical quotient148 gives936.
+The verifier rechecks its exact quotient against the unchanged support-only Walsh space:
 
-It then builds a deterministic half-first basis of the same grouped-e0 GF(2) space:
+- B support-only668 plus canonical ZZ quotient80 gives748;
+- C support-only788 plus canonical ZZ quotient148 gives936.
 
-1. insert the144 reconstructed half basis vectors;
-2. extend with grouped-e0 vectors until the full272-dimensional B or388-dimensional C space is recovered;
-3. compute the exact ZZ quotient of that half-first basis against the same support-only space.
+This makes the canonical grouped-e0 basis the preferred gauge for deciding whether half structure genuinely propagates from the admitted748/936 second lift.
 
-The reported boolean
+## Canonical half carry has degree at most four on each fiber
 
-`half_first_preserves_or_improves_PR104_total`
+Fix one support-syndrome fiber and one scalar pattern. Let `t` denote the fiber coordinates and let
 
-is true exactly when the resulting total is no worse than748 for B or936 for C.
+`y(t)`
 
-This check is important because two binary bases spanning the same GF(2) space may define different integer lifts and therefore different exact rational quotient ranks.
+be the half-correction truth vector. By the degree-two reconstruction above, `y(t)` has degree at most2.
 
-A subgeneric half-carry result with a **false** compatibility flag remains a valid diagnostic for that alternate half-first gauge, but it is not yet a propagation theorem for the current748/936 authority. A subgeneric carry with a **true** compatibility flag is much more directly useful for the current k9 program, though complete B2/C2 still requires the omitted carry pieces below.
+Coordinates of `y(t)` in the fixed canonical grouped-e0 basis are GF(2)-linear functions of `y`, so every coordinate bit also has degree at most2 in `t`.
 
-## Explicit parity lift
+For an explicit parity lift with basis vectors `v_i`, if
 
-Let `v_i`, `i=1..144`, be the reconstructed relaxed half basis. For every half-correction truth vector `y`, solve exactly over GF(2)
+`y = XOR_i a_i v_i`
 
-`y = XOR_i a_i v_i`.
+and
 
-Choose the integer half lift
+`K(y)=SUM_i a_i v_i`,
 
-`K(y) = SUM_i a_i v_i`.
+then pointwise
 
-This is congruent to `y mod2` by construction.
+`(K-y)/2 mod2 = C(n,2) mod2`
 
-Pointwise, if `n` active basis terms equal one, then
+where `n` is the number of active basis terms equal to1. Hence
 
-`(K-y)/2 mod2 = floor(n/2) mod2 = C(n,2) mod2`.
+`carry(y)=XOR_{i<j, a_i=a_j=1}(v_i AND v_j)`.
 
-Hence the induced third-bit carry is exactly
+The carry is quadratic in the coordinate bits `a_i`. Since each `a_i(t)` has degree at most2, canonical half carry has degree at most4 on the fiber.
 
-`carry(y) = XOR_{i<j, a_i=a_j=1} (v_i AND v_j)`.
+Therefore the entire relaxed canonical half-carry span is recovered exactly from the vector-valued ANF coefficients through degree4. The new certificate evaluates only subsets of at most four fiber directions, extracts the Möbius coefficients, inserts those coefficients into a GF(2) span, and regresses the interpolation on deterministic higher-weight fiber points.
 
-## Pairwise-intersection hull precheck
+This replaces a possible2,097,152-state fallback by an exact low-degree certificate when the cheap canonical pairwise hull itself has already saturated.
 
-Before enumerating the full relaxed state family, the verifier builds
+## Canonical pairwise-hull precheck
 
-`H = span_GF2 { v_i AND v_j : i<j }`
+Before degree-four interpolation, the canonical certificate forms
 
-using the144-vector half basis.
+`H_can = span_GF2 { v_i AND v_j : i<j }`
 
-Every carry produced by this explicit parity lift lies in `H`. Therefore
+for the actual grouped-e0 basis.
 
-`dim carry_span <= dim H`.
+Every canonical half carry lies in this hull. Thus if `dim H_can<2048`, the hull alone is an immediate authority-compatible uniform half-only carry upper span.
 
-If `dim H < 2048`, that value is immediately a valid uniform upper span for the half-only inherited carry and the expensive full relaxed scan is unnecessary.
+If `H_can` saturates2048, that is not a lower bound on realized half carry. The exact degree-four fiber interpolation is then used to determine the span actually attained by the relaxed half family.
 
-If `dim H = 2048`, the hull gives no subgeneric gain but does not imply that the actually realized carry family spans2048. The verifier then scans the exact PR104 relaxed family, with coordinate/carry caching, to measure the realized carry span.
+## Compact 144-basis alternate gauge
 
-## Uniform relaxed state family
+The companion diagnostic also uses the reconstructed144 half vectors themselves as an explicit parity-lift basis. Its pairwise-intersection hull is
 
-If the hull saturates, the fallback scan uses the same PR104 state reduction:
+`H_half = span_GF2 { h_i AND h_j : i<j }`.
+
+If this hull is subgeneric, it is an immediate upper span for half-only inherited carry in that compact gauge. If it saturates, the companion probe may scan the complete relaxed family with coordinate/carry caching.
+
+Because this is an alternate integer basis, the verifier separately builds a deterministic **half-first extension** to the full grouped-e0 GF(2) space:
+
+1. insert the144 half basis vectors first;
+2. extend with grouped-e0 vectors until dimension272 for B or388 for C;
+3. compute the exact ZZ quotient against the same support-only Walsh space.
+
+It reports
+
+`half_first_preserves_or_improves_PR104_total`.
+
+A compact-gauge carry gain with a false compatibility flag is still a valid alternate-gauge diagnostic, but it does not propagate the current748/936 authority. A compatible compact gauge is potentially useful, although complete B2/C2 still requires the omitted carry pieces.
+
+## Uniform relaxation semantics
+
+Both routes use the same PR104 relaxed family:
 
 - predecessor restricted to the exact half-active affine space;
 - predecessor-null and right21 variables combined;
@@ -95,27 +114,20 @@ If the hull saturates, the fallback scan uses the same PR104 state reduction:
 -131072 support-feasible states;
 - all16 scalar phase patterns safely allowed per feasible state.
 
-The complete relaxed family has2,097,152 state/scalar pairs. The true scalar-feasible family is a subset.
+The true scalar-feasible family is a subset. Therefore a subgeneric span computed for the full relaxation is a valid uniform upper span for the true half-only carry in the stated gauge.
 
-If the complete relaxed scan finishes with carry dimension below2048, the result is a valid uniform upper span for the true half-only inherited carry of this explicit144-vector gauge.
-
-If the relaxed carry span reaches2048, that is NO-GAIN only for this relaxed gauge/global-span route. It is not a lower bound on the true carry rank and does not exclude another integer-lift basis from giving a smaller carry hull.
+Conversely, saturation of a relaxed route is only a NO-GAIN result for that gauge/relaxation. It is not an invariant lower bound on the true third-residue rank.
 
 ## Claim discipline
 
 Not included:
 
-- grouped-e0 own lift carry;
+- grouped-e0 family own lift carry;
 - support-only lift carry;
-- cross-carry between support/e0/half lifts;
+- cross-carry between support/e0/half contributions;
 - complete B2/C2;
 - complete leaf Schmidt rank;
 - `W_repr`;
 - arithmetic-work, alpha, ranking/search, or full-round claims.
 
-The purpose is to determine whether the new uniform half construction propagates useful structure into the third dyadic bit and to separate two logically different failure modes:
-
-1. the half-only carry hull/span is already generic for this gauge; or
-2. the half-only carry is structured, but the half-first integer gauge does not preserve the current748/936 quotient budget.
-
-Either outcome narrows the next lift-design step without being mistaken for an invariant lower bound.
+The primary useful outcome is a subgeneric **canonical grouped-e0-gauge** half-carry span, because that attaches directly to the admitted748/936 second lift. The compact144-basis result is secondary gauge geometry and helps diagnose whether a poor canonical result is intrinsic to the relaxed half family or merely basis-induced.
