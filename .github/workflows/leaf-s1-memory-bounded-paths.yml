@@ -1,6 +1,10 @@
 name: Leaf S1 memory-bounded path probe
 on:
   pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_leaf_s1_*.py'
+      - 'scripts/verify_v26_q138_leaf_*.py'
+      - '.github/workflows/leaf-s1-memory-bounded-paths.yml'
   workflow_dispatch:
 concurrency:
   group: leaf-s1-memory-bounded-paths-${{ github.ref }}
