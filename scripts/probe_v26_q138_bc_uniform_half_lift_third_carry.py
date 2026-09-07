@@ -245,19 +245,64 @@ def relaxed_half_basis(st):
     }
 
 
+def half_first_extended_gauge(pos, halfB, e0):
+    """Compare the half-first e0 basis gauge with the admitted PR104 gauge.
+
+    GF(2) containment alone does not preserve exact ZZ quotient rank.  Build a
+    deterministic basis by inserting the 144 half basis first and then
+    extending it with the grouped-e0 space, and measure its exact quotient.
+    """
+    support = U.N.weight120_union(pos)
+    expected_support = 668 if pos == 'B' else 788
+    expected_total = 748 if pos == 'B' else 936
+    expected_baseline_qr = expected_total - expected_support
+    assert len(support) == expected_support
+
+    baseline_qr, baseline_comp = U.R.quotient_rank(e0, support)
+    assert baseline_qr == expected_baseline_qr, (pos, baseline_qr)
+    assert expected_support + baseline_qr == expected_total
+
+    gauge = {}
+    for v in halfB.values():
+        S.insert(gauge, v)
+    assert len(gauge) == 144
+    for v in e0.values():
+        S.insert(gauge, v)
+    assert len(gauge) == len(e0)
+
+    gauge_qr, gauge_comp = U.R.quotient_rank(gauge, support)
+    gauge_total = expected_support + gauge_qr
+    compatible = gauge_total <= expected_total
+
+    return {
+        'support_only_dim': expected_support,
+        'canonical_grouped_e0_ZZ_quotient': baseline_qr,
+        'canonical_second_lift_total': expected_total,
+        'canonical_Walsh_complement_coordinates': baseline_comp,
+        'half_first_extended_basis_dim': len(gauge),
+        'half_first_extended_ZZ_quotient': gauge_qr,
+        'half_first_extended_second_lift_total': gauge_total,
+        'half_first_extended_Walsh_complement_coordinates': gauge_comp,
+        'half_first_preserves_or_improves_PR104_total': compatible,
+    }
+
+
 def analyze(pos):
     st = half_state_setup(pos)
 
     # Reconstruct the exact PR104 relaxed half span cheaply and prove that its
-    # 144-dimensional basis lies inside the grouped-e0 space. This makes the
-    # half basis itself a valid integer-lift gauge without enlarging PR104's
-    # admitted ambient sign left-factor space.
+    # 144-dimensional basis lies inside the grouped-e0 space.  This makes it a
+    # valid explicit parity-lift gauge for the half-only family.  Because an
+    # integer lift is basis-gauge sensitive, exact compatibility with the
+    # admitted PR104 748/936 quotient is measured separately below.
     halfB, hstats = relaxed_half_basis(st)
     e0 = S.grouped_e0_basis(pos)
     expected_e0_dim = 272 if pos == 'B' else 388
     assert len(e0) == expected_e0_dim
     _e0_items, e0_piv = coordinate_solver(e0)
     assert all(coordinates(v, e0_piv) is not None for v in halfB.values())
+
+    gauge_stats = half_first_extended_gauge(pos, halfB, e0)
 
     items, piv = coordinate_solver(halfB)
     assert len(items) == 144
@@ -267,6 +312,7 @@ def analyze(pos):
         'relaxed_half_basis_dim', len(items),
         'ambient_grouped_e0_dim', len(e0),
         'relaxed_half_basis_subset_grouped_e0', True,
+        **gauge_stats,
         flush=True,
     )
 
@@ -281,7 +327,7 @@ def analyze(pos):
     )
 
     if len(pair_hull) < 2048:
-        return ('pairwise_hull_upper', len(pair_hull))
+        return ('pairwise_hull_upper', len(pair_hull), gauge_stats['half_first_extended_second_lift_total'])
 
     carry_basis = {}
     support_cache = {}
@@ -360,16 +406,16 @@ def analyze(pos):
     if saturation_at is None:
         assert feasible_states == 131072
         assert generated_pairs == 2_097_152
-        return ('upper', len(carry_basis))
+        return ('upper', len(carry_basis), gauge_stats['half_first_extended_second_lift_total'])
 
-    return ('relaxed_saturated', 2048)
+    return ('relaxed_saturated', 2048, gauge_stats['half_first_extended_second_lift_total'])
 
 
 def main():
     out = {pos: analyze(pos) for pos in 'BC'}
     print('result', out)
     print('PASS V26_Q138_BC_UNIFORM_HALF_LIFT_THIRD_CARRY')
-    print('scope=induced third-bit carry of an explicit 144-vector relaxed-half-basis integer lift; basis containment in grouped-e0 is reverified by degree-two fiber interpolation; pairwise-intersection hull checked before full state enumeration')
+    print('scope=induced third-bit carry of an explicit 144-vector relaxed-half-basis integer lift; basis containment in grouped-e0 is reverified by degree-two fiber interpolation; exact half-first extended-gauge ZZ quotient is compared with canonical PR104 748/936; pairwise-intersection hull checked before full state enumeration')
     print('not_included=grouped-e0 own lift carry, support-only lift carry, cross-carries between components, complete B2/C2, complete leaf, W_repr, alpha, arithmetic-work, ranking/search, full-round')
 
 
