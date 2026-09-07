@@ -18,25 +18,50 @@ REXT = [128 + i for i in RIGHT]
 ALL = (1 << (1 << len(LEFT))) - 1
 NROW = 1 << len(LEFT)
 MAX_COLUMNS = 4096
+PRED_MASK = (1 << 128) - 1
+EXT_MASK = (1 << 160) - 1
+FULL_SECTOR_ZERO = {
+    'B': ((1, 5),),
+    'C': ((1, 1),),
+}
 
 
-def beta32_equations(can):
+def beta32_equations(can, pred):
     out = []
     for row in can:
         m = 0
         for i in range(32):
             if (row >> (128 + i)) & 1:
                 m |= 1 << i
-        out.append((m, (row >> 160) & 1))
+        rhs = ((row >> 160) & 1) ^ ((row & pred).bit_count() & 1)
+        out.append((m, rhs))
     return out
 
 
-def fixed_predecessor_possible(can):
-    # All predecessor bits are fixed to zero; only the 32 beta bits remain.
-    return T.rref(beta32_equations(can), n=32) is not None
+def fixed_predecessor_possible(can, pred):
+    return T.rref(beta32_equations(can, pred), n=32) is not None
 
 
-def support_desc(can):
+def witness_predecessor(pos, e1):
+    target = FULL_SECTOR_ZERO[pos]
+    found = None
+    for zs, cls in e1[len(target)]:
+        if zs == target:
+            found = (zs, cls)
+            break
+    assert found is not None, (pos, target)
+    zs, cls = found
+    can = H.support_for(pos, zs, cls)
+    assert can is not None
+    eq = [(row & EXT_MASK, (row >> 160) & 1) for row in can]
+    sol = T.rref(eq, n=160)
+    assert sol is not None
+    pred = sol[1] & PRED_MASK
+    assert fixed_predecessor_possible(can, pred)
+    return pred, zs, cls
+
+
+def support_desc(can, pred):
     eqs = []
     toggles = [0] * len(RIGHT)
     rhsbits = 0
@@ -48,7 +73,7 @@ def support_desc(can):
         for q, ext in enumerate(REXT):
             if (row >> ext) & 1:
                 rm |= 1 << q
-        rhs = (row >> 160) & 1
+        rhs = ((row >> 160) & 1) ^ ((row & pred).bit_count() & 1)
         eqs.append(lm)
         if rhs:
             rhsbits |= 1 << e
@@ -77,14 +102,18 @@ def support_mask(desc):
     return out
 
 
-def phase_desc(pos, zs):
+def phase_desc(pos, zs, pred):
     c, lin, polar, _rank, _pr = X.full_corrected_phase(pos, D.carries(zs))
 
-    # q(left,0) without its global constant. Every left-left quadratic
-    # monomial is represented as an AND of two Walsh coordinate masks.
+    # Specialize the complete 160-variable quadratic phase at the fixed
+    # predecessor. Quadratic beta-beta coefficients are unchanged; each beta
+    # linear coefficient gains B(pred,e), and the global constant becomes q(pred,0).
+    const = X.q_eval(c, lin, polar, pred)
+
     lfreq = 0
     for q, ext in enumerate(LEXT):
-        if (lin >> ext) & 1:
+        bit = ((lin >> ext) & 1) ^ ((polar[ext] & pred).bit_count() & 1)
+        if bit:
             lfreq |= 1 << q
     base = S.WALSH[lfreq]
     for a in range(len(LEXT)):
@@ -104,7 +133,8 @@ def phase_desc(pos, zs):
 
     rlin = 0
     for j, er in enumerate(REXT):
-        if (lin >> er) & 1:
+        bit = ((lin >> er) & 1) ^ ((polar[er] & pred).bit_count() & 1)
+        if bit:
             rlin |= 1 << j
     rpolar = []
     for j, er in enumerate(REXT):
@@ -115,8 +145,7 @@ def phase_desc(pos, zs):
         assert not ((m >> j) & 1)
         rpolar.append(m)
 
-    # Mutable tail: current right-only sign and current left linear frequency.
-    return [base, tuple(cross), rlin, tuple(rpolar), c & 1, 0]
+    return [base, tuple(cross), rlin, tuple(rpolar), const & 1, 0]
 
 
 def phase_flip(desc, j, old_y):
@@ -136,7 +165,6 @@ def phase_bits(desc):
 
 
 def add_signed_mod3(one, two, positive, negative):
-    # Ternary vector in two disjoint bitplanes: one=value1, two=value2.
     used = positive | negative
     zero = (~(one | two)) & ALL
     n1 = (one & ~used) | (zero & positive) | (two & negative)
@@ -157,51 +185,52 @@ def insert_mod3(basis, one, two):
         p = (one | two).bit_length() - 1
         cur = basis[p]
         if cur is None:
-            # Normalize pivot to1. Multiplication by2 swaps 1<->2.
             if (two >> p) & 1:
                 one, two = two, one
             basis[p] = (one, two)
             return True
-        b1, b2 = cur  # stored with pivot value1
+        b1, b2 = cur
         if (one >> p) & 1:
-            # one - basis = one + 2*basis
             one, two = add_mod3(one, two, b2, b1)
         else:
-            # 2 + 1 = 0 at the pivot.
             one, two = add_mod3(one, two, b1, b2)
     return False
 
 
 def prepare(pos):
     _e0, e1, _half = H.classify_patterns()
+    pred, witness_zs, witness_cls = witness_predecessor(pos, e1)
     support_groups = {}
     phases = []
     raw = fixed_unreachable = 0
     byk = Counter()
+    witness_active = False
     for k in range(4):
         for zs, cls in e1[k]:
             can = H.support_for(pos, zs, cls)
             if can is None:
                 continue
             raw += 1
-            if not fixed_predecessor_possible(can):
+            if not fixed_predecessor_possible(can, pred):
                 fixed_unreachable += 1
                 continue
             byk[k] += 1
+            if zs == witness_zs and cls == witness_cls:
+                witness_active = True
             gi = support_groups.get(can)
             if gi is None:
                 gi = len(support_groups)
                 support_groups[can] = gi
-            pd = phase_desc(pos, zs)
+            pd = phase_desc(pos, zs, pred)
             phases.append((gi, pd))
 
+    assert witness_active
     groups = [None] * len(support_groups)
     for can, gi in support_groups.items():
-        groups[gi] = [support_desc(can), []]
+        groups[gi] = [support_desc(can, pred), []]
     for gi, pd in phases:
         groups[gi][1].append(pd)
 
-    # Put the most row-relevant right coordinates first in the Gray traversal.
     score = [0] * len(RIGHT)
     for desc, _arr in groups:
         for j, t in enumerate(desc[1]):
@@ -212,18 +241,21 @@ def prepare(pos):
             if f:
                 score[j] += 2
     order = sorted(range(len(RIGHT)), key=lambda j: (-score[j], j))
-    print('position', pos, 'reachable_global_e1', raw,
-          'fixed_predecessor_zero_unreachable', fixed_unreachable,
-          'active_fixed_zero', len(phases), 'support_groups', len(groups),
+    print('position', pos,
+          'predecessor_witness_hex', hex(pred),
+          'witness_sector', (witness_zs, witness_cls),
+          'reachable_global_e1', raw,
+          'fixed_predecessor_unreachable', fixed_unreachable,
+          'active_fixed_predecessor', len(phases),
+          'support_groups', len(groups),
           'active_by_zero_count', dict(sorted(byk.items())), flush=True)
     print('position', pos, 'right_bit_order', [RIGHT[j] for j in order],
           'right_bit_scores', [score[j] for j in order], flush=True)
-    return groups, phases, order
+    return pred, groups, phases, order
 
 
 def aggregate_column(groups):
     one = two = 0
-    # Support is shared within a group; phases are not.
     for sdesc, arr in groups:
         sm = support_mask(sdesc)
         if not sm:
@@ -237,7 +269,7 @@ def aggregate_column(groups):
 
 
 def run_position(pos):
-    groups, phases, order = prepare(pos)
+    pred, groups, phases, order = prepare(pos)
     basis = [None] * NROW
     rank = 0
     y = 0
@@ -264,7 +296,9 @@ def run_position(pos):
             rank += 1
             if rank == NROW:
                 print('position', pos, 'FULL_RANK_F3', rank,
-                      'columns_examined', i + 1, 'last_right_beta', y, flush=True)
+                      'columns_examined', i + 1,
+                      'predecessor_witness_hex', hex(pred),
+                      'last_right_beta', y, flush=True)
                 return rank, i + 1
         if (i + 1) in milestones:
             print('position', pos, 'columns_examined', i + 1, 'rank_F3', rank, flush=True)
@@ -281,11 +315,11 @@ def main():
     print('results', results)
     if all(r == NROW for r, _n in results.values()):
         print('PASS PROBE V26_Q138_BC_DIRECT_E1_AGGREGATE_MOD3_FULL_RANK')
-        print('theorem=fixed predecessor x=0 complete direct-e1 integer aggregate has rank_F3=2048 for both B and C, hence exact rank_Q=2048')
+        print('theorem=at deterministic reachable predecessor witnesses, complete direct-e1 integer aggregates have rank_F3=2048 for both B and C, hence exact rank_Q=2048')
         print('consequence=no uniform subgeneric rational-rank bound exists for the complete direct-e1 aggregate itself')
     else:
         print('PASS PROBE V26_Q138_BC_DIRECT_E1_AGGREGATE_MOD3_LOWER_BOUND')
-        print('scope=deterministic exact GF(3) lower bound on sampled-column submatrices; non-full result is not an upper bound')
+        print('scope=deterministic exact GF(3) lower bound on sampled-column submatrices at reachable predecessor witnesses; non-full result is not an upper bound')
 
 
 if __name__ == '__main__':
