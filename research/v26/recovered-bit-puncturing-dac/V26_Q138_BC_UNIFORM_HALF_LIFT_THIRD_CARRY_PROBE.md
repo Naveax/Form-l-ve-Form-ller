@@ -35,6 +35,20 @@ Hence the induced carry truth vector is exactly
 
 The verifier evaluates this efficiently by accumulating the XOR of previously active basis vectors, so each active term contributes one big-integer `AND` rather than an explicit quadratic loop.
 
+## Pairwise-intersection hull precheck
+
+Before enumerating any PR104 state, the verifier builds the GF(2) span
+
+`H = span { v_i AND v_j : i<j }`.
+
+Every carry produced by the explicit parity lift lies in `H`, regardless of which coordinate masks are actually realized by the half-state family. Therefore
+
+`dim carry_span <= dim H`.
+
+If `dim H < 2048`, that value is already a valid uniform upper bound for the half-only induced carry and the expensive relaxed-state scan is unnecessary.
+
+If `dim H = 2048`, the hull precheck gives no subgeneric gain, but this does not imply that the realized carry family spans 2048. In that case the verifier proceeds to the exact relaxed PR104 state family below.
+
 ## Uniform state family
 
 The state reduction is copied from the admitted PR104 construction:
