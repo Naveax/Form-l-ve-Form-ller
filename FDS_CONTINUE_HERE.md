@@ -7,7 +7,7 @@
 **d>=2:** `W_repr(d)<=508.4979393937686...d-333.8951148057971...`.  
 **ALPHA_PASS=0**.
 
-All admitted reductions are exact (`epsilon=0`). Code is only calculator/falsifier/certificate machinery.
+All admitted reductions are exact (`epsilon=0`). Code is calculator/falsifier/certificate machinery; finite computational claims require clean-checkout execution.
 
 ## Center authority — unchanged
 
@@ -15,7 +15,7 @@ All admitted reductions are exact (`epsilon=0`). Code is only calculator/falsifi
 
 `rank_center(S1)<=3829*2^29`.
 
-The D16 per-high-prefix decomposition remains
+D16 per-high-prefix decomposition:
 
 `26712n common +1960n private0 +1960n private1`, `n=2^22`.
 
@@ -25,193 +25,134 @@ No arithmetic-work reduction is admitted.
 
 Natural four-leaf scale: `2^426`.
 
-A `[3,219,565,2048,...]`
+A `[1,41,564,1761,2048,...]`
 
 B `[36,812,2048,2048,...]`
 
 C `[84,972,2048,2048,...]`
 
-D `[3,207,364,2048,...]`
+D `[1,20,173,838,1958,2048,...]`
 
-The A/D index2 values are complete uniform dyadic-lift envelopes for the current lift choice. B/C index2 and all later2048 entries remain unresolved universal caps. The complete direct-e1 aggregate full-rank witnesses below are route obstructions, not improved `b2/c2` bounds.
+The older A/D chains `[3,219,565,...]` and `[3,207,364,...]` remain valid historical bounds but are superseded.
 
-## Exact signed e1 lift
+## A/D universal carry-offset exact-signed lifts
 
-Clean run `32189863746` is authority.
+Clean run `34109587357` is current low-layer authority.
 
-Previous valid accounting used unsigned e1 support indicators in the second lift, leaving inherited index2 correction. That is superseded.
+The always-present carry equations give a selected-side affine map `beta_keep=Lx+Hz+c`. Sectors sharing a carry offset share one selected matrix row/column, so the exact signed aggregate over one offset class has rational rank at most1. Using the exact signed aggregate is a valid binary lift and removes that valuation family from later residuals.
 
-For every reachable e1 sector:
+Certified prefixes:
 
-- A: all271 supports have a unique right21 assignment; at most181 sectors are simultaneously active;
-- D: all274 supports have a unique left11 assignment; at most171 sectors are simultaneously active.
+- A `[1,41,564,2048,2048]`;
+- D `[1,20,173,838,1958]`.
 
-Therefore every exact signed e1 matrix has rank<=1. Since `-1 == +1 (mod2)`, the exact signed matrix itself is a valid second lift at the same rank cost as the unsigned support indicator.
-
-Together with the already-admitted exact e0 `-q` lift:
-
-`rank(K_A,1)<=181+38=219`,
-
-`rank(K_D,1)<=171+36=207`,
-
-and **all inherited e0/e1 index2 correction is zero**.
+For A e2, the clean global raw-e2 interpolated singleton-template cover564 improves the generic carry-offset count763.
 
 Authority:
 
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_AD_EXACT_SIGNED_E1_LIFT_RANK565_364.md`
-- `scripts/verify_v26_q138_predecessor_leaf_ad_exact_signed_e1_lift_rank565_364.py`
-- clean `32189863746`.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_AD_UNIVERSAL_CARRY_OFFSET_EXACT_SIGNED_LIFTS.md`;
+- `scripts/verify_v26_q138_ad_universal_carry_offset_exact_signed_lifts.py`;
+- clean run `34109587357`.
 
-## A/D index2 = direct e2 only
+## A direct e3 — now subgeneric
 
-Forced-core theorem remains:
+Clean run `34109587313` proves the direct valuation-e3 A signed aggregate satisfies
 
-- A global direct maximizers lie in A6; outside A6 direct rank<=189;
-- D global direct maximizers lie in D5; outside D5 direct rank<=364.
+`rank_Q(K_A,3^direct)<=1761<2048`.
 
-Corrected interpolated affine-coset covers:
+The four enlarged regime row-set sizes are `1168,1206,1206,151`. Their joint relative predecessor-shift map has GF(2) rank4, so only16 relative shift states occur. Exact union sizes are `{1742:8,1761:8}`. Omitted external consistency can only shrink support.
 
-- A6 direct cover565, clean `32160207690`;
-- D5 direct cover179, clean `32160149637`.
+Because A e0/e1/e2 are exact-signed lifts with zero inherited correction, this is a valid index3 lift. Canonical A is therefore
 
-Therefore
+`[1,41,564,1761,2048,...]`.
 
-`a2<=565`,
+This closes the A-side subgeneric condition for the current k9 search, but does **not** pass k9 by itself. The theorem notes that under the equal-rank idealization the remaining B/C index2 condition would still require roughly `b2=c2<=31`.
 
-`d2<=364`.
+Authority:
 
-This supersedes D1022, D851/D535, A746/D535, and the old362/171 inherited-correction accounting.
+- `research/v26/recovered-bit-puncturing-dac/V26_Q138_PREDECESSOR_LEAF_A_DIRECT_E3_ROW_UNION1761.md`;
+- `scripts/verify_v26_q138_predecessor_leaf_a_direct_e3_row_union1761.py`;
+- clean run `34109587313`.
 
-## Dynamic product gate — passes through k7
+## Certified dynamic product gate — k8 pass, currently non-sharp
 
-Using the current envelopes, exact four-leaf convolution gives
+Clean run `34109587357` used A index3=2048 and certified:
 
-- k0 `27,216`
-- k1 `4,793,472`
-- k2 `286,719,696`
-- k3 `6,955,731,216`
-- k4 `79,723,547,424`
-- k5 `535,328,405,616`
-- k6 `2,657,484,843,456`
-- k7 `10,194,932,924,416`
+- k0 `3,024`
+- k1 `287,664`
+- k2 `12,038,592`
+- k3 `292,005,472`
+- k4 `4,586,351,280`
+- k5 `49,716,263,696`
+- k6 `387,621,863,744`
+- k7 `2,230,860,887,520`
+- k8 `9,647,756,379,008`
 
 Hence
 
-`sum(k0..k7)=13,474,716,992,512 <2^44=17,592,186,044,416`.
+`sum(k0..k8)=12,320,846,080,000 <2^44=17,592,186,044,416`,
 
-Exact margin:
+with certified margin
 
-`4,117,469,051,904`.
+`5,271,339,964,416`.
 
-This is a genuine dynamic k0..k7 pass. It is **not** a frozen remaining-budget theorem. The complete k>=8 tail is still open, and deeper residue improvements must be dynamically recounted because they also lower earlier convolution layers.
+This remains a valid exact k8 pass, but it is now non-sharp because A e3 was subsequently improved to1761. Do not promote sharpened convolution numbers until a clean-checkout assertion records them. K9 and the complete tail remain open.
 
-## B/C status — complete direct-e1 low-rank route closed
+## B/C status — three simple low-rank routes closed
 
-B/C second lifts remain authority:
+B/C lower authority remains
 
 B `[36,812,...]`, C `[84,972,...]`.
 
-No improved complete `b2/c2` envelope is admitted yet.
+No improved complete `b2/c2` envelope is admitted.
 
-The complete direct-e1 aggregate itself is now known to be full rational rank at deterministic reachable witnesses:
+### Individual sector rank
 
-- **B:** clean run `34107536167` reaches `rank_F3=2048` at the8195th examined column, hence `rank_Q=2048`.
-- **C exact-zero core:** clean run `34107785435` proves a12-dimensional right-beta subcube `U` (4096 columns) is exactly zero over Z using primes `3,5,7,11,13` and coefficient bound `|c|<=3043`, since `15015>3043`.
-- **C escape:** clean run `34109587430` finds `U` plus the first eight adjacent tested cosets mod3-zero, then `U+e31` drives the accumulated rank to `rank_F3=2048` after2056 columns in that coset. Hence the complete C aggregate has `rank_Q=2048`.
+Clean run `34109587338` proves an individually reachable direct-e1 signed sector has exact rational rank2048 for both B and C. Sectorwise low-rank subadditivity is therefore blocked.
 
-Consequences:
+### Identical-support whole-sector cancellation
 
-- no uniform subgeneric rational-rank upper bound exists for the complete direct-e1 B aggregate;
-- no uniform subgeneric rational-rank upper bound exists for the complete direct-e1 C aggregate;
-- the exact-zero C subcube is real cancellation geometry, but it does **not** lower the complete aggregate rank by itself.
+Clean run `34109587395` groups reachable e1 sectors by identical affine support and compares their restricted complete Gauss phases.
 
-Authority:
+- B:10695 reachable sectors,8952 support groups,1743 duplicate groups; no exact opposite-zero class.
+- C:10598 reachable sectors,8876 support groups,1722 duplicate groups; no exact opposite-zero class.
 
-- B clean `34107536167`;
-- C exact-zero clean `34107785435`;
-- C escape clean `34109587430`;
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_C_DIRECT_E1_ZERO_SUBCUBE_ESCAPE_COSETS.md`.
+Every duplicate-sector phase class combines to a nonzero odd coefficient. Thus exact whole-sector cancellation among identical affine supports is absent. Partial cancellation across different supports is not covered.
+
+### Complete direct-e1 aggregate rank
+
+- **B:** clean `34107536167` reaches `rank_F3=2048`, hence `rank_Q=2048`.
+- **C exact-zero core:** clean `34107785435` proves a12-dimensional 4096-column subcube `U` is exactly zero over Z via primes `3,5,7,11,13` and `|c|<=3043`.
+- **C escape:** clean `34109587430` finds the first eight adjacent tested cosets still mod3-zero, then `U+e31` drives accumulated rank to `rank_F3=2048`; hence complete C `rank_Q=2048`.
+
+A preceding sampled-column run `34109587325` saw C rank0 and B rank1536 on the first4096 sampled columns; those were lower bounds only and are superseded by the later complete-rank witnesses.
+
+Therefore useful B/C progress must exploit a more structured higher-residue lift or genuinely nonlocal/product cancellation. Uniform subgeneric direct-e1 sector rank, identical-support cancellation, and complete-direct-e1 aggregate rank are all dead ends.
 
 ## Complete-leaf exact contraction program
 
-The complete S1 `2048 x 2048` leaf-minor route remains a numerical falsifier target, but execution design is not solved by RAM caps alone.
+The full S1 `2048 x 2048` leaf-minor route remains a numerical falsifier target.
 
-Clean path-only run `34109391867` shows that output/column slicing plus an opt_einsum memory ceiling can fit explicit intermediate-size caps for all A-D, but the selected paths use high multi-operand arity and astronomical estimated total work. For C, a representative `2^28`/`2^30`-element plan uses `b_open=2`,512 blocks, max step arity11, with estimated total work about `7.85e45`.
+Clean path-only run `34109391867` shows output/column slicing plus opt_einsum memory ceilings can fit explicit intermediate-size caps, but selected paths use high multi-operand arity and astronomical total work. Representative C `2^28/2^30` plans use `b_open=2`,512 blocks, max step arity11, estimated total work about `7.85e45`.
 
-Therefore run `34109391867` is **not** a numerical contraction and proves no leaf rank.
+The older `leaf-s1-memory-bounded-paths` workflow also only applies memory limits to the full-output network. It performs no internal index slicing and does not require binary contraction, so it does not solve this execution problem.
 
-Immediate execution-design step:
+Immediate execution-design target:
 
-1. preserve the existing exact factor network and output block slicing;
-2. slice selected **internal** binary indices exactly, multiplying work by all `2^k` slice assignments;
-3. require every contraction path step to be binary/pairwise (`max_step_arity=2`);
+1. preserve the admitted exact factor network and output block slicing;
+2. slice selected **internal** binary indices exactly and account for every `2^k` assignment;
+3. require `max_step_arity=2` throughout;
 4. report peak intermediate and total work including output blocks and internal slices;
-5. only after a practical binary plan exists, execute modulo251 with reduction after every pairwise step and explicit int64 accumulation safety.
+5. only if the plan is practical, execute modulo251 with reduction after every pairwise contraction and explicit int64 accumulation safety/chunking.
 
-Authority for the current path-only NO-GO:
-
-- clean `34109391867`;
-- `research/v26/recovered-bit-puncturing-dac/V26_Q138_LEAF_S1_SLICED_COLUMN_BLOCK_PATH_PROBE.md`;
-- `scripts/probe_v26_q138_leaf_s1_sliced_column_blocks.py`.
-
-## Immediate higher-residue program
-
-The exact signed e1 lift gives the structural simplification we wanted: valuation e0/e1 sectors are exhausted exactly and create no later correction.
-
-The next question is whether valuation e2 can be treated the same way.
-
-### Active raw-e2 global-cover probe
-
-Do **not** reuse A6/D5 outside-core bounds for this step. Those are mod2 odd-residue statements. An exact signed e2 lift contains raw sectors that may cancel mod2 but still exist over the integers.
-
-Current active probe therefore:
-
-1. enumerate every reachable raw e2 sector from the exact direct-e2 generator;
-2. verify cut intersection0 / singleton side sector-by-sector;
-3. deduplicate condition-map classes;
-4. construct a **global** affine singleton-template cover, not merely A6/D5-local;
-5. if cover rank is subgeneric, use the exact signed raw-e2 aggregate as `K2`, which is congruent mod2 to the direct e2 residue and would leave zero inherited e2 correction at index3.
-
-This may trade a somewhat larger index2 lift for a much cleaner higher tail; compare dynamically rather than with a frozen k8 budget.
-
-### A/D arbitrary zero-set internal-rank law
-
-A separate theorem is in validation:
-
-For the93 j1..j3 carry sites and specials `{(1,0),(3,0)}`:
-
-- zero sets containing no special have internal rank127/nullity1;
-- zero sets containing a special have rank128.
-
-The proof uses the unique top kernel and monotonic row addition, so it covers all `2^93` zero sets without enumeration.
-
-Consequent next-family counts before external pruning:
-
-`C(91,3)=121,485` three-nonspecial nullity-one candidates,
-
-`C(93,4)-C(91,4)=247,065` four-zero-with-special full-rank candidates,
-
-combined `368,550` per position.
-
-Do not naively RREF all368,550 if the structural law is clean; external consistency/template geometry is the real remaining cost.
-
-## Closed/revoked routes
-
-- frozen-tail k7 “necessity” interpretations are revoked;
-- pointwise `2^128` affine-coset enumeration is invalid as a practical exact route;
-- A/D active-group whole-quotient/FWHT bounds are too coarse;
-- D global affine label-hyperplane route is falsified;
-- existing-map-only A6 cover1977 is superseded by interpolated565;
-- old one-QR support216/rank12 state remains revoked;
-- uniform subgeneric complete direct-e1 aggregate rank bounds are falsified for both B and C;
-- high-arity memory-capped opt_einsum paths are not an admitted practical contraction route.
+A dedicated branch `probe-leaf-s1-internal-sliced-binary-path` has been prepared for this path-only diagnostic; it is distinct from the older memory-limit workflows. No numerical leaf-rank claim follows until an actual exact contraction is executed.
 
 ## Sharp blockers
 
-1. Global exact-signed raw-e2 template persistence.
-2. Higher direct e3/e4 external consistency and singleton-map compression using the internal-rank law, not naive internal solves.
-3. Complete dyadic k>=8 tail or a structurally stronger complete-leaf/product cancellation theorem that survives the B/C full-rank aggregate obstructions.
-4. A practical exact binary internal-slicing contraction plan for the full S1 minor.
-5. Only after complete leaf control, fuse with central `common+private+private` geometry and count arithmetic work.
+1. **B/C index2/index3:** find a representation surviving the exact direct-e1 rank/cancellation obstructions above.
+2. **Dynamic k9 and complete tail:** first certify the sharpened convolution with A e3=1761, then attack the remaining B/C-heavy k9 term.
+3. **Product-level cancellation:** any useful complete-leaf theorem must exploit structure beyond separate B/C direct-e1 aggregate ranks.
+4. **Practical exact contraction:** obtain a binary internal-slicing plan with controlled peak memory and total work.
+5. **Arithmetic work:** only after complete leaf control, fuse with central `common+private+private` geometry and count scalar work.
 
 Still not admitted: lower complete `W_repr(1)`, arithmetic-work improvement, ranking/search gain, `alpha<1`, or full-round relevance.
