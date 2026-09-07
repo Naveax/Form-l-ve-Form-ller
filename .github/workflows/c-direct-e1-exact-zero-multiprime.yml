@@ -1,0 +1,19 @@
+name: C direct e1 exact-zero multiprime probe
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: c-direct-e1-exact-zero-multiprime-${{ github.ref }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_c_direct_e1_exact_zero_multiprime.py
