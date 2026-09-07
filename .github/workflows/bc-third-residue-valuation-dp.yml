@@ -1,0 +1,23 @@
+name: B-C third residue valuation DP
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_third_residue_valuation_dp.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_THIRD_RESIDUE_VALUATION_DP_PROBE.md'
+      - '.github/workflows/bc-third-residue-valuation-dp.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: bc-third-residue-valuation-dp-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/probe_v26_q138_bc_third_residue_valuation_dp.py
