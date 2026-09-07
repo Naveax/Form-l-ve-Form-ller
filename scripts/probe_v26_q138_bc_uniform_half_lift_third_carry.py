@@ -58,6 +58,24 @@ def xor_lift_carry(coeff, items, expected_vec):
     return carry
 
 
+def pairwise_intersection_basis(items):
+    # Every carry produced by the explicit parity lift is an XOR of pairwise
+    # basis intersections.  Therefore this hull is a uniform upper span before
+    # any restriction to the PR104 state family is used.
+    H = {}
+    saturation_pair = None
+    tested = 0
+    for i in range(len(items)):
+        vi = items[i]
+        for j in range(i + 1, len(items)):
+            tested += 1
+            S.insert(H, vi & items[j])
+            if len(H) == 2048:
+                saturation_pair = (i, j)
+                return H, tested, saturation_pair
+    return H, tested, saturation_pair
+
+
 def half_state_setup(pos):
     _e0, _e1, half = U.H.classify_patterns()
     assert len(half) == 4
@@ -132,6 +150,22 @@ def analyze(pos):
     expected_e0_dim = 272 if pos == 'B' else 388
     assert len(e0) == expected_e0_dim
     items, piv = coordinate_solver(e0)
+
+    pair_hull, pair_tests, pair_sat = pairwise_intersection_basis(items)
+    print(
+        'position', pos,
+        'explicit_e0_basis_dim', len(items),
+        'pairwise_intersections_tested', pair_tests,
+        'pairwise_intersection_hull_GF2_dim<=', len(pair_hull),
+        'pairwise_hull_saturation_pair', pair_sat,
+        flush=True,
+    )
+
+    if len(pair_hull) < 2048:
+        # This bound is stronger than scanning the relaxed state family: every
+        # possible carry from this explicit parity-lift gauge lies in the hull,
+        # regardless of which coordinate masks are actually realized.
+        return ('pairwise_hull_upper', len(pair_hull))
 
     carry_basis = {}
     support_cache = {}
@@ -242,7 +276,7 @@ def main():
     out = {pos: analyze(pos) for pos in 'BC'}
     print('result', out)
     print('PASS V26_Q138_BC_UNIFORM_HALF_LIFT_THIRD_CARRY')
-    print('scope=induced third-bit carry of the explicit grouped-e0-basis integer lift for the PR104 relaxed half correction only')
+    print('scope=induced third-bit carry of the explicit grouped-e0-basis integer lift for the PR104 relaxed half correction only; pairwise-intersection hull checked before full state enumeration')
     print('not_included=grouped-e0 own lift carry, support-only lift carry, cross-carries between components, complete B2/C2, complete leaf, W_repr, alpha, arithmetic-work, ranking/search, full-round')
 
 
