@@ -1,0 +1,28 @@
+name: B-C uniform half-lift third carry
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_uniform_half_lift_third_carry.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_UNIFORM_HALF_LIFT_THIRD_CARRY_PROBE.md'
+      - '.github/workflows/bc-uniform-half-lift-third-carry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bc-uniform-half-lift-third-carry-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Probe uniform half-lift induced third carry
+        run: python scripts/probe_v26_q138_bc_uniform_half_lift_third_carry.py
