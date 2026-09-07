@@ -2,7 +2,9 @@
 
 ## Status
 
-Arithmetic certificate for the currently admitted predecessor-leaf envelopes. This file does not claim a new B/C higher-residue bound, a complete dyadic-tail theorem, a lower `W_repr(1)`, arithmetic-work improvement, `ALPHA_PASS=1`, or full-round relevance.
+Clean arithmetic authority for the currently admitted predecessor-leaf envelopes. This file does not claim a new B/C higher-residue bound, a complete dyadic-tail theorem, a lower `W_repr(1)`, arithmetic-work improvement, `ALPHA_PASS=1`, or full-round relevance.
+
+Clean-checkout authority run `34114525610` executed `scripts/verify_v26_q138_sharpened_k9_convolution.py` successfully and reproduced every exact integer assertion below.
 
 The admitted leaf envelopes used here are
 
@@ -44,7 +46,7 @@ the exact remaining margin after k8 is
 
 `5,940,246,658,144`.
 
-Therefore k8 still passes, with a larger margin than the preceding non-sharp certificate.
+Therefore k8 passes with a larger margin than the preceding non-sharp certificate.
 
 However
 
@@ -70,13 +72,14 @@ It also reduces the k9 layer by
 
 but that is nowhere near enough to make k9 pass while B/C index2 remain at2048.
 
-## Authority semantics
+## Authority
 
-`scripts/verify_v26_q138_sharpened_k9_convolution.py` contains exact integer assertions for every k0..k9 coefficient, both cumulative totals, the k8 margin, and the k9 deficit.
+- `scripts/verify_v26_q138_sharpened_k9_convolution.py`;
+- `.github/workflows/sharpened-k9-convolution.yml`;
+- clean run `34114525610`;
+- merge PR #92.
 
-Promotion to canonical arithmetic authority requires a clean-checkout successful CI execution of that verifier. Until such a run exists, the numbers in this file are a proposed certificate, not frozen authority.
-
-Even after a clean run, the interpretation remains limited: the sharpened arithmetic proves only that the current admitted envelopes pass through k8 and fail at k9. It does not prove that the true k9 rank is large, because sharper B/C higher-residue representations or nonlocal/product cancellation may still reduce it.
+The interpretation remains limited: the sharpened arithmetic proves only that the current admitted envelopes pass through k8 and fail at k9. It does not prove that the true k9 rank is large, because sharper B/C higher-residue representations or nonlocal/product cancellation may still reduce it.
 
 ## Next mathematical target
 
