@@ -74,7 +74,7 @@ def analyze(pos):
     pair_hull, pair_tests, pair_sat = H.pairwise_intersection_basis(e0_items)
     print(
         'position', pos,
-        **hstats,
+        'half_basis_stats', hstats,
         'canonical_grouped_e0_basis_dim', len(e0_items),
         'canonical_exact_ZZ_quotient', qr,
         'canonical_second_lift_total', expected_total,
@@ -170,7 +170,7 @@ def analyze(pos):
                 anf_coefficients += 1
 
             # Deterministic degree<=4 regressions away from the interpolation
-            # sample set.  These checks fail if the coordinate/carry degree
+            # sample set. These checks fail if the coordinate/carry degree
             # argument or affine-fiber origin handling is wrong.
             probes = []
             full = (1 << len(dirs)) - 1
