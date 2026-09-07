@@ -90,10 +90,10 @@ def analyze(pos):
         qbase.append(q)
         crosses.append(cross)
 
-    # Build the exact linear image seen by the common support syndrome and the
-    # four left phase frequencies when both the half-active predecessor and
-    # the 21 right-beta variables vary. Scalar phase bits are intentionally
-    # omitted here and will be relaxed to all 16 patterns after enumeration.
+    # Exact linear image seen by support syndrome plus four left phase
+    # frequencies when both the half-active predecessor and the 21 right-beta
+    # variables vary. Scalar phase bits are deliberately omitted and relaxed
+    # to all 16 patterns only after this exact linear image is enumerated.
     generators = []
 
     for d in null:
@@ -132,22 +132,19 @@ def analyze(pos):
     feasible_states = 0
     generated_pairs = 0
 
+    # Enumerate the image subspace in Gray-code order. Every actual
+    # predecessor/right pair maps into this image. For each linear state all
+    # four scalar phase bits are allowed, a safe superset of the true
+    # quadratic scalar image.
     state = 0
-    # Enumerate the image subspace itself. Every actual predecessor/right pair
-    # maps into this image. For each state we allow all four scalar phase bits,
-    # which is a safe superset of the exact quadratic scalar image.
-    for code in range(1 << image_rank):
-        if code == 0:
-            state = 0
-        else:
-            j = (code & -code).bit_length() - 1
-            prev = code ^ (code & -code)
-            # Reconstructing by XOR over selected image-basis vectors keeps the
-            # implementation simple; image_rank is capped at 20.
-            state = 0
-            for k, b in enumerate(image_basis):
-                if (code >> k) & 1:
-                    state ^= b
+    prev_gray = 0
+    for step in range(1 << image_rank):
+        gray = step ^ (step >> 1)
+        if step:
+            changed = gray ^ prev_gray
+            j = changed.bit_length() - 1
+            state ^= image_basis[j]
+        prev_gray = gray
 
         synd = rhsbits ^ (state & syndrome_mask)
         if synd not in support_cache:
