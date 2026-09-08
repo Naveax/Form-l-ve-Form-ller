@@ -1,0 +1,31 @@
+name: C916 quadratic function-space separator
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_quadratic_function_space_separator.py'
+      - 'scripts/probe_v26_q138_c916_hybrid_aggregate_scalar_separator.py'
+      - 'scripts/probe_v26_q138_c916_aggregate_e0_scalar_separator.py'
+      - 'scripts/probe_v26_q138_bc_e0_aggregate_signature_separator.py'
+      - '.github/workflows/c916-quadratic-function-space-separator.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-quadratic-function-space-separator-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe C916 quadratic function-space separator
+        run: python scripts/probe_v26_q138_c916_quadratic_function_space_separator.py
