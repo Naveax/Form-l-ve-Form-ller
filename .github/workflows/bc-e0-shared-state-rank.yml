@@ -1,0 +1,30 @@
+name: B-C e0 shared-state rank diagnostic
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_bc_e0_shared_state_rank.py'
+      - 'scripts/probe_v26_q138_bc_half_uniform_linear_state_relaxed_scalar.py'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_sign_span348_432.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_BC_E0_SHARED_STATE_RANK.md'
+      - '.github/workflows/bc-e0-shared-state-rank.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bc-e0-shared-state-rank-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - run: python scripts/probe_v26_q138_bc_e0_shared_state_rank.py
