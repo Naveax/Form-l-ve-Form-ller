@@ -1,0 +1,35 @@
+name: C916 width64 quadratic edge image
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_width64_quadratic_edge_origin_image.py'
+      - 'scripts/probe_v26_q138_c916_width64_quadratic_edge_all_fiber_image.py'
+      - 'scripts/verify_v26_q138_c916_width64_quadratic_edge_all_fiber_image_result.py'
+      - 'scripts/probe_v26_q138_c916_quadratic_function_space_separator.py'
+      - 'scripts/probe_v26_q138_c916_quadratic_residual_separator.py'
+      - 'scripts/probe_v26_q138_c916_worst_cut_origin_fiber_residual_image.py'
+      - 'scripts/probe_v26_q138_c916_full_tree_evaluation_width.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_WIDTH64_QUADRATIC_EDGE_ALL_FIBER_IMAGE.md'
+      - '.github/workflows/c916-width64-quadratic-edge-origin-image.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-width64-quadratic-edge-image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Verify C916 width64 quadratic edge all-fiber image
+        run: python scripts/verify_v26_q138_c916_width64_quadratic_edge_all_fiber_image_result.py
