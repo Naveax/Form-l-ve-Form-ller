@@ -51,7 +51,7 @@ def intersection_basis(a_rows, b_rows):
             xa = xor_selected(A0, am)
             xb = xor_selected(B0, bm)
             assert xa == xb and xa != 0
-            A.L.insert(out, xa)
+            A.S.insert(out, xa)
 
     expected = len(A0) + len(B0) - len(A.L.basis(rows))
     assert len(out) == expected, (len(out), expected)
@@ -191,8 +191,6 @@ def analyze():
         st.update({'lo': child['lo'], 'hi': child['hi']})
         root_children.append(st)
 
-    # Exact 125/125 cut in the same multiplicity/function order, even though it
-    # is not necessarily an edge of the recursively chosen tree.
     half_idx = frozenset(order[:n//2])
     balanced = analyze_edge(half_idx, all_indices, oracles, affine_basis)
 
