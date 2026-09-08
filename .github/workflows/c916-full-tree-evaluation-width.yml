@@ -1,0 +1,30 @@
+name: C916 full-tree evaluation width
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_full_tree_evaluation_width.py'
+      - 'scripts/probe_v26_q138_c916_quadratic_residual_separator.py'
+      - 'scripts/probe_v26_q138_c916_worst_cut_all_fiber_residual_upper_bound.py'
+      - '.github/workflows/c916-full-tree-evaluation-width.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-full-tree-evaluation-width-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe C916 full-tree evaluation width
+        run: python scripts/probe_v26_q138_c916_full_tree_evaluation_width.py
