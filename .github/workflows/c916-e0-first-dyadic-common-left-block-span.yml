@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_e0_first_dyadic_common_left_block_span.py'
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_common_left_block_span_result.py'
       - 'scripts/probe_v26_q138_c916_e0_first_dyadic_pair_residual.py'
       - 'scripts/probe_v26_q138_c916_e0_same_support_integer_coefficients.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_E0_FIRST_DYADIC_COMMON_LEFT_BLOCK_SPAN.md'
       - '.github/workflows/c916-e0-first-dyadic-common-left-block-span.yml'
   workflow_dispatch:
 
@@ -17,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  probe:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     steps:
@@ -26,5 +28,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe common-left block span
-        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_common_left_block_span.py
+      - name: Verify common-left block span
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_common_left_block_span_result.py
