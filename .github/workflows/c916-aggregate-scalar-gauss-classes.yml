@@ -1,0 +1,29 @@
+name: C916 aggregate scalar Gauss classes
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_aggregate_scalar_gauss_classes.py'
+      - 'scripts/probe_v26_q138_c916_aggregate_e0_scalar_separator.py'
+      - '.github/workflows/c916-aggregate-scalar-gauss-classes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-aggregate-scalar-gauss-classes-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe C916 aggregate scalar Gauss classes
+        run: python scripts/probe_v26_q138_c916_aggregate_scalar_gauss_classes.py
