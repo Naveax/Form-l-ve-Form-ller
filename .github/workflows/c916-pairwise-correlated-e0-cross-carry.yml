@@ -4,9 +4,11 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_pairwise_correlated_e0_cross_carry.py'
+      - 'scripts/verify_v26_q138_c916_pairwise_correlated_e0_cross_carry_result.py'
       - 'scripts/probe_v26_q138_c916_reachable_e0_own_third_carry.py'
       - 'scripts/probe_v26_q138_bc_e0_reachable_joint_sign_span.py'
       - 'scripts/probe_v26_q138_bc_e0_aggregate_signature_separator.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_PAIRWISE_CORRELATED_E0_CROSS_CARRY.md'
       - '.github/workflows/c916-pairwise-correlated-e0-cross-carry.yml'
   workflow_dispatch:
 
@@ -18,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  probe:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -27,5 +29,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe C916 pairwise correlated e0 cross carry
-        run: python scripts/probe_v26_q138_c916_pairwise_correlated_e0_cross_carry.py
+      - name: Verify C916 pairwise correlated e0 cross carry 1848
+        run: python scripts/verify_v26_q138_c916_pairwise_correlated_e0_cross_carry_result.py
