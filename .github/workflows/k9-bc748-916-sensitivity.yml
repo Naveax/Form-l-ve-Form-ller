@@ -1,0 +1,27 @@
+name: K9 B748-C916 sensitivity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/verify_v26_q138_k9_bc748_916_sensitivity.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_K9_BC748_916_SENSITIVITY.md'
+      - '.github/workflows/k9-bc748-916-sensitivity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: k9-bc748-916-sensitivity-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify B748/C916 k9 sensitivity
+        run: python scripts/verify_v26_q138_k9_bc748_916_sensitivity.py
