@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -17,6 +18,26 @@ def flatten_matrix(rows, width):
         assert row >> width == 0
         z |= row << (i * width)
     return z
+
+
+def unflatten_matrix(z, nrows, width):
+    mask = (1 << width) - 1
+    return [(z >> (i * width)) & mask for i in range(nrows)]
+
+
+def xor_subset(items, mask):
+    z = 0
+    x = mask
+    while x:
+        b = x & -x
+        z ^= items[b.bit_length() - 1]
+        x ^= b
+    return z
+
+
+def ceil_log2(n):
+    assert n > 0
+    return (n - 1).bit_length()
 
 
 def analyze():
@@ -48,7 +69,8 @@ def analyze():
             assert W.functional_on_kernel(full_polars[i], k, kernel) == 0
 
     common_row_span_rank = W.A.L.rank(origin_rows + effect_rows)
-    translation_matrix_control_rank = W.A.L.rank(effect_matrices)
+    control_basis = W.A.L.basis(effect_matrices)
+    translation_matrix_control_rank = len(control_basis)
     varying_affine_label_rank = DOMAIN_BITS - kdim
     assert varying_affine_label_rank == 56
     assert translation_matrix_control_rank <= varying_affine_label_rank
@@ -71,6 +93,42 @@ def analyze():
         assert uniform_image_upper == 16
         assert shared_evaluation_upper_bits == 60
 
+    # The translation map V/K -> Mat(13,K*) is linear. Its image has the
+    # exact dimension reported above, so each matrix in the image is attained
+    # by exactly 2^(56-d) affine labels. When d is small, enumerate that image
+    # exactly and recover the rank distribution over every one of the 2^56
+    # affine fibers, not a sample.
+    control_rank_hist = None
+    all_fiber_rank_hist = None
+    exact_shared_evaluation_states = None
+    exact_shared_evaluation_ceiling_bits = None
+    fiber_labels_per_control_state = None
+    control_states = None
+
+    if translation_matrix_control_rank <= 20:
+        d = translation_matrix_control_rank
+        control_states = 1 << d
+        fiber_labels_per_control_state = 1 << (varying_affine_label_rank - d)
+        hist = Counter()
+        image_size_sum = 0
+        for m in range(control_states):
+            flat = xor_subset(control_basis, m)
+            erows = unflatten_matrix(flat, 13, kdim)
+            rows = [origin_rows[i] ^ erows[i] for i in range(13)]
+            r = W.A.L.rank(rows)
+            hist[r] += 1
+            image_size_sum += 1 << r
+        control_rank_hist = dict(sorted(hist.items()))
+        all_fiber_rank_hist = {
+            r: count * fiber_labels_per_control_state
+            for r, count in sorted(hist.items())
+        }
+        assert sum(all_fiber_rank_hist.values()) == 1 << varying_affine_label_rank
+        exact_shared_evaluation_states = image_size_sum * fiber_labels_per_control_state
+        exact_shared_evaluation_ceiling_bits = ceil_log2(exact_shared_evaluation_states)
+        assert exact_shared_evaluation_states <= shared_evaluation_upper_states
+        assert max(hist) == exact_max_rank
+
     out = {
         'position': 'C',
         'edge': {'lo': 110, 'hi': 166, 'size': 56},
@@ -84,21 +142,27 @@ def analyze():
         'translation_effect_vectors': len(effect_rows),
         'common_kernel_dual_row_span_rank': common_row_span_rank,
         'translation_matrix_control_rank': translation_matrix_control_rank,
+        'translation_matrix_control_states': control_states,
+        'fiber_labels_per_control_state': fiber_labels_per_control_state,
+        'control_state_residual_rank_histogram': control_rank_hist,
+        'all_affine_fiber_residual_rank_histogram': all_fiber_rank_hist,
         'all_fiber_residual_rank_upper_bound': uniform_rank_upper,
         'all_fiber_residual_image_upper_bound': uniform_image_upper,
         'max_fiber_residual_rank_exact': exact_max_rank,
         'max_fiber_residual_image_exact': exact_max_image,
         'shared_evaluation_state_upper_bits': shared_evaluation_upper_bits,
         'shared_evaluation_state_upper_bound': shared_evaluation_upper_states,
+        'exact_shared_evaluation_state_count': exact_shared_evaluation_states,
+        'exact_shared_evaluation_state_ceiling_bits': exact_shared_evaluation_ceiling_bits,
     }
     print('result', json.dumps(out, sort_keys=True), flush=True)
 
     if exact_max_rank == 4:
         print('PASS V26_Q138_C916_WORST_CUT_ALL_FIBER_RESIDUAL_UPPER_BOUND')
         print('verdict=ALL_FIBER_RESIDUAL_RANK_AT_MOST_4_AND_MAX_EXACTLY_4')
-        print('scope=exact all-affine-fiber residual evaluation-rank upper bound for the unique width-70 C edge')
-        print('method=all origin residual rows and all 149 coordinate translation-effect rows lie in one 4-dimensional subspace of K*')
-        print('important=the unique width-70 edge has at most 2^56 affine labels times 2^4 residual values = 2^60 shared evaluation tuples')
+        print('scope=exact all-affine-fiber residual evaluation geometry for the unique width-70 C edge')
+        print('method=all origin residual rows and all 149 coordinate translation-effect rows lie in one 4-dimensional subspace of K*; enumerate the exact 4-dimensional translation-matrix image')
+        print('important=the unique width-70 edge has at most 2^56 affine labels times 2^4 residual values; when the 4D control image is enumerated, the exact realizable shared-evaluation tuple count is also reported')
     else:
         print('PASS V26_Q138_C916_WORST_CUT_ALL_FIBER_RESIDUAL_DIAGNOSTIC')
         print('verdict=COMMON_ROW_SPAN_EXCEEDS_ORIGIN_RANK')
