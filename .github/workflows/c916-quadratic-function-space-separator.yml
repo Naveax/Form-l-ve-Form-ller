@@ -4,9 +4,11 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_quadratic_function_space_separator.py'
+      - 'scripts/verify_v26_q138_c916_quadratic_function_space_separator_result.py'
       - 'scripts/probe_v26_q138_c916_hybrid_aggregate_scalar_separator.py'
       - 'scripts/probe_v26_q138_c916_aggregate_e0_scalar_separator.py'
       - 'scripts/probe_v26_q138_bc_e0_aggregate_signature_separator.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_QUADRATIC_FUNCTION_SPACE_SEPARATOR.md'
       - '.github/workflows/c916-quadratic-function-space-separator.yml'
   workflow_dispatch:
 
@@ -18,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  probe:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
@@ -27,5 +29,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe C916 quadratic function-space separator
-        run: python scripts/probe_v26_q138_c916_quadratic_function_space_separator.py
+      - name: Verify C916 quadratic function-space separator
+        run: python scripts/verify_v26_q138_c916_quadratic_function_space_separator_result.py
