@@ -1,9 +1,10 @@
-name: C916 worst-cut origin-fiber residual image
+name: C916 worst-cut residual fiber geometry
 
 on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_worst_cut_origin_fiber_residual_image.py'
+      - 'scripts/probe_v26_q138_c916_worst_cut_fiber_residual_rank_witness.py'
       - 'scripts/probe_v26_q138_c916_quadratic_residual_separator.py'
       - 'scripts/probe_v26_q138_c916_aggregate_scalar_gauss_classes.py'
       - '.github/workflows/c916-worst-cut-origin-fiber-residual-image.yml'
@@ -13,7 +14,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: c916-worst-cut-origin-fiber-residual-image-${{ github.ref }}
+  group: c916-worst-cut-residual-fiber-geometry-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -26,5 +27,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe worst-cut origin-fiber residual image
-        run: python scripts/probe_v26_q138_c916_worst_cut_origin_fiber_residual_image.py
+      - name: Probe worst-cut fiber residual rank witness
+        run: python scripts/probe_v26_q138_c916_worst_cut_fiber_residual_rank_witness.py
