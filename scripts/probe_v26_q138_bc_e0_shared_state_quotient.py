@@ -12,6 +12,18 @@ import probe_v26_q138_bc_half_uniform_linear_state_relaxed_scalar as U
 PRED_BITS = 128
 RIGHT_BITS = len(U.F.RIGHT)
 DOMAIN_BITS = PRED_BITS + RIGHT_BITS
+EXPECTED = {
+    'B': {
+        'support_joint_rank': 149,
+        'frequency_joint_rank': 149,
+        'frequency_kernel_dim': 0,
+    },
+    'C': {
+        'support_joint_rank': 149,
+        'frequency_joint_rank': 147,
+        'frequency_kernel_dim': 2,
+    },
+}
 
 
 def rank(rows):
@@ -152,8 +164,26 @@ def analyze(pos):
     assert combined_stats['joint_rank'] == DOMAIN_BITS, (pos, combined_stats)
     assert combined_stats['domain_kernel_dim'] == 0
 
-    # Exact conditional dimensions.  For linear maps A=support and B=frequency,
-    # rank(A,B)-rank(A) = rank(B restricted to ker A).  This is the number of
+    # Freeze the exact quotient diagnostic observed by run 34192321862.
+    # In particular, support syndromes alone are injective for both B and C.
+    # Therefore no lossless linear quotient of the shared state is obtained by
+    # conditioning on support and enumerating only a frequency residual.
+    expected = EXPECTED[pos]
+    assert support_stats['joint_rank'] == expected['support_joint_rank'], (
+        pos,
+        support_stats,
+    )
+    assert freq_stats['joint_rank'] == expected['frequency_joint_rank'], (
+        pos,
+        freq_stats,
+    )
+    assert freq_stats['domain_kernel_dim'] == expected['frequency_kernel_dim'], (
+        pos,
+        freq_stats,
+    )
+
+    # Exact conditional dimensions. For linear maps A=support and B=frequency,
+    # rank(A,B)-rank(A) = rank(B restricted to ker A). This is the number of
     # frequency degrees of freedom that remain after the support signature is
     # fixed; the symmetric expression has the analogous meaning.
     freq_given_support = DOMAIN_BITS - support_stats['joint_rank']
@@ -162,6 +192,15 @@ def analyze(pos):
         support_stats['joint_rank']
         + freq_stats['joint_rank']
         - combined_stats['joint_rank']
+    )
+
+    assert freq_given_support == 0
+    assert support_given_freq == expected['frequency_kernel_dim']
+
+    verdict = (
+        'NO_LINEAR_QUOTIENT_GAIN_SUPPORT_CHANNEL_ALREADY_INJECTIVE'
+        if pos == 'B'
+        else 'NO_SUPPORT_CONDITIONING_GAIN_FREQUENCY_ONLY_HAS_TWO_BIT_KERNEL'
     )
 
     out = {
@@ -178,6 +217,7 @@ def analyze(pos):
         'frequency_residual_dim_given_support': freq_given_support,
         'support_residual_dim_given_frequency': support_given_freq,
         'shared_measurement_redundancy_dim': shared_measurement_redundancy,
+        'verdict': verdict,
         'checkpoints': checkpoints,
     }
     print(json.dumps(out, sort_keys=True), flush=True)
@@ -190,6 +230,9 @@ def main():
     print('PASS V26_Q138_BC_E0_SHARED_STATE_QUOTIENT')
     print(
         'scope=exact GF2 quotient diagnostic splitting the PR110 shared e0 linear state into support-syndrome and left-frequency channels'
+    )
+    print(
+        'decision=support syndromes alone have rank149 for both B and C, so support-conditioned linear residual enumeration gives no state-dimension reduction; next route is local-group or algebraic-degree factorization'
     )
     print(
         'not_included=quadratic scalar phases, grouped-e0 carry evaluation, e0-half cross-carry, complete B2/C2, W_repr, alpha, arithmetic-work, ranking/search, full-round'
