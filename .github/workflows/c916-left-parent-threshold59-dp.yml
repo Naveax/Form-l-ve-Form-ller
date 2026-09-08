@@ -1,0 +1,30 @@
+name: C916 left parent threshold59 DP
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_left_parent_threshold59_dp.py'
+      - 'scripts/probe_v26_q138_c916_evaluation_aware_recursive_tree_refined.py'
+      - 'scripts/probe_v26_q138_c916_quadratic_function_space_separator.py'
+      - '.github/workflows/c916-left-parent-threshold59-dp.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-left-parent-threshold59-dp-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe exact threshold59 left-parent feasibility
+        run: python scripts/probe_v26_q138_c916_left_parent_threshold59_dp.py
