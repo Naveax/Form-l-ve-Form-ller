@@ -1,0 +1,33 @@
+name: C916 e0 complete first dyadic fiber geometry
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_complete_first_dyadic_fiber_geometry.py'
+      - 'scripts/verify_v26_q138_c916_e0_complete_first_dyadic_fiber_geometry_result.py'
+      - 'scripts/probe_v26_q138_c916_e0_complete_first_dyadic_group_residual.py'
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_pair_residual.py'
+      - 'scripts/probe_v26_q138_c916_e0_same_support_integer_coefficients.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_E0_COMPLETE_FIRST_DYADIC_FIBER_GEOMETRY.md'
+      - '.github/workflows/c916-e0-complete-first-dyadic-fiber-geometry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-e0-complete-first-dyadic-fiber-geometry-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Verify complete first dyadic fiber geometry
+        run: python scripts/verify_v26_q138_c916_e0_complete_first_dyadic_fiber_geometry_result.py
