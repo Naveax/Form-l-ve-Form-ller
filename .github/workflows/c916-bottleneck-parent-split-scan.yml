@@ -1,0 +1,30 @@
+name: C916 bottleneck parent split scan
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_bottleneck_parent_split_scan.py'
+      - 'scripts/probe_v26_q138_c916_evaluation_aware_recursive_tree_refined.py'
+      - 'scripts/probe_v26_q138_c916_full_tree_evaluation_width.py'
+      - '.github/workflows/c916-bottleneck-parent-split-scan.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-bottleneck-parent-split-scan-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Scan all bottleneck-parent splits
+        run: python scripts/probe_v26_q138_c916_bottleneck_parent_split_scan.py
