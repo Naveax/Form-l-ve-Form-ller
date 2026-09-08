@@ -32,7 +32,6 @@ The former unique 65-bit descendant edge `[166,199)` is absent from the substitu
 Exactly two edges attain 60 bits.
 
 ### `[110,166)`
-
 - size: `56`
 - function lambda: `70`
 - generic safe-evaluation bits: `60`
@@ -42,7 +41,6 @@ Exactly two edges attain 60 bits.
 - merged exact subset override is active
 
 ### `[55,110)`
-
 - size: `55`
 - function lambda: `64`
 - generic safe-evaluation bits: `64`
@@ -59,9 +57,7 @@ Local surgery succeeded. The historical 65-bit obstruction was a tree-shape arti
 
 The resulting complete displayed tree has safe evaluation width 60 while its degree-2 function-space width remains 70. This is not an unrestricted branchwidth optimum. It is, however, the strongest complete 498-edge C916 evaluation-state certificate currently in this chain.
 
-Decision:
-
-`FREEZE_COMPLETE_DISPLAYED_TREE_WIDTH60`
+Decision: `FREEZE_COMPLETE_DISPLAYED_TREE_WIDTH60`
 
 Further tree surgery below 60 would have to address the two independent 60-bit edges `[110,166)` and `[55,110)` rather than the right-side parent that has now been reduced to 55.
 

@@ -105,26 +105,16 @@ def analyze():
     outside_width = max(e['safe_evaluation_bits'] for e in outside_edges)
     function_width = max(e['function_lambda'] for e in edges)
     safe_hist = Counter(e['safe_evaluation_bits'] for e in edges)
-    worst = sorted(
-        edges,
-        key=lambda e: (-e['safe_evaluation_bits'], -e['function_lambda'], -e['size'], e['lo']),
-    )[:24]
+    worst = sorted(edges, key=lambda e: (-e['safe_evaluation_bits'], -e['function_lambda'], -e['size'], e['lo']))[:24]
 
     out = {
-        'position': 'C',
-        'support_groups': n,
-        'tree_edges_analyzed': len(edges),
-        'baseline_function_tree_width': fcert['width'],
-        'baseline_function_tree_depth': fcert['max_depth'],
-        'local_minimax_width': local_optimum,
-        'local_root_split': local['root_split'],
-        'local_witness_edge_count': len(local_edges),
-        'outside_safe_width': outside_width,
-        'substituted_full_tree_safe_width': safe_width,
-        'substituted_full_tree_function_width': function_width,
+        'position': 'C', 'support_groups': n, 'tree_edges_analyzed': len(edges),
+        'baseline_function_tree_width': fcert['width'], 'baseline_function_tree_depth': fcert['max_depth'],
+        'local_minimax_width': local_optimum, 'local_root_split': local['root_split'],
+        'local_witness_edge_count': len(local_edges), 'outside_safe_width': outside_width,
+        'substituted_full_tree_safe_width': safe_width, 'substituted_full_tree_function_width': function_width,
         'substituted_full_tree_depth': max_depth,
-        'safe_evaluation_bit_histogram': dict(sorted(safe_hist.items())),
-        'worst_edges': worst,
+        'safe_evaluation_bit_histogram': dict(sorted(safe_hist.items())), 'worst_edges': worst,
         'oracle_cache_entries': len(oracle.cache),
     }
     print('result', json.dumps(out, sort_keys=True), flush=True)
