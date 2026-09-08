@@ -1,0 +1,32 @@
+name: C916 coarse carry obstruction
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_coarse_carry_obstruction.py'
+      - 'scripts/probe_v26_q138_bc_e0_reachable_half_relaxed_zz.py'
+      - 'scripts/probe_v26_q138_bc_uniform_half_lift_third_carry.py'
+      - 'scripts/verify_v26_q138_predecessor_leaf_bc_second_residue_support_frequency_nesting.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_COARSE_CARRY_OBSTRUCTION.md'
+      - '.github/workflows/c916-coarse-carry-obstruction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-coarse-carry-obstruction-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe C916 coarse carry obstruction
+        run: python scripts/probe_v26_q138_c916_coarse_carry_obstruction.py
