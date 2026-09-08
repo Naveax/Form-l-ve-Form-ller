@@ -18,7 +18,6 @@ def embed_domain(x):
     """Embed 128 predecessor + 21 right-beta bits into the 160 external bits."""
     out = x & ((1 << PRED_BITS) - 1)
     y = x >> PRED_BITS
-    j = 0
     while y:
         b = y & -y
         j = b.bit_length() - 1
@@ -58,7 +57,7 @@ def scalar_phase(pos, zs):
         'polar': polar,
         'restricted_polar_rows': restrict_polar_rows(polar),
         'internal_rank': rank,
-        'polar_radical_dim': pr,
+        'internal_pr': pr,
     }
 
 
@@ -141,8 +140,7 @@ def refine_group(info, phases):
         )
         assert all(scalar_delta(phase, h) == 0 for phase in phases)
 
-    refined_basis = annihilator_basis(kernel)
-    refined_basis = P.basis(refined_basis)
+    refined_basis = P.basis(annihilator_basis(kernel))
     refined_rank = len(refined_basis)
     assert refined_rank == DOMAIN_BITS - len(kernel)
     assert P.rank(refined_basis + original) == refined_rank
@@ -198,7 +196,7 @@ def analyze(pos):
         for zs, _cls in sectors:
             phase = scalar_phase(pos, zs)
             phase_rank_hist[phase['internal_rank']] += 1
-            phase_pr_hist[phase['polar_radical_dim']] += 1
+            phase_pr_hist[phase['internal_pr']] += 1
             phases.append(phase)
         groups.append(refine_group(info, phases))
 
@@ -262,7 +260,7 @@ def analyze(pos):
         'support_groups': len(groups),
         'global_refined_rank': global_rank,
         'phase_internal_rank_histogram': dict(sorted(phase_rank_hist.items())),
-        'phase_internal_polar_radical_dim_histogram': dict(sorted(phase_pr_hist.items())),
+        'phase_internal_pr_histogram': dict(sorted(phase_pr_hist.items())),
         'original_local_rank_histogram': dict(sorted(original_hist.items())),
         'radical_refined_rank_histogram': dict(sorted(radical_hist.items())),
         'refined_local_rank_histogram': dict(sorted(refined_hist.items())),
@@ -303,6 +301,7 @@ def main():
     print('PASS V26_Q138_BC_E0_QUADRATIC_SCALAR_REFINEMENT')
     print('scope=exact minimal sectorwise linear refinements of PR112 local signatures sufficient to determine each grouped-e0 sector scalar quadratic phase on the 149-bit shared domain')
     print('claim=refinement is minimal among linear signatures extending each local support/frequency signature and determining all sector scalar bits individually; separator values are exact for the displayed refined linear routes')
+    print('decision=NO_SECTORWISE_LINEAR_SCALAR_SEPARATOR_GAIN')
     print('relaxation=sectorwise scalar determination may be stronger than necessary for the aggregate grouped factor because cross-sector cancellation is not exploited')
     print('not_included=recursive refined tree, grouped-e0 carry values, e0-half cross-carry, complete B2/C2, W_repr, alpha, arithmetic-work, ranking/search, full-round')
 
