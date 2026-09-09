@@ -1,0 +1,26 @@
+name: C916 e0 first-dyadic phase overlap forest
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_phase_overlap_forest.py'
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_phase_overlap_forest_result.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_E0_FIRST_DYADIC_PHASE_OVERLAP_FOREST.md'
+      - '.github/workflows/c916-e0-first-dyadic-phase-overlap-forest.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Verify first-dyadic phase overlap forest result
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_phase_overlap_forest_result.py
