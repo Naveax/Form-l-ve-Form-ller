@@ -1,0 +1,32 @@
+name: C916 e0 transformed first-dyadic pair compatibility
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_transformed_pair_compatibility.py'
+      - 'scripts/probe_v26_q138_c916_e0_local_gauss_transform_quotient_geometry.py'
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_pair_residual.py'
+      - 'scripts/probe_v26_q138_c916_e0_same_support_integer_coefficients.py'
+      - 'scripts/probe_v26_q138_c916_e0_complete_first_dyadic_fiber_geometry.py'
+      - '.github/workflows/c916-e0-first-dyadic-transformed-pair-compatibility.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: c916-e0-first-dyadic-transformed-pair-compatibility-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe transformed first-dyadic pair compatibility
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_transformed_pair_compatibility.py
