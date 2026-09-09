@@ -13,7 +13,7 @@ import probe_v26_q138_c916_e0_first_dyadic_gauss_radical_control as R
 
 POS = 'C'
 DOMAIN_BITS = 149
-SHARED_EXT = tuple(R.SHARED_EXT)
+SHARED_EXT = tuple(range(128)) + tuple(C.P.U.F.REXT)
 assert len(SHARED_EXT) == DOMAIN_BITS
 
 
