@@ -4,10 +4,12 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_e0_gauss_radical_augmented_separator.py'
+      - 'scripts/verify_v26_q138_c916_e0_gauss_radical_augmented_separator_result.py'
       - 'scripts/probe_v26_q138_c916_e0_first_dyadic_gauss_radical_control.py'
       - 'scripts/probe_v26_q138_bc_e0_aggregate_signature_separator.py'
       - 'scripts/probe_v26_q138_c916_e0_complete_first_dyadic_fiber_geometry.py'
       - 'scripts/probe_v26_q138_c916_e0_same_support_integer_coefficients.py'
+      - 'research/v26/recovered-bit-puncturing-dac/V26_Q138_C916_E0_GAUSS_RADICAL_AUGMENTED_SEPARATOR.md'
       - '.github/workflows/c916-e0-gauss-radical-augmented-separator.yml'
   workflow_dispatch:
 
@@ -19,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  probe:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 240
     steps:
@@ -28,5 +30,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe gauge-aware Gauss radical augmented separator
-        run: python scripts/probe_v26_q138_c916_e0_gauss_radical_augmented_separator.py
+      - name: Verify gauge-aware Gauss radical augmented separator
+        run: python scripts/verify_v26_q138_c916_e0_gauss_radical_augmented_separator_result.py
