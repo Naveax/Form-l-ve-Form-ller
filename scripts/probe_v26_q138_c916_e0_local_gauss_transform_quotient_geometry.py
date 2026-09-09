@@ -140,13 +140,47 @@ def partial_gauss_eliminate(c0, lin0, rows0, p, k):
         (rows[i] & smask, (lin >> i) & 1)
         for i in sorted(active_local)
     ]
+    control_rank = D.gf2_rank(m for m, _rhs in constraints)
     sol = C.P.U.T.rref(constraints, n=p)
-    assert sol is not None
-    control_rank, support_x0, support_basis = sol
-    support_basis = tuple(support_basis)
 
     shared_rows = tuple(rows[i] & smask for i in range(p))
     shared_lin = lin & smask
+    base = {
+        'hyperbolic_pairs': pairs,
+        'radical_dimension': len(active_local),
+        'support_control_rank': control_rank,
+        'support_control_rows': tuple(m for m, _rhs in constraints),
+        'support_control_rhs': tuple(rhs for _m, rhs in constraints),
+        'shared_survivor_constant': c,
+        'shared_survivor_linear': shared_lin,
+        'shared_survivor_rows': shared_rows,
+    }
+
+    # A radical equation 0=1 means the local Gauss transform vanishes for
+    # every shared input. This is a legitimate exact outcome, not a failure of
+    # the elimination. The old radical-control authority only measures the
+    # coefficient span, so keep that rank even when the affine system is
+    # inconsistent.
+    if sol is None:
+        return {
+            **base,
+            'identically_zero': True,
+            'support_x0': None,
+            'support_basis': (),
+            'support_free_dimension': None,
+            'log2_abs_nonzero_gauss': None,
+            'normalized_sign_constant': None,
+            'normalized_sign_linear': None,
+            'normalized_sign_rows': (),
+            'normalized_sign_polar_rank': None,
+            'normalized_sign_is_affine': None,
+            'normalized_sign_is_constant': None,
+        }
+
+    rref_rank, support_x0, support_basis = sol
+    assert rref_rank == control_rank
+    support_basis = tuple(support_basis)
+
     sc, slin, srows = restrict_form(
         c, shared_lin, shared_rows, support_x0, support_basis
     )
@@ -154,18 +188,12 @@ def partial_gauss_eliminate(c0, lin0, rows0, p, k):
     assert sign_polar_rank % 2 == 0
 
     return {
-        'hyperbolic_pairs': pairs,
-        'radical_dimension': len(active_local),
-        'support_control_rank': control_rank,
-        'support_control_rows': tuple(m for m, _rhs in constraints),
-        'support_control_rhs': tuple(rhs for _m, rhs in constraints),
+        **base,
+        'identically_zero': False,
         'support_x0': support_x0,
         'support_basis': support_basis,
         'support_free_dimension': len(support_basis),
         'log2_abs_nonzero_gauss': pairs + len(active_local),
-        'shared_survivor_constant': c,
-        'shared_survivor_linear': shared_lin,
-        'shared_survivor_rows': shared_rows,
         'normalized_sign_constant': sc,
         'normalized_sign_linear': slin,
         'normalized_sign_rows': srows,
@@ -192,11 +220,13 @@ def partial_gauss_regression_split(p, k):
     assert n == 4
     pair_bits = n * (n - 1) // 2
     tested = 0
+    zero_transforms = 0
     for pm in range(1 << pair_bits):
         rows = rows_from_pair_mask(n, pm)
         for lin in range(1 << n):
             for c in (0, 1):
                 got = partial_gauss_eliminate(c, lin, rows, p, k)
+                zero_transforms += int(got['identically_zero'])
                 constraints = list(zip(
                     got['support_control_rows'],
                     got['support_control_rhs'],
@@ -207,9 +237,12 @@ def partial_gauss_regression_split(p, k):
                         x = s | (local << p)
                         brute += -1 if q_eval(c, lin, rows, x) else 1
 
-                    feasible = all(
-                        ((m & s).bit_count() & 1) == rhs
-                        for m, rhs in constraints
+                    feasible = (
+                        not got['identically_zero']
+                        and all(
+                            ((m & s).bit_count() & 1) == rhs
+                            for m, rhs in constraints
+                        )
                     )
                     if feasible:
                         sign = q_eval(
@@ -227,15 +260,15 @@ def partial_gauss_regression_split(p, k):
                         p, k, pm, lin, c, s, got, brute, predicted
                     )
                 tested += 1
-    return tested
+    return tested, zero_transforms
 
 
 def analyze():
-    regression_forms = (
-        partial_gauss_regression_split(2, 2)
-        + partial_gauss_regression_split(1, 3)
-    )
+    reg22, zero22 = partial_gauss_regression_split(2, 2)
+    reg13, zero13 = partial_gauss_regression_split(1, 3)
+    regression_forms = reg22 + reg13
     assert regression_forms == 4096
+    assert (zero22, zero13) == (336, 644)
 
     e0, _e1, _half = C.P.U.H.classify_patterns()
     grouped = defaultdict(list)
@@ -259,9 +292,11 @@ def analyze():
     sign_free_dim_hist = Counter()
     sign_affine = 0
     sign_constant = 0
+    identically_zero = 0
 
     by_mult_sign_rank = defaultdict(Counter)
     by_mult_amplitude = defaultdict(Counter)
+    by_mult_zero = Counter()
     compact = []
 
     for gid, (can, sectors) in enumerate(sorted(grouped.items(), key=lambda kv: kv[0])):
@@ -293,26 +328,31 @@ def analyze():
             old = R.sector_radical_controls(sig, d, kernel)
             assert got['radical_dimension'] == old['local_fiber_radical_dimension']
             assert got['support_control_rank'] == old['shared_projection_radical_control_rank']
-            assert got['support_control_rank'] == got['radical_dimension']
 
             projection_hist[projection_rank] += 1
             local_dim_hist[k] += 1
             local_polar_hist[lrank] += 1
             radical_hist[got['radical_dimension']] += 1
             control_hist[got['support_control_rank']] += 1
-            amplitude_hist[got['log2_abs_nonzero_gauss']] += 1
-            sign_rank_hist[got['normalized_sign_polar_rank']] += 1
-            sign_free_dim_hist[got['support_free_dimension']] += 1
-            sign_affine += int(got['normalized_sign_is_affine'])
-            sign_constant += int(got['normalized_sign_is_constant'])
-            by_mult_sign_rank[m][got['normalized_sign_polar_rank']] += 1
-            by_mult_amplitude[m][got['log2_abs_nonzero_gauss']] += 1
+
+            if got['identically_zero']:
+                identically_zero += 1
+                by_mult_zero[m] += 1
+            else:
+                amplitude_hist[got['log2_abs_nonzero_gauss']] += 1
+                sign_rank_hist[got['normalized_sign_polar_rank']] += 1
+                sign_free_dim_hist[got['support_free_dimension']] += 1
+                sign_affine += int(got['normalized_sign_is_affine'])
+                sign_constant += int(got['normalized_sign_is_constant'])
+                by_mult_sign_rank[m][got['normalized_sign_polar_rank']] += 1
+                by_mult_amplitude[m][got['log2_abs_nonzero_gauss']] += 1
 
             sector_records.append({
                 'local_fiber_dimension': k,
                 'local_polar_rank': lrank,
                 'radical_dimension': got['radical_dimension'],
                 'support_control_rank': got['support_control_rank'],
+                'identically_zero': got['identically_zero'],
                 'support_free_dimension_after_radical_constraints': got['support_free_dimension'],
                 'log2_abs_nonzero_gauss': got['log2_abs_nonzero_gauss'],
                 'normalized_sign_polar_rank': got['normalized_sign_polar_rank'],
@@ -330,7 +370,7 @@ def analyze():
         })
 
     assert dict(sorted(mult_hist.items())) == {1: 103, 2: 57, 4: 90}
-    assert sum(sign_rank_hist.values()) == 577
+    assert sum(sign_rank_hist.values()) + identically_zero == 577
     assert dict(sorted(control_hist.items())) == {
         0: 3, 1: 88, 2: 172, 3: 180, 4: 134,
     }
@@ -338,6 +378,10 @@ def analyze():
     out = {
         'position': POS,
         'small_split_quadratic_forms_exhaustively_checked': regression_forms,
+        'small_split_identically_zero_transforms': {
+            '2_shared_2_local': zero22,
+            '1_shared_3_local': zero13,
+        },
         'raw_e0_sectors': raw,
         'support_groups': len(grouped),
         'support_multiplicity_histogram': dict(sorted(mult_hist.items())),
@@ -346,12 +390,15 @@ def analyze():
         'local_fiber_polar_rank_histogram': dict(sorted(local_polar_hist.items())),
         'local_fiber_radical_dimension_histogram': dict(sorted(radical_hist.items())),
         'support_control_rank_histogram': dict(sorted(control_hist.items())),
+        'identically_zero_gauss_sectors': identically_zero,
+        'nonzero_gauss_sectors': raw - identically_zero,
+        'identically_zero_gauss_by_multiplicity': dict(sorted(by_mult_zero.items())),
         'nonzero_gauss_log2_abs_histogram': dict(sorted(amplitude_hist.items())),
         'support_free_dimension_after_radical_constraints_histogram': dict(sorted(sign_free_dim_hist.items())),
         'normalized_sign_polar_rank_histogram': dict(sorted(sign_rank_hist.items())),
         'normalized_sign_affine_sectors': sign_affine,
         'normalized_sign_constant_sectors': sign_constant,
-        'max_normalized_sign_polar_rank': max(sign_rank_hist),
+        'max_normalized_sign_polar_rank': max(sign_rank_hist) if sign_rank_hist else None,
         'normalized_sign_polar_rank_by_multiplicity': {
             int(m): dict(sorted(h.items()))
             for m, h in sorted(by_mult_sign_rank.items())
@@ -364,8 +411,8 @@ def analyze():
     }
     print('result', json.dumps(out, sort_keys=True), flush=True)
     print('PASS V26_Q138_C916_E0_LOCAL_GAUSS_TRANSFORM_QUOTIENT_GEOMETRY')
-    print('scope=exact symbolic elimination of the 7-9 dimensional local support fiber for every one of the 577 C grouped-e0 sector characters, followed by exact restriction of the nonzero normalized Gauss sign to the radical-compatible shared support quotient')
-    print('important=the reported normalized-sign polar rank is measured on each sector support quotient after radical constraints, so no arbitrary ambient 149-bit quadratic lift or quadratic gauge is used')
+    print('scope=exact symbolic elimination of the 7-9 dimensional local support fiber for every one of the 577 C grouped-e0 sector characters, including identically-zero transforms from inconsistent radical affine constraints; nonzero transforms are then restricted to their radical-compatible shared support quotient')
+    print('important=the reported normalized-sign polar rank is measured only on each nonzero sector support quotient after radical constraints, so no arbitrary ambient 149-bit quadratic lift or quadratic gauge is used')
     print('next=combine the exact per-sector transforms according to the frozen singleton/pair first-dyadic arithmetic and measure pairwise support/amplitude/sign compatibility before separator-state assembly')
     print('ALPHA_PASS=0')
     return out
