@@ -1,0 +1,25 @@
+name: C916 e0 first-dyadic phase-complete width147 three-plane cover
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_phase_complete_width147_three_plane_cover.py'
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_phase_complete_width147_three_plane_cover_result.py'
+      - '.github/workflows/c916-e0-first-dyadic-phase-complete-width147-three-plane-cover.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Verify frozen width147 three-plane-cover obstruction
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_phase_complete_width147_three_plane_cover_result.py
