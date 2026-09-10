@@ -181,8 +181,15 @@ def exact_min_extra_cover(target_mask, candidates, max_depth=3):
         options = maximal_options(rem, gid)
         stats['options_considered'] += len(options)
 
-        max_gain = max(cov.bit_count() for cov, _ in options)
-        if max_gain * depth < rem.bit_count():
+        # Safe cardinality lower bound: use the largest gain of ANY remaining
+        # candidate, not merely candidates covering the selected branching
+        # group. The latter can falsely prune a valid solution whose later
+        # planes cover much larger portions of the remainder.
+        global_max_gain = max(
+            (rec['restricted_mask'] & rem).bit_count()
+            for rec in candidates
+        )
+        if global_max_gain * depth < rem.bit_count():
             stats['cardinality_lower_bound_prunes'] += 1
             return None
 
