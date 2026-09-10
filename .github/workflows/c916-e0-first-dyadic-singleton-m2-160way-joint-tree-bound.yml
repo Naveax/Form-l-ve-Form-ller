@@ -1,0 +1,28 @@
+name: C916 e0 singleton m2 160-way joint tree bound
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_singleton_m2_160way_joint_tree_bound.py'
+      - '.github/workflows/c916-e0-first-dyadic-singleton-m2-160way-joint-tree-bound.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Bound exact combined 160-way singleton plus m2 joint image by tree DP
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_singleton_m2_160way_joint_tree_bound.py
