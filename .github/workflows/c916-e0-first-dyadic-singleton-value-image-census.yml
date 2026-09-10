@@ -1,0 +1,29 @@
+name: C916 e0 singleton first-dyadic residual value-image census
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_singleton_value_image_census.py'
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_singleton_value_image_census_result.py'
+      - 'research/v26_q138_c916_e0_first_dyadic_singleton_value_image_census_2026-09-10.md'
+      - '.github/workflows/c916-e0-first-dyadic-singleton-value-image-census.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Verify frozen exact singleton first-dyadic residual value-image census
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_singleton_value_image_census_result.py
