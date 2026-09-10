@@ -13,7 +13,10 @@ M = K.M
 D = K.PHYS_N
 N = K.GROUPS
 FULL = (1 << N) - 1
+EXPECTED_DIRECTION_COUNT = 3607
+EXPECTED_PAIR_COUNT = EXPECTED_DIRECTION_COUNT * (EXPECTED_DIRECTION_COUNT - 1) // 2
 assert D == 149 and N == 250
+assert EXPECTED_PAIR_COUNT == 6_503_421
 
 
 def digest_direction(direction):
@@ -40,7 +43,7 @@ def build_direction_masks():
         for direction in K.xor_span_nonzero(kbasis):
             coverage_masks[int(direction)] |= 1 << gid
 
-    assert len(coverage_masks) == 3607
+    assert len(coverage_masks) == EXPECTED_DIRECTION_COUNT
     return records, mult_hist, coverage_masks, kernel_dim_hist, rank_hist
 
 
@@ -70,7 +73,7 @@ def synthetic_pair_cover_regression():
 
 def analyze():
     regression = synthetic_pair_cover_regression()
-    records, mult_hist, coverage_masks, kernel_dim_hist, rank_hist = build_direction_masks()
+    _records, mult_hist, coverage_masks, kernel_dim_hist, rank_hist = build_direction_masks()
 
     directions = sorted(
         coverage_masks,
@@ -103,7 +106,8 @@ def analyze():
                 if first_full_cover_pair is None:
                     first_full_cover_pair = (da, db)
 
-    assert pair_count == len(directions) * (len(directions) - 1) // 2
+    assert pair_count == EXPECTED_PAIR_COUNT
+    assert sum(union_hist.values()) == EXPECTED_PAIR_COUNT
 
     if full_cover_count:
         decision = 'GLOBAL_TWO_KERNEL_DIRECTION_COVER_EXISTS'
