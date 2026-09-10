@@ -4,9 +4,11 @@ on:
   pull_request:
     paths:
       - "scripts/probe_v26_q138_c916_e0_first_dyadic_group_output_pair_dependency.py"
+      - "scripts/verify_v26_q138_c916_e0_first_dyadic_group_output_pair_dependency_result.py"
       - "scripts/probe_v26_q138_c916_e0_first_dyadic_even_group_value_image_census.py"
       - "scripts/probe_v26_q138_c916_e0_first_dyadic_singleton_value_image_census.py"
       - "scripts/probe_v26_q138_c916_e0_post_gauss_physical_phase_common.py"
+      - "research/v26_q138_c916_e0_first_dyadic_group_output_pair_dependency_2026-09-10.md"
       - ".github/workflows/c916-e0-first-dyadic-group-output-pair-dependency.yml"
 
 concurrency:
@@ -14,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  probe:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 240
     steps:
@@ -23,5 +25,5 @@ jobs:
         with:
           python-version: "3.11"
       - run: python -m pip install --quiet sympy==1.14.0
-      - name: Probe exact pairwise dependency across all 250 first-dyadic group outputs
-        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_group_output_pair_dependency.py
+      - name: Verify frozen exact pairwise dependency result
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_group_output_pair_dependency_result.py
