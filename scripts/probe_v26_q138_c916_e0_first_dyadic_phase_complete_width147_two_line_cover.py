@@ -52,7 +52,7 @@ def synthetic_pair_cover_regression():
     masks = {
         1: 0b001111,
         2: 0b111100,
-        4: 0b000011,
+        4: 0b000001,
     }
     best = 0
     full_count = 0
