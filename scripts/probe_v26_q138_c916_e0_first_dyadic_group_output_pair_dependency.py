@@ -139,9 +139,12 @@ def term_inner(left, right, cache):
     if key in cache:
         return cache[key]
 
+    ambient = int(left.get('ambient_dimension', PHYS_N))
+    assert ambient == int(right.get('ambient_dimension', PHYS_N))
+
     la = left['anchor']
     ra = right['anchor']
-    _relation, inter = P.support_relation(la, ra, PHYS_N)
+    _relation, inter = P.support_relation(la, ra, ambient)
     if inter is None:
         value = 0
     else:
@@ -208,6 +211,7 @@ def synthetic_regression():
                 'kind': 'synthetic',
                 'coefficient': coefficient,
                 'anchor': anchors[anchor_index],
+                'ambient_dimension': n,
             })
             tid += 1
         groups.append({'group_id': gid, 'terms': tuple(terms)})
