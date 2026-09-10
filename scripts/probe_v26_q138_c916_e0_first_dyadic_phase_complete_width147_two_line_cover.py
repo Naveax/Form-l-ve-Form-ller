@@ -52,16 +52,19 @@ def synthetic_pair_cover_regression():
         4: 0b000011,
     }
     best = 0
-    full_pairs = []
+    full_count = 0
+    first_full = None
     dirs = sorted(masks)
     for i, a in enumerate(dirs):
         for b in dirs[i + 1:]:
             union = masks[a] | masks[b]
             best = max(best, union.bit_count())
             if union == full:
-                full_pairs.append((a, b))
+                full_count += 1
+                if first_full is None:
+                    first_full = (a, b)
     assert best == 6
-    assert full_pairs == [(1, 2)]
+    assert full_count == 1 and first_full == (1, 2)
     return {'directions': 3, 'full_pair_count': 1, 'max_union_coverage': 6}
 
 
@@ -75,7 +78,8 @@ def analyze():
     )
 
     pair_count = 0
-    full_cover_pairs = []
+    full_cover_count = 0
+    first_full_cover_pair = None
     max_union = -1
     max_union_pair = None
     max_union_pair_count = 0
@@ -95,11 +99,13 @@ def analyze():
                 max_union_pair_count += 1
 
             if union_count == N:
-                full_cover_pairs.append((da, db))
+                full_cover_count += 1
+                if first_full_cover_pair is None:
+                    first_full_cover_pair = (da, db)
 
     assert pair_count == len(directions) * (len(directions) - 1) // 2
 
-    if full_cover_pairs:
+    if full_cover_count:
         decision = 'GLOBAL_TWO_KERNEL_DIRECTION_COVER_EXISTS'
         structural_consequence = (
             'width147 admissible cuts of type k(S)=k(S^c)=1 are possible in principle'
@@ -132,11 +138,11 @@ def analyze():
             digest_direction(witness[0]),
             digest_direction(witness[1]),
         ],
-        'global_two_direction_cover_count': len(full_cover_pairs),
+        'global_two_direction_cover_count': full_cover_count,
         'global_two_direction_cover_example_digests': (
-            [] if not full_cover_pairs else [
-                digest_direction(full_cover_pairs[0][0]),
-                digest_direction(full_cover_pairs[0][1]),
+            [] if first_full_cover_pair is None else [
+                digest_direction(first_full_cover_pair[0]),
+                digest_direction(first_full_cover_pair[1]),
             ]
         ),
         'two_direction_union_coverage_histogram': dict(sorted(union_hist.items())),
