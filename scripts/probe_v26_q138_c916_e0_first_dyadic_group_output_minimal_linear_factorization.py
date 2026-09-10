@@ -22,23 +22,44 @@ def parity(x):
 
 
 def canonical_basis(rows, n=PHYS_N):
-    work = sorted({int(x) for x in rows if int(x)}, reverse=True)
-    out = []
-    r = 0
-    for col in range(n - 1, -1, -1):
-        pivot = next((i for i in range(r, len(work)) if (work[i] >> col) & 1), None)
-        if pivot is None:
+    mask = (1 << n) - 1 if n else 0
+    pivots = {}
+    for raw in sorted({int(x) & mask for x in rows if int(x) & mask}, reverse=True):
+        y = raw
+        for p in sorted(pivots, reverse=True):
+            if (y >> p) & 1:
+                y ^= pivots[p]
+        if not y:
             continue
-        work[r], work[pivot] = work[pivot], work[r]
-        pv = work[r]
-        for i in range(len(work)):
-            if i != r and ((work[i] >> col) & 1):
-                work[i] ^= pv
-        out.append(work[r])
-        r += 1
-        if r == len(work):
-            break
-    return tuple(out)
+        p = y.bit_length() - 1
+        for q in list(pivots):
+            if (pivots[q] >> p) & 1:
+                pivots[q] ^= y
+        pivots[p] = y
+    return tuple(pivots[p] for p in sorted(pivots, reverse=True))
+
+
+class IncrementalBasis:
+    def __init__(self):
+        self.pivots = {}
+
+    @property
+    def rank(self):
+        return len(self.pivots)
+
+    def add(self, row):
+        y = int(row)
+        while y:
+            p = y.bit_length() - 1
+            old = self.pivots.get(p)
+            if old is None:
+                self.pivots[p] = y
+                return True
+            y ^= old
+        return False
+
+    def canonical(self, n=PHYS_N):
+        return canonical_basis(self.pivots.values(), n=n)
 
 
 def space_digest(rows):
@@ -48,7 +69,7 @@ def space_digest(rows):
 
 
 def homogeneous_kernel(rows, n):
-    rows = tuple(canonical_basis(rows, n=n))
+    rows = canonical_basis(rows, n=n)
     sol = Q.B.C.P.U.T.rref([(row, 0) for row in rows], n=n)
     assert sol is not None
     rank, x0, kernel = sol
@@ -132,7 +153,7 @@ def make_custom_anchor(constraints, n, c, lin_seed, pair_seed):
     rows = [0] * d
     for i in range(d):
         for j in range(i + 1, d):
-            if ((pair_seed >> ((i * d + j) % 13)) & 1):
+            if (pair_seed >> ((i * d + j) % 13)) & 1:
                 rows[i] |= 1 << j
                 rows[j] |= 1 << i
     return {
@@ -168,7 +189,9 @@ def synthetic_regression():
     tid = 0
     for si, constraints in enumerate(systems):
         for vi, (c, lin, pair_seed) in enumerate(variants):
-            anchor = make_custom_anchor(constraints, n, c, lin, pair_seed ^ (si << 3) ^ vi)
+            anchor = make_custom_anchor(
+                constraints, n, c, lin, pair_seed ^ (si << 3) ^ vi
+            )
             term = {
                 'term_id': tid,
                 'group_id': 0,
@@ -187,12 +210,9 @@ def synthetic_regression():
                 )
                 tested_frequencies += 1
             tested_terms += 1
-    assert tested_terms == len(systems) * len(variants) == 28
-    assert tested_frequencies == tested_terms * (1 << n) == 896
-    return {
-        'terms': tested_terms,
-        'frequencies': tested_frequencies,
-    }
+    assert tested_terms == 28
+    assert tested_frequencies == 896
+    return {'terms': tested_terms, 'frequencies': tested_frequencies}
 
 
 def hashed_affine_point(gid, local_term_index, rec, round_index):
@@ -203,10 +223,7 @@ def hashed_affine_point(gid, local_term_index, rec, round_index):
     ).encode()
     raw = hashlib.shake_256(seed).digest((d + 7) // 8 or 1)
     coeff = int.from_bytes(raw, 'little')
-    if d:
-        coeff &= (1 << d) - 1
-    else:
-        coeff = 0
+    coeff = coeff & ((1 << d) - 1) if d else 0
     return rec['support_x0'] ^ D.P.xor_combine(coeff, basis)
 
 
@@ -215,18 +232,20 @@ def candidate_stream(gid, supports):
         yield 'support_origin', ti, rec['support_x0']
     for ti, rec in enumerate(supports):
         x0 = rec['support_x0']
-        for bi, b in enumerate(rec['support_basis']):
+        for b in rec['support_basis']:
             yield 'support_basis_single', ti, x0 ^ b
     for round_index in range(HASH_ROUNDS_PER_TERM):
         for ti, rec in enumerate(supports):
-            yield 'support_hash', ti, hashed_affine_point(gid, ti, rec, round_index)
+            yield 'support_hash', ti, hashed_affine_point(
+                gid, ti, rec, round_index
+            )
 
 
 def certified_lower_space(gid, supports, upper_basis):
     target_rank = len(upper_basis)
-    lower_basis = ()
+    lower = IncrementalBasis()
     seen = set()
-    unique_points = []
+    rank_witnesses = []
     source_seen = Counter()
     source_unique = Counter()
     source_rank_increase = Counter()
@@ -241,28 +260,31 @@ def certified_lower_space(gid, supports, upper_basis):
             continue
         seen.add(omega)
         candidates += 1
-        owners = [i for i, rec in enumerate(supports) if in_fourier_support(rec, omega)]
+        owners = [
+            i for i, rec in enumerate(supports)
+            if in_fourier_support(rec, omega)
+        ]
         owner_hist[len(owners)] += 1
         if len(owners) != 1:
             continue
         source_unique[source] += 1
-        new_basis = canonical_basis(list(lower_basis) + [omega])
-        if len(new_basis) > len(lower_basis):
+        if lower.add(omega):
             source_rank_increase[source] += 1
-            unique_points.append({
+            rank_witnesses.append({
                 'frequency': int(omega),
                 'owner_term_index': owners[0],
                 'source': source,
             })
-            lower_basis = new_basis
-            if len(lower_basis) == target_rank:
+            if lower.rank == target_rank:
                 break
 
+    lower_basis = lower.canonical()
+    assert len(lower_basis) == lower.rank
     return {
-        'lower_basis': tuple(lower_basis),
-        'lower_rank': len(lower_basis),
+        'lower_basis': lower_basis,
+        'lower_rank': lower.rank,
         'target_rank': target_rank,
-        'candidate_unique_points': tuple(unique_points),
+        'candidate_unique_points': tuple(rank_witnesses),
         'candidates_evaluated': candidates,
         'duplicates_skipped': duplicates,
         'source_seen': dict(sorted(source_seen.items())),
@@ -288,20 +310,18 @@ def build_minimal_spaces():
         assert group['multiplicity'] == refined['multiplicity']
         supports = tuple(term_fourier_support(term) for term in group['terms'])
         upper_basis = canonical_basis(
-            row
-            for rec in supports
-            for row in rec['linear_hull_basis']
+            row for rec in supports for row in rec['linear_hull_basis']
         )
         lower = certified_lower_space(gid, supports, upper_basis)
         lower_basis = lower.pop('lower_basis')
         lower_rank = len(lower_basis)
         upper_rank = len(upper_basis)
         assert lower_rank <= upper_rank <= PHYS_N
+
+        union_rank = len(canonical_basis(list(lower_basis) + list(upper_basis)))
+        assert union_rank == upper_rank, (gid, lower_rank, upper_rank, union_rank)
         exact = lower_rank == upper_rank
-        if exact:
-            assert canonical_basis(lower_basis) == canonical_basis(
-                list(lower_basis) + list(upper_basis)
-            )
+
         records.append({
             'group_id': gid,
             'multiplicity': group['multiplicity'],
@@ -366,23 +386,21 @@ def analyze():
     else:
         decision = f'MINIMAL_LINEAR_FACTORIZATION_BOUNDS_UNRESOLVED_{250 - closed}'
 
-    compact = []
-    for rec in records:
-        compact.append({
-            'group_id': rec['group_id'],
-            'multiplicity': rec['multiplicity'],
-            'physical_term_count': rec['physical_term_count'],
-            'refined_rank': rec['refined_rank'],
-            'lower_rank': rec['lower_rank'],
-            'upper_rank': rec['upper_rank'],
-            'exact': rec['exact'],
-            'minimal_space_digest': rec['minimal_space_digest'],
-            'upper_space_digest': rec['upper_space_digest'],
-            'candidates_evaluated': rec['candidates_evaluated'],
-            'duplicates_skipped': rec['duplicates_skipped'],
-            'source_rank_increase': rec['source_rank_increase'],
-            'certified_basis_witness_count': len(rec['candidate_unique_points']),
-        })
+    compact = [{
+        'group_id': rec['group_id'],
+        'multiplicity': rec['multiplicity'],
+        'physical_term_count': rec['physical_term_count'],
+        'refined_rank': rec['refined_rank'],
+        'lower_rank': rec['lower_rank'],
+        'upper_rank': rec['upper_rank'],
+        'exact': rec['exact'],
+        'minimal_space_digest': rec['minimal_space_digest'],
+        'upper_space_digest': rec['upper_space_digest'],
+        'candidates_evaluated': rec['candidates_evaluated'],
+        'duplicates_skipped': rec['duplicates_skipped'],
+        'source_rank_increase': rec['source_rank_increase'],
+        'certified_basis_witness_count': len(rec['candidate_unique_points']),
+    } for rec in records]
 
     out = {
         'position': POS,
