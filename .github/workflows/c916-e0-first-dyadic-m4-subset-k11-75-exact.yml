@@ -1,0 +1,45 @@
+name: C916 e0 m4 subset K11-75 exact
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_subset_k11_75_exact.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-subset-k11-75-exact.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download frozen PR203 base authority
+        uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          path: authorities/base
+      - name: Download frozen PR201 m4 authority
+        uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          path: authorities/m4
+      - name: Download frozen PR206 subset relation authority
+        uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          path: authorities/subset
+      - name: Count exact K11-75 subset value model
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_subset_k11_75_exact.py
