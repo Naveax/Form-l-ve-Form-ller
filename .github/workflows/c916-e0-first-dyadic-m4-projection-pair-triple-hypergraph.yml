@@ -1,0 +1,24 @@
+name: C916 e0 m4 projection pair-triple hypergraph
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_projection_pair_triple_hypergraph.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-projection-pair-triple-hypergraph.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Count exact m4 projection pair-triple hypergraph
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_projection_pair_triple_hypergraph.py
