@@ -1,0 +1,23 @@
+name: C916 e0 m4-m4 zero-correlation support pilot
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_zero_correlation_support_pilot.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-m4-zero-correlation-support-pilot.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe zero-correlation support-stratified m4-m4 joint images
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_zero_correlation_support_pilot.py
