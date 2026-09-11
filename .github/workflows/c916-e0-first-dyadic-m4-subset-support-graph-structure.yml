@@ -1,0 +1,24 @@
+name: C916 e0 m4 subset support graph structure
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_subset_support_graph_structure.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-subset-support-graph-structure.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Measure m4 subset-support graph structure
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_subset_support_graph_structure.py
