@@ -1,0 +1,28 @@
+name: C916 e0 m4 equal pair relation authority
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_equal_pair_relation_authority.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-equal-pair-relation-authority.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Freeze exact equal-support m4 relation masks
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_equal_pair_relation_authority.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          path: artifacts/c916_e0_first_dyadic_m4_equal_pair_relation_authority.json
+          if-no-files-found: error
