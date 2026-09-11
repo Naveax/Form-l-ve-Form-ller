@@ -1,0 +1,21 @@
+name: C916 e0 m4-m4 disjoint-support balanced sample
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_disjoint_support_balanced_sample.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-m4-disjoint-support-balanced-sample.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Probe balanced disjoint-support m4-m4 joint images
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_disjoint_support_balanced_sample.py
