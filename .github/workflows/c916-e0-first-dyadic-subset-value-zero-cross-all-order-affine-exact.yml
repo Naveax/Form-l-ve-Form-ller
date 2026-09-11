@@ -1,0 +1,42 @@
+name: C916 e0 subset value zero-cross all-order affine exact
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_exact.py'
+      - '.github/workflows/c916-e0-first-dyadic-subset-value-zero-cross-all-order-affine-exact.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          path: authorities/subset
+      - name: Count exact subset-value zero-cross all-order affine model
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_exact.py
