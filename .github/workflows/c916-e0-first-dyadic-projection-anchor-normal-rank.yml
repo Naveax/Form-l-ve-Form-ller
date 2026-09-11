@@ -1,0 +1,24 @@
+name: C916 e0 projection-anchor normal rank
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_projection_anchor_normal_rank.py'
+      - '.github/workflows/c916-e0-first-dyadic-projection-anchor-normal-rank.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Measure projection-anchor constraint normal ranks
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_projection_anchor_normal_rank.py
