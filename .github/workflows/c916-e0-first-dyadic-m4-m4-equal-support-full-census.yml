@@ -1,0 +1,24 @@
+name: C916 e0 m4-m4 equal-support full census
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_equal_support_full_census.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-m4-equal-support-full-census.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Measure all equal-support m4-m4 exact joint images
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_m4_equal_support_full_census.py
