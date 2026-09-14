@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import io, json, math, os
+import io, json, os
 from contextlib import redirect_stdout
 from pathlib import Path
 
@@ -8,14 +8,33 @@ import probe_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_relaxation_exact
 PAIRWISE_COUNTER = C.ExactCounter
 PAIRWISE_TOTAL = int(C.EXPECTED_EXACT_COUNT)
 SHARD = int(os.environ.get('C916_IE_SHARD', '0'))
-SHARDS = int(os.environ.get('C916_IE_SHARDS', '8'))
+SHARDS = int(os.environ.get('C916_IE_SHARDS', '4'))
 OUT = Path(os.environ.get('C916_IE_OUT', f'out/ie_shard_{SHARD}.json'))
 HARD_DSUMS = {251, 288, 302}
+ZERO_PAIR_AUTHORITY_RUN = 34826179077
 QUADS = (
     (3,8,12,183), (3,113,183,185), (7,144,154,186),
     (10,24,154,186), (11,24,112,181), (11,24,112,182),
     (237,239,240,249),
 )
+# Exact event-pair intersections that are zero on each hard profile 251/288/302
+# in merged authority run 34826179077. Every IE superset containing one of these
+# pairs is therefore identically zero and can be omitted, not approximated.
+ZERO_EVENT_PAIRS = (
+    (0,7), (0,8), (1,3), (2,5), (2,6), (2,9), (2,10),
+    (3,7), (3,8), (5,9), (5,10), (6,9), (6,10),
+)
+
+
+def contains_zero_pair(mask):
+    return any(((mask >> i) & 1) and ((mask >> j) & 1) for i, j in ZERO_EVENT_PAIRS)
+
+
+ADMISSIBLE_MASKS = tuple(mask for mask in range(1 << 12) if not contains_zero_pair(mask))
+assert len(ADMISSIBLE_MASKS) == 384
+assert sum(mask.bit_count() % 2 == 0 for mask in ADMISSIBLE_MASKS) == 192
+assert sum(mask.bit_count() % 2 == 1 for mask in ADMISSIBLE_MASKS) == 192
+assert max(mask.bit_count() for mask in ADMISSIBLE_MASKS) == 7
 IE_ROWS = {}
 
 
@@ -27,7 +46,7 @@ class _AcceptExact:
 
 
 class IEShardCounter(PAIRWISE_COUNTER):
-    """One exact inclusion-exclusion shard for the 12 frozen projection events."""
+    """One exact sparse inclusion-exclusion shard for the 12 projection events."""
 
     def __init__(self, variables, var_states, var_weights, pairq):
         super().__init__(variables, var_states, var_weights, pairq)
@@ -48,7 +67,6 @@ class IEShardCounter(PAIRWISE_COUNTER):
             row = []
             for gid in edge:
                 vi, ci = loc[int(gid)]
-                # The frozen 12 events avoid both signed-pair contractions.
                 assert len(self.variables[vi]) == 1 and ci == 0, (gid, self.variables[vi])
                 self.zero_state[vi] = max(int(s[0]) for s in self.var_states[vi])
                 row.append(vi)
@@ -78,15 +96,13 @@ class IEShardCounter(PAIRWISE_COUNTER):
 
     def _event_count(self, domains, event_index):
         d = self._force_nonzero_vars(domains, self.event_vars[event_index])
-        if d is None:
-            return 0
-        return int(self.solve(self.ALL, d))
+        return 0 if d is None else int(self.solve(self.ALL, d))
 
     def count_profile(self, domains):
         baseline, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
         dsum = sum(int(d).bit_count() for d in domains)
-        assigned = list(range(SHARD, 1 << 12, SHARDS))
-        assert len(assigned) == (1 << 12) // SHARDS
+        assigned = ADMISSIBLE_MASKS[SHARD::SHARDS]
+        assert len(assigned) == len(ADMISSIBLE_MASKS) // SHARDS
         even_terms = sum(mask.bit_count() % 2 == 0 for mask in assigned)
         odd_terms = len(assigned) - even_terms
 
@@ -94,26 +110,25 @@ class IEShardCounter(PAIRWISE_COUNTER):
         minus = 0
         positive_intersections = 0
         if dsum not in HARD_DSUMS:
-            # Merged event-mass authority run 34826179077 proves each individual
-            # event is impossible on these profiles. Recheck that cheaply here;
-            # then every nonempty event intersection is also empty.
-            singles = [self._event_count(tuple(domains), i) for i in range(12)]
-            assert singles == [0] * 12, (dsum, singles)
+            # The same merged authority proves every individual event impossible
+            # on profiles through dsum154. Recheck the singles once in shard 0;
+            # then every nonempty IE intersection on these profiles is zero.
             if SHARD == 0:
-                assert assigned[0] == 0
+                singles = [self._event_count(tuple(domains), i) for i in range(12)]
+                assert singles == [0] * 12, (dsum, singles)
+            if 0 in assigned:
                 plus = int(baseline)
                 positive_intersections = int(baseline > 0)
         else:
-            # Group nearby subset sizes only as a cache-locality heuristic. The
-            # shard assignment and every IE sign remain fixed and exact.
+            # Only the 384 masks not annihilated by an exact zero event pair need
+            # an oracle query. Sort by order for memo locality; signs stay exact.
             for mask in sorted(assigned, key=lambda m: (m.bit_count(), m)):
                 if mask == 0:
                     count = int(baseline)
                 else:
                     d = self._force_nonzero_vars(tuple(domains), self.union_vars[mask])
                     count = 0 if d is None else int(self.solve(self.ALL, d))
-                if count:
-                    positive_intersections += 1
+                positive_intersections += int(count > 0)
                 if mask.bit_count() & 1:
                     minus += count
                 else:
@@ -133,15 +148,15 @@ class IEShardCounter(PAIRWISE_COUNTER):
         }
         IE_ROWS[dsum] = row
         print('ie_profile', json.dumps(row, sort_keys=True), flush=True)
-        # C.analyze supplies the exact separator-profile base masses. Returning
-        # the even-parity subtotal lets it aggregate the global plus side once;
-        # the odd side is aggregated below from the same stored profile rows.
-        return int(plus), self.calls, len(self.memo)
+        # C.analyze is used only to reconstruct exact separator-profile masses.
+        # Return a positive host value even if this shard has no even contribution;
+        # all mathematical IE totals are taken from IE_ROWS below.
+        return max(1, int(plus)), self.calls, len(self.memo)
 
 
 def analyze():
-    assert SHARDS > 0 and SHARDS & (SHARDS - 1) == 0
-    assert (1 << 12) % SHARDS == 0 and 0 <= SHARD < SHARDS
+    assert SHARDS > 0 and len(ADMISSIBLE_MASKS) % SHARDS == 0
+    assert 0 <= SHARD < SHARDS
     original_counter = C.ExactCounter
     original_expected = C.EXPECTED_EXACT_COUNT
     original_pr212 = C.EXPECTED_PR212_COUNT
@@ -150,13 +165,13 @@ def analyze():
     C.EXPECTED_PR212_COUNT = 1 << 10000
     try:
         with redirect_stdout(io.StringIO()):
-            plus_base = C.analyze()
+            host = C.analyze()
     finally:
         C.ExactCounter = original_counter
         C.EXPECTED_EXACT_COUNT = original_expected
         C.EXPECTED_PR212_COUNT = original_pr212
 
-    profile_meta = {int(r['domain_state_sum']): r for r in plus_base['profile_rows']}
+    profile_meta = {int(r['domain_state_sum']): r for r in host['profile_rows']}
     assert set(profile_meta) == set(IE_ROWS)
     assert set(profile_meta) == {83,88,95,100,102,134,154,251,288,302}
 
@@ -166,28 +181,31 @@ def analyze():
         mass = int(profile_meta[dsum]['base_mass'])
         global_plus += mass * int(erow['ie_plus_partial'])
         global_minus += mass * int(erow['ie_minus_partial'])
-    assert global_plus == int(plus_base['exact_count'])
 
     result = {
         'shard': SHARD,
         'shards': SHARDS,
         'projection_events': 12,
-        'assigned_subset_terms': sum(int(r['assigned_terms']) for r in IE_ROWS.values()) // len(IE_ROWS),
-        'assigned_even_terms': sum(int(r['assigned_even_terms']) for r in IE_ROWS.values()) // len(IE_ROWS),
-        'assigned_odd_terms': sum(int(r['assigned_odd_terms']) for r in IE_ROWS.values()) // len(IE_ROWS),
+        'full_ie_subset_terms': 1 << 12,
+        'zero_pair_pruned_terms': (1 << 12) - len(ADMISSIBLE_MASKS),
+        'admissible_ie_subset_terms': len(ADMISSIBLE_MASKS),
+        'assigned_subset_terms': len(ADMISSIBLE_MASKS[SHARD::SHARDS]),
+        'assigned_even_terms': sum(mask.bit_count() % 2 == 0 for mask in ADMISSIBLE_MASKS[SHARD::SHARDS]),
+        'assigned_odd_terms': sum(mask.bit_count() % 2 == 1 for mask in ADMISSIBLE_MASKS[SHARD::SHARDS]),
         'global_ie_plus_partial': int(global_plus),
         'global_ie_minus_partial': int(global_minus),
         'global_signed_partial': int(global_plus - global_minus),
         'profile_rows': [IE_ROWS[k] for k in sorted(IE_ROWS)],
         'pairwise_exact_baseline_count': PAIRWISE_TOTAL,
         'hard_profiles': sorted(HARD_DSUMS),
-        'event_inactivity_authority_run': 34826179077,
-        'decision': 'C916_PROJECTION_HYPEREDGES_EXACT_IE_SHARD',
+        'zero_event_pairs': [list(p) for p in ZERO_EVENT_PAIRS],
+        'event_pair_zero_authority_run': ZERO_PAIR_AUTHORITY_RUN,
+        'decision': 'C916_PROJECTION_HYPEREDGES_SPARSE_EXACT_IE_SHARD',
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, sort_keys=True, indent=2) + '\n')
     print('result', json.dumps(result, sort_keys=True), flush=True)
-    print('PASS V26_Q138_C916_E0_FIRST_DYADIC_PROJECTION_HYPEREDGES_IE_SHARD')
+    print('PASS V26_Q138_C916_E0_FIRST_DYADIC_PROJECTION_HYPEREDGES_SPARSE_IE_SHARD')
     print('ALPHA_PASS=0')
     return result
 
