@@ -1,0 +1,53 @@
+name: C916 e0 m4 sign-reflection quotient
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_sign_reflection_quotient.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-sign-reflection-quotient.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-stratified-sample
+          run-id: 34816121389
+          github-token: ${{ github.token }}
+          path: authorities/sample
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-rare-shapes
+          run-id: 34816433188
+          github-token: ${{ github.token }}
+          path: authorities/rare
+      - name: Verify exact sign-reflection quotient
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_sign_reflection_quotient.py
