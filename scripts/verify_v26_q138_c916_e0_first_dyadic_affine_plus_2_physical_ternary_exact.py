@@ -52,7 +52,7 @@ class AffinePlusPhysicalEventCounter(V.EventMaskVectorCounter):
     survives iff all three participating variables take the forbidden states.
     This is the same exact AND-semiring principle used for the affine support
     events, so an event may span pairwise components without adding a hard
-    hyperedge to the recursion graph.  Mask zero satisfies every affine circuit
+    hyperedge to the recursion graph. Mask zero satisfies every affine circuit
     and every physical ternary factor simultaneously.
     """
 
@@ -72,12 +72,9 @@ class AffinePlusPhysicalEventCounter(V.EventMaskVectorCounter):
         assert len(loc) == 90
 
         self.event_incidence = [0] * self.N
-        self.clear_by_state = [
-            [0] * len(self.var_states[vi]) for vi in range(self.N)
-        ]
+        self.clear_by_state = [[0] * len(self.var_states[vi]) for vi in range(self.N)]
         event = 0
 
-        # Affine support event: violation means every participant is nonzero.
         for edge in affine_events:
             bit = 1 << event
             event += 1
@@ -88,8 +85,6 @@ class AffinePlusPhysicalEventCounter(V.EventMaskVectorCounter):
                 self.event_incidence[vi] |= bit
                 self.clear_by_state[vi][zero] |= bit
 
-        # Physical value event: violation means the whole forbidden quotient
-        # tuple is selected. Any participant taking another state clears it.
         mapped_physical = []
         for gids, forbidden_rows in PHYSICAL_TERNARY:
             vis = []
@@ -245,14 +240,8 @@ class AffinePlusPhysicalEventCounter(V.EventMaskVectorCounter):
         exact = int(dist.get(0, 0))
         dsum = sum(int(d).bit_count() for d in domains)
         affine_expected = int(EXPECTED_AFFINE_PROFILE_COUNTS[dsum])
-        affine_from_dist = sum(
-            int(weight) for mask, weight in dist.items()
-            if (int(mask) & AFFINE_MASK) == 0
-        )
-        physical_from_dist = sum(
-            int(weight) for mask, weight in dist.items()
-            if (int(mask) & PHYSICAL_MASK) == 0
-        )
+        affine_from_dist = sum(int(weight) for mask, weight in dist.items() if (int(mask) & AFFINE_MASK) == 0)
+        physical_from_dist = sum(int(weight) for mask, weight in dist.items() if (int(mask) & PHYSICAL_MASK) == 0)
         assert affine_from_dist == affine_expected, (dsum, affine_from_dist, affine_expected)
         assert exact <= affine_expected
         assert exact <= physical_from_dist <= baseline
@@ -301,7 +290,7 @@ def analyze():
     assert total <= EXPECTED_AFFINE_TOTAL
     assert {int(row['domain_state_sum']) for row in PROFILE_ROWS} == set(EXPECTED_AFFINE_PROFILE_COUNTS)
     weighted_affine = sum(
-        int(row['base_mass']) * int(row['all_order_affine_support_count'])
+        int(row['base_mass']) * int(EXPECTED_AFFINE_PROFILE_COUNTS[int(row['domain_state_sum'])])
         for row in base['profile_rows']
     )
     assert weighted_affine == EXPECTED_AFFINE_TOTAL
