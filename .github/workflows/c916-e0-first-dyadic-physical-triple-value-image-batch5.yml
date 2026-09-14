@@ -3,6 +3,7 @@ name: C916 e0 physical triple value-image batch 5
 on:
   pull_request:
     paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_physical_triple_value_image_extended.py'
       - '.github/workflows/c916-e0-first-dyadic-physical-triple-value-image-batch5.yml'
   workflow_dispatch:
 
@@ -41,4 +42,4 @@ jobs:
           C916_PHYSICAL_TRIPLE_MAX_CELLS: '50000'
           C916_PHYSICAL_TRIPLE_MAX_PHASES: '14'
           C916_PHYSICAL_TRIPLE_MAX_WALSH_EVALS: '2000000'
-        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_physical_triple_value_image.py
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_physical_triple_value_image_extended.py
