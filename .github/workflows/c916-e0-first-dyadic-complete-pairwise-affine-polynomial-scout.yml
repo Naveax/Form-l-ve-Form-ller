@@ -1,0 +1,77 @@
+name: C916 e0 complete pairwise affine polynomial scout
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_affine_polynomial_scout.py'
+      - '.github/workflows/c916-e0-first-dyadic-complete-pairwise-affine-polynomial-scout.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-remaining-zero-cross-value-relation-authority
+          run-id: 34823110470
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/zero
+      - name: Reassert all 4005 exact pairwise value factors
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_value_exact.py
+      - name: Contract exact affine-state polynomials
+        env:
+          C916_AFFINE_POLY_DOMAIN_SUMS: '134,154,251'
+          C916_AFFINE_POLY_MAX_CALLS: '2000000'
+          C916_AFFINE_POLY_MAX_STATES: '750000'
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_affine_polynomial_scout.py
