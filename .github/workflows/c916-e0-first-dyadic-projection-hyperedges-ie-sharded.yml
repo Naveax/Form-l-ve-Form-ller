@@ -1,0 +1,148 @@
+name: C916 e0 sharded projection hyperedge IE exact
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_projection_hyperedges_ie_shard.py'
+      - 'scripts/reduce_v26_q138_c916_e0_first_dyadic_projection_hyperedges_ie.py'
+      - '.github/workflows/c916-e0-first-dyadic-projection-hyperedges-ie-sharded.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  shard:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - name: Count one exact inclusion-exclusion shard
+        env:
+          C916_IE_SHARD: ${{ matrix.shard }}
+          C916_IE_SHARDS: '8'
+          C916_IE_OUT: out/ie_shard_${{ matrix.shard }}.json
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_projection_hyperedges_ie_shard.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-projection-hyperedges-ie-shard-${{ matrix.shard }}
+          path: out/ie_shard_${{ matrix.shard }}.json
+          if-no-files-found: error
+
+  reduce:
+    needs: shard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-projection-hyperedges-ie-shard-*
+          merge-multiple: true
+          path: results
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-remaining-zero-cross-value-relation-authority
+          run-id: 34823110470
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/zero
+      - name: Reassert all 4005 exact pairwise value factors
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_value_exact.py
+      - name: Reduce all 4096 exact inclusion-exclusion terms
+        env:
+          C916_IE_SHARDS: '8'
+          C916_IE_GLOB: results/ie_shard_*.json
+          C916_IE_REDUCED_OUT: out/c916_projection_hyperedges_ie_exact.json
+        run: python scripts/reduce_v26_q138_c916_e0_first_dyadic_projection_hyperedges_ie.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-projection-hyperedges-ie-exact
+          path: out/c916_projection_hyperedges_ie_exact.json
+          if-no-files-found: error
