@@ -1,0 +1,81 @@
+name: C916 e0 remaining m4 zero-cross value authority
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_remaining_zero_cross_value_shard.py'
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_remaining_zero_cross_value_reduce.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-remaining-zero-cross-value-authority.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - name: Census remaining zero-cross value shard
+        env:
+          C916_SHARD_INDEX: ${{ matrix.shard }}
+          C916_SHARD_TOTAL: 8
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_remaining_zero_cross_value_shard.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-remaining-zero-cross-value-s${{ matrix.shard }}
+          path: artifacts/shards/*.json
+          if-no-files-found: error
+
+  reduce:
+    needs: shard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-m4-remaining-zero-cross-value-s*
+          path: artifacts/shards
+          merge-multiple: true
+      - name: Reduce exact remaining zero-cross value authority
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_remaining_zero_cross_value_reduce.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-remaining-zero-cross-value-relation-authority
+          path: artifacts/c916_e0_first_dyadic_m4_remaining_zero_cross_value_relation_authority.json
+          if-no-files-found: error
