@@ -3,6 +3,7 @@ import io
 import json
 import math
 import sys
+from collections import defaultdict
 from contextlib import redirect_stdout
 from pathlib import Path
 
@@ -13,8 +14,18 @@ import verify_v26_q138_c916_e0_first_dyadic_projection_hyperedges_eventmask_vect
 import verify_v26_q138_c916_e0_first_dyadic_all_order_affine_support_exact as A
 
 PAIRWISE_COUNTER = C.ExactCounter
-EVENT_COUNT = 19
+AFFINE_EVENT_COUNT = 19
+PHYSICAL_TERNARY = (
+    ((5, 181, 182), ((0, 1, 1), (1, 0, 2), (1, 1, 0), (2, 0, 1))),
+    ((11, 12, 24), ((0, 1, 1), (1, 0, 2), (1, 2, 0))),
+    ((62, 67, 104), ((1, 0, 2), (1, 1, 1))),
+    ((111, 112, 113), ((0, 1, 1), (1, 0, 1), (1, 1, 0))),
+)
+PHYSICAL_EVENT_COUNT = sum(len(rows) for _gids, rows in PHYSICAL_TERNARY)
+EVENT_COUNT = AFFINE_EVENT_COUNT + PHYSICAL_EVENT_COUNT
 ALL_EVENTS = (1 << EVENT_COUNT) - 1
+AFFINE_MASK = (1 << AFFINE_EVENT_COUNT) - 1
+PHYSICAL_MASK = ALL_EVENTS ^ AFFINE_MASK
 EXPECTED_AFFINE_TOTAL = 100215909735124105069922281032909019043326715916545026952580687530924399001600000
 EXPECTED_AFFINE_PROFILE_COUNTS = {
     83: 0, 88: 1, 95: 0, 100: 25, 102: 0,
@@ -24,123 +35,228 @@ EXPECTED_AFFINE_PROFILE_COUNTS = {
     288: 183697181089509355446657454121817216,
     302: 196896631570740171574763723334509184,
 }
-PHYSICAL_TERNARY = (
-    ((5, 181, 182), frozenset({(0, 1, 1), (1, 0, 2), (1, 1, 0), (2, 0, 1)})),
-    ((11, 12, 24), frozenset({(0, 1, 1), (1, 0, 2), (1, 2, 0)})),
-    ((62, 67, 104), frozenset({(1, 0, 2), (1, 1, 1)})),
-    ((111, 112, 113), frozenset({(0, 1, 1), (1, 0, 1), (1, 1, 0)})),
-)
 PROFILE_ROWS = []
 
-class AnyExpected:
-    def __eq__(self, other): return True
 
-class AffinePlusFourPhysicalCounter(A.CompleteAffineEventCounter):
+class AnyExpected:
+    def __eq__(self, other):
+        return True
+
+
+class AffinePlusFourPhysicalEventCounter(V.EventMaskVectorCounter):
+    """Exact pairwise recursion over all affine events plus twelve ternary value events."""
+
     def __init__(self, variables, var_states, var_weights, pairq):
-        super().__init__(variables, var_states, var_weights, pairq)
+        PAIRWISE_COUNTER.__init__(self, variables, var_states, var_weights, pairq)
+        m4 = C.load(C.M4_PATH)
+        triples = tuple(tuple(map(int, row)) for row in m4['projection_minimal_empty_triples'])
+        assert len(triples) == 5
+        affine_events = triples + V.QUADS + (A.AFFINE_FIVE,) + A.EXTRA_SIX
+        assert len(affine_events) == AFFINE_EVENT_COUNT
+        assert A.Q.digest_rows(tuple(sorted(affine_events, key=lambda r: (len(r), tuple(r))))) == A.EXPECTED_CONFLICT_DIGEST
+
         loc = {}
         for vi, members in enumerate(self.variables):
-            for ci, gid in enumerate(members): loc[int(gid)] = (vi, ci)
+            for ci, gid in enumerate(members):
+                loc[int(gid)] = (vi, ci)
         assert len(loc) == 90
-        self.physical_ternary = []
-        self.hyper_adj = [0] * self.N
-        for gids, forbidden in PHYSICAL_TERNARY:
+
+        self.event_incidence = [0] * self.N
+        self.clear_by_state = [[0] * len(self.var_states[vi]) for vi in range(self.N)]
+        event = 0
+
+        for edge in affine_events:
+            bit = 1 << event
+            event += 1
+            for gid in edge:
+                vi, ci = loc[int(gid)]
+                assert len(self.variables[vi]) == 1 and ci == 0, (gid, self.variables[vi])
+                zero = max(int(state[0]) for state in self.var_states[vi])
+                self.event_incidence[vi] |= bit
+                self.clear_by_state[vi][zero] |= bit
+
+        mapped_physical = []
+        for gids, forbidden_rows in PHYSICAL_TERNARY:
             vis = []
             for gid in gids:
                 vi, ci = loc[int(gid)]
-                assert len(self.variables[vi]) == 1 and ci == 0
-                assert len(self.var_states[vi]) == 4
+                assert len(self.variables[vi]) == 1 and ci == 0, (gid, self.variables[vi])
+                assert len(self.var_states[vi]) == 4, (gid, self.var_states[vi])
                 vis.append(vi)
             assert len(set(vis)) == 3
-            bad = frozenset(tuple(map(int, row)) for row in forbidden)
-            assert all(len(row) == 3 and all(0 <= x < 4 for x in row) for row in bad)
-            vis = tuple(vis)
-            self.physical_ternary.append((vis, bad))
-            for i in range(3):
-                for j in range(i + 1, 3):
-                    self.hyper_adj[vis[i]] |= 1 << vis[j]
-                    self.hyper_adj[vis[j]] |= 1 << vis[i]
-        self.physical_ternary = tuple(self.physical_ternary)
+            for row in forbidden_rows:
+                row = tuple(map(int, row))
+                assert len(row) == 3 and all(0 <= x < 4 for x in row)
+                bit = 1 << event
+                event += 1
+                for pos, vi in enumerate(vis):
+                    self.event_incidence[vi] |= bit
+                    required = row[pos]
+                    for si in range(len(self.var_states[vi])):
+                        if si != required:
+                            self.clear_by_state[vi][si] |= bit
+                mapped_physical.append((tuple(gids), row))
+        assert event == EVENT_COUNT
+        assert len(mapped_physical) == PHYSICAL_EVENT_COUNT
+        self.physical_events = tuple(mapped_physical)
 
-    def _relevant_neighbors(self, i, active, domains):
-        return PAIRWISE_COUNTER._relevant_neighbors(self, i, active, domains) | (self.hyper_adj[i] & active)
+        self.vector_memo = {}
+        self.vector_calls = 0
+        self.vector_peak_states = 0
+        self.and_convolutions = 0
+        self.vector_memo_hits = 0
 
-    @staticmethod
-    def _state_indices(mask):
-        m = int(mask)
-        while m:
-            bit = m & -m
-            yield bit.bit_length() - 1
-            m ^= bit
+    def _isolated_poly(self, vi, domain):
+        out = defaultdict(int)
+        mask = int(domain)
+        while mask:
+            bit = mask & -mask
+            mask ^= bit
+            si = bit.bit_length() - 1
+            event_mask = ALL_EVENTS ^ int(self.clear_by_state[vi][si])
+            out[event_mask] += int(self.var_weights[vi][si])
+        ans = dict(out)
+        self._record_peak(ans)
+        return ans
 
-    def _physical_prune_once(self, domains):
-        dom = list(domains)
-        changed = False
-        for vis, forbidden in self.physical_ternary:
-            for pos, vi in enumerate(vis):
-                others = [q for q in range(3) if q != pos]
-                vj, vk = vis[others[0]], vis[others[1]]
-                keep = 0
-                for si in self._state_indices(dom[vi]):
-                    supported = False
-                    for sj in self._state_indices(dom[vj]):
-                        for sk in self._state_indices(dom[vk]):
-                            row = [None, None, None]
-                            row[pos] = si
-                            row[others[0]] = sj
-                            row[others[1]] = sk
-                            if tuple(row) not in forbidden:
-                                supported = True
-                                break
-                        if supported: break
-                    if supported: keep |= 1 << si
-                if keep == 0: return None, False
-                if keep != dom[vi]:
-                    dom[vi] = keep
-                    changed = True
-        return tuple(dom), changed
+    def vector_solve(self, active, domains):
+        self.vector_calls += 1
+        closed = self._arc_closure(active, domains)
+        if closed is None:
+            return {}
+        domains = closed
 
-    def _arc_closure(self, active, domains):
-        dom = tuple(domains)
-        while True:
-            dom = PAIRWISE_COUNTER._arc_closure(self, active, dom)
-            if dom is None: return None
-            dom, changed = self._physical_prune_once(dom)
-            if dom is None: return None
-            if not changed: return dom
+        singleton = 0
+        factor = 1
+        clear_mask = 0
+        scan = active
+        while scan:
+            bit = scan & -scan
+            vi = bit.bit_length() - 1
+            scan ^= bit
+            d = int(domains[vi])
+            if d & (d - 1) == 0:
+                si = d.bit_length() - 1
+                singleton |= bit
+                factor *= int(self.var_weights[vi][si])
+                clear_mask |= int(self.clear_by_state[vi][si])
+        if singleton:
+            rest = active ^ singleton
+            if rest == 0:
+                return {ALL_EVENTS ^ clear_mask: factor}
+            return self._shift_clear(self.vector_solve(rest, domains), clear_mask, factor)
+
+        key = (active, tuple(domains[i] for i in range(self.N) if (active >> i) & 1))
+        cached = self.vector_memo.get(key)
+        if cached is not None:
+            self.vector_memo_hits += 1
+            return cached
+
+        remain = active
+        pieces = []
+        while remain:
+            seed = remain & -remain
+            vi = seed.bit_length() - 1
+            if self._relevant_neighbors(vi, active, domains) == 0:
+                pieces.append((seed, self._isolated_poly(vi, domains[vi])))
+                remain ^= seed
+                continue
+            comp = 0
+            frontier = seed
+            while frontier:
+                x = frontier & -frontier
+                frontier ^= x
+                k = x.bit_length() - 1
+                if comp & x:
+                    continue
+                comp |= x
+                frontier |= self._relevant_neighbors(k, active, domains) & ~comp
+            pieces.append((comp, None))
+            remain &= ~comp
+
+        if len(pieces) > 1 or pieces[0][0] != active:
+            solved = []
+            for piece, poly in pieces:
+                if poly is None:
+                    poly = self.vector_solve(piece, domains)
+                solved.append(poly)
+            solved.sort(key=len)
+            ans = {ALL_EVENTS: 1}
+            for poly in solved:
+                ans = self._and_convolve(ans, poly)
+                if not ans:
+                    break
+            self.vector_memo[key] = ans
+            return ans
+
+        best = None
+        scan = active
+        while scan:
+            bit = scan & -scan
+            vi = bit.bit_length() - 1
+            scan ^= bit
+            score = (
+                int(domains[vi]).bit_count(),
+                -self._relevant_neighbors(vi, active, domains).bit_count(),
+                -int(self.event_incidence[vi]).bit_count(),
+                vi,
+            )
+            if best is None or score < best[0]:
+                best = (score, vi)
+        vi = best[1]
+
+        ans = {}
+        mask = int(domains[vi])
+        while mask:
+            bit = mask & -mask
+            mask ^= bit
+            nd = list(domains)
+            nd[vi] = bit
+            ans = self._add_poly(ans, self.vector_solve(active, tuple(nd)))
+        self.vector_memo[key] = ans
+        return ans
 
     def count_profile(self, domains):
-        physical_pairwise, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
+        baseline, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
         self.vector_memo.clear()
         self.vector_calls = 0
         self.vector_peak_states = 0
         self.and_convolutions = 0
         self.vector_memo_hits = 0
+
         dist = self.vector_solve(self.ALL, tuple(domains))
-        assert sum(int(weight) for weight in dist.values()) == int(physical_pairwise)
+        tracked_total = sum(int(weight) for weight in dist.values())
+        assert tracked_total == int(baseline)
         exact = int(dist.get(0, 0))
         dsum = sum(int(d).bit_count() for d in domains)
-        affine = int(EXPECTED_AFFINE_PROFILE_COUNTS[dsum])
-        assert exact <= affine
+        affine_expected = int(EXPECTED_AFFINE_PROFILE_COUNTS[dsum])
+        affine_from_dist = sum(int(weight) for mask, weight in dist.items() if (int(mask) & AFFINE_MASK) == 0)
+        physical_from_dist = sum(int(weight) for mask, weight in dist.items() if (int(mask) & PHYSICAL_MASK) == 0)
+        assert affine_from_dist == affine_expected, (dsum, affine_from_dist, affine_expected)
+        assert exact <= affine_expected
+        assert exact <= physical_from_dist <= baseline
+
         row = {
             'domain_state_sum': dsum,
-            'all_order_affine_support_count': affine,
-            'pairwise_plus_four_physical_ternary_count': int(physical_pairwise),
+            'pairwise_count': int(baseline),
+            'all_order_affine_support_count': affine_from_dist,
+            'pairwise_plus_four_physical_ternary_count': physical_from_dist,
             'affine_plus_four_physical_ternary_count': exact,
-            'removed_vs_affine': affine - exact,
-            'gain_vs_affine_log2_bits': None if exact == 0 or affine == 0 else math.log2(affine) - math.log2(exact),
-            'positive_affine_event_masks': len(dist),
+            'removed_vs_affine': affine_from_dist - exact,
+            'gain_vs_affine_log2_bits': None if exact == 0 or affine_from_dist == 0 else math.log2(affine_from_dist) - math.log2(exact),
+            'positive_event_masks': len(dist),
             'vector_calls': self.vector_calls,
             'vector_memo_states': len(self.vector_memo),
             'vector_memo_hits': self.vector_memo_hits,
             'peak_event_mask_states': self.vector_peak_states,
             'and_convolutions': self.and_convolutions,
-            'physical_baseline_calls': baseline_calls,
-            'physical_baseline_memo_states': baseline_memo,
+            'pairwise_baseline_calls': baseline_calls,
+            'pairwise_baseline_memo_states': baseline_memo,
         }
         PROFILE_ROWS.append(row)
         print('affine19_physical4_profile', json.dumps(row, sort_keys=True), flush=True)
         return exact, self.vector_calls, len(self.vector_memo)
+
 
 def analyze():
     original_counter = C.ExactCounter
@@ -149,25 +265,34 @@ def analyze():
     old_v_all_events = V.ALL_EVENTS
     V.EVENT_COUNT = EVENT_COUNT
     V.ALL_EVENTS = ALL_EVENTS
-    C.ExactCounter = AffinePlusFourPhysicalCounter
+    C.ExactCounter = AffinePlusFourPhysicalEventCounter
     C.EXPECTED_EXACT_COUNT = AnyExpected()
     try:
-        with redirect_stdout(io.StringIO()): base = C.analyze()
+        with redirect_stdout(io.StringIO()):
+            base = C.analyze()
     finally:
         C.ExactCounter = original_counter
         C.EXPECTED_EXACT_COUNT = original_expected
         V.EVENT_COUNT = old_v_event_count
         V.ALL_EVENTS = old_v_all_events
+
     total = int(base['exact_count'])
     assert total <= EXPECTED_AFFINE_TOTAL
     assert {int(row['domain_state_sum']) for row in PROFILE_ROWS} == set(EXPECTED_AFFINE_PROFILE_COUNTS)
+    weighted_affine = sum(
+        int(row['base_mass']) * int(EXPECTED_AFFINE_PROFILE_COUNTS[int(row['domain_state_sum'])])
+        for row in base['profile_rows']
+    )
+    assert weighted_affine == EXPECTED_AFFINE_TOTAL
     affected = [row for row in PROFILE_ROWS if int(row['removed_vs_affine']) > 0]
+
     out = {
         'position': 'C',
         'physical_shared_dimension': 149,
-        'complete_higher_affine_conflicts': 19,
-        'physical_ternary_factors': [list(gids) for gids, _ in PHYSICAL_TERNARY],
-        'physical_ternary_forbidden_quotient_tuples': [len(forbidden) for _, forbidden in PHYSICAL_TERNARY],
+        'complete_higher_affine_conflicts': AFFINE_EVENT_COUNT,
+        'physical_ternary_factors': [list(gids) for gids, _rows in PHYSICAL_TERNARY],
+        'physical_ternary_forbidden_quotient_tuples': [len(rows) for _gids, rows in PHYSICAL_TERNARY],
+        'tracked_events': EVENT_COUNT,
         'all_order_affine_support_exact_count': EXPECTED_AFFINE_TOTAL,
         'exact_affine_plus_four_physical_ternary_count': total,
         'exact_log2': math.log2(total),
@@ -180,9 +305,11 @@ def analyze():
     }
     print('result', json.dumps(out, sort_keys=True), flush=True)
     print('PASS V26_Q138_C916_E0_FIRST_DYADIC_AFFINE_PLUS_4_PHYSICAL_TERNARY_EXACT')
-    print('theorem=the emitted integer is exact under all 4005 pairwise value factors, the complete 19-circuit affine-support condition, and all four currently certified ternary magnitude-quotient physical factors')
+    print('theorem=the exact pairwise component recursion tracks the complete 19 affine-support violations and every forbidden tuple of all four certified physical ternary quotient factors in one AND-event semiring; coefficient mask zero is therefore exact')
     print('boundary=known quaternary and any additional ternary or higher physical-value constraints remain outside this partial physical-image model')
     print('ALPHA_PASS=0')
     return out
 
-if __name__ == '__main__': analyze()
+
+if __name__ == '__main__':
+    analyze()
