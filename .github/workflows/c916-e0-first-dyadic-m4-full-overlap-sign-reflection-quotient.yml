@@ -1,0 +1,49 @@
+name: C916 e0 m4 full overlap sign-reflection quotient
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_full_overlap_sign_reflection_quotient.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-full-overlap-sign-reflection-quotient.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-7x7-full-authority
+          run-id: 34817114134
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/full7
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-rare-shapes
+          run-id: 34816433188
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/rare
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-stratified-sample
+          run-id: 34816121389
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/sample
+      - name: Verify and freeze the full overlap quotient authority
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_full_overlap_sign_reflection_quotient.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          path: artifacts/c916_e0_first_dyadic_m4_full_overlap_sign_reflection_quotient_authority.json
+          if-no-files-found: error
