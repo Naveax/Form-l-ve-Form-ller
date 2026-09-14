@@ -1,0 +1,75 @@
+name: C916 e0 m4 overlap 7x7 full authority
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_overlap_7x7_shard.py'
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_m4_overlap_7x7_reduce.py'
+      - '.github/workflows/c916-e0-first-dyadic-m4-overlap-7x7-full-authority.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        include:
+          - {dim: 139, index: 0, total: 2}
+          - {dim: 139, index: 1, total: 2}
+          - {dim: 140, index: 0, total: 4}
+          - {dim: 140, index: 1, total: 4}
+          - {dim: 140, index: 2, total: 4}
+          - {dim: 140, index: 3, total: 4}
+          - {dim: 141, index: 0, total: 2}
+          - {dim: 141, index: 1, total: 2}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          path: authorities/m4
+      - name: Census 7x7 overlap shard
+        env:
+          C916_DIM: ${{ matrix.dim }}
+          C916_SHARD_INDEX: ${{ matrix.index }}
+          C916_SHARD_TOTAL: ${{ matrix.total }}
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_overlap_7x7_shard.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-overlap-7x7-d${{ matrix.dim }}-s${{ matrix.index }}
+          path: artifacts/shards/*.json
+          if-no-files-found: error
+
+  reduce:
+    needs: shard
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-m4-overlap-7x7-*
+          path: artifacts/shards
+          merge-multiple: true
+      - name: Reduce full 7x7 authority
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_m4_overlap_7x7_reduce.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-m4-overlap-nonzero-cross-7x7-full-authority
+          path: artifacts/c916_e0_first_dyadic_m4_overlap_nonzero_cross_7x7_full_authority.json
+          if-no-files-found: error
