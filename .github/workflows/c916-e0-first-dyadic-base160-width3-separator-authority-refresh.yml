@@ -1,0 +1,29 @@
+name: C916 e0 base160 width3 separator authority refresh
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/c916-e0-first-dyadic-base160-width3-separator-authority-refresh.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
+      - name: Recompute exact base160 width3 separator authority
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_base160_width3_separator_marginal.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority-refresh
+          path: artifacts/c916_e0_first_dyadic_base160_width3_separator_authority.json
+          if-no-files-found: error
