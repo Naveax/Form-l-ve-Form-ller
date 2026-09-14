@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+import json
+import os
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import probe_v26_q138_c916_e0_first_dyadic_physical_triple_value_image as T
+import verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_authority as Q
+import verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_batch4 as G
+
+TARGET = int(os.environ.get('C916_PHYSICAL_QUOTIENT_BATCH8_TARGET', '0'))
+TARGETS = (
+    {
+        'source_index': 28,
+        'triple': (3, 4, 165),
+        'raw_holes': 16,
+        'raw_hole_digest': '8a9d31b52b4a275b906ce15eede95b2296a5d19450d0acb350a7e86f6bb9113a',
+        'raw_image_digest': '92799147c1169925db7c4ea04d2396b9f382aa6cd7a27ad3e702801614e6672a',
+    },
+    {
+        'source_index': 29,
+        'triple': (3, 5, 7),
+        'raw_holes': 48,
+        'raw_hole_digest': 'cb2ef59d0effd341bd8ca841dbf945ef61a78c021c9241c960a73617eef75ae9',
+        'raw_image_digest': '3ad6609388e210f2d2cf876546775286294d6cf2dde52d53aa3434a2bd606334',
+    },
+    {
+        'source_index': 30,
+        'triple': (3, 7, 8),
+        'raw_holes': 16,
+        'raw_hole_digest': '673ca8750eba5fb16aa3882ada4a2fa68152750e3a1dba7c4e6151d0e7ff90e2',
+        'raw_image_digest': '59d48966555ca3013930d2a012f372e2896f5f9635ce1db71fe1e7d5e9ebf470',
+    },
+    {
+        'source_index': 31,
+        'triple': (3, 7, 9),
+        'raw_holes': 16,
+        'raw_hole_digest': '673ca8750eba5fb16aa3882ada4a2fa68152750e3a1dba7c4e6151d0e7ff90e2',
+        'raw_image_digest': '59d48966555ca3013930d2a012f372e2896f5f9635ce1db71fe1e7d5e9ebf470',
+    },
+)
+
+
+def analyze():
+    assert 0 <= TARGET < len(TARGETS)
+    expected = TARGETS[TARGET]
+    triple = tuple(expected['triple'])
+    groups = Q.build_groups(triple)
+    dist, stats = T.exact_joint_distribution(groups)
+    image = set(dist)
+    assert sum(dist.values()) == (1 << T.PHYS_N)
+
+    values = tuple(tuple(sorted({row[i] for row in image})) for i in range(3))
+    assert tuple(map(len, values)) == (7, 7, 7)
+    raw_closure = Q.pairwise_closure(image, values)
+    raw_holes = tuple(sorted(raw_closure - image))
+    assert len(raw_holes) == expected['raw_holes']
+    assert T.digest_rows([list(row) for row in raw_holes]) == expected['raw_hole_digest']
+    image_rows = [[list(key), int(dist[key])] for key in sorted(dist)]
+    assert T.digest_rows(image_rows) == expected['raw_image_digest']
+
+    maps, expected_qvalues = G.generalized_quotient_map(values)
+    qimage = {Q.qtuple(row, maps) for row in image}
+    qvalues = tuple(tuple(sorted({row[i] for row in qimage})) for i in range(3))
+    assert qvalues == expected_qvalues
+    qclosure = Q.pairwise_closure(qimage, qvalues)
+    qholes = tuple(sorted(qclosure - qimage))
+
+    details = []
+    for q in qholes:
+        raw_candidates = tuple(sorted(row for row in raw_closure if Q.qtuple(row, maps) == q))
+        assert raw_candidates and all(row not in image for row in raw_candidates)
+        details.append({
+            'quotient_tuple': list(q),
+            'raw_pairwise_closure_tuples_eliminated': len(raw_candidates),
+            'raw_tuples': [list(row) for row in raw_candidates],
+        })
+
+    out = {
+        'position': 'C',
+        'physical_shared_dimension': T.PHYS_N,
+        'target': TARGET,
+        'source_target_index': expected['source_index'],
+        'triple': list(triple),
+        'raw_exact_image_size': len(image),
+        'raw_pairwise_closure_size': len(raw_closure),
+        'raw_holes': len(raw_holes),
+        'raw_hole_digest_sha256': expected['raw_hole_digest'],
+        'raw_joint_distribution_digest_sha256': expected['raw_image_digest'],
+        'quotient_alphabet_sizes': [len(v) for v in qvalues],
+        'quotient_exact_image_size': len(qimage),
+        'quotient_pairwise_closure_size': len(qclosure),
+        'quotient_holes': len(qholes),
+        'quotient_hole_tuples': [list(row) for row in qholes],
+        'quotient_hole_digest_sha256': Q.digest_rows(qholes),
+        'quotient_hole_details': details,
+        'support_classes': stats['support_classes'],
+        'cells_visited': stats['cells_visited'],
+        'leaf_cells': stats['leaf_cells'],
+        'walsh_evals': stats['walsh_evals'],
+        'decision': (
+            'EXACT_PHYSICAL_TERNARY_OBSTRUCTION_DESCENDS_TO_SIGN_REFLECTION_QUOTIENT'
+            if qholes else
+            'PHYSICAL_TERNARY_OBSTRUCTION_IS_SIGN_ONLY_AT_SIGN_REFLECTION_QUOTIENT'
+        ),
+    }
+    print('result', json.dumps(out, sort_keys=True), flush=True)
+    if qholes:
+        print('PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_BATCH8_OBSTRUCTION')
+        print('theorem=this batch-8 exact physical ternary obstruction contains complete sign-reflection-orbit holes and descends to a forbidden relation on the existing quotient states')
+    else:
+        print('PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_BATCH8_SIGN_ONLY')
+        print('theorem=this batch-8 exact physical ternary obstruction has no complete sign-reflection quotient hole and cannot be propagated on the existing quotient without sign refinement')
+    print('boundary=only the emitted batch-8 target is frozen; other physical higher-order factors remain open')
+    print('ALPHA_PASS=0')
+    return out
+
+
+if __name__ == '__main__':
+    analyze()
