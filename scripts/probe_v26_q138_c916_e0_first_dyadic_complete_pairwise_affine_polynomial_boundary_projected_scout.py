@@ -9,13 +9,13 @@ import probe_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_relaxation_exact
 import probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_all_order_affine_scout as A
 import probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_affine_polynomial_scout as P
 
+PAIRWISE_COUNTER = C.ExactCounter
 TARGET_DOMAIN_SUMS = tuple(sorted({int(x) for x in os.environ.get('C916_AFFINE_BOUNDARY_DOMAIN_SUMS', '134,154,251').split(',') if x.strip()}))
 EXPECTED_MEDIUM = {134: 21578474445840, 154: 42542498200320}
 SCOUT_ROWS = []
 
 
 def normal_insert(state, x):
-    """Canonical GF(2) RREF insertion for non-augmented physical normals."""
     x = int(x)
     if not x:
         return state
@@ -48,26 +48,10 @@ def reduce_normal(x, basis):
 
 
 class BoundaryProjectedCounter(P.AffinePolynomialCounter):
-    """Exact component polynomial with future-boundary affine projection.
-
-    Let a solved subproblem contribute a consistent affine system S with normal
-    rowspace W. Every affine system that can still be convolved with it has its
-    normals in B, the span of all possible anchor normals outside the subproblem.
-    Consistency of S with any such future system depends only on the RHS
-    functional of S restricted to W intersect B. Therefore states that have the
-    same restriction to B are exactly equivalent for all future continuations.
-
-    This solver projects every returned polynomial to that conservative boundary
-    before memoization. No branch or state is approximated or discarded; weights
-    of exactly continuation-equivalent states are aggregated.
-    """
+    """Exact component polynomial with future-boundary affine projection."""
 
     def __init__(self, variables, var_states, var_weights, pairq):
         super().__init__(variables, var_states, var_weights, pairq)
-
-        # For each contracted CSP variable, freeze the span of every normal that
-        # any of its local states can contribute. This is a conservative exact
-        # future span and handles the two signed-pair supervariables naturally.
         var_normals = []
         all_normals = []
         for states in self.state_aff:
@@ -84,7 +68,6 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
         self.var_normal_span = tuple(var_normals)
         self.global_normal_span = normal_canonical(all_normals)
         assert len(self.global_normal_span) == A.EXPECTED_NORMAL_RANK == 92
-
         self.boundary_cache = {}
         self.project_cache = {}
         self.boundary_stats = Counter()
@@ -97,8 +80,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
             self.boundary_stats['boundary_cache_hits'] += 1
             return got
         rows = []
-        outside = self.ALL ^ active
-        scan = outside
+        scan = self.ALL ^ active
         while scan:
             bit = scan & -scan
             vi = bit.bit_length() - 1
@@ -120,17 +102,12 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
         if got is not None:
             self.boundary_stats['projection_cache_hits'] += 1
             return got
-
         boundary = self._boundary_basis(active)
         if not boundary:
             out = ()
         elif len(boundary) == len(self.global_normal_span):
-            # B is the complete global normal span, so W intersect B = W.
             out = state
         else:
-            # Map each state normal to V/B. Kernel combinations are exactly the
-            # combinations whose normals lie in B. Carry their RHS bits through
-            # the same combination to recover the restricted affine functional.
             quotient_basis = {}
             kernel_combos = []
             for i, aug in enumerate(state):
@@ -146,7 +123,6 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
                     combo ^= prior[1]
                 if residual == 0:
                     kernel_combos.append(combo)
-
             out = ()
             for combo in kernel_combos:
                 aug = 0
@@ -156,13 +132,10 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
                     j = bit.bit_length() - 1
                     mask ^= bit
                     aug ^= int(state[j])
-                normal = aug & A.MASK
-                assert reduce_normal(normal, boundary) == 0
+                assert reduce_normal(aug & A.MASK, boundary) == 0
                 nxt = A.insert_rref(out, aug)
-                # A restriction of a consistent affine system remains consistent.
                 assert nxt is not None
                 out = nxt
-
         self.project_cache[key] = out
         self.boundary_stats['projection_cache_misses'] += 1
         self.boundary_stats['projected_rank_before_sum'] += len(state)
@@ -174,9 +147,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
             return {}
         out = defaultdict(int)
         for state, weight in poly.items():
-            projected = self._project_state(active, state)
-            assert projected is not None
-            out[projected] += int(weight)
+            out[self._project_state(active, state)] += int(weight)
         ans = dict(out)
         self.boundary_stats['poly_states_before_projection'] += len(poly)
         self.boundary_stats['poly_states_after_projection'] += len(ans)
@@ -193,8 +164,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
             if merged is None:
                 self.poly_stats['affine_empty_prunes'] += 1
                 continue
-            projected = self._project_state(target_active, merged)
-            out[projected] += int(weight) * int(factor)
+            out[self._project_state(target_active, merged)] += int(weight) * int(factor)
         ans = dict(out)
         self._guard(ans)
         return ans
@@ -212,8 +182,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
                 if merged is None:
                     self.poly_stats['affine_empty_prunes'] += 1
                     continue
-                projected = self._project_state(target_active, merged)
-                out[projected] += int(aw) * int(bw)
+                out[self._project_state(target_active, merged)] += int(aw) * int(bw)
             if len(out) > P.MAX_POLY_STATES:
                 self._guard(out)
         ans = dict(out)
@@ -221,18 +190,16 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
         return ans
 
     def _variable_boundary_poly(self, vi, domain):
-        raw = self._variable_poly(vi, domain)
-        return self._project_poly(1 << vi, raw)
+        return self._project_poly(1 << vi, self._variable_poly(vi, domain))
 
     def _solve_poly(self, active, domains):
         self.poly_calls += 1
         self._guard()
-        closed = C.ExactCounter._arc_closure(self, active, domains)
+        closed = PAIRWISE_COUNTER._arc_closure(self, active, domains)
         if closed is None:
             self.poly_stats['pairwise_wipeouts'] += 1
             return {}
         domains = closed
-
         key = (active, tuple(domains[i] for i in range(self.N) if (active >> i) & 1))
         cached = self.poly_memo.get(key)
         if cached is not None:
@@ -262,8 +229,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
             if not rest:
                 ans = self._project_poly(active, {aff: factor})
             else:
-                child = self._solve_poly(rest, domains)
-                ans = self._shift_scale_boundary(child, aff, factor, active)
+                ans = self._shift_scale_boundary(self._solve_poly(rest, domains), aff, factor, active)
             self.poly_memo[key] = ans
             return ans
 
@@ -303,7 +269,6 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
                 ans = self._convolve_boundary(ans, poly, combined_active)
                 if not ans:
                     break
-            # combined_active == active; helper already projected after each join.
             assert combined_active == active
             self.poly_memo[key] = ans
             return ans
@@ -325,8 +290,7 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
             mask ^= bit
             nd = list(domains)
             nd[vi] = bit
-            child = self._solve_poly(active, tuple(nd))
-            for state, weight in child.items():
+            for state, weight in self._solve_poly(active, tuple(nd)).items():
                 out[state] += int(weight)
             self._guard(out)
         ans = dict(out)
@@ -334,11 +298,10 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
         return ans
 
     def count_profile(self, domains):
-        baseline, baseline_calls, baseline_memo = C.ExactCounter.count_profile(self, domains)
+        baseline, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
         dsum = sum(int(d).bit_count() for d in domains)
         if dsum not in TARGET_DOMAIN_SUMS:
             return baseline, baseline_calls, baseline_memo
-
         self.aff_cache.clear()
         self.poly_memo.clear()
         self.poly_stats.clear()
@@ -358,16 +321,12 @@ class BoundaryProjectedCounter(P.AffinePolynomialCounter):
         except P.PolyBudgetExceeded as exc:
             status = 'budget_exceeded'
             self.poly_stats['budget_reason'] = str(exc)
-
         if exact is not None:
             assert 0 <= exact <= baseline
             if dsum in EXPECTED_MEDIUM:
                 assert baseline == EXPECTED_MEDIUM[dsum]
                 assert exact == baseline
-            # At the root there is no future boundary, so all consistent states
-            # must collapse to one scalar-equivalent polynomial key.
             assert final_states <= 1
-
         row = {
             'domain_state_sum': dsum,
             'status': status,
@@ -399,13 +358,12 @@ def analyze():
         assert int(baseline['exact_count']) == int(C.EXPECTED_EXACT_COUNT)
     finally:
         C.ExactCounter = original
-
     got = {int(row['domain_state_sum']) for row in SCOUT_ROWS}
     assert got == set(TARGET_DOMAIN_SUMS), (got, TARGET_DOMAIN_SUMS)
     out = {
         'position': 'C',
         'physical_shared_dimension': A.PHYS_N,
-        'global_projection_normal_rank': len(BoundaryProjectedCounter.__mro__),
+        'global_projection_normal_rank': A.EXPECTED_NORMAL_RANK,
         'pairwise_exact_baseline_count': int(C.EXPECTED_EXACT_COUNT),
         'target_domain_state_sums': list(TARGET_DOMAIN_SUMS),
         'max_poly_calls': P.MAX_POLY_CALLS,
@@ -415,8 +373,6 @@ def analyze():
         'budget_exceeded_profiles': sum(row['status'] != 'completed' for row in SCOUT_ROWS),
         'decision': 'C916_COMPLETE_PAIRWISE_ALL_ORDER_AFFINE_POLYNOMIAL_BOUNDARY_PROJECTED_SCOUT',
     }
-    # The fixed theorem is asserted in every counter initialization above.
-    out['global_projection_normal_rank'] = A.EXPECTED_NORMAL_RANK
     print('result', json.dumps(out, sort_keys=True), flush=True)
     print('PASS V26_Q138_C916_E0_FIRST_DYADIC_COMPLETE_PAIRWISE_AFFINE_POLYNOMIAL_BOUNDARY_PROJECTED_SCOUT')
     print('scope=exact component affine-state polynomials projected before memoization to the conservative span of all possible normals outside each active subproblem; projection preserves exactly the affine information any future continuation can observe')
