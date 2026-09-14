@@ -9,6 +9,7 @@ import probe_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_relaxation_exact
 import probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_all_order_affine_scout as A
 import probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_affine_polynomial_scout as P
 
+PAIRWISE_COUNTER = C.ExactCounter
 TARGET_DOMAIN_SUMS = tuple(sorted({int(x) for x in os.environ.get('C916_AFFINE_COORD_DOMAIN_SUMS', '134,154,251').split(',') if x.strip()}))
 MAX_POLY_CALLS = int(os.environ.get('C916_AFFINE_COORD_MAX_CALLS', '2000000'))
 MAX_POLY_STATES = int(os.environ.get('C916_AFFINE_COORD_MAX_POLY_STATES', '1200000'))
@@ -60,7 +61,7 @@ class CoordinateAffinePolynomialCounter(P.AffinePolynomialCounter):
     """
 
     def __init__(self, variables, var_states, var_weights, pairq):
-        C.ExactCounter.__init__(self, variables, var_states, var_weights, pairq)
+        PAIRWISE_COUNTER.__init__(self, variables, var_states, var_weights, pairq)
         self.aff_cache = {}
         self.poly_memo = {}
         self.poly_calls = 0
@@ -156,7 +157,7 @@ class CoordinateAffinePolynomialCounter(P.AffinePolynomialCounter):
         return state
 
     def count_profile(self, domains):
-        baseline, baseline_calls, baseline_memo = C.ExactCounter.count_profile(self, domains)
+        baseline, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
         dsum = sum(int(d).bit_count() for d in domains)
         if dsum not in TARGET_DOMAIN_SUMS:
             return baseline, baseline_calls, baseline_memo
