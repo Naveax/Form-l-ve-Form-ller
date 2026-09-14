@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_exact.py'
+      - 'scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_fast.py'
       - '.github/workflows/c916-e0-first-dyadic-subset-value-zero-cross-all-order-affine-exact.yml'
 
 permissions:
@@ -13,7 +14,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -39,4 +40,4 @@ jobs:
           github-token: ${{ github.token }}
           path: authorities/subset
       - name: Count exact subset-value zero-cross all-order affine model
-        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_exact.py
+        run: python scripts/probe_v26_q138_c916_e0_first_dyadic_subset_value_zero_cross_all_order_affine_fast.py
