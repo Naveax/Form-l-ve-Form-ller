@@ -1,135 +1,137 @@
-# V26 Q138 C916 complete-pairwise current authority
+# V26 Q138 C916 current physical authority
 
 Status date: 2026-09-14.
 
 `ALPHA_PASS=0`.
 
-This note records the current exact Position-C m4 value authority and the sharp boundary of what has, and has not, been proved. It supersedes older continuation notes only for the C916 m4 pairwise/all-order-affine line; historical A/B/C/D dyadic leaf authorities remain separately valid.
+This note records the current exact Position-C m4 value/affine/physical-factor authority. Historical A/B/C/D dyadic leaf authorities remain separately valid. Every integer admitted below comes from an exact clean CI authority; capped scouts and incomplete searches are not promoted to theorems.
 
-## Complete m4 pairwise value theorem
+## Complete 4005-pair value theorem
 
-The m4 family has 90 outputs, hence `binom(90,2)=4005` pairwise factors. All 4005 are now exact value relations:
+The m4 family has 90 outputs, hence `binom(90,2)=4005` pairwise factors. All 4005 are exact value relations:
 
 - 825 subset-support exact value pairs;
 - 55 equal-support exact value pairs;
-- 2000 overlap exact value pairs, including the two signed-magnitude contractions `(141,247)` and `(160,241)`;
-- 1125 formerly activity-only remaining zero-cross pairs, now proved to be exact zero-axis unions and independently sign-reflection invariant.
+- 2000 overlap exact value pairs, including signed-magnitude contractions `(141,247)` and `(160,241)`;
+- 1125 remaining zero-cross pairs, all exact zero-axis unions and independently sign-reflection invariant.
 
 The exact complete-pairwise weighted count is
 
 `667251639197063986752771721653766635157388976602589789841148591163677039001600000`,
 
-with
+with `log2 = 268.49247853554294` and bit length 269.
 
-`log2 = 268.49247853554294`
+Primary authorities include zero-cross run `34823110470`, complete-pairwise verification, and zero-cross relation digest
 
-and state width 269 bits.
+`5b93c1bae1acb4571690af475439ec9e8539d234d4626935812280eeda401d58`.
 
-This integer is exact for the complete set of 4005 m4 pairwise value factors. The pairwise-relaxation gap inside that model is exactly zero.
+## Exact finite projection-hyperedge model
 
-Primary clean authorities:
+The frozen five minimal-empty triples and seven minimal-empty quadruples are exact. Two independent exact implementations, including merged PR #239 run `34831706439`, give the complete pairwise-plus-12-hyperedge count
 
-- zero-cross value authority run `34823110470`;
-- complete 4005-pair verification run `34823245596`;
-- zero-cross exact relation digest `5b93c1bae1acb4571690af475439ec9e8539d234d4626935812280eeda401d58`.
+`119224931058957005800358130035798112729920532677074863008477782553762159001600000`,
 
-## Remaining higher-order gap
+with `log2 = 266.00793353949246` and bit length 267.
 
-The complete-pairwise theorem is not an all-order physical-image theorem. In particular it does not yet include:
+Hard-profile exact counts are:
 
-- the five frozen minimal-empty projection triples;
-- the seven frozen minimal-empty projection quadruples;
-- the global all-order affine-anchor intersection condition;
-- any additional higher-order physical-image constraint not implied by the preceding items.
+- 251: `114884695573259724175905211418508096`;
+- 288: `218548782904222169092344242900939904`;
+- 302: `234148899850520139999772901208978048`.
 
-Therefore the 268.492-bit pairwise count is not permission to claim a 149-dimensional physical image, an end-to-end evaluator reduction, or `alpha<1`.
+The former Bonferroni bounds are historical diagnostics only; the finite 12-hyperedge conjunction is now counted exactly.
 
-## Finite projection obstruction authority
+## Complete all-order affine-support theorem
 
-The five exact minimal-empty triples are
+Exact iterative closure proves that, in the presence of all 1318 pairwise zero-activity conflicts, the complete higher affine obstruction family contains 19 inclusion-minimal conflicts. Its digest is
 
-- `(5,8,184)`;
-- `(6,9,154)`;
-- `(24,111,112)`;
-- `(62,113,165)`;
-- `(67,104,165)`.
+`e510dae8f89a09a914839c542e8a70806167531dffa2470f52b376ce48db30a7`.
 
-The seven exact minimal-empty quadruples are
+The closure theorem checks every inclusion-maximal support admitted by those conflicts and proves nonempty exact 149-bit affine-anchor intersection whenever no conflict is present. Therefore the exact complete pairwise plus all-order affine-support weighted count is
 
-- `(3,8,12,183)`;
-- `(3,113,183,185)`;
-- `(7,144,154,186)`;
-- `(10,24,154,186)`;
-- `(11,24,112,181)`;
-- `(11,24,112,182)`;
-- `(237,239,240,249)`.
+`100215909735124105069922281032909019043326715916545026952580687530924399001600000`,
 
-Clean event-mass run `34826179077` proves that all 12 forbidden events are pairwise-impossible on separator profiles through domain-state sum 154 and all 12 are active on the three dominant hard profiles 251, 288 and 302. It also counts every single event and all 66 pair intersections exactly on those hard profiles.
+with `log2 = 265.75735915215614` and bit length 266.
 
-The first two Bonferroni inequalities therefore give the rigorous global valid-count interval
+Hard-profile affine-support counts are:
 
-`2722414587159602541040697551354574968461239522793839001600000`
+- 251: `96491872903925175488260425426864960`;
+- 288: `183697181089509355446657454121817216`;
+- 302: `196896631570740171574763723334509184`.
 
-`<= N_pairwise+12hyperedges <=`
+The affine normal span has exact GF(2) rank 92 inside the 149-dimensional physical space. All-order affine support is a complete theorem for that support condition, but it is strictly weaker than the full physical output-value image.
 
-`441205873912093509972717475553434060732158565102084857212293988604025199001600000`.
+## Certified physical quotient factors
 
-Hence the 12 known finite projection obstructions alone guarantee at least
+The current exact quotient model contains six ternary physical factors:
 
-`0.5967789464455109`
+- `(5,181,182)`, 4 forbidden quotient tuples;
+- `(11,12,24)`, 3 forbidden quotient tuples;
+- `(62,67,104)`, 2 forbidden quotient tuples;
+- `(111,112,113)`, 3 forbidden quotient tuples;
+- `(69,82,87)`, 3 forbidden quotient tuples, with a five-state magnitude endpoint at gid 82;
+- `(130,131,132)`, 2 forbidden quotient tuples.
 
-bits of reduction relative to the complete-pairwise count. The lower Bonferroni endpoint is intentionally loose and is not an exact finite-hyperedge count.
+It also contains five exact quaternary physical factors:
 
-The same authority gives 13 hard-profile event pairs with exact zero intersection:
+- `(4,5,8,9)`, 3 forbidden tuples;
+- `(4,5,8,114)`, 28 forbidden tuples;
+- `(4,5,9,114)`, 28 forbidden tuples;
+- `(4,8,9,114)`, 6 forbidden tuples;
+- `(5,8,9,114)`, 12 forbidden tuples.
 
-`(0,7),(0,8),(1,3),(2,5),(2,6),(2,9),(2,10),(3,7),(3,8),(5,9),(5,10),(6,9),(6,10)`.
+The conjunction of the complete 4005-pair model, the complete 19-conflict affine-support theorem, all six certified ternary quotient factors, and all five certified quaternary quotient factors was counted exactly by merged PR #258, clean run `34840416927`:
 
-Consequently only 384 of the 4096 inclusion-exclusion event subsets avoid a certified zero pair.
+`90987190266267462495323685079227633113020903735137825407846207198697839001600000`.
 
-## All-order affine exact-solver status
+Its `log2` value is `265.6179829442682`; bit length is 266.
 
-The complete affine-anchor normal span has exact GF(2) rank 92 inside the 149-dimensional physical space. The 90 anchor codimensions have histogram
+The two newest ternary factors affect only the medium profiles relative to the previous four-ternary/five-quad checkpoint:
 
-`{6:12, 7:46, 8:32}`.
+- profile 134: `21578474445840 -> 21387962445840`;
+- profile 154: `42542498200320 -> 39497049400320`.
 
-Direct global affine recursion and the component affine-polynomial method agree exactly with the pairwise counts on the medium separator profiles:
+Profiles 251/288/302 remain at the previous four-ternary/five-quad checkpoint values:
 
-- domain-state sum 134: `21578474445840`;
-- domain-state sum 154: `42542498200320`.
+- 251: `87639022052873245102889951271577152`;
+- 288: `167100640692156092551072548681523584`;
+- 302: `178525130634609700681252266313472640`.
 
-Thus those two profiles have zero all-order affine gain.
+This integer is exact for the stated finite physical-factor model. It is not the full physical image count.
 
-The merged component-polynomial scout, clean run `34825970336`, reduces recursion drastically but hits a 750000-state polynomial cap on the first dominant profile 251. Hash-consing canonical affine RREF states, clean run `34826688178`, confirms that the hard obstruction is not merely Python object duplication: profile 251 reaches the 1800000 interned-state cap after generating 1734398 new canonical affine states and 3917198 exact intersection-cache entries.
+## Raw physical ternary frontier
 
-Conditioning first on the 12 finite projection clauses, clean run `34828969429`, still hits the 750000-state cap on the first hard terminal branch. No incomplete hard-profile affine count is admitted.
+Merged batch-5 PR #257, clean run `34840541439`, exactly resolved extended-shortlist target indices 16 through 19.
 
-## Dominant profiles
+Targets 16, 17 and 18 have exact physical joint image equal to the join of their three exact pair projections.
 
-Almost all weighted complete-pairwise mass lies in the final three separator profiles:
+Target 19, triple `(178,179,184)`, has exact raw physical image size 251 versus exact pairwise closure size 275, hence 24 exact physical holes. The frozen raw-hole digest is
 
-- domain-state sum 251: pairwise count `643305124889230385720745189422199360`;
-- domain-state sum 288: pairwise count `1225045697842497384662724781551504000`;
-- domain-state sum 302: pairwise count `1308847670855160788759692358502898560`.
+`26550add0ec46d20b259f3db3f18beb1bbd4db6a0839e7d7edf7db26c8ccc6db`,
 
-Future all-order work must therefore target 251/288/302. Spending large compute only on the medium profiles cannot materially change the global exponent.
+and the exact joint-distribution digest is
 
-## Current exact-program boundary
+`0a8ef378e6a6b0eacf1a1b76eb8c103c6fa9fb88ea594b34095a6ebd50103f9f`.
+
+This proves a genuine ternary physical-value obstruction beyond complete pairwise value factors and complete all-order affine support. It is not yet admitted as a quotient factor until exact sign-reflection quotient descent is separately certified.
+
+## Exact-program boundary
 
 Admitted now:
 
-1. complete exact value relations for all 4005 m4 pairs;
-2. exact complete-pairwise weighted count above;
-3. exact five-triple and seven-quad projection obstruction list;
-4. exact single-event and pair-intersection masses on the hard profiles;
-5. rigorous finite-hyperedge Bonferroni interval;
-6. exact zero all-order affine gain on profiles 134 and 154;
-7. rank-92 global affine-normal span.
+1. all 4005 exact m4 pairwise value factors and their exact weighted count;
+2. the exact 12 finite projection-hyperedge conjunction;
+3. the complete 19-conflict all-order affine-support theorem and exact weighted count;
+4. six exact ternary and five exact quaternary physical magnitude-quotient factors;
+5. the exact combined affine-plus-physical-factor count above;
+6. the raw target-19 physical ternary obstruction `(178,179,184)` at full 149-bit value level.
 
 Not admitted:
 
-1. exact complete count after all 12 finite hyperedges;
-2. exact all-order affine counts for 251/288/302;
-3. complete physical-image count in dimension 149;
-4. arithmetic-work improvement or practical evaluator;
-5. ranking/search improvement;
-6. `alpha<1`.
+1. quotient propagation of target 19 before exact descent certification;
+2. completeness of the currently known ternary/quaternary physical factor family;
+3. the complete 149-dimensional physical output-value image count;
+4. an end-to-end arithmetic-work improvement or evaluator;
+5. `alpha<1`.
+
+The active frontier is exact physical-image discovery and exact quotient descent/propagation for newly found factors. `ALPHA_PASS=0`.
