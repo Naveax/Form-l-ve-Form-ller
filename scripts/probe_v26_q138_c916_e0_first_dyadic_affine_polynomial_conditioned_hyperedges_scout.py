@@ -8,6 +8,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import probe_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_relaxation_exact as C
 import probe_v26_q138_c916_e0_first_dyadic_complete_pairwise_affine_polynomial_scout as P
 
+# C.ExactCounter is temporarily monkey-patched in analyze(). Freeze the actual
+# scalar pairwise base class now so helper calls cannot recurse back into this
+# subclass after that patch.
+PAIRWISE_COUNTER = C.ExactCounter
+
 TARGET_DOMAIN_SUMS = tuple(sorted({int(x) for x in os.environ.get('C916_AFFINE_COND_DOMAIN_SUMS', '134,154,251').split(',') if x.strip()}))
 QUADS = (
     (3,8,12,183), (3,113,183,185), (7,144,154,186),
@@ -93,7 +98,7 @@ class ConditionedAffinePolynomialCounter(P.AffinePolynomialCounter):
         dom = tuple(domains)
         eds = tuple(edges)
         while True:
-            dom = C.ExactCounter._arc_closure(self, self.ALL, dom)
+            dom = PAIRWISE_COUNTER._arc_closure(self, self.ALL, dom)
             if dom is None:
                 self.hyper_stats['pairwise_wipeouts'] += 1
                 return None, None
@@ -183,7 +188,7 @@ class ConditionedAffinePolynomialCounter(P.AffinePolynomialCounter):
         return total
 
     def count_profile(self, domains):
-        baseline, baseline_calls, baseline_memo = C.ExactCounter.count_profile(self, domains)
+        baseline, baseline_calls, baseline_memo = PAIRWISE_COUNTER.count_profile(self, domains)
         dsum = sum(int(d).bit_count() for d in domains)
         if dsum not in TARGET_DOMAIN_SUMS:
             return baseline, baseline_calls, baseline_memo
