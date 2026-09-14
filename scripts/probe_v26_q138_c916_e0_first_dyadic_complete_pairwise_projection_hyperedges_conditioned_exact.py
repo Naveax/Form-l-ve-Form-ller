@@ -12,6 +12,14 @@ PAIRWISE_COUNT = int(C.EXPECTED_EXACT_COUNT)
 QUADS = tuple(tuple(map(int, q)) for q in H.QUADS)
 EXPECTED_QUAD_DIGEST = H.EXPECTED_QUAD_DIGEST
 
+# Frozen heuristic only, not mathematical authority. Run 34826179077 counted the
+# exact all-nonzero event masses on the three dominant profiles 251/288/302.
+# Ordering by their pairwise-model mass (weighted by the profile contribution to
+# the exact pairwise total) gives this descending priority. It changes traversal
+# only; every branch partition and returned integer remain exact.
+EVENT_MASS_PRIORITY = (4, 3, 0, 1, 9, 10, 6, 5, 11, 8, 7, 2)
+EVENT_PRIORITY_RANK = {event_index: rank for rank, event_index in enumerate(EVENT_MASS_PRIORITY)}
+
 
 class _AcceptExact:
     def __eq__(self, other):
@@ -61,17 +69,16 @@ class ConditionedHyperCounter(C.ExactCounter):
             mapped = []
             for gid in edge:
                 vi, ci = loc[int(gid)]
-                # None of the frozen 5+7 projection obstructions touches the two
-                # special signed-pair contractions. Keep this an asserted theorem
-                # of this implementation rather than silently mishandling coords.
                 assert len(self.variables[vi]) == 1 and ci == 0, (gid, vi, self.variables[vi])
                 z = max(int(s[0]) for s in self.var_states[vi])
                 self.zero_state[vi] = z
                 mapped.append(vi)
             assert len(mapped) == len(set(mapped)) == len(edge)
             edges.append(tuple(sorted(mapped)))
+        self.raw_mapped_edges = tuple(edges)
         self.hyperedges = _canonical_edges(edges)
         assert len(self.hyperedges) == 12
+        assert len(self.raw_mapped_edges) == 12
         self.hyper_memo = {}
         self.hyper_stats = Counter()
 
@@ -94,7 +101,6 @@ class ConditionedHyperCounter(C.ExactCounter):
         return tuple(out)
 
     def _normalize(self, domains, edges):
-        """Pairwise-close domains and simplify/propagate forbidden hyperedges."""
         dom = tuple(domains)
         eds = tuple(edges)
         while True:
@@ -119,8 +125,6 @@ class ConditionedHyperCounter(C.ExactCounter):
                         break
                     if can_zero:
                         uncertain.append(vi)
-                    # else this participant is already forced nonzero and drops
-                    # from the residual not-all-nonzero clause.
                 if satisfied:
                     self.hyper_stats['satisfied_edges_dropped'] += 1
                     continue
@@ -144,15 +148,25 @@ class ConditionedHyperCounter(C.ExactCounter):
                 dom = nd
                 continue
 
-            new_eds = _canonical_edges(reduced)
-            return dom, new_eds
+            return dom, _canonical_edges(reduced)
+
+    def _event_priority(self, edge):
+        target = set(edge)
+        ranks = [
+            EVENT_PRIORITY_RANK[i]
+            for i, raw in enumerate(self.raw_mapped_edges)
+            if target <= set(raw)
+        ]
+        return min(ranks) if ranks else len(EVENT_MASS_PRIORITY)
 
     def _choose_edge(self, domains, edges):
-        # Small residual edges first; then prefer participants whose domains are
-        # smallest after pairwise closure so first-zero branching propagates fast.
+        # Exact masses from run 34826179077 guide traversal only. Residual edges
+        # inherit the best priority of any original frozen event containing them.
+        # Dynamic domain size remains a tie-breaker after that frozen priority.
         return min(
             edges,
             key=lambda e: (
+                self._event_priority(e),
                 len(e),
                 sum(int(domains[v]).bit_count() for v in e),
                 e,
@@ -177,9 +191,6 @@ class ConditionedHyperCounter(C.ExactCounter):
         rest = tuple(e for e in norm_edges if e != edge)
         total = 0
 
-        # Exact disjoint partition of "edge has at least one zero": first member
-        # is zero; or first is nonzero and second is zero; ... . The omitted
-        # all-nonzero branch is precisely the forbidden event.
         prefix = norm_dom
         for vi in edge:
             zdom = self._restrict_zero(prefix, vi)
@@ -207,6 +218,7 @@ class ConditionedHyperCounter(C.ExactCounter):
             'pairwise_recursive_calls': self.calls,
             'hyper_memo_states': len(self.hyper_memo),
             'hyper_stats': dict(self.hyper_stats),
+            'event_mass_priority': list(EVENT_MASS_PRIORITY),
         }, sort_keys=True), flush=True)
         return value, self.calls, len(self.memo)
 
@@ -217,10 +229,8 @@ def analyze():
     C.ExactCounter = ConditionedHyperCounter
     C.EXPECTED_EXACT_COUNT = _AcceptExact()
     try:
-        with redirect_stdout(io.StringIO()) as capture:
+        with redirect_stdout(io.StringIO()):
             base = C.analyze()
-        # Keep the heavy internal profile chatter out of normal CI logs. The
-        # exact final profile rows are retained in the returned object.
     finally:
         C.ExactCounter = original_counter
         C.EXPECTED_EXACT_COUNT = original_expected
@@ -246,12 +256,14 @@ def analyze():
         'projection_minimal_empty_quadruples_added': 7,
         'minimal_empty_quadruple_digest_sha256': EXPECTED_QUAD_DIGEST,
         'higher_order_hyperedges_added': 12,
-        'solver': 'conditioned_first_zero_partition_with_pairwise_oracle',
+        'event_mass_priority': list(EVENT_MASS_PRIORITY),
+        'event_mass_priority_authority_run': 34826179077,
+        'solver': 'conditioned_first_zero_partition_pairwise_oracle_mass_priority',
         'decision': 'C916_250WAY_COMPLETE_M4_PAIRWISE_PLUS_PROJECTION_TRIPLES_QUADS_CONDITIONED_EXACT',
     }
     print('result', json.dumps(out, sort_keys=True), flush=True)
     print('PASS V26_Q138_C916_E0_FIRST_DYADIC_COMPLETE_PAIRWISE_PROJECTION_HYPEREDGES_CONDITIONED_EXACT')
-    print('scope=all 4005 exact m4 pairwise value factors plus five exact minimal-empty projection triples and seven exact minimal-empty projection quadruples; finite hyperedges are enforced by an exact disjoint first-zero partition so pairwise component factorization remains available')
+    print('scope=all 4005 exact m4 pairwise value factors plus five exact minimal-empty projection triples and seven exact minimal-empty projection quadruples; event-mass ordering changes traversal only')
     print('boundary=all-order affine intersection and any further higher-order physical-image constraint remain outside this finite-hyperedge model')
     print('ALPHA_PASS=0')
     return out
