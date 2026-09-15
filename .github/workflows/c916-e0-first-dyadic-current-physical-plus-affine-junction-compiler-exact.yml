@@ -1,9 +1,6 @@
 name: C916 E0 current physical plus affine junction compiler exact
 
 on:
-  push:
-    branches:
-      - 'math/c916-current-physical-affine-junction-compiler-main-20260915'
   pull_request:
     paths:
       - 'scripts/verify_v26_q138_c916_e0_first_dyadic_current_physical_plus_affine_junction_compiler_exact.py'
@@ -12,7 +9,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 permissions:
   contents: read
