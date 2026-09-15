@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-"""Compile current physical + complete affine-support constraints into width-9 tables.
+"""Compile the current physical + complete affine-support layer with correct activity semantics.
 
-This is the executable companion to the exact treewidth-9 topology certificate.  It
-compiles all currently certified physical higher-order quotient relations together with
-the complete 19 affine-support obstructions into clique tables on the deterministic
-width-9 chordal completion, then performs exact junction-tree sum-product.
+The combined higher-order topology is the already-certified width-9 primal graph. This
+verifier compiles the 38 exact ternary physical quotient factors, the exact conjunction
+of the five quaternary physical factors, and all 19 affine-support obstructions into that
+junction forest.
 
-The resulting count concerns this combined higher-order layer only.  The dense 4,005
-pairwise quotient relation layer and its multiplicity weights remain outside this pass.
+Affine semantics are authority-critical: an affine scope is forbidden when every endpoint
+is NONZERO in the sign-reflection quotient. The maximal local quotient-state index is the
+zero state, and any zero endpoint clears the affine conflict. The earlier singleton
+all-zero translation was the opposite relation and is intentionally rejected here.
+
+The resulting count is for the combined higher-order layer only. The dense 4,005 pairwise
+quotient relation layer and multiplicity weights remain outside this verifier.
 """
 
 from __future__ import annotations
@@ -16,21 +21,19 @@ import hashlib
 import itertools
 import json
 import math
-import os
 import sys
 from collections import defaultdict, deque
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import probe_v26_q138_c916_e0_first_dyadic_complete_m4_pairwise_relaxation_exact as C
-import verify_v26_q138_c916_e0_first_dyadic_all_current_physical_hypergraph_treewidth_exact as T
+import verify_v26_q138_c916_e0_first_dyadic_current_physical_junction_compiler_exact as P
+import verify_v26_q138_c916_e0_first_dyadic_current_physical_junction_forest_exact as J
 import verify_v26_q138_c916_e0_first_dyadic_projection_hyperedges_eventmask_vector_exact as V
 import verify_v26_q138_c916_e0_first_dyadic_all_order_affine_support_exact as A
 import verify_v26_q138_c916_e0_first_dyadic_affine_plus_all_known_physical_exact as H
 import verify_v26_q138_c916_e0_first_dyadic_current_physical_plus_affine_treewidth_exact as W
 
-FACTOR_DIR = Path(os.environ.get("C916_CURRENT_PHYSICAL_FACTOR_DIR", "authorities/current-physical-factors"))
 EXPECTED_TERNARY_COUNT = 38
 EXPECTED_CLIQUE_COUNT = 26
 EXPECTED_COMPONENT_COUNT = 5
@@ -44,156 +47,95 @@ def digest(obj) -> str:
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def quotient_sizes():
-    m4 = C.load(C.M4_PATH)
-    out = {}
-    for row in m4["four_parent_relations"]:
-        gid = int(row["m4_group_id"])
-        qsize = (int(row["cols"]) + 1) // 2
-        old = out.setdefault(gid, qsize)
-        assert old == qsize
-    assert len(out) == 90
-    assert sorted(g for g, n in out.items() if n == 5) == [31, 82]
-    return out
-
-
 def affine_scopes():
-    m4 = C.load(C.M4_PATH)
+    m4 = P.J.C.load(P.J.C.M4_PATH)
     triples = tuple(tuple(map(int, row)) for row in m4["projection_minimal_empty_triples"])
     assert len(triples) == 5
     rows = triples + V.QUADS + (A.AFFINE_FIVE,) + A.EXTRA_SIX
     assert len(rows) == A.EVENT_COUNT == 19
+    assert A.Q.digest_rows(tuple(sorted(rows, key=lambda r: (len(r), tuple(r))))) == A.EXPECTED_CONFLICT_DIGEST
     return tuple(tuple(map(int, row)) for row in rows)
 
 
-def load_ternary_factors():
-    rows = []
-    for i, expected_scope in enumerate(T.TERNARY_FACTORS):
-        row = json.loads((FACTOR_DIR / f"factor_{i:02d}.json").read_text())
-        assert int(row["inventory_index"]) == i
-        scope = tuple(map(int, row["triple"]))
-        assert scope == tuple(map(int, expected_scope))
-        qholes = frozenset(tuple(map(int, x)) for x in row["quotient_hole_tuples"])
-        qsizes = tuple(map(int, row["quotient_alphabet_sizes"]))
-        assert qholes and len(qholes) == int(row["quotient_holes"])
-        rows.append({"name": f"physical_ternary:{i}", "scope": scope, "qsizes": qsizes, "forbidden": qholes})
-    assert len(rows) == EXPECTED_TERNARY_COUNT
-    return tuple(rows)
-
-
-def elimination_cliques(scopes):
+def build_cliques_and_forest():
+    scopes = W.all_scopes()
     adj = W.build_primal_graph(scopes)
     rows, fill_edges = W.deterministic_min_fill_certificate(adj)
     assert max(row["later_degree"] for row in rows) == W.EXPECTED_TREEWIDTH == 9
     assert len(fill_edges) == W.EXPECTED_FILL_EDGE_COUNT == 13
-    bags = [frozenset((row["vertex"], *row["later_neighbors"])) for row in rows]
-    maximal = []
-    for bag in bags:
-        if bag and not any(bag < other for other in bags):
-            maximal.append(tuple(sorted(bag)))
-    maximal = tuple(sorted(set(maximal), key=lambda row: (-len(row), row)))
-    assert len(maximal) == EXPECTED_CLIQUE_COUNT
-    assert max(map(len, maximal)) == 10
-    return maximal, fill_edges
 
+    simple_rows = tuple((int(row["vertex"]), tuple(map(int, row["later_neighbors"]))) for row in rows)
+    cliques = J.maximal_cliques(simple_rows)
+    assert len(cliques) == EXPECTED_CLIQUE_COUNT
+    assert max(map(len, cliques)) == 10
 
-def maximum_intersection_forest(cliques):
-    sets = tuple(map(set, cliques))
-    edges = []
-    for i in range(len(cliques)):
-        for j in range(i + 1, len(cliques)):
-            sep = tuple(sorted(sets[i] & sets[j]))
-            if sep:
-                edges.append((len(sep), i, j, sep))
-    parent = list(range(len(cliques)))
-
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    chosen = []
-    for _weight, i, j, sep in sorted(edges, key=lambda row: (-row[0], row[1], row[2])):
-        ri, rj = find(i), find(j)
-        if ri == rj:
-            continue
-        parent[ri] = rj
-        chosen.append((i, j, sep))
-    assert len(chosen) == EXPECTED_FOREST_EDGES
-    return tuple(chosen)
-
-
-def verify_running_intersection(cliques, forest):
-    cadj = defaultdict(set)
-    for i, j, _sep in forest:
-        cadj[i].add(j)
-        cadj[j].add(i)
-    for v in sorted({x for bag in cliques for x in bag}):
-        members = {i for i, bag in enumerate(cliques) if v in bag}
-        root = min(members)
-        q = deque([root])
-        seen = {root}
-        while q:
-            i = q.popleft()
-            for j in cadj[i]:
-                if j in members and j not in seen:
-                    seen.add(j)
-                    q.append(j)
-        assert seen == members, (v, sorted(members), sorted(seen))
+    forest = J.maximum_intersection_forest(cliques)
+    assert len(forest) == EXPECTED_FOREST_EDGES
+    J.verify_running_intersection(cliques, forest)
+    return cliques, forest, tuple(fill_edges)
 
 
 def assign_scope(scope, cliques):
-    s = set(scope)
-    candidates = [i for i, bag in enumerate(cliques) if s <= set(bag)]
+    wanted = set(scope)
+    candidates = [i for i, bag in enumerate(cliques) if wanted <= set(bag)]
     assert candidates, scope
     return min(candidates, key=lambda i: (len(cliques[i]), cliques[i], i))
 
 
 def compile_tables(cliques, qsizes, ternary, affine):
     constraints = defaultdict(list)
-    attachment_rows = []
+    attachments = []
 
     for factor in ternary:
         ci = assign_scope(factor["scope"], cliques)
-        constraints[ci].append(("forbidden", factor["scope"], factor["forbidden"], factor["name"]))
-        attachment_rows.append((factor["name"], ci))
+        name = str(factor["name"])
+        constraints[ci].append(("finite_forbidden", factor["scope"], factor["forbidden"], name))
+        attachments.append((name, ci))
 
     quad_scope = tuple(map(int, H.FIVE_GIDS))
     quad_allowed = frozenset(tuple(map(int, row)) for row in H.ALLOWED)
     assert len(quad_allowed) == 832
     qci = assign_scope(quad_scope, cliques)
     constraints[qci].append(("allowed", quad_scope, quad_allowed, "physical_quads:compiled5"))
-    attachment_rows.append(("physical_quads:compiled5", qci))
+    attachments.append(("physical_quads:compiled5", qci))
 
     for ai, scope in enumerate(affine):
         ci = assign_scope(scope, cliques)
-        forbidden = frozenset((tuple(qsizes[v] - 1 for v in scope),))
-        constraints[ci].append(("forbidden", scope, forbidden, f"affine:{ai}"))
-        attachment_rows.append((f"affine:{ai}", ci))
+        constraints[ci].append(("affine_all_nonzero_forbidden", scope, None, f"affine:{ai}"))
+        attachments.append((f"affine:{ai}", ci))
 
-    assert len(attachment_rows) == 38 + 1 + 19
+    assert len(attachments) == EXPECTED_TERNARY_COUNT + 1 + A.EVENT_COUNT
+
     tables = []
     metadata = []
-    for ci, bag in enumerate(cliques):
-        bag = tuple(map(int, bag))
+    for ci, raw_bag in enumerate(cliques):
+        bag = tuple(map(int, raw_bag))
         pos = {v: p for p, v in enumerate(bag)}
         capacity = math.prod(qsizes[v] for v in bag)
         allowed_rows = []
+
         for assignment in itertools.product(*(range(qsizes[v]) for v in bag)):
             ok = True
             for kind, scope, relation, _name in constraints.get(ci, ()):
                 row = tuple(assignment[pos[v]] for v in scope)
-                if kind == "forbidden":
+                if kind == "finite_forbidden":
                     if row in relation:
                         ok = False
                         break
-                else:
+                elif kind == "allowed":
                     if row not in relation:
+                        ok = False
+                        break
+                else:
+                    assert kind == "affine_all_nonzero_forbidden"
+                    # Zero is the maximal quotient-state index. A conflict survives
+                    # exactly when every endpoint is nonzero.
+                    if all(state != qsizes[v] - 1 for state, v in zip(row, scope)):
                         ok = False
                         break
             if ok:
                 allowed_rows.append(tuple(map(int, assignment)))
+
         allowed_rows = tuple(allowed_rows)
         assert allowed_rows, (ci, bag)
         tables.append(allowed_rows)
@@ -207,14 +149,16 @@ def compile_tables(cliques, qsizes, ternary, affine):
                 "table_digest_sha256": digest([list(row) for row in allowed_rows]),
             }
         )
-    return tuple(tables), tuple(metadata), tuple(sorted(attachment_rows))
+
+    return tuple(tables), tuple(metadata), tuple(sorted(attachments))
 
 
 def exact_junction_count(cliques, tables, forest):
     cadj = [[] for _ in cliques]
     for i, j, sep in forest:
-        cadj[i].append((j, tuple(sep)))
-        cadj[j].append((i, tuple(sep)))
+        sep = tuple(map(int, sep))
+        cadj[i].append((j, sep))
+        cadj[j].append((i, sep))
 
     seen = set()
     component_counts = []
@@ -278,17 +222,14 @@ def exact_junction_count(cliques, tables, forest):
 
 
 def analyze():
-    scopes = W.all_scopes()
-    cliques, fill_edges = elimination_cliques(scopes)
-    forest = maximum_intersection_forest(cliques)
-    verify_running_intersection(cliques, forest)
-
-    qsizes = quotient_sizes()
+    cliques, forest, fill_edges = build_cliques_and_forest()
+    qsizes = J.quotient_sizes_from_m4()
     capacities = [math.prod(qsizes[v] for v in bag) for bag in cliques]
     assert max(capacities) == EXPECTED_MAX_CLIQUE_CAPACITY
     assert sum(capacities) == EXPECTED_TOTAL_CLIQUE_CAPACITY
 
-    ternary = load_ternary_factors()
+    ternary = P.load_ternary_factors()
+    assert len(ternary) == EXPECTED_TERNARY_COUNT
     affine = affine_scopes()
     tables, metadata, attachments = compile_tables(cliques, qsizes, ternary, affine)
     total, components, messages = exact_junction_count(cliques, tables, forest)
@@ -297,6 +238,7 @@ def analyze():
     out = {
         "position": "C",
         "physical_shared_dimension": 149,
+        "affine_constraint_semantics": "all-nonzero forbidden; maximal local quotient-state index is zero",
         "exact_treewidth": W.EXPECTED_TREEWIDTH,
         "maximal_cliques": len(cliques),
         "junction_forest_edges": len(forest),
@@ -312,13 +254,13 @@ def analyze():
         "max_positive_separator_rows": max((row["positive_rows"] for row in messages), default=1),
         "messages": list(messages),
         "clique_tables": list(metadata),
-        "decision": "C916_CURRENT_PHYSICAL_PLUS_COMPLETE_AFFINE_COMPILE_EXACTLY_INTO_WIDTH9_JUNCTION_TABLES",
-        "next_exact_step": "use these combined higher-order clique tables as a single propagation/message layer inside the exact weighted pairwise quotient recursion, with the six-factor historical checkpoint retained as a regression gate",
+        "decision": "C916_CURRENT_PHYSICAL_PLUS_COMPLETE_AFFINE_ACTIVITY_CORRECT_WIDTH9_JUNCTION_TABLES",
+        "next_exact_step": "use these authority-correct combined higher-order relations inside the exact weighted pairwise quotient recursion, retaining the six-factor historical checkpoint as a regression gate",
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_CURRENT_PHYSICAL_PLUS_AFFINE_JUNCTION_COMPILER_EXACT")
-    print("theorem=all current physical higher-order quotient factors and the complete 19 affine-support obstructions compile exactly into the certified width-9 chordal completion and admit exact junction-tree sum-product")
-    print("boundary=this still excludes the dense 4005 pairwise quotient relation layer and multiplicity weights, so it is not the final weighted count")
+    print("theorem=all current physical higher-order quotient factors and the complete 19 affine all-nonzero activity obstructions compile exactly into the certified width-9 chordal completion and admit exact junction-tree sum-product")
+    print("boundary=this excludes the dense 4005 pairwise quotient relation layer and multiplicity weights, so it is not the final weighted count")
     print("ALPHA_PASS=0")
     return out
 
