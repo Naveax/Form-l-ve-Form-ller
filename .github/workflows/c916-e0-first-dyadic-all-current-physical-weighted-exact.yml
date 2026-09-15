@@ -41,7 +41,6 @@ jobs:
       - name: Recompute exact quotient factor
         env:
           C916_CURRENT_PHYSICAL_FACTOR_TARGET: ${{ matrix.target }}
-          C916_CURRENT_PHYSICAL_FACTOR_OUTPUT: factor_${{ matrix.target }}.json
           C916_PHYSICAL_TRIPLE_MAX_CELLS: '50000'
           C916_PHYSICAL_TRIPLE_MAX_PHASES: '14'
           C916_PHYSICAL_TRIPLE_MAX_WALSH_EVALS: '2000000'
@@ -49,7 +48,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: c916-current-physical-factor-${{ matrix.target }}
-          path: factor_${{ matrix.target }}.json
+          path: factor_*.json
           if-no-files-found: error
 
   aggregate:
