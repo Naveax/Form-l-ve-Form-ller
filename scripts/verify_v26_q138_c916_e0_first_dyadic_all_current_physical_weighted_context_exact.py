@@ -6,9 +6,11 @@ activity obstruction semantics certified by the event-mask authorities: an affin
 is forbidden only when every endpoint is in a nonzero quotient state. The local zero
 state is the maximal quotient-state index. This is not the all-zero forbidden tuple.
 
-Memoized weighted states remain isolated per separator-domain profile, and every active
-variable plus every higher-order endpoint remains in the memo projection. Those choices
-are conservative execution policy; they do not alter the mathematical relation layer.
+Memoized weighted states are isolated per separator-domain profile. Inside one profile,
+the underlying engine retains active domains plus only inactive endpoints of higher-order
+constraints that are still relevant. That projection is exact because domain restriction
+is monotone: once no forbidden completion is compatible, later restrictions cannot make
+one reappear.
 """
 
 from __future__ import annotations
@@ -24,15 +26,7 @@ import _c916_all_current_weighted_context_engine as E
 
 
 class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
-    """Context-cached counter with exact affine activity-obstruction semantics."""
-
-    def __init__(self, variables, var_states, var_weights, pairq):
-        super().__init__(variables, var_states, var_weights, pairq)
-        hyper_context = 0
-        for constraint in self.constraints:
-            hyper_context |= int(constraint["active_mask"])
-        self.hyper_context_mask = hyper_context
-        self.hyper_context_variables = hyper_context.bit_count()
+    """Context-cached counter with exact affine all-nonzero obstruction semantics."""
 
     def _evaluate_constraint(self, ci, domains):
         constraint = self.constraints[ci]
@@ -51,7 +45,7 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
         # The certified event-mask theorem clears an affine conflict as soon as any
         # endpoint takes its zero quotient state. Therefore the forbidden relation is
         # the Cartesian product of NONZERO states, not the singleton all-zero tuple.
-        # The base engine stores the zero-state tuple only as compact metadata here.
+        # The base engine's singleton tuple is used only to carry the zero-state index.
         zero_row = next(iter(constraint["forbidden"]))
         assert len(zero_row) == len(vis)
         nonzero_counts = []
@@ -86,15 +80,10 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
         self.constraint_eval_cache[key] = result
         return result
 
-    def _memo_key(self, active, domains):
-        context = int(active) | self.hyper_context_mask
-        self.max_context_variables = max(self.max_context_variables, context.bit_count())
-        projected = tuple(int(domains[i]) for i in range(self.N) if (context >> i) & 1)
-        return active, context, projected
-
     def count_profile(self, domains):
-        # Profiles carry different unary boundary conditions. Keeping their weighted
-        # memo tables separate is conservative and matches the historical exact count.
+        # Unary boundary conditions differ between separator-domain profiles. Keep the
+        # exact residual memo table local to each profile while retaining the safe
+        # constraint-evaluation cache, which is keyed by full local domain projection.
         self.memo.clear()
         return super().count_profile(domains)
 
@@ -156,7 +145,7 @@ def analyze():
         "removed_weighted_assignments_vs_affine": E.EXPECTED_AFFINE_TOTAL - total,
         "gain_vs_six_factor_checkpoint_log2_bits": None if total == 0 else math.log2(regression_total) - math.log2(total),
         "gain_vs_affine_log2_bits": None if total == 0 else math.log2(E.EXPECTED_AFFINE_TOTAL) - math.log2(total),
-        "memo_context_policy": "active variables union all higher-order variables; memo reset per separator-domain profile",
+        "memo_context_policy": "per-profile memo; active domains plus inactive endpoints of still-relevant higher-order constraints",
         "regression_profile_rows": regression_profile_rows,
         "all_current_profile_rows": full_profile_rows,
         "decision": "C916_COMPLETE_AFFINE_SUPPORT_PLUS_ALL_CURRENT_EXACT_PHYSICAL_QUOTIENT_FACTORS_WEIGHTED_COUNT_AUTHORITY_CORRECT",
