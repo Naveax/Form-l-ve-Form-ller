@@ -3,11 +3,11 @@
 
 The current physical factor engine is retained, but affine-support scopes use the exact
 activity obstruction semantics certified by the event-mask authorities: an affine scope
-is forbidden only when every endpoint is in a nonzero quotient state.  The local zero
-state is the maximal quotient-state index.  This is not the all-zero forbidden tuple.
+is forbidden only when every endpoint is in a nonzero quotient state. The local zero
+state is the maximal quotient-state index. This is not the all-zero forbidden tuple.
 
 Memoized weighted states remain isolated per separator-domain profile, and every active
-variable plus every higher-order endpoint remains in the memo projection.  Those choices
+variable plus every higher-order endpoint remains in the memo projection. Those choices
 are conservative execution policy; they do not alter the mathematical relation layer.
 """
 
@@ -36,7 +36,7 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
 
     def _evaluate_constraint(self, ci, domains):
         constraint = self.constraints[ci]
-        if constraint["kind"] != "affine":
+        if not str(constraint["name"]).startswith("affine:"):
             return super()._evaluate_constraint(ci, domains)
 
         vis = constraint["vis"]
@@ -48,15 +48,16 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
             return cached
         self.constraint_eval_misses += 1
 
-        # The historical event-mask theorem clears an affine conflict as soon as any
-        # endpoint takes its zero quotient state.  Therefore the forbidden relation is
+        # The certified event-mask theorem clears an affine conflict as soon as any
+        # endpoint takes its zero quotient state. Therefore the forbidden relation is
         # the Cartesian product of NONZERO states, not the singleton all-zero tuple.
+        # The base engine stores the zero-state tuple only as compact metadata here.
         zero_row = next(iter(constraint["forbidden"]))
         assert len(zero_row) == len(vis)
         nonzero_counts = []
         for p, domain in enumerate(projected):
             zero = int(zero_row[p])
-            assert (domain >> zero) >= 0
+            assert 0 <= zero < len(self.var_states[vis[p]])
             nonzero_counts.append((int(domain) & ~(1 << zero)).bit_count())
 
         compatible = math.prod(nonzero_counts)
@@ -75,13 +76,13 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
                     all_other *= int(other_domain).bit_count()
                     blocked_other *= nonzero_counts[q]
                 # A nonzero candidate has support iff at least one completion contains
-                # a zero state at another endpoint.  If every completion is nonzero,
+                # a zero state at another endpoint. If every completion is nonzero,
                 # every completion belongs to the affine forbidden relation.
                 if blocked_other < all_other:
                     kept |= nonzero_domain
             supported.append(kept)
 
-        result = (tuple(supported), int(compatible))
+        result = (int(compatible), tuple(supported))
         self.constraint_eval_cache[key] = result
         return result
 
@@ -92,8 +93,8 @@ class AuthorityCorrectConstraintCounter(E.ContextMinimizedConstraintCounter):
         return active, context, projected
 
     def count_profile(self, domains):
-        # Profiles carry different unary boundary conditions.  Keeping their weighted
-        # memo tables separate is conservative and matches the original exact counter.
+        # Profiles carry different unary boundary conditions. Keeping their weighted
+        # memo tables separate is conservative and matches the historical exact count.
         self.memo.clear()
         return super().count_profile(domains)
 
