@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3.py'
+      - 'scripts/summarize_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3.py'
       - '.github/workflows/c916-e0-first-dyadic-physical-triple-quotient-tail3-exact.yml'
   workflow_dispatch:
 
@@ -45,7 +46,37 @@ jobs:
       - name: Exact third-tail quotient descent ${{ matrix.target_index }}
         env:
           C916_PHYSICAL_QUOTIENT_TAIL3_TARGET: ${{ matrix.target_index }}
+          C916_PHYSICAL_QUOTIENT_TAIL3_OUTPUT: tail3_quotient_${{ matrix.target_index }}.json
           C916_PHYSICAL_TRIPLE_MAX_CELLS: '50000'
           C916_PHYSICAL_TRIPLE_MAX_PHASES: '14'
           C916_PHYSICAL_TRIPLE_MAX_WALSH_EVALS: '2000000'
         run: python scripts/verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tail3-quotient-${{ matrix.target_index }}
+          path: tail3_quotient_${{ matrix.target_index }}.json
+          if-no-files-found: error
+
+  aggregate:
+    name: aggregate-tail3-quotient-topology
+    needs: exact-target
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: tail3-quotient-*
+          merge-multiple: true
+          path: tail3-quotient-summaries
+      - name: Syntax-check exact aggregate
+        run: >-
+          python -m py_compile
+          scripts/summarize_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3.py
+      - name: Aggregate exact quotient promotions and topology
+        env:
+          C916_PHYSICAL_QUOTIENT_TAIL3_SUMMARY_DIR: tail3-quotient-summaries
+        run: python scripts/summarize_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3.py
