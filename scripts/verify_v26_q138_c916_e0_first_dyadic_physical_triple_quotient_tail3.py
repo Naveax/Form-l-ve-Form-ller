@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Test whether one third-tail exact physical ternary obstruction survives the existing quotient.
+"""Test each third-tail physical value image for exact quotient-level ternary holes.
 
-The merged tail3 scout certifies raw physical value-image holes.  This verifier applies
-exactly the same sign-reflection quotient construction used by the frozen current
-physical factor pipeline.  A target is promotable to that quotient factor inventory only
-when an entire quotient tuple is absent from the exact image while remaining allowed by
-all three quotient pair projections.
+The merged tail3 scout evaluates raw physical value-image obstructions target by target;
+some targets have raw holes and some may already equal their raw pairwise closure.  This
+verifier applies exactly the sign-reflection quotient construction used by the frozen
+current physical factor pipeline.  A target is promotable to that quotient factor
+inventory only when an entire quotient tuple is absent from the exact image while all
+three quotient pair projections allow it, with the same raw-lift admission invariant used
+by the 38-factor generator.
 """
 from __future__ import annotations
 
@@ -45,9 +47,6 @@ def analyze():
     assert all(len(v) in (7, 9) for v in values), (triple, tuple(map(len, values)))
     raw_closure = Q.pairwise_closure(image, values)
     raw_holes = tuple(sorted(raw_closure - image))
-    # This rechecks the essential theorem previously certified by the tail3 value-image
-    # matrix before asking the strictly stronger quotient-descent question.
-    assert raw_holes, ("tail3 target lost its exact raw physical obstruction", triple)
 
     maps, expected_qvalues = G.generalized_quotient_map(values)
     qimage = {Q.qtuple(row, maps) for row in image}
@@ -59,16 +58,23 @@ def analyze():
     qhole_rows = []
     for qrow in qholes:
         raw_candidates = tuple(sorted(row for row in raw_closure if Q.qtuple(row, maps) == qrow))
-        # Match the exact admission invariant of the 38-factor generator from PR #284:
-        # a quotient hole may be promoted only when it eliminates genuine raw pairwise-
-        # closure tuples and every such lift is absent from the exact physical image.
-        assert raw_candidates, (triple, qrow)
+        # Match the exact admission invariant of the 38-factor generator from PR #284.
+        # This prevents a quotient-projection artifact from being silently admitted as
+        # a new current physical factor.
+        assert raw_candidates, ("quotient hole has no raw pairwise-closure lift", triple, qrow)
         assert all(row not in image for row in raw_candidates)
         qhole_rows.append({
             "quotient_tuple": list(qrow),
             "raw_pairwise_closure_tuples_eliminated": len(raw_candidates),
             "raw_tuples": [list(row) for row in raw_candidates],
         })
+
+    if qholes:
+        decision = "EXACT_TAIL3_PHYSICAL_TERNARY_OBSTRUCTION_DESCENDS_TO_SIGN_REFLECTION_QUOTIENT"
+    elif raw_holes:
+        decision = "EXACT_TAIL3_PHYSICAL_TERNARY_OBSTRUCTION_IS_SIGN_ONLY_AT_SIGN_REFLECTION_QUOTIENT"
+    else:
+        decision = "NO_TAIL3_TERNARY_OBSTRUCTION_BEYOND_PAIRWISE_AT_RAW_OR_QUOTIENT_LEVEL"
 
     out = {
         "position": "C",
@@ -92,19 +98,18 @@ def analyze():
         "leaf_cells": stats["leaf_cells"],
         "walsh_evals": stats["walsh_evals"],
         "promotable_to_current_quotient_factor_inventory": bool(qholes),
-        "decision": (
-            "EXACT_TAIL3_PHYSICAL_TERNARY_OBSTRUCTION_DESCENDS_TO_SIGN_REFLECTION_QUOTIENT"
-            if qholes
-            else "EXACT_TAIL3_PHYSICAL_TERNARY_OBSTRUCTION_IS_SIGN_ONLY_AT_SIGN_REFLECTION_QUOTIENT"
-        ),
+        "decision": decision,
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     if qholes:
         print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_TAIL3_OBSTRUCTION")
-        print("theorem=the emitted third-tail exact physical ternary obstruction contains complete sign-reflection-orbit holes and is admissible as an exact forbidden ternary relation on the existing quotient states")
-    else:
+        print("theorem=the emitted third-tail exact physical relation contains complete sign-reflection-orbit holes and is admissible as an exact forbidden ternary relation on the existing quotient states")
+    elif raw_holes:
         print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_TAIL3_SIGN_ONLY")
-        print("theorem=the emitted third-tail exact physical ternary value obstruction has no complete sign-reflection quotient hole and is not admissible as a new factor on the current quotient state space")
+        print("theorem=the emitted third-tail exact physical value obstruction has no complete sign-reflection quotient hole and is not admissible as a new factor on the current quotient state space")
+    else:
+        print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_TAIL3_NONE")
+        print("theorem=the emitted third-tail exact physical value image equals its raw pairwise closure and contributes no new ternary obstruction at the current quotient level")
     print("boundary=this decides quotient descent only for the emitted tail3 target; it does not modify the frozen 38-factor weighted authority")
     print("ALPHA_PASS=0")
     return out
