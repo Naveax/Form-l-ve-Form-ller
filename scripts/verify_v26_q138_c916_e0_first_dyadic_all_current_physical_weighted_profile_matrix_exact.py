@@ -2,11 +2,18 @@
 """Exact profile-matrix execution for the C916 all-current weighted count.
 
 The ten separator-domain profiles in the frozen width-3 base authority are independent
-summands.  Running them separately changes only scheduling: every profile still uses the
-same exact 4,005-pair quotient model, complete 19 affine all-nonzero obstructions, five
-compiled physical quaternary factors, all current ternary factors, and multiplicity
-weights.  The aggregate mode adds the ten exact weighted summands and rechecks the
-historical six-factor regression integer before admitting an all-current integer.
+summands. Running them separately changes only scheduling: every target profile still
+uses the same exact 4,005-pair quotient model, complete 19 affine all-nonzero
+obstructions, five compiled physical quaternary factors, all current ternary factors,
+and multiplicity weights.
+
+The legacy pairwise driver computes log2(total) after visiting all ten profiles. A target
+profile can legitimately have exact count zero, so non-target profiles return a dummy
+count of one solely to keep that legacy reporting total positive. The target row itself
+is untouched. Its exact weighted summand is reconstructed as base_mass * target_count,
+and the dummy background is checked algebraically then discarded. If the six-factor
+target count is zero, the all-current target is exactly zero by monotonicity and no
+second recursive solve is needed.
 """
 
 from __future__ import annotations
@@ -14,7 +21,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import os
 from pathlib import Path
 
 TARGET_DOMAIN_STATE_SUMS = (83, 88, 95, 100, 102, 134, 154, 251, 288, 302)
@@ -34,7 +40,10 @@ def run_profile(target: int, output: Path) -> dict:
         def count_profile(self, domains):
             dsum = sum(int(d).bit_count() for d in domains)
             if dsum != target:
-                return 0, 0, 0
+                # Scheduling sentinel only. C.analyze() takes log2 of its aggregate;
+                # returning zero for every non-target profile would make that report
+                # undefined when the exact target is itself zero.
+                return 1, 0, 0
             return super().count_profile(domains)
 
     def run_one(limit: int, label: str) -> dict:
@@ -49,23 +58,33 @@ def run_profile(target: int, output: Path) -> dict:
         rows = [row for row in E.PROFILE_ROWS if row["model"] == label]
         assert len(rows) == 1, (label, target, rows)
         exact_row = rows[0]
-        base_rows = [
-            row for row in base["profile_rows"]
-            if int(row["domain_state_sum"]) == target
-        ]
-        assert len(base_rows) == 1
-        base_row = base_rows[0]
+        base_rows = list(base["profile_rows"])
+        assert len(base_rows) == len(TARGET_DOMAIN_STATE_SUMS)
+        target_rows = [row for row in base_rows if int(row["domain_state_sum"]) == target]
+        assert len(target_rows) == 1
+        base_row = target_rows[0]
+
         raw = int(exact_row["exact_count"])
-        weighted = int(base["exact_count"])
         base_mass = int(base_row["base_mass"])
+        weighted = base_mass * raw
         assert int(base_row["m4_pairwise_relaxation_count"]) == raw
-        assert weighted == base_mass * raw
+
+        dummy_background = 0
+        for row in base_rows:
+            dsum = int(row["domain_state_sum"])
+            if dsum == target:
+                continue
+            assert int(row["m4_pairwise_relaxation_count"]) == 1, (dsum, row)
+            dummy_background += int(row["base_mass"])
+        assert int(base["exact_count"]) == dummy_background + weighted
+
         return {
             "label": label,
             "domain_state_sum": target,
             "base_mass": base_mass,
             "exact_profile_count": raw,
             "exact_weighted_summand": weighted,
+            "scheduler_dummy_background": dummy_background,
             "calls_delta": int(exact_row["calls_delta"]),
             "memo_states_delta": int(exact_row["memo_states_delta"]),
             "memo_hits_delta": int(exact_row["memo_hits_delta"]),
@@ -75,9 +94,27 @@ def run_profile(target: int, output: Path) -> dict:
         }
 
     regression = run_one(6, "six_factor_regression")
-    full = run_one(len(factors), "all_current")
+    if int(regression["exact_profile_count"]) == 0:
+        # The 38-factor model only adds constraints to the six-factor model.
+        # An empty six-factor profile therefore remains empty exactly.
+        full = {
+            **regression,
+            "label": "all_current",
+            "exact_profile_count": 0,
+            "exact_weighted_summand": 0,
+            "derived_from_zero_regression_by_monotonicity": True,
+            "calls_delta": 0,
+            "memo_states_delta": 0,
+            "memo_hits_delta": 0,
+            "constraint_eval_hits_delta": 0,
+            "constraint_eval_misses_delta": 0,
+        }
+    else:
+        full = run_one(len(factors), "all_current")
+        full["derived_from_zero_regression_by_monotonicity"] = False
+
     assert full["base_mass"] == regression["base_mass"]
-    assert 0 <= full["exact_profile_count"] <= regression["exact_profile_count"]
+    assert 0 <= int(full["exact_profile_count"]) <= int(regression["exact_profile_count"])
 
     out = {
         "position": "C",
