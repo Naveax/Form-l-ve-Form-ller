@@ -1,6 +1,6 @@
 # FDS C916 CONTINUE HERE
 
-Status date: 2026-09-15.  
+Status date: 2026-09-16.  
 `ALPHA_PASS=0`.
 
 This file is the continuation authority for the C916 E0 first-dyadic position-C exact-count workstream. It is intentionally separate from the older global `FDS_CONTINUE_HERE.md`, which currently tracks a different dyadic leaf-compression line.
@@ -123,7 +123,7 @@ This normalized density reduction is **not** a bound on the weighted pairwise-co
 
 ## Current weighted all-current target
 
-PR #290 (`perf/c916-all-current-weighted-junction-bitset-20260915`) is the current exact weighted integration attempt. Its active run is `34985971234`. Do not dispatch or rerun an equivalent target while that run is queued, pending, or in progress.
+PR #290 (`perf/c916-all-current-weighted-junction-bitset-20260915`) is the current exact weighted integration attempt. The superseded monolithic direct run timed out/cancelled after the mandatory six-factor regression gate had passed, so it must not be rerun blindly. The active replacement is exact profile-matrix run `35078055585`; do not dispatch or rerun an equivalent target while any of its profile jobs is queued, pending, or in progress.
 
 The counter conjoins:
 
@@ -133,7 +133,19 @@ The counter conjoins:
 - all 38 current ternary physical quotient factors;
 - multiplicity weights from the exact quotient construction.
 
-Execution uses local higher-order support caching, residual-context memoization, and a memo reset between the ten separator-domain profiles. The six-ternary + five-quaternary historical integer above must reproduce exactly before any all-current integer is admitted.
+Execution uses local higher-order support caching and residual-context memoization. The ten separator-domain profiles are now independent exact jobs and are combined only by exact integer summation. The six-ternary + five-quaternary historical integer above remains the mandatory aggregate regression gate before any all-current integer is admitted.
+
+Current exact profile checkpoints from run `35078055585`:
+
+- profile `83`: regression count `0`; all-current count `0` by monotonicity; weighted summand `0`;
+- profile `88`: regression count `1`; all-current count `1`; weighted summand `30480904722839961600000`;
+- profile `95`: regression count `0`; all-current count `0` by monotonicity; weighted summand `0`;
+- profile `100`: regression count `1`; all-current count `1`; weighted summand `30480904722839961600000`;
+- profile `102`: regression count `0`; all-current count `0` by monotonicity; weighted summand `0`;
+- profile `134`: regression/all-current count `21387962445840`; all-current weighted summand `681875933912984177143966374798523033976832000000000000000000`;
+- profile `154`: regression count `39497049400320`, all-current count `39494619400320`, so the additional 32 ternary factors remove exactly `2430000000` quotient-weighted states; all-current weighted summand `1888709400649505336435863766592709044731904000000000000000000`.
+
+Profiles `251`, `288`, and `302` are still the unresolved heavy profiles in that run. No final all-current weighted integer is promoted until all ten profile certificates and the exact fan-in regression succeed. A manual exact heavy-profile shard workflow exists only as a fallback for a concrete timeout/failure; it must not be launched in parallel with a still-running equivalent profile job.
 
 The pairwise baseline sits at `268.49247853554294...` bits, so reaching a local normalized count below `2^250` would require more than
 
@@ -147,8 +159,10 @@ bits to the `2^250` line. These are arithmetic target gaps only, not impossibili
 
 ## Next exact actions
 
-1. If run `34985971234` succeeds, inspect the full logs, confirm the six-factor regression gate, freeze the all-current weighted integer in a dedicated regression verifier, merge PR #290 only if the semantics and exact boundary are intact, then update this file.
-2. If the run times out or fails for performance rather than mathematics, do not rerun blindly. Preserve exact semantics and optimize execution, with priority on hyper-variable branch ordering, residual-context minimization, and cached global higher-order support.
-3. Use the merged width-9 junction authority as a stronger exact propagation oracle only if the implementation preserves coupling to the dense pairwise layer and multiplicity weights. The unweighted junction integer must never be promoted directly into a weighted work exponent.
-4. Continue searching for additional certified physical higher-order image constraints. The current 38 ternaries + five quads are only the current inventory, not a completeness theorem for the full physical image.
-5. `ALPHA_PASS` stays `0` until an actual end-to-end schedule/work reduction is proved.
+1. Complete exact profiles `251`, `288`, and `302` in run `35078055585`; inspect each `profile_result` certificate as it lands and do not duplicate an active profile target.
+2. Once all ten profile artifacts exist, run/inspect the exact fan-in, require exact reproduction of the historical six-factor checkpoint, then freeze the all-current weighted integer in a dedicated regression verifier before promotion.
+3. If a heavy profile times out or fails for performance rather than mathematics, use the exact disjoint heavy-profile shard fallback only for that failed profile. Do not rerun the same monolithic profile blindly.
+4. Merge PR #290 only after all required exact profile and aggregate checks pass and the weighted boundary is explicit.
+5. Use the merged width-9 junction authority as a stronger exact propagation oracle only if the implementation preserves coupling to the dense pairwise layer and multiplicity weights. The unweighted junction integer must never be promoted directly into a weighted work exponent.
+6. Continue searching for additional certified physical higher-order image constraints. The current 38 ternaries + five quads are only the current inventory, not a completeness theorem for the full physical image.
+7. `ALPHA_PASS` stays `0` until an actual end-to-end schedule/work reduction is proved.
