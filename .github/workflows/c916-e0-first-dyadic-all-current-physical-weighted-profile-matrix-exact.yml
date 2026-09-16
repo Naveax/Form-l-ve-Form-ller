@@ -32,6 +32,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Syntax-check exact profile-matrix runner
+        run: >-
+          python -m py_compile
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_matrix_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_context_exact.py
+          scripts/_c916_all_current_weighted_context_engine.py
       - run: python -m pip install --quiet sympy==1.14.0
       - uses: actions/download-artifact@v4
         with:
@@ -101,6 +107,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Syntax-check aggregate runner
+        run: python -m py_compile scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_matrix_exact.py
       - uses: actions/download-artifact@v4
         with:
           pattern: c916-all-current-weighted-profile-*
