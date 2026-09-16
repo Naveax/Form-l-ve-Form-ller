@@ -24,6 +24,7 @@ import verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_authority a
 import verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_batch4 as G
 
 TARGET = int(os.environ.get("C916_PHYSICAL_QUOTIENT_TAIL3_TARGET", "0"))
+OUTPUT = os.environ.get("C916_PHYSICAL_QUOTIENT_TAIL3_OUTPUT")
 
 
 def analyze():
@@ -100,6 +101,10 @@ def analyze():
         "promotable_to_current_quotient_factor_inventory": bool(qholes),
         "decision": decision,
     }
+    if OUTPUT:
+        path = Path(OUTPUT)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(out, sort_keys=True, indent=2) + "\n")
     print("result", json.dumps(out, sort_keys=True), flush=True)
     if qholes:
         print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_TAIL3_OBSTRUCTION")
