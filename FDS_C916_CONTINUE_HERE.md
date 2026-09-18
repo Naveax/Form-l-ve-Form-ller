@@ -182,13 +182,63 @@ Only profile `251` remains unresolved in run `35078055585`. A separate non-dispa
 
 The pairwise baseline sits at `268.49247853554294...` bits. The nine certified all-current profiles already force the current-inventory weighted quotient count above `265.02844502351445...` bits, leaving at least `15.02844502351445...` bits above the `2^250` line even before the nonnegative profile-`251` contribution is added. This arithmetic gap is not an impossibility bound once additional certified physical constraints are allowed.
 
+## 2026-09-18 tail3 exact expansion checkpoint
+
+The third physical ternary tail has now been promoted through the existing sign-reflection quotient exactly.
+
+Merged PR #298 added ten new exact quotient ternary factors, all disjoint from the frozen 38-factor inventory:
+
+`(4,11,165)`, `(4,24,165)`, `(4,62,165)`, `(4,67,165)`, `(4,111,165)`,
+`(4,113,165)`, `(4,114,165)`, `(4,136,165)`, `(4,144,165)`, `(4,165,181)`.
+
+Across those ten scopes the exact quotient relations contain 39 forbidden quotient tuples. Six of the 16 tested tail3 targets are exact pairwise-complete negative controls; none of the raw obstructions in that tail collapsed into a sign-only quotient obstruction.
+
+Merged PR #301 closes the expanded physical topology exactly:
+
+- frozen physical ternaries: 38;
+- newly promoted tail3 ternaries: 10;
+- physical quaternary factors: 5;
+- large connected component: 28 variables;
+- exact treewidth: 6;
+- width-5 exhaustive labeled-state search: 384,000 memo states, no valid ordering;
+- deterministic width-6 elimination: one fill edge.
+
+Merged PR #302 compiles the resulting 48 ternaries plus five quaternary factors into exact width-6 junction tables. The exact expanded physical-only quotient-layer assignment count is
+
+`24336193146014265408978624`
+
+with
+
+`log2 = 84.33130588046147...`.
+
+Frozen comparison against the earlier 38-ternary physical authority:
+
+- earlier physical-only exact count: `31704503579053764899189904`;
+- assignments removed by the ten tail3 factors: `7368310433039499490211280`;
+- exact uniform quotient-layer reduction: `0.3815842793957813...` bits;
+- component counts: `[21745530614546912, 63, 61, 77, 62, 61]`;
+- maximal cliques: 24;
+- junction-forest edges: 18;
+- largest clique capacity: 16,384;
+- largest compiled allowed table: 15,488;
+- largest positive separator support: 934.
+
+This is still a physical higher-order quotient-layer authority only. It does not include the dense 4,005 pairwise value relations, the complete affine-support constraints, or multiplicity weights, and it is not an end-to-end work exponent.
+
+Current active follow-ups:
+
+- PR #297: exact nested state shards for the unresolved weighted profile `251`; the third-level fallback is prepared on branch `perf/c916-profile251-third-level-fallback-20260918` but is not dispatched while second-level children remain active.
+- PR #300: exact quotient descent for the fourth physical ternary tail. A prior run completed all target-level exact quotient computations but failed only in summary-artifact shell quoting; the corrected workflow is the authority path.
+- PR #303: exact tail3-expanded physical + complete-affine junction compiler. The initial topology check found maximum-clique lower bound 9 and deterministic min-fill upper bound 11, so exact treewidth is not assumed. The current branch searches for a narrower deterministic completion and otherwise keeps the junction count exact on the certified upper-bound chordal completion.
+
 ## Next exact actions
 
-1. Let the already-active profile `251` job in run `35078055585` finish without dispatching an equivalent duplicate.
-2. If profile `251` succeeds, inspect its exact certificate and the automatic ten-profile aggregate; require exact reproduction of the historical six-factor checkpoint before promoting the all-current integer.
-3. If profile `251` fails only for performance/timeout, keep the nine successful artifacts and use the prepared exact five-way state-shard fallback for profile `251`; do not rerun profiles `83,88,95,100,102,134,154,288,302`.
-4. Freeze the admitted all-current weighted integer in a dedicated regression verifier and update this continuation authority before merging PR #290.
-5. Merge PR #290 only after the required exact certificate path is clean and the weighted boundary remains explicit.
-6. Use the merged width-9 junction authority as a stronger exact propagation oracle only if the implementation preserves coupling to the dense pairwise layer and multiplicity weights. The unweighted junction integer must never be promoted directly into a weighted work exponent.
-7. Continue searching for additional certified physical higher-order image constraints. The current 38 ternaries + five quads are only the current inventory, not a completeness theorem for the full physical image.
+1. Finish the already-active second-level profile-`251` shard run without launching equivalent duplicate child targets. If any heavy child reaches the runner ceiling, activate the prepared third-level exact partition only for that failed child.
+2. Aggregate profile `251` only after the frozen six-factor profile regression count `87639022052873245102889951271577152` and weighted summand `21312470864940260066305006484700721917824185471141115669201479972945920000000000` are exactly reproduced by the partition.
+3. Combine the admitted profile-`251` contribution with the nine already-certified profile summands and freeze the exact ten-profile weighted integer in a dedicated regression authority.
+4. Finish PR #300 and admit only clean exact tail4 quotient relations. Do not promote raw physical holes that disappear under sign reflection.
+5. Finish PR #303 and record the exact tail3-expanded physical+affine junction count. Keep treewidth as bounds unless lower and upper certificates actually meet.
+6. After the current 38-factor weighted baseline is frozen, rebuild the weighted model with the newly certified tail3 quotient factors rather than treating the physical-only density gain as a weighted gain.
+7. Continue the physical higher-order search beyond tail4. The current factor inventory remains an exact finite inventory, not a completeness theorem for the full physical image.
 8. `ALPHA_PASS` stays `0` until an actual end-to-end schedule/work reduction is proved.
+
