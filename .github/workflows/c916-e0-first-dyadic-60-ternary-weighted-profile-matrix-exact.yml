@@ -1,0 +1,144 @@
+name: C916 E0 60-ternary weighted profile matrix exact
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_60_ternary_weighted_profile_matrix_exact.py'
+      - '.github/workflows/c916-e0-first-dyadic-60-ternary-weighted-profile-matrix-exact.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  profile:
+    name: profile-${{ matrix.domain_state_sum }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        domain_state_sum: [83, 88, 95, 100, 102, 134, 154, 251, 288, 302]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax-check exact 60-factor profile runner
+        run: >-
+          python -m py_compile
+          scripts/verify_v26_q138_c916_e0_first_dyadic_60_ternary_weighted_profile_matrix_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_context_exact.py
+          scripts/_c916_all_current_weighted_context_engine.py
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-current-physical-factor-*
+          run-id: 34952229238
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/current-physical-factors
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: tail3-quotient-*
+          run-id: 35120066130
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail3-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-tail4-quotient-*
+          run-id: 35333500851
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail4-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - name: Exact 60-factor weighted profile ${{ matrix.domain_state_sum }}
+        env:
+          C916_CURRENT_PHYSICAL_FACTOR_DIR: authorities/current-physical-factors
+          C916_TAIL3_QUOTIENT_DIR: authorities/tail3-quotient
+          C916_TAIL4_QUOTIENT_DIR: authorities/tail4-quotient
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_60_ternary_weighted_profile_matrix_exact.py
+          profile
+          --domain-state-sum ${{ matrix.domain_state_sum }}
+          --output authorities/profile-results/profile-${{ matrix.domain_state_sum }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-60-ternary-weighted-profile-${{ matrix.domain_state_sum }}
+          path: authorities/profile-results/profile-${{ matrix.domain_state_sum }}.json
+          if-no-files-found: error
+          retention-days: 14
+
+  aggregate:
+    name: aggregate
+    needs: profile
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax-check aggregate runner
+        run: python -m py_compile scripts/verify_v26_q138_c916_e0_first_dyadic_60_ternary_weighted_profile_matrix_exact.py
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-60-ternary-weighted-profile-*
+          path: authorities/profile-results
+          merge-multiple: true
+      - name: Aggregate ten exact 60-factor weighted profile summands
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_60_ternary_weighted_profile_matrix_exact.py
+          aggregate
+          --directory authorities/profile-results
+          --output authorities/c916-60-ternary-weighted-profile-matrix-exact.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-60-ternary-weighted-profile-matrix-exact
+          path: authorities/c916-60-ternary-weighted-profile-matrix-exact.json
+          if-no-files-found: error
+          retention-days: 14
