@@ -47,17 +47,11 @@ jobs:
       - name: Exact fourth-tail quotient descent
         env:
           C916_PHYSICAL_QUOTIENT_TAIL4_TARGET: ${{ matrix.target_index }}
+          C916_PHYSICAL_QUOTIENT_TAIL4_OUTPUT: tail4-quotient-summaries/tail4_quotient_${{ matrix.target_index }}.json
           C916_PHYSICAL_TRIPLE_MAX_CELLS: '50000'
           C916_PHYSICAL_TRIPLE_MAX_PHASES: '14'
           C916_PHYSICAL_TRIPLE_MAX_WALSH_EVALS: '2000000'
-        run: >-
-          python scripts/verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail4.py
-          | tee tail4.log
-      - name: Write exact summary artifact
-        env:
-          TARGET: ${{ matrix.target_index }}
-        run: >-
-          python -c 'import json,os,pathlib; line=next(x for x in pathlib.Path("tail4.log").read_text().splitlines() if x.startswith("result ")); pathlib.Path("tail4-quotient-summaries").mkdir(exist_ok=True); pathlib.Path(f"tail4-quotient-summaries/tail4_quotient_{int(os.environ["TARGET"]):02d}.json").write_text(line[7:]+"\n")'
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail4.py
       - uses: actions/upload-artifact@v4
         with:
           name: c916-tail4-quotient-${{ matrix.target_index }}
