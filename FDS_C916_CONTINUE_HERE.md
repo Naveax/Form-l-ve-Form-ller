@@ -225,11 +225,42 @@ Frozen comparison against the earlier 38-ternary physical authority:
 
 This is still a physical higher-order quotient-layer authority only. It does not include the dense 4,005 pairwise value relations, the complete affine-support constraints, or multiplicity weights, and it is not an end-to-end work exponent.
 
+Merged PR #303 then folds those ten tail3 quotient factors into the complete 19-scope affine higher-order layer with authority-correct all-nonzero affine semantics. The exact expanded physical+affine higher-order assignment count is
+
+`610168911320611717122698496`
+
+with
+
+`log2 = 88.97933914219256...`.
+
+Compared with the earlier frozen 38-ternary physical+affine authority `681934454409791000768011200`, the ten tail3 factors remove exactly
+
+`71765543089179283645312704`
+
+assignments, an exact uniform quotient-layer reduction of `0.16042440306917172...` bits. The clean junction certificate has five components with counts `[33258087916833958528, 63, 61, 77, 62]`, 25 maximal cliques, 20 junction-forest edges, total clique capacity `30,825,488`, total compiled allowed rows `27,829,295`, and maximum positive separator support `842,752`.
+
+The combined expanded topology is **not** claimed to have exact treewidth. The exact maximum-clique lower bound remains 9 while the best certified deterministic elimination currently has width 11. The junction count is nevertheless exact on that explicit chordal completion. Dense pairwise relations and multiplicity weights are still outside this integer.
+
+For the weighted 38-ternary baseline, the unresolved profile `251` is being partitioned exactly. In addition to the nine-profile exact partial sum, first-level shard 2 contributes exact weighted summand
+
+`6201069113280857026222089856062228073519347057022249691298101754593280000000000`
+
+and nested parent-3/child-2 contributes
+
+`2067023037760285675407363285354076024506449019007416563766033918197760000000000`.
+
+These already-certified disjoint pieces raise the current exact partial weighted lower bound to
+
+`68734150144380520506990404790715742098806722115815611926371371576564079001600000`
+
+with `log2 = 265.2133465675264...`. This remains a partial current-inventory quotient-layer lower bound, not the final ten-profile total and not an end-to-end work lower bound.
+
 Current active follow-ups:
 
 - PR #297: exact nested state shards for the unresolved weighted profile `251`; the third-level fallback is prepared on branch `perf/c916-profile251-third-level-fallback-20260918` but is not dispatched while second-level children remain active.
 - PR #300: exact quotient descent for the fourth physical ternary tail. A prior run completed all target-level exact quotient computations but failed only in summary-artifact shell quoting; the corrected workflow is the authority path.
-- PR #303: exact tail3-expanded physical + complete-affine junction compiler. The initial topology check found maximum-clique lower bound 9 and deterministic min-fill upper bound 11, so exact treewidth is not assumed. The current branch searches for a narrower deterministic completion and otherwise keeps the junction count exact on the certified upper-bound chordal completion.
+- PR #303 is merged. Its exact tail3-expanded physical+affine junction count is now authority; treewidth remains bounded by `9 <= tw <= 11`.
+- A frozen regression verifier for this merged combined authority is prepared on branch `math/c916-tail3-expanded-physical-affine-freeze-prep-20260918` and is intentionally not dispatched while heavier active CI occupies the queue.
 
 ## Next exact actions
 
@@ -237,7 +268,7 @@ Current active follow-ups:
 2. Aggregate profile `251` only after the frozen six-factor profile regression count `87639022052873245102889951271577152` and weighted summand `21312470864940260066305006484700721917824185471141115669201479972945920000000000` are exactly reproduced by the partition.
 3. Combine the admitted profile-`251` contribution with the nine already-certified profile summands and freeze the exact ten-profile weighted integer in a dedicated regression authority.
 4. Finish PR #300 and admit only clean exact tail4 quotient relations. Do not promote raw physical holes that disappear under sign reflection.
-5. Finish PR #303 and record the exact tail3-expanded physical+affine junction count. Keep treewidth as bounds unless lower and upper certificates actually meet.
+5. Freeze the merged PR #303 exact physical+affine integer with the prepared regression verifier once CI capacity is available; keep treewidth as bounds unless lower and upper certificates actually meet.
 6. After the current 38-factor weighted baseline is frozen, rebuild the weighted model with the newly certified tail3 quotient factors rather than treating the physical-only density gain as a weighted gain.
 7. Continue the physical higher-order search beyond tail4. The current factor inventory remains an exact finite inventory, not a completeness theorem for the full physical image.
 8. `ALPHA_PASS` stays `0` until an actual end-to-end schedule/work reduction is proved.
