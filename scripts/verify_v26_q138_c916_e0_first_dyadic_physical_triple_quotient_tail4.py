@@ -87,6 +87,11 @@ def analyze():
             )
         ),
     }
+    output_path = os.environ.get("C916_PHYSICAL_QUOTIENT_TAIL4_OUTPUT")
+    if output_path:
+        path = Path(output_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PHYSICAL_TRIPLE_QUOTIENT_TAIL4_EXACT")
     print("boundary=this target-level theorem does not alter the frozen weighted authority")
