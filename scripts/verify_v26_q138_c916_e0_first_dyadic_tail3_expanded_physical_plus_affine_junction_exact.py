@@ -117,8 +117,8 @@ def analyze():
     upper = max(int(row["later_degree"]) for row in rows)
     clique = S.exact_maximum_clique(adj)
     lower = len(clique) - 1
-    assert lower == upper, (lower, upper, clique)
-    exact_treewidth = upper
+    assert lower <= upper, (lower, upper, clique)
+    exact_treewidth = upper if lower == upper else None
 
     simple_rows = tuple((int(row["vertex"]), tuple(map(int, row["later_neighbors"]))) for row in rows)
     cliques = J.maximal_cliques(simple_rows)
@@ -140,7 +140,9 @@ def analyze():
         "expanded_ternary_factors": len(ternary),
         "physical_quaternary_factors": 5,
         "affine_constraints": len(affine),
-        "exact_treewidth": exact_treewidth,
+        "treewidth_lower_bound_from_maximum_clique": lower,
+        "deterministic_min_fill_upper_bound": upper,
+        "exact_treewidth_if_bounds_match": exact_treewidth,
         "exact_maximum_clique": list(clique),
         "fill_edges": [list(map(int, x)) for x in fill_edges],
         "maximal_cliques": len(cliques),
@@ -158,11 +160,17 @@ def analyze():
         "gain_vs_frozen_38_log2_bits": math.log2(OLD_COMBINED_COUNT) - math.log2(total),
         "max_positive_separator_rows": max((row["positive_rows"] for row in messages), default=1),
         "clique_tables": list(metadata),
-        "decision": "C916_TAIL3_EXPANDED_PHYSICAL_PLUS_COMPLETE_AFFINE_EXACT_JUNCTION_TABLES",
+        "decision": (
+            "C916_TAIL3_EXPANDED_PHYSICAL_PLUS_COMPLETE_AFFINE_EXACT_JUNCTION_TABLES_WITH_EXACT_TREEWIDTH"
+            if exact_treewidth is not None
+            else "C916_TAIL3_EXPANDED_PHYSICAL_PLUS_COMPLETE_AFFINE_EXACT_JUNCTION_TABLES_WITH_TREEWIDTH_BOUNDS"
+        ),
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_TAIL3_EXPANDED_PHYSICAL_PLUS_AFFINE_JUNCTION_EXACT")
-    print("theorem=the frozen physical inventory plus ten exact tail3 quotient factors and all 19 authority-correct affine activity obstructions compile into the emitted exact junction model")
+    print("theorem=the frozen physical inventory plus ten exact tail3 quotient factors and all 19 authority-correct affine activity obstructions compile exactly into the emitted chordal junction model")
+    if exact_treewidth is None:
+        print("boundary=treewidth is not claimed exact; the emitted maximum-clique lower bound and deterministic elimination upper bound remain distinct")
     print("boundary=this excludes the dense 4005 pairwise quotient relation layer and multiplicity weights, so it is not a weighted work exponent")
     print("ALPHA_PASS=0")
     return out
