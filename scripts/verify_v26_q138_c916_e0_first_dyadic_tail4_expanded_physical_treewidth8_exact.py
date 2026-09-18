@@ -12,6 +12,7 @@ from __future__ import annotations
 import functools
 import itertools
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -31,6 +32,24 @@ TAIL4 = (
 EXPECTED_COMPONENT_SIZES = (29, 3, 3, 3, 3, 3)
 EXPECTED_FILL_EDGES = ((4, 7), (165, 182))
 EXPECTED_WIDTH7_STATES = 655360
+TAIL4_DIR = Path(os.environ.get("C916_TAIL4_QUOTIENT_DIR", "authorities/tail4-quotient"))
+
+
+def verify_tail4_artifacts():
+    files = sorted(TAIL4_DIR.glob("tail4_quotient_*.json"))
+    assert len(files) == 16, (TAIL4_DIR, len(files))
+    rows = [json.loads(p.read_text()) for p in files]
+    by = {int(row["tail4_target"]): row for row in rows}
+    assert set(by) == set(range(16))
+    promoted = []
+    for target in range(16):
+        row = by[target]
+        qholes = int(row["quotient_holes"])
+        assert bool(row["promotable_to_current_quotient_factor_inventory"]) == (qholes > 0)
+        if qholes > 0:
+            promoted.append(tuple(map(int, row["triple"])))
+    assert tuple(sorted(promoted)) == tuple(sorted(TAIL4))
+    return tuple(rows)
 
 
 def build_graph():
@@ -147,6 +166,7 @@ def exact_width_at_most(adj0, vertices, k):
 
 
 def analyze():
+    artifact_rows = verify_tail4_artifacts()
     scopes, adj = build_graph()
     comps = components(adj)
     sizes = tuple(len(c) for c in comps)
@@ -168,6 +188,7 @@ def analyze():
         "physical_shared_dimension": 149,
         "frozen_ternary_factors": len(T.TERNARY_FACTORS),
         "tail3_promoted_ternary_factors": len(TAIL3),
+        "tail4_targets": len(artifact_rows),
         "tail4_promoted_ternary_factors": len(TAIL4),
         "physical_quaternary_factors": len(T.QUATERNARY_FACTORS),
         "combined_physical_scopes": len(scopes),
