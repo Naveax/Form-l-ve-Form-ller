@@ -40,7 +40,7 @@ def analyze():
     assert int(out["expanded_ternary_factors"]) == EXPECTED_TERNARY
     assert int(out["physical_quaternary_factors"]) == EXPECTED_QUADS
     assert int(out["deterministic_triangulation_width"]) == EXPECTED_TREEWIDTH
-    assert list(map(int, out["fill_edges"])) if False else True
+    assert [list(map(int, row)) for row in out["fill_edges"]] == [[4, 7]]
     assert int(out["maximal_cliques"]) == EXPECTED_CLIQUES
     assert int(out["junction_forest_edges"]) == EXPECTED_FOREST_EDGES
     assert int(out["largest_clique_capacity"]) == EXPECTED_LARGEST_CAPACITY
