@@ -25,6 +25,71 @@ EXPECTED_TERNARY_COUNT = 48
 EXPECTED_AFFINE_COUNT = 19
 
 
+def beam_elimination_certificate(adj0, beam_width=512, branch_factor=6):
+    """Deterministically search for a narrower chordal completion.
+
+    This is an upper-bound search only. Any returned ordering is explicitly verified by
+    replay because a heuristic failure must never be promoted to a lower-bound claim.
+    """
+    initial = ({v: set(nbs) for v, nbs in adj0.items()}, [], [], 0, 0)
+    beam = [initial]
+
+    def signature(adj):
+        return tuple((v, tuple(sorted(adj[v]))) for v in sorted(adj))
+
+    for _depth in range(len(adj0)):
+        children = {}
+        for adj, rows, fills, width, fill_total in beam:
+            candidates = []
+            for v, nbs0 in adj.items():
+                nbs = tuple(sorted(nbs0))
+                missing = tuple(
+                    (u, w)
+                    for u, w in itertools.combinations(nbs, 2)
+                    if w not in adj[u]
+                )
+                candidates.append((
+                    max(width, len(nbs)),
+                    len(missing),
+                    len(nbs),
+                    v,
+                    nbs,
+                    missing,
+                ))
+            for _neww, fcount, degree, v, nbs, missing in sorted(candidates)[:branch_factor]:
+                nadj = {x: set(ns) for x, ns in adj.items()}
+                nfills = list(fills)
+                for u, w in missing:
+                    if w not in nadj[u]:
+                        nadj[u].add(w)
+                        nadj[w].add(u)
+                        nfills.append((u, w))
+                for u in nbs:
+                    nadj[u].remove(v)
+                del nadj[v]
+                nrows = rows + [{
+                    "vertex": v,
+                    "later_neighbors": list(nbs),
+                    "later_degree": degree,
+                    "fill_edges_needed": [list(x) for x in missing],
+                }]
+                nwidth = max(width, degree)
+                nfill_total = fill_total + fcount
+                sig = signature(nadj)
+                score = (nwidth, nfill_total, sum(len(ns) for ns in nadj.values()), tuple(x["vertex"] for x in nrows))
+                old = children.get(sig)
+                if old is None or score < old[0]:
+                    children[sig] = (score, (nadj, nrows, nfills, nwidth, nfill_total))
+        ranked = sorted(children.values(), key=lambda x: x[0])
+        beam = [state for _score, state in ranked[:beam_width]]
+        assert beam
+
+    best = min(beam, key=lambda s: (s[3], s[4], tuple(r["vertex"] for r in s[1])))
+    _adj, rows, fills, width, _fill_total = best
+    assert not _adj and len(rows) == len(adj0)
+    return tuple(rows), tuple(fills), int(width)
+
+
 def assign_scope(scope, cliques):
     wanted = set(scope)
     candidates = [i for i, bag in enumerate(cliques) if wanted <= set(bag)]
@@ -113,8 +178,17 @@ def analyze():
 
     scopes = tuple(W.all_scopes()) + tuple(f["scope"] for f in tail3)
     adj = W.build_primal_graph(scopes)
-    rows, fill_edges = W.deterministic_min_fill_certificate(adj)
-    upper = max(int(row["later_degree"]) for row in rows)
+    deterministic_rows, deterministic_fill_edges = W.deterministic_min_fill_certificate(adj)
+    deterministic_upper = max(int(row["later_degree"]) for row in deterministic_rows)
+    beam_rows, beam_fill_edges, beam_upper = beam_elimination_certificate(adj)
+    if beam_upper < deterministic_upper:
+        rows, fill_edges = beam_rows, beam_fill_edges
+        upper = beam_upper
+        elimination_source = "deterministic_beam_search"
+    else:
+        rows, fill_edges = deterministic_rows, deterministic_fill_edges
+        upper = deterministic_upper
+        elimination_source = "deterministic_min_fill"
     clique = S.exact_maximum_clique(adj)
     lower = len(clique) - 1
     assert lower <= upper, (lower, upper, clique)
@@ -141,7 +215,10 @@ def analyze():
         "physical_quaternary_factors": 5,
         "affine_constraints": len(affine),
         "treewidth_lower_bound_from_maximum_clique": lower,
-        "deterministic_min_fill_upper_bound": upper,
+        "deterministic_min_fill_upper_bound": deterministic_upper,
+        "beam_search_upper_bound": beam_upper,
+        "selected_elimination_upper_bound": upper,
+        "selected_elimination_source": elimination_source,
         "exact_treewidth_if_bounds_match": exact_treewidth,
         "exact_maximum_clique": list(clique),
         "fill_edges": [list(map(int, x)) for x in fill_edges],
