@@ -34,11 +34,22 @@ def load_promoted(directory: Path, prefix: str, target_key: str):
     rows = [json.loads(p.read_text()) for p in files]
     by = {int(r[target_key]): r for r in rows}
     assert set(by) == set(range(16))
-    return tuple(sorted(
-        tuple(map(int, by[i]["triple"]))
-        for i in range(16)
-        if int(by[i]["quotient_holes"]) > 0
-    ))
+    scopes = []
+    for i in range(16):
+        row = by[i]
+        qholes = int(row["quotient_holes"])
+        raw_holes = int(row["raw_holes"])
+        assert bool(row["promotable_to_current_quotient_factor_inventory"]) == (qholes > 0)
+        forbidden = tuple(tuple(map(int, x)) for x in row["quotient_hole_tuples"])
+        assert len(forbidden) == qholes
+        if qholes:
+            scopes.append(tuple(map(int, row["triple"])))
+        elif raw_holes:
+            assert "SIGN_ONLY" in str(row["decision"])
+        else:
+            assert "PAIRWISE_COMPLETE_NEGATIVE_CONTROL" in str(row["decision"])
+    assert len(scopes) == len(set(scopes))
+    return tuple(sorted(scopes))
 
 
 def analyze():
@@ -49,9 +60,22 @@ def analyze():
     assert set(by) == set(range(16))
     rows = [by[i] for i in range(16)]
 
+    for r in rows:
+        qholes = int(r["quotient_holes"])
+        raw_holes = int(r["raw_holes"])
+        assert bool(r["promotable_to_current_quotient_factor_inventory"]) == (qholes > 0)
+        assert len(r["quotient_hole_tuples"]) == qholes
+        if qholes:
+            assert "DESCENDS_TO_SIGN_REFLECTION_QUOTIENT" in str(r["decision"])
+        elif raw_holes:
+            assert "SIGN_ONLY" in str(r["decision"])
+        else:
+            assert "PAIRWISE_COMPLETE_NEGATIVE_CONTROL" in str(r["decision"])
+
     promotable = [r for r in rows if int(r["quotient_holes"]) > 0]
     sign_only = [r for r in rows if int(r["raw_holes"]) > 0 and int(r["quotient_holes"]) == 0]
     pairwise_complete = [r for r in rows if int(r["raw_holes"]) == 0]
+    assert len(promotable) + len(sign_only) + len(pairwise_complete) == 16
 
     frozen = tuple(tuple(map(int, x)) for x in TOPO.TERNARY_FACTORS)
     tail5 = load_promoted(TAIL5_DIR, "tail5_quotient", "tail5_target")
