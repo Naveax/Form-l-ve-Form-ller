@@ -1,6 +1,6 @@
 # FDS C916 CONTINUE HERE
 
-Status date: 2026-09-16.  
+Status date: 2026-09-21.  
 `ALPHA_PASS=0`.
 
 This file is the continuation authority for the C916 E0 first-dyadic position-C exact-count workstream. It is intentionally separate from the older global `FDS_CONTINUE_HERE.md`, which currently tracks a different dyadic leaf-compression line.
@@ -380,13 +380,77 @@ with `log2 = 265.2277364860576...`.
 
 This remains a partial finite-inventory weighted quotient-layer result, not the final ten-profile total and not an end-to-end work exponent. A fourth-level exact fallback is prepared only for third-level grandchildren that actually fail or hit the runner ceiling; it must not be dispatched while the corresponding third-level jobs remain active.
 
+## 2026-09-21 late exact checkpoint
+
+Merged PR #314 freezes the tail4-expanded physical + complete-affine higher-order count using the memory-bounded modular junction engine. The same engine first reproduces both prior combined authorities exactly:
+
+- 38-ternary physical + affine: `681934454409791000768011200`;
+- 48-ternary tail3 physical + affine: `610168911320611717122698496`.
+
+It then certifies the 60-ternary tail4 physical + affine exact count
+
+`487658086737909263297551584`
+
+with `log2 = 88.65600044794664...`. The exact density reduction versus the tail3 combined authority is `0.3233386942459191...` bits. Treewidth remains bounded by `9 <= tw <= 12`; the count is exact on the explicit width-12 chordal completion. Dense pairwise relations and multiplicity weights remain outside this integer.
+
+Merged PR #315 promotes the nine tail5 quotient factors into the physical-only layer. Tail5 introduces `gid=154`, so the tail4 physical count must first be lifted by its four-state quotient alphabet. The aligned prior count is
+
+`301237990951554718804645056`.
+
+The exact 69-ternary + five-quaternary physical-only count is
+
+`258065635183020457238565504`
+
+with `log2 = 87.73786850756619...`. This removes `43172355768534261566079552` assignments from the lifted tail4 universe, an exact uniform quotient-layer reduction of `0.22316568801802816...` bits.
+
+Merged PR #318 independently closes the tail5 physical topology: exact treewidth is 8. The width-7 exact memoized search with safe simplicial reduction finds no valid ordering, while the deterministic elimination attains width 8.
+
+Merged PR #317 certifies the sixth exact 16-target physical ternary quotient tail:
+
+- 11 newly promotable exact quotient ternary factors;
+- 35 exact forbidden quotient tuples in total;
+- 5 exact pairwise-complete negative controls;
+- 0 sign-only raw obstructions;
+- no overlap with the merged 69-ternary inventory.
+
+The eleven new scopes are:
+
+`(3,6,7)`,
+`(3,7,18)`,
+`(3,7,22)`,
+`(3,7,30)`,
+`(3,7,33)`,
+`(3,7,69)`,
+`(3,7,88)`,
+`(3,7,89)`,
+`(181,182,244)`,
+`(181,182,245)`,
+`(181,182,249)`.
+
+The tail6 aggregate gives the 80-ternary candidate physical topology 52 primal variables, component sizes `[40,3,3,3,3]`, exact maximum-clique lower bound 6 and deterministic min-fill upper bound 8. PR #320 is the active clean-main promotion path that must prove exact treewidth 8 and then compile the exact physical-only junction count.
+
+Weighted profile `251` third-level run `35571022310` completed 12 grandchildren and cancelled eight heavy grandchildren. The successful parent-3 / child-3 / grandchild-2 slice has exact raw count
+
+`2833268820839722949952783867049152`
+
+and exact weighted summand
+
+`689007679253428558469121095118025341502149673002472187922011306065920000000000`.
+
+Together with the previously certified first- and second-level pieces, the current disjoint exact partial ten-profile weighted lower bound is
+
+`69423157823633949065459525885833767440308871788818084114293382882629999001600000`
+
+with `log2 = 265.2277364860576...`.
+
+PR #319 is the active exact fourth-level fallback only for the eight cancelled grandchildren: grandchild indices 1 and 3 under second-level children `(1,1)`, `(1,3)`, `(3,1)`, and `(3,3)`. Its final fan-in reuses all 12 successful third-level artifacts and substitutes fourth-level aggregates only for the eight missing slices, with an XOR source invariant to prevent double counting. It must still reproduce the frozen profile-`251` six-factor regression count and weighted summand exactly before the final 38-ternary weighted total is admitted.
+
 ## Next exact actions
 
-1. Finish active profile-`251` third-level jobs without duplicate reruns. If a remaining grandchild fails or reaches the runner ceiling, activate the prepared fourth-level exact partition only for that failed grandchild.
-2. Require the final profile-`251` fan-in to reproduce the frozen six-factor profile regression count `87639022052873245102889951271577152` and weighted summand exactly before accepting the 38-ternary ten-profile total.
-3. Finish PR #314. Accept the tail4-expanded physical+affine integer only after the modular engine reproduces the frozen 38-ternary combined integer exactly and CRT uniqueness is certified by a modulus product above the full quotient assignment universe.
-4. Finish PR #315 and freeze the exact 69-ternary physical-only count. Keep physical treewidth as bounds unless lower and upper certificates meet.
-5. After the frozen 38-ternary weighted baseline is complete, run the prepared 60-ternary weighted profile matrix. Do not infer a weighted gain directly from physical-only or physical+affine unweighted quotient counts.
-6. Continue the physical higher-order search beyond tail5 with new, non-overlapping exact targets.
-7. Keep exact/provisional boundaries explicit and keep `ALPHA_PASS=0` until an actual end-to-end schedule/work reduction is proved.
+1. Finish PR #319. Do not rerun any successful profile-`251` slice. Require exact one-source coverage of every third-level grandchild and exact reproduction of the profile-`251` six-factor regression checkpoint before freezing the 38-ternary ten-profile weighted integer.
+2. Finish PR #320. Admit the 11 tail6 factors into the physical authority only after exact `tw=8` and junction-count checks pass cleanly.
+3. After the 38-ternary weighted baseline is frozen, rebuild the weighted matrix with the enlarged certified physical inventory. Do not convert physical-only or physical+affine density reductions directly into weighted gains.
+4. Continue the non-overlapping exact physical ternary search beyond tail6. New scopes remain provisional until their quotient matrix and aggregate both pass.
+5. Preserve the exact/provisional boundary: physical-only, physical+affine, and weighted pairwise-coupled integers are different measures and must not be substituted for one another.
+6. Keep `ALPHA_PASS=0` until an actual end-to-end schedule/work reduction is proved.
 
