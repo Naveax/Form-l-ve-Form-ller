@@ -207,6 +207,112 @@ def aggregate_child(parent_shard: int, child_shard: int, directory: Path, output
     return out
 
 
+
+EXPECTED_PROFILE_REGRESSION_COUNT = 87639022052873245102889951271577152
+EXPECTED_PROFILE_REGRESSION_WEIGHTED = 21312470864940260066305006484700721917824185471141115669201479972945920000000000
+NINE_PROFILE_ALL_CURRENT_WEIGHTED = 60466057993339377805360951649299438000780926039785945671307235903773039001600000
+EXPECTED_FIRST_LEVEL = {
+    0: {"regression": 0, "all_current": 0},
+    2: {"regression": 29433771109794078070279953089929920, "all_current": 25499419387557506549575054803442368},
+    4: {"regression": 0, "all_current": 0},
+}
+EXPECTED_NESTED_SUCCESS = {
+    (1, 0): 0,
+    (1, 2): 0,
+    (1, 4): 0,
+    (3, 0): 0,
+    (3, 2): 8499806462519168849858351601147456,
+    (3, 4): 0,
+}
+EXPECTED_THIRD_CHILDREN = ((1, 1), (1, 3), (3, 1), (3, 3))
+
+
+def aggregate_final(first_level_directory: Path, nested_directory: Path, third_child_directory: Path, output: Path) -> dict:
+    first_rows = {}
+    for path in sorted(first_level_directory.glob("profile-251-shard-*.json")):
+        row = json.loads(path.read_text())
+        idx = int(row["shard"]["shard_index"])
+        if idx in EXPECTED_FIRST_LEVEL:
+            first_rows[idx] = row
+    assert tuple(sorted(first_rows)) == tuple(sorted(EXPECTED_FIRST_LEVEL))
+    for idx, expected in EXPECTED_FIRST_LEVEL.items():
+        row = first_rows[idx]
+        assert int(row["regression"]["exact_profile_count"]) == expected["regression"]
+        assert int(row["all_current"]["exact_profile_count"]) == expected["all_current"]
+        assert int(row["regression"]["base_mass"]) == EXPECTED_BASE_MASS
+        assert int(row["all_current"]["base_mass"]) == EXPECTED_BASE_MASS
+
+    nested_rows = {}
+    for path in sorted(nested_directory.glob("profile-251-parent-*-child-*.json")):
+        row = json.loads(path.read_text())
+        key = (int(row["shard"]["parent_shard_index"]), int(row["shard"]["child_shard_index"]))
+        if key in EXPECTED_NESTED_SUCCESS:
+            nested_rows[key] = row
+    assert tuple(sorted(nested_rows)) == tuple(sorted(EXPECTED_NESTED_SUCCESS))
+    for key, expected_count in EXPECTED_NESTED_SUCCESS.items():
+        row = nested_rows[key]
+        assert int(row["all_current"]["exact_profile_count"]) == expected_count
+        assert int(row["all_current"]["base_mass"]) == EXPECTED_BASE_MASS
+
+    third_rows = {}
+    for path in sorted(third_child_directory.glob("profile-251-parent-*-child-*-third-aggregate.json")):
+        row = json.loads(path.read_text())
+        key = (int(row["parent_shard_index"]), int(row["child_shard_index"]))
+        third_rows[key] = row
+    assert tuple(sorted(third_rows)) == EXPECTED_THIRD_CHILDREN
+
+    third_counts = {}
+    for key in EXPECTED_THIRD_CHILDREN:
+        row = third_rows[key]
+        raw = int(row["exact_all_current_child_profile_count"])
+        weighted = int(row["exact_all_current_child_weighted_summand"])
+        assert weighted == EXPECTED_BASE_MASS * raw
+        assert raw <= PARENT_REGRESSION_COUNTS[key[0]]
+        third_counts[key] = raw
+
+    regression_count = (
+        sum(v["regression"] for v in EXPECTED_FIRST_LEVEL.values())
+        + PARENT_REGRESSION_COUNTS[1]
+        + PARENT_REGRESSION_COUNTS[3]
+    )
+    assert regression_count == EXPECTED_PROFILE_REGRESSION_COUNT
+    assert EXPECTED_BASE_MASS * regression_count == EXPECTED_PROFILE_REGRESSION_WEIGHTED
+
+    all_current_count = (
+        sum(v["all_current"] for v in EXPECTED_FIRST_LEVEL.values())
+        + sum(EXPECTED_NESTED_SUCCESS.values())
+        + sum(third_counts.values())
+    )
+    assert 0 <= all_current_count <= regression_count
+    profile_weighted = EXPECTED_BASE_MASS * all_current_count
+    ten_profile_total = NINE_PROFILE_ALL_CURRENT_WEIGHTED + profile_weighted
+
+    out = {
+        "position": "C",
+        "physical_shared_dimension": 149,
+        "domain_state_sum": TARGET,
+        "six_factor_regression_profile_count": regression_count,
+        "six_factor_regression_weighted_summand": EXPECTED_PROFILE_REGRESSION_WEIGHTED,
+        "exact_all_current_profile_count": all_current_count,
+        "exact_all_current_profile_weighted_summand": profile_weighted,
+        "third_level_child_counts": {
+            f"{parent}:{child}": third_counts[(parent, child)]
+            for parent, child in EXPECTED_THIRD_CHILDREN
+        },
+        "nine_profile_all_current_weighted_sum": NINE_PROFILE_ALL_CURRENT_WEIGHTED,
+        "exact_all_current_ten_profile_weighted_count": ten_profile_total,
+        "exact_all_current_ten_profile_log2": None if ten_profile_total == 0 else __import__("math").log2(ten_profile_total),
+        "decision": "C916_ALL_CURRENT_WEIGHTED_PROFILE_251_THIRD_LEVEL_FANIN_AND_TEN_PROFILE_TOTAL_EXACT",
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(out, sort_keys=True) + "\n")
+    print("result", json.dumps(out, sort_keys=True), flush=True)
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PROFILE_251_THIRD_LEVEL_FINAL_AGGREGATE_EXACT")
+    print("boundary=exact for the current 38-ternary physical inventory plus the complete affine, quaternary, pairwise, and multiplicity model; later tail3/tail4 physical factors are not included")
+    print("ALPHA_PASS=0")
+    return out
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="mode", required=True)
@@ -220,11 +326,18 @@ def main():
     a.add_argument("--child-shard", type=int, required=True)
     a.add_argument("--directory", type=Path, required=True)
     a.add_argument("--output", type=Path, required=True)
+    z = sub.add_parser("aggregate-final")
+    z.add_argument("--first-level-directory", type=Path, required=True)
+    z.add_argument("--nested-directory", type=Path, required=True)
+    z.add_argument("--third-child-directory", type=Path, required=True)
+    z.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     if args.mode == "grandchild":
         run_grandchild(args.parent_shard, args.child_shard, args.grandchild_shard, args.output)
-    else:
+    elif args.mode == "aggregate-child":
         aggregate_child(args.parent_shard, args.child_shard, args.directory, args.output)
+    else:
+        aggregate_final(args.first_level_directory, args.nested_directory, args.third_child_directory, args.output)
 
 
 if __name__ == "__main__":
