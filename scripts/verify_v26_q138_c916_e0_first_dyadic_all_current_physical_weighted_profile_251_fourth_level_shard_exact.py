@@ -425,6 +425,12 @@ def main():
     a.add_argument("--grandchild-shard", type=int, required=True)
     a.add_argument("--directory", type=Path, required=True)
     a.add_argument("--output", type=Path, required=True)
+    m = sub.add_parser("aggregate-child-mixed")
+    m.add_argument("--parent-shard", type=int, required=True)
+    m.add_argument("--child-shard", type=int, required=True)
+    m.add_argument("--third-directory", type=Path, required=True)
+    m.add_argument("--fourth-directory", type=Path, required=True)
+    m.add_argument("--output", type=Path, required=True)
     z = sub.add_parser("aggregate-final-with-replacements")
     z.add_argument("--first-level-directory", type=Path, required=True)
     z.add_argument("--nested-directory", type=Path, required=True)
@@ -436,6 +442,14 @@ def main():
         run_fourth(args.parent_shard, args.child_shard, args.grandchild_shard, args.fourth_shard, args.output)
     elif args.mode == "aggregate-grandchild":
         aggregate_grandchild(args.parent_shard, args.child_shard, args.grandchild_shard, args.directory, args.output)
+    elif args.mode == "aggregate-child-mixed":
+        aggregate_child_mixed(
+            args.parent_shard,
+            args.child_shard,
+            args.third_directory,
+            args.fourth_directory,
+            args.output,
+        )
     else:
         aggregate_final_with_replacements(
             args.first_level_directory,
