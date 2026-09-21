@@ -128,6 +128,54 @@ def build_model():
     )
 
 
+def build_tail3_regression_model():
+    frozen = P.load_ternary_factors()
+    tail3 = E3.load_tail3_factors()
+    assert len(frozen) == 38 and len(tail3) == 10
+    assert not ({f["scope"] for f in frozen} & {f["scope"] for f in tail3})
+    ternary = frozen + tail3
+    affine = C.affine_scopes()
+    assert len(affine) == EXPECTED_AFFINE_COUNT
+
+    scopes = tuple(W.all_scopes()) + tuple(f["scope"] for f in tail3)
+    adj = W.build_primal_graph(scopes)
+    rows, fills = W.deterministic_min_fill_certificate(adj)
+    width = max(int(row["later_degree"]) for row in rows)
+    assert width == 11
+    simple_rows = tuple(
+        (int(row["vertex"]), tuple(map(int, row["later_neighbors"])))
+        for row in rows
+    )
+    cliques = J.maximal_cliques(simple_rows)
+    forest = J.maximum_intersection_forest(cliques)
+    J.verify_running_intersection(cliques, forest)
+    assert len(cliques) == 25
+    assert len(forest) == 20
+
+    qsizes = J.quotient_sizes_from_m4()
+    capacities = tuple(math.prod(qsizes[v] for v in bag) for bag in cliques)
+    assert max(capacities) == 16_777_216
+    assert sum(capacities) == 30_825_488
+
+    attached = defaultdict(list)
+    for factor in ternary:
+        ci = assign_scope(factor["scope"], cliques)
+        attached[ci].append(("finite_forbidden", tuple(factor["scope"]), factor["forbidden"], str(factor["name"])))
+
+    quad_scope = tuple(map(int, H.FIVE_GIDS))
+    quad_allowed = frozenset(tuple(map(int, row)) for row in H.ALLOWED)
+    assert len(quad_allowed) == 832
+    qci = assign_scope(quad_scope, cliques)
+    attached[qci].append(("allowed", quad_scope, quad_allowed, "physical_quads:compiled5"))
+
+    for ai, scope in enumerate(affine):
+        scope = tuple(map(int, scope))
+        ci = assign_scope(scope, cliques)
+        attached[ci].append(("affine_all_nonzero_forbidden", scope, None, f"affine:{ai}"))
+
+    return tuple(cliques), tuple(forest), qsizes, dict(attached), tuple(fills)
+
+
 def build_current_38_regression_model():
     frozen = P.load_ternary_factors()
     assert len(frozen) == 38
@@ -401,7 +449,18 @@ def analyze():
         "current_38_regression", r_cliques, r_masks, r_forest, r_qsizes
     )
     assert regression_total == CURRENT_38_COMBINED_COUNT, regression_total
-    print(f"modular_regression_exact_count={regression_total}", flush=True)
+    print(f"modular_regression_current38_exact_count={regression_total}", flush=True)
+
+    # Promoted-factor regression: this catches loader, quotient-hole ordering, affine
+    # semantics, and junction-message bugs that the 38-factor regression cannot see.
+    t3_cliques, t3_forest, t3_qsizes, t3_attached, _t3_fills = build_tail3_regression_model()
+    t3_masks, _t3_metadata = build_allowed_masks(t3_cliques, t3_qsizes, t3_attached)
+    tail3_regression_total, _t3_universe, _t3_primes, _t3_modulus, _t3_rows = modular_exact_count(
+        "tail3_48_regression", t3_cliques, t3_masks, t3_forest, t3_qsizes
+    )
+    assert tail3_regression_total == TAIL3_COMBINED_COUNT, tail3_regression_total
+    print(f"modular_regression_tail3_48_exact_count={tail3_regression_total}", flush=True)
+    del t3_masks
 
     (
         cliques,
@@ -443,6 +502,7 @@ def analyze():
         "constraint_attachments": [list(x) for x in attachments],
         "quotient_variables_in_model": len(variables),
         "modular_regression_current_38_exact_count": regression_total,
+        "modular_regression_tail3_48_exact_count": tail3_regression_total,
         "full_assignment_universe_bound": universe_bound,
         "crt_primes": list(primes),
         "crt_modulus_product": modulus_product,
@@ -458,7 +518,7 @@ def analyze():
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_TAIL4_EXPANDED_PHYSICAL_PLUS_AFFINE_JUNCTION_EXACT")
-    print("theorem=the same dense-mask modular junction engine first reproduces the frozen 38-ternary physical+affine authority exactly, then CRT counts the 60 ternary physical factors, five-quaternary conjunction, and all 19 authority-correct affine obstructions without materializing Python tuple tables")
+    print("theorem=the same dense-mask modular junction engine first reproduces both the frozen 38-ternary and merged 48-ternary tail3 physical+affine authorities exactly, then CRT counts the 60 ternary physical factors, five-quaternary conjunction, and all 19 authority-correct affine obstructions without materializing Python tuple tables")
     print("boundary=treewidth remains bounded by 9 <= tw <= 12; the count is exact on the explicit width-12 chordal completion")
     print("boundary=this excludes the dense 4005 pairwise quotient relation layer and multiplicity weights, so it is not a weighted work exponent")
     print("ALPHA_PASS=0")
