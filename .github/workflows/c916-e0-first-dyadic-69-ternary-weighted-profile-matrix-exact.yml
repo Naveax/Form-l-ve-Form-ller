@@ -172,6 +172,14 @@ jobs:
           merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
+          pattern: c916-tail5-quotient-*
+          run-id: 35571898114
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail5-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
           name: c916-base160-width3-separator-authority
           run-id: 34607657664
           github-token: ${{ github.token }}
