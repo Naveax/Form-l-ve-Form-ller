@@ -1,0 +1,195 @@
+name: C916 E0 profile 251 weighted fourth-level shards exact
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_fourth_level_shard_exact.py'
+      - '.github/workflows/c916-e0-first-dyadic-profile-251-fourth-level-shards-exact.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  fourth:
+    name: profile-251-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-fourth-${{ matrix.fourth_shard }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        parent_shard: [1, 3]
+        child_shard: [1, 3]
+        grandchild_shard: [1, 3]
+        fourth_shard: [0, 1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax-check exact fourth-level shard runner
+        run: >-
+          python -m py_compile
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_fourth_level_shard_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_third_level_shard_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_context_exact.py
+          scripts/_c916_all_current_weighted_context_engine.py
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-current-physical-factor-*
+          run-id: 34952229238
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/current-physical-factors
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - name: Exact fourth-level weighted state shard
+        env:
+          C916_CURRENT_PHYSICAL_FACTOR_DIR: authorities/current-physical-factors
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_fourth_level_shard_exact.py
+          fourth
+          --parent-shard ${{ matrix.parent_shard }}
+          --child-shard ${{ matrix.child_shard }}
+          --grandchild-shard ${{ matrix.grandchild_shard }}
+          --fourth-shard ${{ matrix.fourth_shard }}
+          --output authorities/profile-251-fourth/profile-251-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-fourth-${{ matrix.fourth_shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-profile251-fourth-level-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-fourth-${{ matrix.fourth_shard }}
+          path: authorities/profile-251-fourth/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+  aggregate-grandchild:
+    name: aggregate-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}
+    needs: fourth
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        parent_shard: [1, 3]
+        child_shard: [1, 3]
+        grandchild_shard: [1, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-profile251-fourth-level-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-fourth-*
+          path: authorities/profile-251-fourth
+          merge-multiple: true
+      - name: Aggregate exact fourth-level grandchild
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_fourth_level_shard_exact.py
+          aggregate-grandchild
+          --parent-shard ${{ matrix.parent_shard }}
+          --child-shard ${{ matrix.child_shard }}
+          --grandchild-shard ${{ matrix.grandchild_shard }}
+          --directory authorities/profile-251-fourth
+          --output authorities/profile-251-fourth-aggregate/profile-251-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-fourth-aggregate.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-profile251-fourth-level-parent-${{ matrix.parent_shard }}-child-${{ matrix.child_shard }}-grandchild-${{ matrix.grandchild_shard }}-aggregate
+          path: authorities/profile-251-fourth-aggregate/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+  final:
+    name: aggregate-profile-251-final
+    needs: aggregate-grandchild
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-all-current-weighted-profile-251-shard-*
+          run-id: 35118377359
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/profile-251-first-level
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-all-current-weighted-profile-251-parent-*-child-*
+          run-id: 35321639122
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/profile-251-nested
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-profile251-third-level-parent-*-child-*-grandchild-*
+          run-id: 35571022310
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/profile-251-third
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-profile251-fourth-level-parent-*-child-*-grandchild-*-aggregate
+          path: authorities/profile-251-fourth-aggregate
+          merge-multiple: true
+      - name: Exact final profile-251 fan-in with fourth-level replacements
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_profile_251_fourth_level_shard_exact.py
+          aggregate-final-with-replacements
+          --first-level-directory authorities/profile-251-first-level
+          --nested-directory authorities/profile-251-nested
+          --third-level-directory authorities/profile-251-third
+          --fourth-replacement-directory authorities/profile-251-fourth-aggregate
+          --output authorities/c916-all-current-weighted-profile-251-final-exact.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-all-current-weighted-profile-251-final-exact
+          path: authorities/c916-all-current-weighted-profile-251-final-exact.json
+          if-no-files-found: error
+          retention-days: 14
