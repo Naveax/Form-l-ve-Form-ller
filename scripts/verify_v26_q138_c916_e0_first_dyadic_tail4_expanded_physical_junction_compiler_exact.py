@@ -197,9 +197,18 @@ def analyze():
     J.verify_running_intersection(cliques, forest)
 
     qsizes = J.quotient_sizes_from_m4()
+
+    tail3_scopes = tuple(f["scope"] for f in (frozen + tail3)) + quads
+    tail3_variables = {v for scope in tail3_scopes for v in scope}
+    tail4_variables = {v for scope in (tuple(scopes) + quads) for v in scope}
+    newly_introduced_variables = tuple(sorted(tail4_variables - tail3_variables))
+    assert newly_introduced_variables == (10,)
+    lift_factor = math.prod(qsizes[v] for v in newly_introduced_variables)
+    lifted_tail3_count = TAIL3_PHYSICAL_COUNT * lift_factor
+
     tables, metadata = compile_tables(cliques, factors, qsizes)
     total, component_counts, messages = P.exact_junction_count(cliques, tables, forest)
-    assert 0 < total <= TAIL3_PHYSICAL_COUNT
+    assert 0 < total <= lifted_tail3_count
 
     capacities = [math.prod(qsizes[v] for v in bag) for bag in cliques]
     out = {
@@ -225,15 +234,18 @@ def analyze():
         "exact_tail4_expanded_physical_layer_assignment_count": int(total),
         "exact_tail4_expanded_physical_layer_assignment_log2": math.log2(total),
         "tail3_expanded_physical_layer_assignment_count": TAIL3_PHYSICAL_COUNT,
-        "removed_assignments_vs_tail3_inventory": TAIL3_PHYSICAL_COUNT - total,
-        "gain_vs_tail3_inventory_log2_bits": math.log2(TAIL3_PHYSICAL_COUNT) - math.log2(total),
+        "newly_introduced_variables_vs_tail3": list(newly_introduced_variables),
+        "tail3_lift_factor_into_tail4_variable_universe": lift_factor,
+        "tail3_lifted_assignment_count_in_tail4_variable_universe": lifted_tail3_count,
+        "removed_assignments_vs_lifted_tail3_inventory": lifted_tail3_count - total,
+        "gain_vs_lifted_tail3_inventory_log2_bits": math.log2(lifted_tail3_count) - math.log2(total),
         "max_positive_separator_message_rows": max((r["positive_message_rows"] for r in messages), default=1),
         "clique_tables": list(metadata),
         "decision": "C916_TAIL4_EXPANDED_PHYSICAL_FACTORS_EXACT_JUNCTION_COUNT",
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_TAIL4_EXPANDED_PHYSICAL_JUNCTION_COMPILER_EXACT")
-    print("boundary=activation requires clean corrected tail4 quotient artifacts; this count remains physical higher-order only and excludes pairwise, affine, and multiplicity weights")
+    print("boundary=the tail4 layer introduces gid 10, so comparison to the tail3 count is made only after lifting the tail3 authority by gid 10's quotient alphabet size; this count remains physical higher-order only and excludes pairwise, affine, and multiplicity weights")
     print("ALPHA_PASS=0")
     return out
 
