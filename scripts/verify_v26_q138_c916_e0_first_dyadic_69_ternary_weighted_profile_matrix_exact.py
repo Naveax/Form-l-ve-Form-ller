@@ -209,7 +209,7 @@ def run_profile(target: int, output: Path) -> dict:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("profile_result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_60_TERNARY_WEIGHTED_PROFILE_EXACT")
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_EXACT")
     print("ALPHA_PASS=0")
     return out
 
@@ -242,12 +242,12 @@ def aggregate(directory: Path, output: Path) -> dict:
         "exact_log2": None if total == 0 else math.log2(total),
         "state_bits": total.bit_length(),
         "profile_rows": [by_target[target] for target in TARGET_DOMAIN_STATE_SUMS],
-        "decision": "C916_COMPLETE_AFFINE_PLUS_60_TERNARY_WEIGHTED_COUNT_PROFILE_MATRIX_EXACT",
+        "decision": "C916_COMPLETE_AFFINE_PLUS_69_TERNARY_WEIGHTED_COUNT_PROFILE_MATRIX_EXACT",
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_60_TERNARY_WEIGHTED_PROFILE_MATRIX_EXACT")
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_MATRIX_EXACT")
     print("boundary=exact for the finite 69-ternary physical inventory; it is not a completeness theorem or end-to-end work exponent")
     print("ALPHA_PASS=0")
     return out
