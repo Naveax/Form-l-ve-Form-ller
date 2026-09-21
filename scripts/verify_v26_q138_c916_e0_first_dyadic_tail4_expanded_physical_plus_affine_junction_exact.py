@@ -248,8 +248,7 @@ def reduce_to_separator(work, bag, separator, prime):
     for axis in range(len(current_bag) - 1, -1, -1):
         if current_bag[axis] in keep:
             continue
-        work = work.sum(axis=axis, dtype=np.uint64)
-        np.remainder(work, prime, out=work)
+        work = np.remainder(work.sum(axis=axis, dtype=np.uint64), prime)
         current_bag.pop(axis)
     assert tuple(current_bag) == tuple(v for v in bag if v in keep)
     return work, tuple(current_bag)
