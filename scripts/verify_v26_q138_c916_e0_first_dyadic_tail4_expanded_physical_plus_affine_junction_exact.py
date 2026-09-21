@@ -187,11 +187,13 @@ def analyze():
     adj = W.build_primal_graph(scopes)
     deterministic_rows, deterministic_fill_edges = W.deterministic_min_fill_certificate(adj)
     deterministic_upper = max(int(row["later_degree"]) for row in deterministic_rows)
-    beam_rows, beam_fill_edges, beam_upper = beam_elimination_certificate(adj)
+    beam_rows, beam_fill_edges, beam_upper = beam_elimination_certificate(
+        adj, beam_width=2048, branch_factor=10
+    )
     if beam_upper < deterministic_upper:
         rows, fill_edges = beam_rows, beam_fill_edges
         upper = beam_upper
-        elimination_source = "deterministic_beam_search"
+        elimination_source = "deterministic_beam_2048x10"
     else:
         rows, fill_edges = deterministic_rows, deterministic_fill_edges
         upper = deterministic_upper
