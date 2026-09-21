@@ -2,8 +2,9 @@
 """Prepared exact weighted profile matrix for the 80-ternary C916 inventory.
 
 This is intentionally a preparation artifact only while the frozen 38-ternary weighted
-baseline is still completing.  It appends the ten merged tail3 and twelve merged tail4
-exact quotient factors to the existing 38-factor authority without changing pairwise,
+baseline is still completing. It appends the ten merged tail3, twelve merged tail4,
+nine merged tail5, and eleven merged tail6 exact quotient factors to the existing
+38-factor authority without changing pairwise,
 affine, quaternary, multiplicity, or separator-profile semantics.
 
 The six-factor historical integer remains the mandatory regression gate because the first
@@ -19,8 +20,8 @@ import os
 from pathlib import Path
 
 TARGET_DOMAIN_STATE_SUMS = (83, 88, 95, 100, 102, 134, 154, 251, 288, 302)
-EXPECTED_SIX_FACTOR_TOTAL = 90987190266267462495323685079227633113020903735137825407846207198697839001800000
-EXPECTED_AFFINE_TOTAL = 100215909735124105069922281032909019043326715916545026952580687530924399001800000
+EXPECTED_SIX_FACTOR_TOTAL = 90987190266267462495323685079227633113020903735137825407846207198697839001600000
+EXPECTED_AFFINE_TOTAL = 100215909735124105069922281032909019043326715916545026952580687530924399001600000
 EXPECTED_BASE_FACTOR_COUNT = 38
 EXPECTED_TAIL3_FACTOR_COUNT = 10
 EXPECTED_TAIL4_FACTOR_COUNT = 12
@@ -43,12 +44,14 @@ EXPECTED_TAIL4_SCOPES = (
     (9, 181, 182), (10, 181, 182), (11, 181, 182), (24, 181, 182),
 )
 EXPECTED_TAIL5_SCOPES = (
-    (62,181,182), (67,181,182), (113,181,182), (114,181,182),
-    (136,181,182), (144,181,182), (154,181,182), (181,182,186), (181,182,239),
+    (62, 181, 182), (67, 181, 182), (113, 181, 182), (114, 181, 182),
+    (136, 181, 182), (144, 181, 182), (154, 181, 182), (181, 182, 186),
+    (181, 182, 239),
 )
 EXPECTED_TAIL6_SCOPES = (
-    (3,6,7), (3,7,18), (3,7,22), (3,7,30), (3,7,33), (3,7,69),
-    (3,7,88), (3,7,89), (181,182,244), (181,182,245), (181,182,249),
+    (3, 6, 7), (3, 7, 18), (3, 7, 22), (3, 7, 30), (3, 7, 33),
+    (3, 7, 69), (3, 7, 88), (3, 7, 89), (181, 182, 244),
+    (181, 182, 245), (181, 182, 249),
 )
 
 
