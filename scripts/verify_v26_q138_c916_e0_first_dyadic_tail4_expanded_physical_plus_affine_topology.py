@@ -7,6 +7,7 @@ the junction compiler to be sized before any potentially large table is material
 """
 from __future__ import annotations
 
+import itertools
 import json
 import math
 import sys
@@ -17,8 +18,66 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import verify_v26_q138_c916_e0_first_dyadic_current_physical_plus_affine_treewidth_exact as W
 import verify_v26_q138_c916_e0_first_dyadic_current_physical_junction_forest_exact as J
 import verify_v26_q138_c916_e0_first_dyadic_tail4_expanded_physical_treewidth8_exact as T4
-import verify_v26_q138_c916_e0_first_dyadic_tail3_expanded_physical_plus_affine_junction_exact as B
 import summarize_v26_q138_c916_e0_first_dyadic_physical_triple_quotient_tail3 as S
+
+
+
+def beam_elimination_certificate(adj0, beam_width=2048, branch_factor=10):
+    initial = ({v: set(nbs) for v, nbs in adj0.items()}, [], [], 0, 0)
+    beam = [initial]
+
+    def signature(adj):
+        return tuple((v, tuple(sorted(adj[v]))) for v in sorted(adj))
+
+    for _depth in range(len(adj0)):
+        children = {}
+        for adj, rows, fills, width, fill_total in beam:
+            candidates = []
+            for v, nbs0 in adj.items():
+                nbs = tuple(sorted(nbs0))
+                missing = tuple(
+                    (u, w)
+                    for u, w in itertools.combinations(nbs, 2)
+                    if w not in adj[u]
+                )
+                candidates.append((
+                    max(width, len(nbs)), len(missing), len(nbs), v, nbs, missing
+                ))
+            for _neww, fcount, degree, v, nbs, missing in sorted(candidates)[:branch_factor]:
+                nadj = {x: set(ns) for x, ns in adj.items()}
+                nfills = list(fills)
+                for u, w in missing:
+                    if w not in nadj[u]:
+                        nadj[u].add(w)
+                        nadj[w].add(u)
+                        nfills.append((u, w))
+                for u in nbs:
+                    nadj[u].remove(v)
+                del nadj[v]
+                nrows = rows + [{
+                    "vertex": v,
+                    "later_neighbors": list(nbs),
+                    "later_degree": degree,
+                    "fill_edges_needed": [list(x) for x in missing],
+                }]
+                nwidth = max(width, degree)
+                nfill_total = fill_total + fcount
+                sig = signature(nadj)
+                score = (
+                    nwidth, nfill_total, sum(len(ns) for ns in nadj.values()),
+                    tuple(x["vertex"] for x in nrows),
+                )
+                old = children.get(sig)
+                if old is None or score < old[0]:
+                    children[sig] = (score, (nadj, nrows, nfills, nwidth, nfill_total))
+        ranked = sorted(children.values(), key=lambda x: x[0])
+        beam = [state for _score, state in ranked[:beam_width]]
+        assert beam
+
+    best = min(beam, key=lambda s: (s[3], s[4], tuple(r["vertex"] for r in s[1])))
+    _adj, rows, fills, width, _fill_total = best
+    assert not _adj and len(rows) == len(adj0)
+    return tuple(rows), tuple(fills), int(width)
 
 
 def analyze():
@@ -30,7 +89,7 @@ def analyze():
     deterministic_rows, deterministic_fills = W.deterministic_min_fill_certificate(adj)
     deterministic_upper = max(int(row["later_degree"]) for row in deterministic_rows)
 
-    beam_rows, beam_fills, beam_upper = B.beam_elimination_certificate(
+    beam_rows, beam_fills, beam_upper = beam_elimination_certificate(
         adj, beam_width=2048, branch_factor=10
     )
     if beam_upper < deterministic_upper:
