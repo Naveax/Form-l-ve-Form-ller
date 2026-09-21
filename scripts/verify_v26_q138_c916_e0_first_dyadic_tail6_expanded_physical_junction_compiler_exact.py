@@ -2,6 +2,7 @@
 """Exact physical-only junction compiler for the 80-ternary inventory through tail6."""
 from __future__ import annotations
 import json,math,os,sys
+from collections import defaultdict,deque
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import verify_v26_q138_c916_e0_first_dyadic_current_physical_junction_compiler_exact as P
@@ -14,6 +15,46 @@ import verify_v26_q138_c916_e0_first_dyadic_tail6_expanded_physical_treewidth8_e
 
 TAIL6_DIR=Path(os.environ.get("C916_TAIL6_QUOTIENT_DIR","authorities/tail6-quotient"))
 TAIL5_COUNT=258065635183020457238565504
+EXPECTED_COMPONENTS=5
+
+def exact_junction_count(cliques,tables,forest):
+    cadj=[[] for _ in range(len(cliques))]
+    for i,j,sep in forest:
+        sep=tuple(map(int,sep)); cadj[i].append((j,sep)); cadj[j].append((i,sep))
+    seen=set(); component_counts=[]; message_rows=[]
+    for root in range(len(cliques)):
+        if root in seen: continue
+        parent={root:None}; parent_sep={}; order=[]; q=deque([root]); seen.add(root)
+        while q:
+            i=q.popleft(); order.append(i)
+            for j,sep in cadj[i]:
+                if j in parent: continue
+                parent[j]=i; parent_sep[j]=sep; seen.add(j); q.append(j)
+        messages={}
+        for i in reversed(order):
+            bag=tuple(cliques[i]); pos={v:p for p,v in enumerate(bag)}
+            p=parent[i]; sep_to_parent=tuple(parent_sep[i]) if p is not None else ()
+            accum=defaultdict(int)
+            for assignment in tables[i]:
+                weight=1
+                for child,sep in cadj[i]:
+                    if parent.get(child)!=i: continue
+                    key=tuple(assignment[pos[v]] for v in sep)
+                    weight*=int(messages[child].get(key,0))
+                    if weight==0: break
+                if weight==0: continue
+                key=() if p is None else tuple(assignment[pos[v]] for v in sep_to_parent)
+                accum[key]+=weight
+            if p is None:
+                assert set(accum)<={()}
+                component_counts.append(int(accum.get((),0)))
+            else:
+                messages[i]=dict(accum)
+                message_rows.append({"child":i,"parent":p,"separator":list(sep_to_parent),
+                                     "positive_message_rows":len(accum),
+                                     "message_weight_sum":sum(accum.values())})
+    assert len(component_counts)==EXPECTED_COMPONENTS,component_counts
+    return math.prod(component_counts),tuple(component_counts),tuple(message_rows)
 
 def load_tail6_factors():
     files=sorted(TAIL6_DIR.glob("tail6_quotient_*.json"))
@@ -52,7 +93,7 @@ def analyze():
     newvars=tuple(sorted(expanded_vars-prior_vars))
     lift=math.prod(qsizes[v] for v in newvars); lifted=TAIL5_COUNT*lift
     tables,meta=E5.compile_tables(cliques,factors,qsizes)
-    total,components,messages=P.exact_junction_count(cliques,tables,forest)
+    total,components,messages=exact_junction_count(cliques,tables,forest)
     assert 0<total<=lifted
     capacities=[math.prod(qsizes[v] for v in bag) for bag in cliques]
     out={"position":"C","physical_shared_dimension":149,"frozen_ternary_factors":38,
