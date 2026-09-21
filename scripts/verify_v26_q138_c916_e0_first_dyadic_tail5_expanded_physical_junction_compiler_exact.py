@@ -3,7 +3,7 @@
 
 Activation boundary: this file must not be promoted until the tail5 quotient matrix and
 aggregate pass cleanly. It loads only nonempty exact tail5 quotient-hole relations, adds
-them to the merged 60-ternary tail5-expanded physical inventory, builds a deterministic
+them to the merged 60-ternary tail4-expanded physical inventory, builds a deterministic
 chordal completion, and performs exact junction sum-product for the physical higher-order
 layer. Any variables first introduced by tail5 are handled by lifting the tail4 authority
 into the expanded quotient-variable universe before monotonic comparison.
@@ -166,6 +166,7 @@ def analyze():
     assert len(frozen) == 38
     assert len(tail3) == 10
     assert len(tail4) == 12
+    assert len(tail5) == 9
 
     prior = frozen + tail3 + tail4
     prior_scopes = {f["scope"] for f in prior}
