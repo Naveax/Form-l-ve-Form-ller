@@ -345,6 +345,71 @@ def aggregate_final_with_replacements(
     return out
 
 
+
+def aggregate_child_mixed(parent_shard: int, child_shard: int, third_directory: Path, fourth_directory: Path, output: Path):
+    assert (parent_shard, child_shard) in HEAVY_PARENT_CHILDREN
+
+    third_rows = {}
+    for path in sorted(third_directory.glob(
+        f"profile-251-parent-{parent_shard}-child-{child_shard}-grandchild-*.json"
+    )):
+        row = json.loads(path.read_text())
+        idx = int(row["shard"]["grandchild_shard_index"])
+        assert idx not in third_rows
+        third_rows[idx] = row
+
+    fourth_rows = {}
+    for path in sorted(fourth_directory.glob(
+        f"profile-251-parent-{parent_shard}-child-{child_shard}-grandchild-*-fourth-aggregate.json"
+    )):
+        row = json.loads(path.read_text())
+        idx = int(row["grandchild_shard_index"])
+        assert idx not in fourth_rows
+        fourth_rows[idx] = row
+
+    counts = {}
+    sources = {}
+    for grandchild in range(FOURTH_SHARD_COUNT):
+        if grandchild in third_rows:
+            row = third_rows[grandchild]
+            assert int(row["shard"]["parent_shard_index"]) == parent_shard
+            assert int(row["shard"]["child_shard_index"]) == child_shard
+            raw = int(row["all_current"]["exact_profile_count"])
+            assert int(row["all_current"]["base_mass"]) == BASE_MASS
+            counts[grandchild] = raw
+            sources[grandchild] = "third_level"
+        else:
+            assert grandchild in fourth_rows, (parent_shard, child_shard, grandchild)
+            row = fourth_rows[grandchild]
+            raw = int(row["exact_all_current_grandchild_profile_count"])
+            assert int(row["exact_all_current_grandchild_weighted_summand"]) == BASE_MASS * raw
+            counts[grandchild] = raw
+            sources[grandchild] = "fourth_level_fallback"
+
+    assert set(counts) == set(range(FOURTH_SHARD_COUNT))
+    total = sum(counts.values())
+    assert total <= PARENT_REGRESSION_COUNTS[parent_shard]
+
+    out = {
+        "position": "C",
+        "physical_shared_dimension": 149,
+        "domain_state_sum": TARGET,
+        "parent_shard_index": parent_shard,
+        "child_shard_index": child_shard,
+        "grandchild_counts": {str(k): counts[k] for k in sorted(counts)},
+        "grandchild_sources": {str(k): sources[k] for k in sorted(sources)},
+        "exact_all_current_child_profile_count": total,
+        "exact_all_current_child_weighted_summand": BASE_MASS * total,
+        "decision": "C916_ALL_CURRENT_WEIGHTED_PROFILE_251_MIXED_THIRD_FOURTH_LEVEL_CHILD_AGGREGATE_EXACT",
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(out, sort_keys=True) + "\n")
+    print("result", json.dumps(out, sort_keys=True), flush=True)
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PROFILE_251_MIXED_THIRD_FOURTH_CHILD_AGGREGATE_EXACT")
+    print("ALPHA_PASS=0")
+    return out
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="mode", required=True)
