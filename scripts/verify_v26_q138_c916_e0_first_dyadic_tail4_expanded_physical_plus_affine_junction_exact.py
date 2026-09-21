@@ -67,8 +67,15 @@ def build_model():
     affine = C.affine_scopes()
     assert len(affine) == EXPECTED_AFFINE_COUNT
 
-    all_scopes = tuple(W.all_scopes()) + tuple(f["scope"] for f in tail3) + tuple(f["scope"] for f in tail4)
+    base_scopes = tuple(W.all_scopes())
+    tail3_scopes_all = base_scopes + tuple(f["scope"] for f in tail3)
+    all_scopes = tail3_scopes_all + tuple(f["scope"] for f in tail4)
     assert len(all_scopes) == 84
+    tail3_variables = {v for scope in tail3_scopes_all for v in scope}
+    tail4_variables = {v for scope in all_scopes for v in scope}
+    newly_introduced_variables_vs_tail3 = tuple(sorted(tail4_variables - tail3_variables))
+    assert not newly_introduced_variables_vs_tail3, newly_introduced_variables_vs_tail3
+    assert len(tail4_variables) == 48
     adj = W.build_primal_graph(all_scopes)
     rows, fills = W.deterministic_min_fill_certificate(adj)
     width = max(int(row["later_degree"]) for row in rows)
@@ -110,7 +117,15 @@ def build_model():
         attachments.append((f"affine:{ai}", ci))
 
     assert len(attachments) == EXPECTED_TERNARY_COUNT + 1 + EXPECTED_AFFINE_COUNT
-    return tuple(cliques), tuple(forest), qsizes, dict(attached), tuple(sorted(attachments)), tuple(fills)
+    return (
+        tuple(cliques),
+        tuple(forest),
+        qsizes,
+        dict(attached),
+        tuple(sorted(attachments)),
+        tuple(fills),
+        newly_introduced_variables_vs_tail3,
+    )
 
 
 def build_current_38_regression_model():
@@ -344,7 +359,15 @@ def analyze():
     assert regression_total == CURRENT_38_COMBINED_COUNT, regression_total
     print(f"modular_regression_exact_count={regression_total}", flush=True)
 
-    cliques, forest, qsizes, attached, attachments, fills = build_model()
+    (
+        cliques,
+        forest,
+        qsizes,
+        attached,
+        attachments,
+        fills,
+        newly_introduced_variables_vs_tail3,
+    ) = build_model()
     masks, metadata = build_allowed_masks(cliques, qsizes, attached)
 
     total, universe_bound, primes, modulus_product, residue_rows = modular_exact_count(
@@ -382,6 +405,7 @@ def analyze():
         "exact_tail4_expanded_physical_plus_affine_assignment_count": total,
         "exact_tail4_expanded_physical_plus_affine_assignment_log2": math.log2(total),
         "tail3_physical_plus_affine_assignment_count": TAIL3_COMBINED_COUNT,
+        "newly_introduced_variables_vs_tail3_combined": list(newly_introduced_variables_vs_tail3),
         "removed_assignments_vs_tail3_inventory": TAIL3_COMBINED_COUNT - total,
         "gain_vs_tail3_inventory_log2_bits": math.log2(TAIL3_COMBINED_COUNT) - math.log2(total),
         "clique_tables": list(metadata),
