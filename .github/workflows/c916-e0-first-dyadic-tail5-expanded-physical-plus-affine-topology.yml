@@ -1,0 +1,47 @@
+name: C916 E0 tail5 expanded physical plus affine topology
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/verify_v26_q138_c916_e0_first_dyadic_tail5_expanded_physical_plus_affine_topology.py'
+      - '.github/workflows/c916-e0-first-dyadic-tail5-expanded-physical-plus-affine-topology.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  topology:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax-check tail5 physical plus affine topology
+        run: python -m py_compile scripts/verify_v26_q138_c916_e0_first_dyadic_tail5_expanded_physical_plus_affine_topology.py
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-tail5-quotient-*
+          run-id: 35571898114
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail5-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - name: Size tail5-expanded physical plus affine topology
+        env:
+          C916_TAIL5_QUOTIENT_DIR: authorities/tail5-quotient
+        run: python scripts/verify_v26_q138_c916_e0_first_dyadic_tail5_expanded_physical_plus_affine_topology.py
