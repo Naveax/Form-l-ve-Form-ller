@@ -2,8 +2,8 @@
 """Prepared exact weighted profile matrix for the 69-ternary C916 inventory.
 
 This is intentionally a preparation artifact only while the frozen 38-ternary weighted
-baseline is still completing.  It appends the ten merged tail3 and twelve merged tail4
-exact quotient factors to the existing 38-factor authority without changing pairwise,
+baseline is still completing. It appends the ten merged tail3, twelve merged tail4,
+and nine merged tail5 exact quotient factors to the existing 38-factor authority without changing pairwise,
 affine, quaternary, multiplicity, or separator-profile semantics.
 
 The six-factor historical integer remains the mandatory regression gate because the first
@@ -47,7 +47,14 @@ EXPECTED_TAIL5_SCOPES = (
 )
 
 
-def load_promoted(directory: Path, prefix: str, target_key: str, expected_scopes, start_index: int):
+def load_promoted(
+    directory: Path,
+    prefix: str,
+    target_key: str,
+    expected_scopes,
+    expected_total_holes: int,
+    start_index: int,
+):
     files = sorted(directory.glob(f"{prefix}_*.json"))
     assert len(files) == 16, (directory, [p.name for p in files])
     rows = [json.loads(p.read_text()) for p in files]
@@ -77,6 +84,7 @@ def load_promoted(directory: Path, prefix: str, target_key: str, expected_scopes
         })
 
     assert tuple(sorted(row["scope"] for row in out)) == tuple(sorted(expected_scopes))
+    assert sum(len(row["forbidden"]) for row in out) == expected_total_holes
     return tuple(out)
 
 
@@ -85,15 +93,15 @@ def load_extended_factor_specs(E):
     assert len(base) == EXPECTED_BASE_FACTOR_COUNT
     tail3 = load_promoted(
         TAIL3_DIR, "tail3_quotient", "tail3_target",
-        EXPECTED_TAIL3_SCOPES, len(base),
+        EXPECTED_TAIL3_SCOPES, 39, len(base),
     )
     tail4 = load_promoted(
         TAIL4_DIR, "tail4_quotient", "tail4_target",
-        EXPECTED_TAIL4_SCOPES, len(base) + len(tail3),
+        EXPECTED_TAIL4_SCOPES, 42, len(base) + len(tail3),
     )
     tail5 = load_promoted(
         TAIL5_DIR, "tail5_quotient", "tail5_target",
-        EXPECTED_TAIL5_SCOPES, len(base) + len(tail3) + len(tail4),
+        EXPECTED_TAIL5_SCOPES, 31, len(base) + len(tail3) + len(tail4),
     )
     assert len(tail3) == EXPECTED_TAIL3_FACTOR_COUNT
     assert len(tail4) == EXPECTED_TAIL4_FACTOR_COUNT
