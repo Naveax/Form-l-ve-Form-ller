@@ -150,7 +150,7 @@ def run_leaf(parent: int, child: int, output: Path) -> dict:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("leaf_result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_60_TERNARY_WEIGHTED_PROFILE_251_LEAF_EXACT")
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_251_LEAF_EXACT")
     print("ALPHA_PASS=0")
     return out
 
@@ -221,12 +221,12 @@ def aggregate(profile_directory: Path, leaf_directory: Path, output: Path) -> di
         "exact_log2": None if total == 0 else math.log2(total),
         "profile251_leaves": [by_leaf[(p, c)] for p in range(STATE_COUNT) for c in range(STATE_COUNT)],
         "profile_rows": [by_target[t] for t in NINE_TARGETS],
-        "decision": "C916_COMPLETE_AFFINE_PLUS_60_TERNARY_WEIGHTED_COUNT_WITH_PROFILE251_SECOND_LEVEL_LEAVES_EXACT",
+        "decision": "C916_COMPLETE_AFFINE_PLUS_69_TERNARY_WEIGHTED_COUNT_WITH_PROFILE251_SECOND_LEVEL_LEAVES_EXACT",
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_60_TERNARY_WEIGHTED_PROFILE_MATRIX_WITH_SHARDED_251_EXACT")
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_MATRIX_WITH_SHARDED_251_EXACT")
     print("boundary=exact for the finite 69-ternary physical inventory; it is not a completeness theorem or end-to-end work exponent")
     print("ALPHA_PASS=0")
     return out
