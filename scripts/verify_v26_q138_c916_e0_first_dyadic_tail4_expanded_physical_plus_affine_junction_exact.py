@@ -40,6 +40,7 @@ import verify_v26_q138_c916_e0_first_dyadic_tail4_expanded_physical_plus_affine_
 
 EXPECTED_TERNARY_COUNT = 60
 EXPECTED_AFFINE_COUNT = 19
+CURRENT_38_COMBINED_COUNT = 681_934_454_409_791_000_768_011_200
 TAIL3_COMBINED_COUNT = 610_168_911_320_611_717_122_698_496
 EXPECTED_WIDTH = 12
 EXPECTED_LARGEST_CAPACITY = 67_108_864
@@ -110,6 +111,34 @@ def build_model():
 
     assert len(attachments) == EXPECTED_TERNARY_COUNT + 1 + EXPECTED_AFFINE_COUNT
     return tuple(cliques), tuple(forest), qsizes, dict(attached), tuple(sorted(attachments)), tuple(fills)
+
+
+def build_current_38_regression_model():
+    frozen = P.load_ternary_factors()
+    assert len(frozen) == 38
+    affine = C.affine_scopes()
+    assert len(affine) == EXPECTED_AFFINE_COUNT
+
+    cliques, forest, fills = C.build_cliques_and_forest()
+    qsizes = J.quotient_sizes_from_m4()
+    attached = defaultdict(list)
+
+    for factor in frozen:
+        ci = assign_scope(factor["scope"], cliques)
+        attached[ci].append(("finite_forbidden", tuple(factor["scope"]), factor["forbidden"], str(factor["name"])))
+
+    quad_scope = tuple(map(int, H.FIVE_GIDS))
+    quad_allowed = frozenset(tuple(map(int, row)) for row in H.ALLOWED)
+    assert len(quad_allowed) == 832
+    qci = assign_scope(quad_scope, cliques)
+    attached[qci].append(("allowed", quad_scope, quad_allowed, "physical_quads:compiled5"))
+
+    for ai, scope in enumerate(affine):
+        scope = tuple(map(int, scope))
+        ci = assign_scope(scope, cliques)
+        attached[ci].append(("affine_all_nonzero_forbidden", scope, None, f"affine:{ai}"))
+
+    return tuple(cliques), tuple(forest), qsizes, dict(attached), tuple(fills)
 
 
 def local_relation(kind, scope, relation, bag, qsizes):
@@ -278,10 +307,7 @@ def choose_primes(universe_bound):
     return tuple(primes), int(product)
 
 
-def analyze():
-    cliques, forest, qsizes, attached, attachments, fills = build_model()
-    masks, metadata = build_allowed_masks(cliques, qsizes, attached)
-
+def modular_exact_count(label, cliques, masks, forest, qsizes):
     variables = tuple(sorted({v for bag in cliques for v in bag}))
     universe_bound = math.prod(qsizes[v] for v in variables)
     primes, modulus_product = choose_primes(universe_bound)
@@ -292,16 +318,38 @@ def analyze():
     for prime in primes:
         residue, components = count_mod_prime(prime, cliques, masks, forest, qsizes)
         residues.append(residue)
-        residue_rows.append({
+        row = {
+            "label": label,
             "prime": prime,
             "total_residue": residue,
             "component_residues": list(components),
-        })
-        print("modular_residue", json.dumps(residue_rows[-1], sort_keys=True), flush=True)
+        }
+        residue_rows.append(row)
+        print("modular_residue", json.dumps(row, sort_keys=True), flush=True)
 
     total, crt_modulus = exact_crt(residues, primes)
     assert crt_modulus == modulus_product
     assert 0 < total <= universe_bound
+    return total, universe_bound, primes, modulus_product, residue_rows
+
+
+def analyze():
+    # Mandatory representation regression: the new dense-mask + modular message engine
+    # must exactly reproduce the already-frozen 38-ternary physical+affine authority.
+    r_cliques, r_forest, r_qsizes, r_attached, _r_fills = build_current_38_regression_model()
+    r_masks, _r_metadata = build_allowed_masks(r_cliques, r_qsizes, r_attached)
+    regression_total, _r_universe, _r_primes, _r_modulus, _r_rows = modular_exact_count(
+        "current_38_regression", r_cliques, r_masks, r_forest, r_qsizes
+    )
+    assert regression_total == CURRENT_38_COMBINED_COUNT, regression_total
+    print(f"modular_regression_exact_count={regression_total}", flush=True)
+
+    cliques, forest, qsizes, attached, attachments, fills = build_model()
+    masks, metadata = build_allowed_masks(cliques, qsizes, attached)
+
+    total, universe_bound, primes, modulus_product, residue_rows = modular_exact_count(
+        "tail4_expanded", cliques, masks, forest, qsizes
+    )
     assert total <= TAIL3_COMBINED_COUNT
 
     out = {
@@ -326,6 +374,7 @@ def analyze():
         "total_compiled_allowed_rows": sum(int(row["allowed_rows"]) for row in metadata),
         "constraint_attachments": [list(x) for x in attachments],
         "quotient_variables_in_model": len(variables),
+        "modular_regression_current_38_exact_count": regression_total,
         "full_assignment_universe_bound": universe_bound,
         "crt_primes": list(primes),
         "crt_modulus_product": modulus_product,
@@ -340,7 +389,7 @@ def analyze():
     }
     print("result", json.dumps(out, sort_keys=True), flush=True)
     print("PASS V26_Q138_C916_E0_FIRST_DYADIC_TAIL4_EXPANDED_PHYSICAL_PLUS_AFFINE_JUNCTION_EXACT")
-    print("theorem=exact modular junction sum-product plus CRT counts the 60 ternary physical factors, five-quaternary conjunction, and all 19 authority-correct affine obstructions without materializing Python tuple tables")
+    print("theorem=the same dense-mask modular junction engine first reproduces the frozen 38-ternary physical+affine authority exactly, then CRT counts the 60 ternary physical factors, five-quaternary conjunction, and all 19 authority-correct affine obstructions without materializing Python tuple tables")
     print("boundary=treewidth remains bounded by 9 <= tw <= 12; the count is exact on the explicit width-12 chordal completion")
     print("boundary=this excludes the dense 4005 pairwise quotient relation layer and multiplicity weights, so it is not a weighted work exponent")
     print("ALPHA_PASS=0")
