@@ -189,6 +189,162 @@ def aggregate_grandchild(parent_shard: int, child_shard: int, grandchild_shard: 
     return out
 
 
+
+EXPECTED_PROFILE_REGRESSION_COUNT = T3.EXPECTED_PROFILE_REGRESSION_COUNT
+EXPECTED_PROFILE_REGRESSION_WEIGHTED = T3.EXPECTED_PROFILE_REGRESSION_WEIGHTED
+NINE_PROFILE_ALL_CURRENT_WEIGHTED = T3.NINE_PROFILE_ALL_CURRENT_WEIGHTED
+EXPECTED_FIRST_LEVEL = T3.EXPECTED_FIRST_LEVEL
+EXPECTED_NESTED_SUCCESS = T3.EXPECTED_NESTED_SUCCESS
+CANCELLED_SECOND_LEVEL_CHILDREN = T3.EXPECTED_THIRD_CHILDREN
+THIRD_GRANDCHILD_COUNT = T3.GRANDCHILD_SHARD_COUNT
+
+
+def aggregate_final_with_replacements(
+    first_level_directory: Path,
+    nested_directory: Path,
+    third_level_directory: Path,
+    fourth_replacement_directory: Path,
+    output: Path,
+):
+    """Exact final fan-in with one source per third-level grandchild.
+
+    A grandchild may come either from the direct third-level run or from a fourth-level
+    replacement aggregate, never both. This prevents accidental double counting when a
+    slow direct job later finishes after a replacement was launched.
+    """
+    first_rows = {}
+    for path in sorted(first_level_directory.glob("profile-251-shard-*.json")):
+        row = json.loads(path.read_text())
+        idx = int(row["shard"]["shard_index"])
+        if idx in EXPECTED_FIRST_LEVEL:
+            first_rows[idx] = row
+    assert tuple(sorted(first_rows)) == tuple(sorted(EXPECTED_FIRST_LEVEL))
+    for idx, expected in EXPECTED_FIRST_LEVEL.items():
+        row = first_rows[idx]
+        assert int(row["regression"]["exact_profile_count"]) == expected["regression"]
+        assert int(row["all_current"]["exact_profile_count"]) == expected["all_current"]
+        assert int(row["all_current"]["base_mass"]) == BASE_MASS
+
+    nested_rows = {}
+    for path in sorted(nested_directory.glob("profile-251-parent-*-child-*.json")):
+        row = json.loads(path.read_text())
+        key = (int(row["shard"]["parent_shard_index"]), int(row["shard"]["child_shard_index"]))
+        if key in EXPECTED_NESTED_SUCCESS:
+            nested_rows[key] = row
+    assert tuple(sorted(nested_rows)) == tuple(sorted(EXPECTED_NESTED_SUCCESS))
+    for key, expected_count in EXPECTED_NESTED_SUCCESS.items():
+        row = nested_rows[key]
+        assert int(row["all_current"]["exact_profile_count"]) == expected_count
+        assert int(row["all_current"]["base_mass"]) == BASE_MASS
+
+    direct = {}
+    for path in sorted(third_level_directory.glob("profile-251-parent-*-child-*-grandchild-*.json")):
+        row = json.loads(path.read_text())
+        key = (
+            int(row["shard"]["parent_shard_index"]),
+            int(row["shard"]["child_shard_index"]),
+            int(row["shard"]["grandchild_shard_index"]),
+        )
+        if key[:2] in CANCELLED_SECOND_LEVEL_CHILDREN:
+            direct[key] = row
+
+    replacements = {}
+    for path in sorted(fourth_replacement_directory.glob(
+        "profile-251-parent-*-child-*-grandchild-*-fourth-aggregate.json"
+    )):
+        row = json.loads(path.read_text())
+        key = (
+            int(row["parent_shard_index"]),
+            int(row["child_shard_index"]),
+            int(row["grandchild_shard_index"]),
+        )
+        assert key[:2] in CANCELLED_SECOND_LEVEL_CHILDREN
+        replacements[key] = row
+
+    child_totals = {}
+    source_rows = []
+    for parent, child in CANCELLED_SECOND_LEVEL_CHILDREN:
+        subtotal = 0
+        for grandchild in range(THIRD_GRANDCHILD_COUNT):
+            key = (parent, child, grandchild)
+            have_direct = key in direct
+            have_replacement = key in replacements
+            assert have_direct ^ have_replacement, (
+                "exactly one source required",
+                key,
+                have_direct,
+                have_replacement,
+            )
+            if have_direct:
+                row = direct[key]
+                raw = int(row["all_current"]["exact_profile_count"])
+                weighted = int(row["all_current"]["exact_weighted_summand"])
+                source = "third_level_direct"
+            else:
+                row = replacements[key]
+                raw = int(row["exact_all_current_grandchild_profile_count"])
+                weighted = int(row["exact_all_current_grandchild_weighted_summand"])
+                source = "fourth_level_replacement"
+            assert weighted == BASE_MASS * raw
+            subtotal += raw
+            source_rows.append({
+                "parent_shard_index": parent,
+                "child_shard_index": child,
+                "grandchild_shard_index": grandchild,
+                "source": source,
+                "exact_profile_count": raw,
+                "exact_weighted_summand": weighted,
+            })
+        assert subtotal <= PARENT_REGRESSION_COUNTS[parent]
+        child_totals[(parent, child)] = subtotal
+
+    regression_count = (
+        sum(v["regression"] for v in EXPECTED_FIRST_LEVEL.values())
+        + PARENT_REGRESSION_COUNTS[1]
+        + PARENT_REGRESSION_COUNTS[3]
+    )
+    assert regression_count == EXPECTED_PROFILE_REGRESSION_COUNT
+    assert BASE_MASS * regression_count == EXPECTED_PROFILE_REGRESSION_WEIGHTED
+
+    all_current_count = (
+        sum(v["all_current"] for v in EXPECTED_FIRST_LEVEL.values())
+        + sum(EXPECTED_NESTED_SUCCESS.values())
+        + sum(child_totals.values())
+    )
+    assert 0 <= all_current_count <= regression_count
+    profile_weighted = BASE_MASS * all_current_count
+    ten_profile_total = NINE_PROFILE_ALL_CURRENT_WEIGHTED + profile_weighted
+
+    out = {
+        "position": "C",
+        "physical_shared_dimension": 149,
+        "domain_state_sum": TARGET,
+        "six_factor_regression_profile_count": regression_count,
+        "six_factor_regression_weighted_summand": EXPECTED_PROFILE_REGRESSION_WEIGHTED,
+        "exact_all_current_profile_count": all_current_count,
+        "exact_all_current_profile_weighted_summand": profile_weighted,
+        "cancelled_second_level_child_totals": {
+            f"{p}:{c}": child_totals[(p, c)]
+            for p, c in CANCELLED_SECOND_LEVEL_CHILDREN
+        },
+        "grandchild_sources": source_rows,
+        "nine_profile_all_current_weighted_sum": NINE_PROFILE_ALL_CURRENT_WEIGHTED,
+        "exact_all_current_ten_profile_weighted_count": ten_profile_total,
+        "exact_all_current_ten_profile_log2": (
+            None if ten_profile_total == 0 else __import__("math").log2(ten_profile_total)
+        ),
+        "decision": "C916_ALL_CURRENT_WEIGHTED_PROFILE_251_FINAL_FANIN_WITH_FOURTH_LEVEL_REPLACEMENTS_EXACT",
+    }
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(out, sort_keys=True) + "\n")
+    print("result", json.dumps(out, sort_keys=True), flush=True)
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_PROFILE_251_FINAL_WITH_FOURTH_LEVEL_REPLACEMENTS_EXACT")
+    print("boundary=each third-level grandchild is covered exactly once by either its direct artifact or one exact fourth-level replacement aggregate")
+    print("boundary=exact for the current 38-ternary weighted inventory only; later tail3/tail4/tail5 physical factors remain outside")
+    print("ALPHA_PASS=0")
+    return out
+
+
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="mode", required=True)
@@ -204,11 +360,25 @@ def main():
     a.add_argument("--grandchild-shard", type=int, required=True)
     a.add_argument("--directory", type=Path, required=True)
     a.add_argument("--output", type=Path, required=True)
+    z = sub.add_parser("aggregate-final-with-replacements")
+    z.add_argument("--first-level-directory", type=Path, required=True)
+    z.add_argument("--nested-directory", type=Path, required=True)
+    z.add_argument("--third-level-directory", type=Path, required=True)
+    z.add_argument("--fourth-replacement-directory", type=Path, required=True)
+    z.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     if args.mode == "fourth":
         run_fourth(args.parent_shard, args.child_shard, args.grandchild_shard, args.fourth_shard, args.output)
-    else:
+    elif args.mode == "aggregate-grandchild":
         aggregate_grandchild(args.parent_shard, args.child_shard, args.grandchild_shard, args.directory, args.output)
+    else:
+        aggregate_final_with_replacements(
+            args.first_level_directory,
+            args.nested_directory,
+            args.third_level_directory,
+            args.fourth_replacement_directory,
+            args.output,
+        )
 
 
 if __name__ == "__main__":
