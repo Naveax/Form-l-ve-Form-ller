@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
-"""Exact 16-leaf profile-251 fallback for the prepared 69-ternary weighted model.
+"""Exact hybrid partition for profile 251 in the prepared 69-ternary weighted model.
 
-The partition uses the same pairwise-only deterministic split heuristic as the frozen
-38-ternary fallback, so higher-order factors cannot move partition boundaries.  Profile
-251 is split first on variable index 10 and then on index 11, each over the four singleton
-quotient states. The 16 leaves are disjoint and cover the profile exactly.
+The partition boundary is driven only by the frozen pairwise model, so adding tail3/4/5
+higher-order factors cannot change it.
 
-The historical six-factor profile-251 regression integer is not recomputed per leaf.
-Instead the final fan-in combines its frozen exact weighted summand with the nine
-independently recomputed six-factor profile checkpoints and requires the full historical
-ten-profile integer exactly.
+Stage 1 fixes variable 10 to one of four singleton states.
+Stage 2 fixes variable 11 to one of four singleton states.
+
+Twelve second-level leaves were already easy in the 38-ternary baseline and are counted
+directly. The four historically heavy pairs (1,1), (1,3), (3,1), (3,3) are subdivided
+once more on deterministic variable 14 into four singleton states. Therefore the hybrid
+fan-in consists of 12 direct leaves + 16 grandchildren, all disjoint, covering exactly
+the same 16 second-level leaves and hence the full profile.
+
+The historical six-factor profile-251 regression integer is frozen independently. Final
+fan-in combines it with the nine directly recomputed regression profiles and requires the
+full historical ten-profile integer exactly before promoting the 69-factor weighted sum.
 """
 from __future__ import annotations
 
@@ -22,6 +28,7 @@ TARGET = 251
 STATE_COUNT = 4
 EXPECTED_FIRST_INDEX = 10
 EXPECTED_SECOND_INDEX = 11
+EXPECTED_THIRD_INDEX = 14
 EXPECTED_MASK = 15
 EXPECTED_BITS = (1, 2, 4, 8)
 EXPECTED_BASE_MASS = 243184718013880790060390111206440960000000000
@@ -29,6 +36,14 @@ EXPECTED_PROFILE_REGRESSION_COUNT = 87639022052873245102889951271577152
 EXPECTED_PROFILE_REGRESSION_WEIGHTED = 21312470864940260066305006484700721917824185471141115669201479972945920000000000
 EXPECTED_SIX_FACTOR_TOTAL = 90987190266267462495323685079227633113020903735137825407846207198697839001600000
 NINE_TARGETS = (83, 88, 95, 100, 102, 134, 154, 288, 302)
+HEAVY_PAIRS = ((1, 1), (1, 3), (3, 1), (3, 3))
+EASY_PAIRS = tuple(
+    (p, c)
+    for p in range(STATE_COUNT)
+    for c in range(STATE_COUNT)
+    if (p, c) not in HEAVY_PAIRS
+)
+assert len(EASY_PAIRS) == 12
 
 
 def split_spec(counter, engine, domains):
@@ -56,13 +71,42 @@ def split_spec(counter, engine, domains):
     return i, full_mask, tuple(bits)
 
 
-def run_leaf(parent: int, child: int, output: Path) -> dict:
+def fixed_second_level(counter, engine, original, parent, child):
+    first_i, first_mask, first_bits = split_spec(counter, engine, original)
+    assert first_i == EXPECTED_FIRST_INDEX
+    assert first_mask == EXPECTED_MASK
+    assert first_bits == EXPECTED_BITS
+    d1 = list(original)
+    d1[first_i] = int(first_bits[parent])
+    d1 = tuple(d1)
+
+    second_i, second_mask, second_bits = split_spec(counter, engine, d1)
+    assert second_i == EXPECTED_SECOND_INDEX
+    assert second_mask == EXPECTED_MASK
+    assert second_bits == EXPECTED_BITS
+    d2 = list(d1)
+    d2[second_i] = int(second_bits[child])
+    d2 = tuple(d2)
+    return d2, first_i, first_bits, second_i, second_bits
+
+
+def _run_partition(parent: int, child: int, grandchild, output: Path) -> dict:
     import _c916_all_current_weighted_context_engine as E
     import verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_context_exact as V
     import verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_matrix_exact as M
 
     assert 0 <= parent < STATE_COUNT
     assert 0 <= child < STATE_COUNT
+    if grandchild is None:
+        assert (parent, child) in EASY_PAIRS
+        label = "all_current_69_profile251_easy_leaf"
+        decision = "C916_69_TERNARY_WEIGHTED_PROFILE_251_EASY_SECOND_LEVEL_LEAF_EXACT"
+    else:
+        assert (parent, child) in HEAVY_PAIRS
+        assert 0 <= grandchild < STATE_COUNT
+        label = "all_current_69_profile251_heavy_grandchild"
+        decision = "C916_69_TERNARY_WEIGHTED_PROFILE_251_HEAVY_THIRD_LEVEL_GRANDCHILD_EXACT"
+
     factors = M.load_extended_factor_specs(E)
     assert len(factors) == M.EXPECTED_TOTAL_FACTOR_COUNT == 69
 
@@ -77,46 +121,54 @@ def run_leaf(parent: int, child: int, output: Path) -> dict:
             if sum(int(d).bit_count() for d in original) != TARGET:
                 return 1, 0, 0
 
-            first_i, first_mask, first_bits = split_spec(self, E, original)
-            assert first_i == EXPECTED_FIRST_INDEX
-            assert first_mask == EXPECTED_MASK
-            assert first_bits == EXPECTED_BITS
-            d1 = list(original)
-            d1[first_i] = int(first_bits[parent])
-            d1 = tuple(d1)
-
-            second_i, second_mask, second_bits = split_spec(self, E, d1)
-            assert second_i == EXPECTED_SECOND_INDEX
-            assert second_mask == EXPECTED_MASK
-            assert second_bits == EXPECTED_BITS
-            d2 = list(d1)
-            d2[second_i] = int(second_bits[child])
-            d2 = tuple(d2)
-
-            Counter._meta = {
+            d2, first_i, first_bits, second_i, second_bits = fixed_second_level(
+                self, E, original, parent, child
+            )
+            meta = {
                 "parent_index": parent,
                 "parent_state_bit": int(first_bits[parent]),
                 "child_index": child,
                 "child_state_bit": int(second_bits[child]),
                 "first_split_variable_index": first_i,
                 "first_split_variable_members": list(map(int, self.variables[first_i])),
-                "first_split_domain_mask": first_mask,
+                "first_split_domain_mask": EXPECTED_MASK,
                 "second_split_variable_index": second_i,
                 "second_split_variable_members": list(map(int, self.variables[second_i])),
-                "second_split_domain_mask": second_mask,
+                "second_split_domain_mask": EXPECTED_MASK,
+                "partition_kind": "easy_second_level" if grandchild is None else "heavy_third_level",
             }
-            return super().count_profile(d2)
+
+            if grandchild is None:
+                Counter._meta = meta
+                return super().count_profile(d2)
+
+            third_i, third_mask, third_bits = split_spec(self, E, d2)
+            assert third_i == EXPECTED_THIRD_INDEX
+            assert third_mask == EXPECTED_MASK
+            assert third_bits == EXPECTED_BITS
+            d3 = list(d2)
+            d3[third_i] = int(third_bits[grandchild])
+            d3 = tuple(d3)
+            meta.update({
+                "grandchild_index": grandchild,
+                "grandchild_state_bit": int(third_bits[grandchild]),
+                "third_split_variable_index": third_i,
+                "third_split_variable_members": list(map(int, self.variables[third_i])),
+                "third_split_domain_mask": third_mask,
+            })
+            Counter._meta = meta
+            return super().count_profile(d3)
 
     E.PROFILE_ROWS.clear()
     original_counter = V.AuthorityCorrectConstraintCounter
     V.AuthorityCorrectConstraintCounter = Counter
     try:
-        base = V.run_model(len(factors), "all_current_69_profile251_leaf")
+        base = V.run_model(len(factors), label)
     finally:
         V.AuthorityCorrectConstraintCounter = original_counter
         E.load_factor_specs = original_loader
 
-    rows = [r for r in E.PROFILE_ROWS if r["model"] == "all_current_69_profile251_leaf"]
+    rows = [r for r in E.PROFILE_ROWS if r["model"] == label]
     assert len(rows) == 1, rows
     exact = rows[0]
     target_rows = [r for r in base["profile_rows"] if int(r["domain_state_sum"]) == TARGET]
@@ -133,7 +185,7 @@ def run_leaf(parent: int, child: int, output: Path) -> dict:
         "physical_shared_dimension": 149,
         "domain_state_sum": TARGET,
         "total_ternary_factors": 69,
-        "leaf": Counter._meta,
+        "partition": Counter._meta,
         "all_current": {
             "exact_profile_count": raw,
             "exact_weighted_summand": base_mass * raw,
@@ -145,53 +197,93 @@ def run_leaf(parent: int, child: int, output: Path) -> dict:
             "constraint_eval_misses_delta": int(exact["constraint_eval_misses_delta"]),
             "max_context_variables": int(exact["max_context_variables"]),
         },
-        "decision": "C916_69_TERNARY_WEIGHTED_PROFILE_251_SECOND_LEVEL_LEAF_EXACT",
+        "decision": decision,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
-    print("leaf_result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_251_LEAF_EXACT")
+    print("partition_result", json.dumps(out, sort_keys=True), flush=True)
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_251_PARTITION_EXACT")
     print("ALPHA_PASS=0")
     return out
 
 
-def aggregate(profile_directory: Path, leaf_directory: Path, output: Path) -> dict:
+def run_easy(parent: int, child: int, output: Path):
+    return _run_partition(parent, child, None, output)
+
+
+def run_heavy(parent: int, child: int, grandchild: int, output: Path):
+    return _run_partition(parent, child, grandchild, output)
+
+
+def aggregate(profile_directory: Path, easy_directory: Path, heavy_directory: Path, output: Path) -> dict:
     profile_paths = sorted(profile_directory.glob("profile-*.json"))
     profiles = [json.loads(p.read_text()) for p in profile_paths]
     by_target = {int(r["domain_state_sum"]): r for r in profiles}
     assert tuple(sorted(by_target)) == NINE_TARGETS
 
-    leaf_paths = sorted(leaf_directory.glob("profile-251-parent-*-child-*.json"))
-    assert len(leaf_paths) == STATE_COUNT * STATE_COUNT
-    leaves = [json.loads(p.read_text()) for p in leaf_paths]
-    by_leaf = {
-        (int(r["leaf"]["parent_index"]), int(r["leaf"]["child_index"])): r
-        for r in leaves
+    easy_paths = sorted(easy_directory.glob("profile-251-easy-parent-*-child-*.json"))
+    assert len(easy_paths) == len(EASY_PAIRS)
+    easy_rows = [json.loads(p.read_text()) for p in easy_paths]
+    easy = {
+        (int(r["partition"]["parent_index"]), int(r["partition"]["child_index"])): r
+        for r in easy_rows
     }
-    assert tuple(sorted(by_leaf)) == tuple(
-        (p, c) for p in range(STATE_COUNT) for c in range(STATE_COUNT)
-    )
+    assert tuple(sorted(easy)) == tuple(sorted(EASY_PAIRS))
 
-    for p in range(STATE_COUNT):
-        for c in range(STATE_COUNT):
-            row = by_leaf[(p, c)]
-            meta = row["leaf"]
-            assert int(meta["first_split_variable_index"]) == EXPECTED_FIRST_INDEX
-            assert int(meta["second_split_variable_index"]) == EXPECTED_SECOND_INDEX
-            assert int(meta["first_split_domain_mask"]) == EXPECTED_MASK
-            assert int(meta["second_split_domain_mask"]) == EXPECTED_MASK
-            assert int(meta["parent_state_bit"]) == EXPECTED_BITS[p]
-            assert int(meta["child_state_bit"]) == EXPECTED_BITS[c]
-            assert int(row["all_current"]["base_mass"]) == EXPECTED_BASE_MASS
-
-    profile251_count = sum(
-        int(row["all_current"]["exact_profile_count"]) for row in leaves
+    heavy_paths = sorted(heavy_directory.glob("profile-251-heavy-parent-*-child-*-grandchild-*.json"))
+    assert len(heavy_paths) == len(HEAVY_PAIRS) * STATE_COUNT
+    heavy_rows = [json.loads(p.read_text()) for p in heavy_paths]
+    heavy = {
+        (
+            int(r["partition"]["parent_index"]),
+            int(r["partition"]["child_index"]),
+            int(r["partition"]["grandchild_index"]),
+        ): r
+        for r in heavy_rows
+    }
+    expected_heavy_keys = tuple(
+        (p, c, g) for p, c in HEAVY_PAIRS for g in range(STATE_COUNT)
     )
+    assert tuple(sorted(heavy)) == tuple(sorted(expected_heavy_keys))
+
+    def check_common(row, p, c):
+        meta = row["partition"]
+        assert int(meta["first_split_variable_index"]) == EXPECTED_FIRST_INDEX
+        assert int(meta["second_split_variable_index"]) == EXPECTED_SECOND_INDEX
+        assert int(meta["first_split_domain_mask"]) == EXPECTED_MASK
+        assert int(meta["second_split_domain_mask"]) == EXPECTED_MASK
+        assert int(meta["parent_state_bit"]) == EXPECTED_BITS[p]
+        assert int(meta["child_state_bit"]) == EXPECTED_BITS[c]
+        assert int(row["all_current"]["base_mass"]) == EXPECTED_BASE_MASS
+
+    for p, c in EASY_PAIRS:
+        row = easy[(p, c)]
+        check_common(row, p, c)
+        assert row["partition"]["partition_kind"] == "easy_second_level"
+        assert "grandchild_index" not in row["partition"]
+
+    for p, c in HEAVY_PAIRS:
+        for g in range(STATE_COUNT):
+            row = heavy[(p, c, g)]
+            check_common(row, p, c)
+            meta = row["partition"]
+            assert meta["partition_kind"] == "heavy_third_level"
+            assert int(meta["third_split_variable_index"]) == EXPECTED_THIRD_INDEX
+            assert int(meta["third_split_domain_mask"]) == EXPECTED_MASK
+            assert int(meta["grandchild_index"]) == g
+            assert int(meta["grandchild_state_bit"]) == EXPECTED_BITS[g]
+
+    easy_count = sum(int(row["all_current"]["exact_profile_count"]) for row in easy.values())
+    heavy_count = sum(int(row["all_current"]["exact_profile_count"]) for row in heavy.values())
+    profile251_count = easy_count + heavy_count
     assert 0 <= profile251_count <= EXPECTED_PROFILE_REGRESSION_COUNT
+
     profile251_weighted = EXPECTED_BASE_MASS * profile251_count
-    assert profile251_weighted == sum(
-        int(row["all_current"]["exact_weighted_summand"]) for row in leaves
+    emitted_weighted = (
+        sum(int(row["all_current"]["exact_weighted_summand"]) for row in easy.values())
+        + sum(int(row["all_current"]["exact_weighted_summand"]) for row in heavy.values())
     )
+    assert emitted_weighted == profile251_weighted
 
     nine_regression = sum(
         int(by_target[t]["regression"]["exact_weighted_summand"]) for t in NINE_TARGETS
@@ -210,23 +302,31 @@ def aggregate(profile_directory: Path, leaf_directory: Path, output: Path) -> di
         "physical_shared_dimension": 149,
         "separator_domain_profiles": 10,
         "total_ternary_factors": 69,
+        "profile251_partition": {
+            "easy_second_level_leaves": len(EASY_PAIRS),
+            "heavy_second_level_pairs": [list(x) for x in HEAVY_PAIRS],
+            "heavy_third_level_grandchildren": len(HEAVY_PAIRS) * STATE_COUNT,
+        },
         "six_factor_regression_expected": EXPECTED_SIX_FACTOR_TOTAL,
         "six_factor_regression_observed": regression_total,
         "profile251_six_factor_regression_count": EXPECTED_PROFILE_REGRESSION_COUNT,
         "profile251_six_factor_regression_weighted_summand": EXPECTED_PROFILE_REGRESSION_WEIGHTED,
+        "exact_profile251_easy_count": easy_count,
+        "exact_profile251_heavy_count": heavy_count,
         "exact_profile251_all_current_count": profile251_count,
         "exact_profile251_all_current_weighted_summand": profile251_weighted,
         "nine_profile_all_current_weighted_sum": nine_all_current,
         "exact_69_ternary_weighted_count": total,
         "exact_log2": None if total == 0 else math.log2(total),
-        "profile251_leaves": [by_leaf[(p, c)] for p in range(STATE_COUNT) for c in range(STATE_COUNT)],
+        "easy_rows": [easy[k] for k in sorted(easy)],
+        "heavy_rows": [heavy[k] for k in sorted(heavy)],
         "profile_rows": [by_target[t] for t in NINE_TARGETS],
-        "decision": "C916_COMPLETE_AFFINE_PLUS_69_TERNARY_WEIGHTED_COUNT_WITH_PROFILE251_SECOND_LEVEL_LEAVES_EXACT",
+        "decision": "C916_COMPLETE_AFFINE_PLUS_69_TERNARY_WEIGHTED_COUNT_WITH_HYBRID_PROFILE251_PARTITION_EXACT",
     }
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(out, sort_keys=True) + "\n")
     print("result", json.dumps(out, sort_keys=True), flush=True)
-    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_MATRIX_WITH_SHARDED_251_EXACT")
+    print("PASS V26_Q138_C916_E0_FIRST_DYADIC_69_TERNARY_WEIGHTED_PROFILE_MATRIX_WITH_HYBRID_251_EXACT")
     print("boundary=exact for the finite 69-ternary physical inventory; it is not a completeness theorem or end-to-end work exponent")
     print("ALPHA_PASS=0")
     return out
@@ -235,19 +335,31 @@ def aggregate(profile_directory: Path, leaf_directory: Path, output: Path) -> di
 def main():
     p = argparse.ArgumentParser()
     sub = p.add_subparsers(dest="mode", required=True)
-    s = sub.add_parser("leaf")
-    s.add_argument("--parent", type=int, required=True)
-    s.add_argument("--child", type=int, required=True)
-    s.add_argument("--output", type=Path, required=True)
+
+    e = sub.add_parser("easy")
+    e.add_argument("--parent", type=int, required=True)
+    e.add_argument("--child", type=int, required=True)
+    e.add_argument("--output", type=Path, required=True)
+
+    h = sub.add_parser("heavy")
+    h.add_argument("--parent", type=int, required=True)
+    h.add_argument("--child", type=int, required=True)
+    h.add_argument("--grandchild", type=int, required=True)
+    h.add_argument("--output", type=Path, required=True)
+
     a = sub.add_parser("aggregate")
     a.add_argument("--profile-directory", type=Path, required=True)
-    a.add_argument("--leaf-directory", type=Path, required=True)
+    a.add_argument("--easy-directory", type=Path, required=True)
+    a.add_argument("--heavy-directory", type=Path, required=True)
     a.add_argument("--output", type=Path, required=True)
+
     args = p.parse_args()
-    if args.mode == "leaf":
-        run_leaf(args.parent, args.child, args.output)
+    if args.mode == "easy":
+        run_easy(args.parent, args.child, args.output)
+    elif args.mode == "heavy":
+        run_heavy(args.parent, args.child, args.grandchild, args.output)
     else:
-        aggregate(args.profile_directory, args.leaf_directory, args.output)
+        aggregate(args.profile_directory, args.easy_directory, args.heavy_directory, args.output)
 
 
 if __name__ == "__main__":
