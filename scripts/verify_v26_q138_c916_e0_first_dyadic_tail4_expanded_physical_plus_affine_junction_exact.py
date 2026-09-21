@@ -330,6 +330,40 @@ def choose_primes(universe_bound):
     return tuple(primes), int(product)
 
 
+def self_test_modular_engine():
+    # Two cliques joined on variable 1.  Count directly over 3^3 assignments and
+    # compare with the same message-passing/CRT machinery used by the authority run.
+    cliques = ((0, 1), (1, 2))
+    forest = ((0, 1, (1,)),)
+    qsizes = {0: 3, 1: 3, 2: 3}
+
+    left = np.ones((3, 3), dtype=np.bool_)
+    right = np.ones((3, 3), dtype=np.bool_)
+    left[2, 1] = False
+    left[0, 2] = False
+    right[1, 0] = False
+    right[2, 2] = False
+    masks = (left, right)
+
+    brute = 0
+    for a in range(3):
+        for b in range(3):
+            for d in range(3):
+                if left[a, b] and right[b, d]:
+                    brute += 1
+
+    test_primes = (101, 103)
+    residues = []
+    for prime in test_primes:
+        residue, _components = count_mod_prime(prime, cliques, masks, forest, qsizes)
+        assert residue == brute % prime
+        residues.append(residue)
+    got, modulus = exact_crt(residues, test_primes)
+    assert modulus > 27
+    assert got == brute
+    print(f"modular_self_test_exact_count={got}", flush=True)
+
+
 def modular_exact_count(label, cliques, masks, forest, qsizes):
     variables = tuple(sorted({v for bag in cliques for v in bag}))
     universe_bound = math.prod(qsizes[v] for v in variables)
@@ -357,6 +391,8 @@ def modular_exact_count(label, cliques, masks, forest, qsizes):
 
 
 def analyze():
+    self_test_modular_engine()
+
     # Mandatory representation regression: the new dense-mask + modular message engine
     # must exactly reproduce the already-frozen 38-ternary physical+affine authority.
     r_cliques, r_forest, r_qsizes, r_attached, _r_fills = build_current_38_regression_model()
