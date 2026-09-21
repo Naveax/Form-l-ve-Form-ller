@@ -255,21 +255,94 @@ These already-certified disjoint pieces raise the current exact partial weighted
 
 with `log2 = 265.2133465675264...`. This remains a partial current-inventory quotient-layer lower bound, not the final ten-profile total and not an end-to-end work lower bound.
 
-Current active follow-ups:
+## 2026-09-21 tail4 exact expansion checkpoint
 
-- PR #297: exact nested state shards for the unresolved weighted profile `251`; the third-level fallback is prepared on branch `perf/c916-profile251-third-level-fallback-20260918` but is not dispatched while second-level children remain active.
-- PR #300: exact quotient descent for the fourth physical ternary tail. A prior run completed all target-level exact quotient computations but failed only in summary-artifact shell quoting; the corrected workflow is the authority path.
-- PR #303 is merged. Its exact tail3-expanded physical+affine junction count is now authority; treewidth remains bounded by `9 <= tw <= 11`.
-- A frozen regression verifier for this merged combined authority is prepared on branch `math/c916-tail3-expanded-physical-affine-freeze-prep-20260918` and is intentionally not dispatched while heavier active CI occupies the queue.
+Merged PR #300 certified the fourth 16-target physical ternary tail under the existing sign-reflection quotient.
+
+Exact tail4 result:
+
+- tested targets: 16;
+- newly promotable quotient ternary factors: 12;
+- exact quotient holes across those 12 factors: 42;
+- exact pairwise-complete negative controls: 4;
+- sign-only raw obstructions: 0;
+- overlap with the previously admitted 48 ternaries: none.
+
+The twelve new exact scopes are:
+
+`(4,165,186)`, `(4,165,239)`, `(4,165,244)`, `(4,165,245)`,
+`(4,165,249)`, `(4,181,182)`, `(7,181,182)`, `(8,181,182)`,
+`(9,181,182)`, `(10,181,182)`, `(11,181,182)`, `(24,181,182)`.
+
+Merged PR #306 then certifies the 60-ternary plus five-quaternary physical topology and exact junction count:
+
+- physical primal variables: 44;
+- component sizes: `[29, 3, 3, 3, 3, 3]`;
+- exact treewidth: 8;
+- width-7 exhaustive labeled filled-state search: 655,360 memo states, no valid ordering;
+- deterministic width-8 completion: fill edges `(4,7)` and `(165,182)`;
+- exact physical-only assignment count:
+  `75309497737888679701161264`;
+- `log2 = 85.96103419558422...`;
+- component counts: `[67292570321074232, 63, 61, 77, 62, 61]`;
+- maximal cliques: 23;
+- junction-forest edges: 17;
+- largest clique capacity: 262,144;
+- largest compiled allowed table: 191,392;
+- maximum positive separator support: 3,206.
+
+Tail4 introduces `gid=10`, which was not present in the tail3 physical-only variable universe. Therefore the tail3 physical count must first be lifted by the four-state quotient alphabet of `gid=10` before monotone comparison. The aligned tail3 authority is
+
+`97344772584057061635914496`
+
+and tail4 removes exactly
+
+`22035274846168381934753232`
+
+assignments from that lifted universe, an exact uniform quotient-layer reduction of `0.3702716848772525...` bits.
+
+These are still physical higher-order quotient-layer statements. Dense pairwise relations, affine constraints, multiplicity weights, and any end-to-end work interpretation remain outside them.
+
+For the weighted 38-ternary baseline, second-level profile-`251` run `35321639122` completed six children exactly and four heavy children were cancelled during the exact solve: `(1,1)`, `(1,3)`, `(3,1)`, `(3,3)`. The successful nested child `(3,2)` contributes exact raw count
+
+`8499806462519168849858351601147456`
+
+and weighted summand
+
+`2067023037760285675407363285354076024506449019007416563766033918197760000000000`.
+
+Together with the already-certified first-level shard 2, the current disjoint exact partial ten-profile weighted lower bound remains
+
+`68734150144380520506990404790715742098806722115815611926371371576564079001600000`
+
+with `log2 = 265.2133465675264...`.
+
+PR #307 is now the active exact fallback only for those four cancelled children. Each is partitioned one level deeper into disjoint quotient-state grandchildren. Its final fan-in reuses all previously successful artifacts and must reproduce the frozen profile-`251` six-factor regression count
+
+`87639022052873245102889951271577152`
+
+and weighted summand
+
+`21312470864940260066305006484700721917824185471141115669201479972945920000000000`
+
+before any 38-ternary weighted total is promoted.
+
+Prepared but intentionally undispatched independent follow-ups:
+
+- `math/c916-tail4-expanded-physical-affine-prep-20260921`: tail4-expanded physical + complete-affine junction compiler; it preserves treewidth as bounds unless a matching certificate is actually obtained.
+- `perf/c916-60-factor-weighted-profile-prep-20260918`: exact ten-profile weighted matrix for the full 60-ternary inventory, gated on freezing the 38-ternary baseline first.
+- `probe/c916-physical-triple-tail5-prep-20260918`: next 16 previously untested high-redundancy physical triples.
+- `math/c916-tail3-expanded-physical-affine-freeze-prep-20260918`: frozen regression verifier for the merged tail3+affine exact integer.
+- `math/c916-tail3-expanded-physical-freeze-prep-20260918`: frozen regression verifier for the merged tail3 physical-only exact integer.
 
 ## Next exact actions
 
-1. Finish the already-active second-level profile-`251` shard run without launching equivalent duplicate child targets. If any heavy child reaches the runner ceiling, activate the prepared third-level exact partition only for that failed child.
-2. Aggregate profile `251` only after the frozen six-factor profile regression count `87639022052873245102889951271577152` and weighted summand `21312470864940260066305006484700721917824185471141115669201479972945920000000000` are exactly reproduced by the partition.
-3. Combine the admitted profile-`251` contribution with the nine already-certified profile summands and freeze the exact ten-profile weighted integer in a dedicated regression authority.
-4. Finish PR #300 and admit only clean exact tail4 quotient relations. Do not promote raw physical holes that disappear under sign reflection.
-5. Freeze the merged PR #303 exact physical+affine integer with the prepared regression verifier once CI capacity is available; keep treewidth as bounds unless lower and upper certificates actually meet.
-6. After the current 38-factor weighted baseline is frozen, rebuild the weighted model with the newly certified tail3 quotient factors rather than treating the physical-only density gain as a weighted gain.
-7. Continue the physical higher-order search beyond tail4. The current factor inventory remains an exact finite inventory, not a completeness theorem for the full physical image.
+1. Complete PR #307 without launching equivalent duplicate grandchildren. Aggregate only after all four cancelled second-level children are replaced by exact disjoint third-level fan-in.
+2. Require exact reproduction of the profile-`251` six-factor regression checkpoint before admitting the profile-`251` all-current value.
+3. Freeze the resulting exact 38-ternary ten-profile weighted integer in a dedicated regression verifier, then integrate the stacked weighted branches without re-running already certified logical targets.
+4. Run the prepared 60-ternary weighted profile matrix only after the 38-ternary baseline is frozen. The new tail3/tail4 physical density reductions are not substitutes for that weighted recomputation.
+5. Validate the prepared tail4-expanded physical+affine junction compiler. Keep its treewidth as certified lower/upper bounds unless they meet; the junction count itself may still be exact on an explicit chordal completion.
+6. Continue the physical search with the prepared tail5 scout, admitting only exact quotient obstructions and preserving pairwise-complete/sign-only negative controls.
+7. Freeze merged physical and physical+affine authorities with dedicated regression verifiers when CI capacity is available.
 8. `ALPHA_PASS` stays `0` until an actual end-to-end schedule/work reduction is proved.
 
