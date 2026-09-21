@@ -4,7 +4,7 @@
 The merged topology authority gives a width-12 chordal completion with a largest raw
 clique capacity of 67,108,864 assignments. Materializing those assignments as Python
 tuples is wasteful. This verifier instead builds one dense boolean relation tensor per
-clique and performs junction-tree sum-product modulo several 31-bit primes using NumPy
+clique and performs junction-tree sum-product modulo several 30-bit primes using NumPy
 uint64 arrays. Every multiply is reduced modulo the current prime before the next
 multiply, and every eliminated axis has size at most five, so uint64 arithmetic cannot
 overflow. CRT reconstruction is unique because the product of moduli is required to
@@ -314,13 +314,18 @@ def exact_crt(residues, primes):
 def choose_primes(universe_bound):
     primes = []
     product = 1
-    cursor = 2**31
+    cursor = 2**30
     while product <= universe_bound:
         p = int(prevprime(cursor))
-        assert p < 2**31
+        assert p < 2**30
         primes.append(p)
         product *= p
         cursor = p
+    # With p < 2^30, every reduced product is < 2^60 and summing at most
+    # five quotient states is < 5*2^60 < 2^63, so uint64 elimination sums
+    # cannot overflow before the modular reduction.
+    assert max(primes) < 2**30
+    assert 5 * (max(primes) - 1) ** 2 < 2**64
     assert len(primes) >= 4
     return tuple(primes), int(product)
 
