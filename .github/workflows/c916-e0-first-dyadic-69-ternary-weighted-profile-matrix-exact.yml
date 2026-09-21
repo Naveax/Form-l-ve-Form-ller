@@ -123,22 +123,33 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  profile251-leaf:
-    name: profile-251-parent-${{ matrix.parent }}-child-${{ matrix.child }}
+  profile251-easy:
+    name: profile-251-easy-parent-${{ matrix.parent }}-child-${{ matrix.child }}
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      max-parallel: 16
+      max-parallel: 12
       matrix:
-        parent: [0, 1, 2, 3]
-        child: [0, 1, 2, 3]
+        include:
+          - {parent: 0, child: 0}
+          - {parent: 0, child: 1}
+          - {parent: 0, child: 2}
+          - {parent: 0, child: 3}
+          - {parent: 1, child: 0}
+          - {parent: 1, child: 2}
+          - {parent: 2, child: 0}
+          - {parent: 2, child: 1}
+          - {parent: 2, child: 2}
+          - {parent: 2, child: 3}
+          - {parent: 3, child: 0}
+          - {parent: 3, child: 2}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Syntax-check exact 69-factor profile-251 leaf runner
+      - name: Syntax-check exact 69-factor profile-251 partition runner
         run: >-
           python -m py_compile
           scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_matrix_exact.py
@@ -213,7 +224,7 @@ jobs:
           github-token: ${{ github.token }}
           repository: Naveax/Form-l-ve-Form-ller
           path: authorities/overlap
-      - name: Exact 69-factor weighted profile-251 leaf
+      - name: Exact 69-factor weighted profile-251 easy leaf
         env:
           C916_CURRENT_PHYSICAL_FACTOR_DIR: authorities/current-physical-factors
           C916_TAIL3_QUOTIENT_DIR: authorities/tail3-quotient
@@ -221,20 +232,131 @@ jobs:
           C916_TAIL5_QUOTIENT_DIR: authorities/tail5-quotient
         run: >-
           python scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_251_leaf_exact.py
-          leaf
+          easy
           --parent ${{ matrix.parent }}
           --child ${{ matrix.child }}
-          --output authorities/profile251-leaves/profile-251-parent-${{ matrix.parent }}-child-${{ matrix.child }}.json
+          --output authorities/profile251-easy/profile-251-easy-parent-${{ matrix.parent }}-child-${{ matrix.child }}.json
       - uses: actions/upload-artifact@v4
         with:
-          name: c916-69-ternary-profile251-parent-${{ matrix.parent }}-child-${{ matrix.child }}
-          path: authorities/profile251-leaves/*.json
+          name: c916-69-ternary-profile251-easy-parent-${{ matrix.parent }}-child-${{ matrix.child }}
+          path: authorities/profile251-easy/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+  profile251-heavy:
+    name: profile-251-heavy-parent-${{ matrix.parent }}-child-${{ matrix.child }}-grandchild-${{ matrix.grandchild }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      max-parallel: 16
+      matrix:
+        parent: [1, 3]
+        child: [1, 3]
+        grandchild: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax-check exact 69-factor profile-251 partition runner
+        run: >-
+          python -m py_compile
+          scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_matrix_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_251_leaf_exact.py
+          scripts/verify_v26_q138_c916_e0_first_dyadic_all_current_physical_weighted_context_exact.py
+          scripts/_c916_all_current_weighted_context_engine.py
+      - run: python -m pip install --quiet sympy==1.14.0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-current-physical-factor-*
+          run-id: 34952229238
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/current-physical-factors
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: tail3-quotient-*
+          run-id: 35120066130
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail3-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-tail4-quotient-*
+          run-id: 35333500851
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail4-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-tail5-quotient-*
+          run-id: 35571898114
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/tail5-quotient
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-base160-width3-separator-authority
+          run-id: 34607657664
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-four-separator-complete-authority
+          run-id: 34605915580
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/m4
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-subset-pair-relation-authority
+          run-id: 34612599814
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/subset
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-equal-pair-relation-authority
+          run-id: 34617809287
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/equal
+      - uses: actions/download-artifact@v4
+        with:
+          name: c916-m4-full-overlap-sign-reflection-quotient-authority
+          run-id: 34820011973
+          github-token: ${{ github.token }}
+          repository: Naveax/Form-l-ve-Form-ller
+          path: authorities/overlap
+      - name: Exact 69-factor weighted profile-251 heavy grandchild
+        env:
+          C916_CURRENT_PHYSICAL_FACTOR_DIR: authorities/current-physical-factors
+          C916_TAIL3_QUOTIENT_DIR: authorities/tail3-quotient
+          C916_TAIL4_QUOTIENT_DIR: authorities/tail4-quotient
+          C916_TAIL5_QUOTIENT_DIR: authorities/tail5-quotient
+        run: >-
+          python scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_251_leaf_exact.py
+          heavy
+          --parent ${{ matrix.parent }}
+          --child ${{ matrix.child }}
+          --grandchild ${{ matrix.grandchild }}
+          --output authorities/profile251-heavy/profile-251-heavy-parent-${{ matrix.parent }}-child-${{ matrix.child }}-grandchild-${{ matrix.grandchild }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: c916-69-ternary-profile251-heavy-parent-${{ matrix.parent }}-child-${{ matrix.child }}-grandchild-${{ matrix.grandchild }}
+          path: authorities/profile251-heavy/*.json
           if-no-files-found: error
           retention-days: 14
 
   aggregate:
     name: aggregate
-    needs: [profile, profile251-leaf]
+    needs: [profile, profile251-easy, profile251-heavy]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -254,15 +376,21 @@ jobs:
           merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
-          pattern: c916-69-ternary-profile251-parent-*-child-*
-          path: authorities/profile251-leaves
+          pattern: c916-69-ternary-profile251-easy-*
+          path: authorities/profile251-easy
           merge-multiple: true
-      - name: Aggregate nine direct profiles plus sharded profile 251
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: c916-69-ternary-profile251-heavy-*
+          path: authorities/profile251-heavy
+          merge-multiple: true
+      - name: Aggregate nine direct profiles plus hybrid-sharded profile 251
         run: >-
           python scripts/verify_v26_q138_c916_e0_first_dyadic_69_ternary_weighted_profile_251_leaf_exact.py
           aggregate
           --profile-directory authorities/profile-results
-          --leaf-directory authorities/profile251-leaves
+          --easy-directory authorities/profile251-easy
+          --heavy-directory authorities/profile251-heavy
           --output authorities/c916-69-ternary-weighted-profile-matrix-exact.json
       - uses: actions/upload-artifact@v4
         with:
