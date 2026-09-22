@@ -25,6 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - run: python -m pip install --quiet sympy==1.14.0
       - name: Syntax-check tail7 combined topology verifier
         run: python -m py_compile scripts/verify_v26_q138_c916_e0_first_dyadic_tail7_expanded_physical_plus_affine_treewidth12_exact.py
       - uses: actions/download-artifact@v4
