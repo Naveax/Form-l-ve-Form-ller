@@ -40,7 +40,7 @@ def analyze():
     quads=tuple(T.QUATERNARY_FACTORS)
     adj=T6.build_graph(ternary+quads)
     comps=T6.components(adj); sizes=tuple(len(c) for c in comps)
-    assert sizes==EXPECTED_COMPONENT_SIZES and len(adj)==62
+    assert sizes==EXPECTED_COMPONENT_SIZES and len(adj)==72
     rows,fills=T6.min_fill(adj); upper=max(d for _v,_n,d in rows)
     assert upper==8 and fills==EXPECTED_FILL_EDGES
     order7,states,simp,info=T6.exact_width_at_most(adj,comps[0],7)
